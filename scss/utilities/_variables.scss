@@ -1,0 +1,41 @@
+//? COLORS
+
+$primary-color: #fef8ea;
+$secondary-color-300: #ffd37c;
+$secondary-color-400: #ff9c35;
+
+$white: #fff;
+$black: #000;
+
+//? FONTS
+$ff-primary: 'Inter', sans-serif;
+
+$ff-body: $ff-primary;
+$ff-heading: $ff-primary;
+
+$fw-regular: 400;
+$fw-semi-bold: 500;
+$fw-bold: 700;
+
+$fs-300: 0.875rem;
+$fs-400: 1rem;
+$fs-500: 1.25rem;
+$fs-600: 1.5rem;
+$fs-700: 2rem;
+
+$fs-body: $fs-300;
+$fs-nav: $fs-400;
+$fs-button: $fs-400;
+$fs-primary-heading: $fs-700;
+$fs-secondary-heading: $fs-600;
+
+@media (min-width: 48rem) {
+  $fs-300: 1rem;
+  $fs-400: 1.5rem;
+  $fs-500: 2rem;
+  $fs-600: 3rem;
+  $fs-700: 3.5rem;
+
+  $fs-button: $fs-300;
+  $fs-secondary-heading: $fs-500;
+}
