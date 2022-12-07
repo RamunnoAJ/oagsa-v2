@@ -1,0 +1,24 @@
+header {
+  width: 100%;
+  background-color: cadetblue;
+  padding-block: 2rem;
+  nav ul {
+    @include flex(column, center, center);
+    gap: 1.5rem;
+    li {
+      list-style: none;
+      text-transform: uppercase;
+      font-weight: $fw-bold;
+      font-family: $ff-body;
+
+      a {
+        text-decoration: none;
+        color: $black;
+
+        span {
+          margin-right: 0.3rem;
+        }
+      }
+    }
+  }
+}
