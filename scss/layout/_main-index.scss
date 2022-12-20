@@ -1,0 +1,13 @@
+.main-title {
+  min-height: 60vh;
+
+  .main-container {
+    @include flex(row, center, center);
+    gap: 2rem;
+
+    .main-image {
+      background-color: gray;
+      padding: 2rem;
+    }
+  }
+}

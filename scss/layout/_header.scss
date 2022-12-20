@@ -2,6 +2,11 @@ header {
   width: 100%;
   background-color: cadetblue;
   padding-block: 2rem;
+
+  .logo {
+    width: 10rem;
+  }
+
   nav ul {
     @include flex(column, center, center);
     gap: 1.5rem;
