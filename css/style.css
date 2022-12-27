@@ -2506,6 +2506,7 @@ template {
 .mt-52 {
   margin-top: 13rem; }
 
+
 .mb-52 {
   margin-bottom: 13rem; }
 
@@ -3201,6 +3202,7 @@ header {
 
 .main-title {
   max-height: 60vh;
+
   display: flex;
   flex-direction: row;
   justify-content: center;
