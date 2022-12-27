@@ -1,13 +1,41 @@
 .main-title {
   min-height: 60vh;
-
+  @include flex(row, center, center);
   .main-container {
     @include flex(row, center, center);
     gap: 2rem;
+    max-width: 75rem;
+    margin: 0 auto;
+    width: 95%;
 
     .main-image {
-      background-color: gray;
+      background-color: #e8e6e6;
       padding: 2rem;
+
+      .title {
+        @include flex(column, center, center);
+
+        background: rgba(255, 255, 255, 0.16);
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(0.5rem);
+        -webkit-backdrop-filter: blur(0.5rem);
+
+        h1 {
+          font-size: var(--fs-primary-heading);
+          font-family: $ff-heading;
+          font-weight: $fw-bold;
+        }
+
+        p {
+          font-size: var(--fs-body);
+          font-family: $ff-body;
+          font-weight: $fw-semi-bold;
+        }
+
+        a {
+          align-self: flex-end;
+        }
+      }
     }
   }
 }
