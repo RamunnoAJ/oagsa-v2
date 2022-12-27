@@ -65,12 +65,20 @@ $colors: (
     background-color: $value;
   }
 
+  .bg-hover-#{$color} {
+    transition: all 0.3s ease-in-out;
+  }
+
   .bg-hover-#{$color}:hover {
     background-color: $value;
   }
 
   .text-#{$color} {
     color: $value;
+  }
+
+  .text-hover-#{$color} {
+    transition: all 0.3s ease-in-out;
   }
 
   .text-hover-#{$color}:hover {
