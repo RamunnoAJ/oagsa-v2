@@ -1,0 +1,41 @@
+@media (min-width: 48rem) {
+  header {
+    border-bottom-left-radius: 2.5rem;
+    border-bottom-right-radius: 2.5rem;
+
+    nav .btn-menu {
+      display: none;
+    }
+
+    .logo {
+      width: 15rem;
+    }
+
+    .nav-icons {
+      position: absolute;
+      left: 50%;
+      top: 1rem;
+      transform: translateX(-50%);
+      background-color: $primary-color;
+      padding: 0 6rem 1rem 6rem;
+      border-bottom-left-radius: 4rem;
+      border-bottom-right-radius: 4rem;
+    }
+
+    .nav-bar {
+      @include flex(row, space-between, center);
+      top: 0;
+      left: 0;
+      height: inherit;
+      position: inherit;
+      gap: 4rem;
+
+      li {
+        z-index: 20;
+        &:nth-child(3) {
+          margin-left: auto;
+        }
+      }
+    }
+  }
+}
