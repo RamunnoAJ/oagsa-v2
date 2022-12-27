@@ -36,6 +36,7 @@ header {
       text-transform: uppercase;
       font-weight: $fw-bold;
       font-family: $ff-body;
+      font-size: var(--fs-nav);
 
       a {
         text-decoration: none;

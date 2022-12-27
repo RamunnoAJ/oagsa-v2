@@ -3,8 +3,12 @@
     border-bottom-left-radius: 2.5rem;
     border-bottom-right-radius: 2.5rem;
 
-    nav .btn-menu {
-      display: none;
+    nav {
+      width: 95%;
+
+      .btn-menu {
+        display: none;
+      }
     }
 
     .logo {
