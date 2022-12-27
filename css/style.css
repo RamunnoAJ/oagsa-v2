@@ -3211,7 +3211,7 @@ header {
     justify-content: flex-end;
     align-items: center;
     gap: 2rem;
-    max-width: 87.5rem;
+    max-width: 75rem;
     margin: 0 auto;
     width: 95%;
     height: 110%; }
@@ -3278,9 +3278,10 @@ header {
     height: 100%; }
     .main-title .main-container .main-image {
       position: relative;
-      width: 70%;
+      width: 75%;
       height: 100%; }
       .main-title .main-container .main-image .title {
         position: absolute;
         transform: translateY(-50%) translateX(-50%);
-        top: 50%; } }
+        top: 50%;
+        left: 0; } }

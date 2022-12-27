@@ -5,7 +5,7 @@
   .main-container {
     @include flex(row, flex-end, center);
     gap: 2rem;
-    max-width: 87.5rem;
+    max-width: 75rem;
     margin: 0 auto;
     width: 95%;
     height: 110%;
