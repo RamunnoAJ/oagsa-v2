@@ -1,3 +1,47 @@
-.mt-1 {
-  margin-top: 1rem;
+@for $i from 1 through 48 {
+  .mt-#{$i} {
+    margin-top: calc(0.25rem * #{$i} + 1rem);
+  }
+
+  .mb-#{$i} {
+    margin-bottom: calc(0.25rem * #{$i} + 1rem);
+  }
+
+  .ml-#{$i} {
+    margin-left: calc(0.25rem * #{$i} + 1rem);
+  }
+
+  .mr-#{$i} {
+    margin-right: calc(0.25rem * #{$i} + 1rem);
+  }
+}
+
+$colors: (
+  'primary': $primary-color,
+  'secondary-300': $secondary-color-300,
+  'secondary-400': $secondary-color-400,
+  'white': $white,
+  'black': $black,
+);
+
+@each $color, $value in $colors {
+  .bg-#{$color} {
+    background-color: $value;
+  }
+
+  .bg-hover-#{$color}:hover {
+    background-color: $value;
+  }
+
+  .text-#{$color} {
+    color: $value;
+  }
+
+  .text-hover-#{$color}:hover {
+    color: $value;
+  }
+}
+
+.visually-hidden {
+  display: none;
 }
