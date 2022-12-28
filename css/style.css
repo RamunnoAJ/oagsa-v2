@@ -3184,6 +3184,19 @@ template {
     .menu-open .btn-menu .btn-menu__bars:after {
       transform: rotate(-45deg); }
 
+.contact-banner {
+  width: 95%;
+  max-width: 75rem;
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; }
+  .contact-banner h2 {
+    font-family: "Inter", sans-serif;
+    font-weight: 700;
+    font-size: var(--fs-secondary-heading); }
+
 header {
   width: 100%;
   padding-block: 2rem;
