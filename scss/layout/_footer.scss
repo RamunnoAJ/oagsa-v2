@@ -1,0 +1,38 @@
+footer {
+  .footer-container {
+    @include flex(column, center, center);
+    gap: 1.2rem;
+    width: 95%;
+    max-width: 75rem;
+    margin: 0 auto;
+  }
+
+  .logo-footer {
+    height: 4.5rem;
+  }
+
+  p {
+    font-family: $ff-heading;
+    font-weight: $fw-regular;
+    font-size: 0.625rem;
+    margin-bottom: 2rem;
+  }
+
+  ul {
+    list-style: none;
+    @include flex(row, center, center);
+    gap: 1.5rem;
+
+    li a {
+      font-family: $ff-heading;
+      font-size: var(--fs-200);
+      text-decoration: none;
+      color: $black;
+      font-weight: $fw-semi-bold;
+
+      .footer-icons {
+        font-size: var(--fs-500);
+      }
+    }
+  }
+}

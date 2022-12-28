@@ -43,6 +43,32 @@
     }
   }
 
+
+  footer {
+    .footer-container {
+      @include flex(row, space-between, center);
+      padding-block: 2rem;
+      gap: 2rem;
+
+      p {
+        margin-bottom: 0;
+      }
+    }
+
+    .logo-footer {
+      width: 15rem;
+      height: auto;
+      border-right: 1px solid black;
+    }
+
+    .icons {
+      order: 2;
+      margin-left: auto;
+    }
+
+    div ul {
+      @include flex(row, flex-start, center);
+
   .main-title {
     background-color: $secondary-color-300;
     height: 100%;
@@ -58,6 +84,7 @@
         top: 50%;
         left: 0;
       }
+
     }
   }
 }
