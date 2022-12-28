@@ -18,6 +18,7 @@ $fw-semi-bold: 500;
 $fw-bold: 700;
 
 :root {
+  --fs-200: 0.75rem;
   --fs-300: 0.875rem;
   --fs-400: 1rem;
   --fs-500: 1.25rem;
@@ -31,6 +32,7 @@ $fw-bold: 700;
   --fs-secondary-heading: var(--fs-600);
 
   @media (min-width: 48rem) {
+    --fs-200: 0.875rem;
     --fs-300: 1rem;
     --fs-400: 1.5rem;
     --fs-500: 2rem;

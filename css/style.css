@@ -1,5 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap");
 :root {
+  --fs-200: 0.75rem;
   --fs-300: 0.875rem;
   --fs-400: 1rem;
   --fs-500: 1.25rem;
@@ -12,6 +13,7 @@
   --fs-secondary-heading: var(--fs-600); }
   @media (min-width: 48rem) {
     :root {
+      --fs-200: 0.875rem;
       --fs-300: 1rem;
       --fs-400: 1.5rem;
       --fs-500: 2rem;
@@ -3237,6 +3239,41 @@ header {
         .main-title .main-container .main-image .title a {
           align-self: flex-end; }
 
+footer .footer-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1.2rem;
+  width: 95%;
+  max-width: 75rem;
+  margin: 0 auto; }
+
+footer .logo-footer {
+  height: 4.5rem; }
+
+footer p {
+  font-family: "Inter", sans-serif;
+  font-weight: 400;
+  font-size: 0.625rem;
+  margin-bottom: 2rem; }
+
+footer ul {
+  list-style: none;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem; }
+  footer ul li a {
+    font-family: "Inter", sans-serif;
+    font-size: var(--fs-200);
+    text-decoration: none;
+    color: #000;
+    font-weight: 500; }
+    footer ul li a .footer-icons {
+      font-size: var(--fs-500); }
+
 @media (min-width: 48rem) {
   header {
     border-bottom-left-radius: 2.5rem;
@@ -3269,4 +3306,25 @@ header {
       header .nav-bar li {
         z-index: 20; }
         header .nav-bar li:nth-child(3) {
-          margin-left: auto; } }
+          margin-left: auto; }
+  footer .footer-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding-block: 2rem;
+    gap: 2rem; }
+    footer .footer-container p {
+      margin-bottom: 0; }
+  footer .logo-footer {
+    width: 15rem;
+    height: auto;
+    border-right: 1px solid black; }
+  footer .icons {
+    order: 2;
+    margin-left: auto; }
+  footer div ul {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center; } }
