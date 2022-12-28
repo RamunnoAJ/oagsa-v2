@@ -3036,11 +3036,17 @@ template {
 .bg-primary {
   background-color: #fef8ea; }
 
+.bg-hover-primary {
+  transition: all 0.3s ease-in-out; }
+
 .bg-hover-primary:hover {
   background-color: #fef8ea; }
 
 .text-primary {
   color: #fef8ea; }
+
+.text-hover-primary {
+  transition: all 0.3s ease-in-out; }
 
 .text-hover-primary:hover {
   color: #fef8ea; }
@@ -3048,11 +3054,17 @@ template {
 .bg-secondary-300 {
   background-color: #ffd37c; }
 
+.bg-hover-secondary-300 {
+  transition: all 0.3s ease-in-out; }
+
 .bg-hover-secondary-300:hover {
   background-color: #ffd37c; }
 
 .text-secondary-300 {
   color: #ffd37c; }
+
+.text-hover-secondary-300 {
+  transition: all 0.3s ease-in-out; }
 
 .text-hover-secondary-300:hover {
   color: #ffd37c; }
@@ -3060,11 +3072,17 @@ template {
 .bg-secondary-400 {
   background-color: #ff9c35; }
 
+.bg-hover-secondary-400 {
+  transition: all 0.3s ease-in-out; }
+
 .bg-hover-secondary-400:hover {
   background-color: #ff9c35; }
 
 .text-secondary-400 {
   color: #ff9c35; }
+
+.text-hover-secondary-400 {
+  transition: all 0.3s ease-in-out; }
 
 .text-hover-secondary-400:hover {
   color: #ff9c35; }
@@ -3072,11 +3090,17 @@ template {
 .bg-white {
   background-color: #fff; }
 
+.bg-hover-white {
+  transition: all 0.3s ease-in-out; }
+
 .bg-hover-white:hover {
   background-color: #fff; }
 
 .text-white {
   color: #fff; }
+
+.text-hover-white {
+  transition: all 0.3s ease-in-out; }
 
 .text-hover-white:hover {
   color: #fff; }
@@ -3084,11 +3108,17 @@ template {
 .bg-black {
   background-color: #000; }
 
+.bg-hover-black {
+  transition: all 0.3s ease-in-out; }
+
 .bg-hover-black:hover {
   background-color: #000; }
 
 .text-black {
   color: #000; }
+
+.text-hover-black {
+  transition: all 0.3s ease-in-out; }
 
 .text-hover-black:hover {
   color: #000; }
@@ -3310,7 +3340,6 @@ footer ul {
         z-index: 20; }
         header .nav-bar li:nth-child(3) {
           margin-left: auto; }
-
   footer .footer-container {
     display: flex;
     flex-direction: row;
@@ -3331,8 +3360,7 @@ footer ul {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
-    align-items: center; } }
-
+    align-items: center; }
   .main-title {
     background-color: #ffd37c;
     height: 100%; }
@@ -3345,4 +3373,3 @@ footer ul {
         transform: translateY(-50%) translateX(-50%);
         top: 50%;
         left: 0; } }
-

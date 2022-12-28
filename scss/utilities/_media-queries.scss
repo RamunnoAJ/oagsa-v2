@@ -43,7 +43,6 @@
     }
   }
 
-
   footer {
     .footer-container {
       @include flex(row, space-between, center);
@@ -65,9 +64,10 @@
       order: 2;
       margin-left: auto;
     }
-
     div ul {
       @include flex(row, flex-start, center);
+    }
+  }
 
   .main-title {
     background-color: $secondary-color-300;
@@ -84,7 +84,6 @@
         top: 50%;
         left: 0;
       }
-
     }
   }
 }
