@@ -43,6 +43,7 @@
     }
   }
 
+
   footer {
     .footer-container {
       @include flex(row, space-between, center);
@@ -67,6 +68,23 @@
 
     div ul {
       @include flex(row, flex-start, center);
+
+  .main-title {
+    background-color: $secondary-color-300;
+    height: 100%;
+
+    .main-container .main-image {
+      position: relative;
+      width: 75%;
+      height: 100%;
+
+      .title {
+        position: absolute;
+        transform: translateY(-50%) translateX(-50%);
+        top: 50%;
+        left: 0;
+      }
+
     }
   }
 }
