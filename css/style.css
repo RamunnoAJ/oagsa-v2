@@ -3197,6 +3197,57 @@ template {
     font-weight: 700;
     font-size: var(--fs-secondary-heading); }
 
+.carousel {
+  position: relative;
+  height: 250px;
+  width: 80%;
+  margin: 0 auto; }
+  .carousel .carousel__track-container {
+    background: lightgreen;
+    height: 100%;
+    position: relative; }
+    .carousel .carousel__track-container .carousel__track {
+      padding: 0;
+      margin: 0;
+      list-style: none; }
+      .carousel .carousel__track-container .carousel__track .carousel__slide {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 100%; }
+        .carousel .carousel__track-container .carousel__track .carousel__slide .carousel__image {
+          width: 100%;
+          height: 100%;
+          object-fit: cover; }
+  .carousel .carousel__button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: 0;
+    cursor: pointer; }
+    .carousel .carousel__button img {
+      width: 35px;
+      padding: 5px; }
+  .carousel .carousel__button--left {
+    left: -50px; }
+  .carousel .carousel__button--right {
+    right: -50px; }
+  .carousel .carousel__nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 0.65rem; }
+    .carousel .carousel__nav .carousel__indicator {
+      border: 0;
+      border-radius: 50%;
+      width: 12.5px;
+      height: 12.5px;
+      background: #7b7b7b76; }
+    .carousel .carousel__nav .current-slide {
+      background: #5b5b5bcb; }
+
 header {
   width: 100%;
   padding-block: 2rem;
