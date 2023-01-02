@@ -149,7 +149,7 @@ sup {
 img,
 picture,
 svg {
-  min-width: 100%;
+  max-width: 100%;
   display: block;
 }
 
@@ -362,4 +362,10 @@ template {
   margin: 0;
   padding: 0;
   font: inherit;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
