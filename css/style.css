@@ -3129,6 +3129,10 @@ template {
 .uppercase {
   text-transform: uppercase; }
 
+body {
+  font-size: var(--fs-body);
+  font-family: "Inter", sans-serif; }
+
 .button {
   padding: 0.75rem 1.25rem;
   border-radius: 1.3rem;
@@ -3136,7 +3140,8 @@ template {
   text-decoration: none;
   font-family: "Inter", sans-serif;
   font-weight: 700;
-  transition: all 0.3s ease-in-out; }
+  transition: all 0.3s ease-in-out;
+  cursor: pointer; }
 
 .btn-menu {
   display: flex;
@@ -3284,6 +3289,40 @@ header {
           font-weight: 500; }
         .main-title .main-container .main-image .title a {
           align-self: flex-end; }
+
+.main-login {
+  max-width: 75rem;
+  width: 95%;
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; }
+  .main-login > div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem; }
+    .main-login > div h1 {
+      font-size: var(--fs-secondary-heading);
+      font-weight: 700;
+      font-family: "Inter", sans-serif; }
+    .main-login > div .label {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      font-weight: 700;
+      font-size: var(--fs-300);
+      gap: 0.5rem;
+      width: 100%; }
+      .main-login > div .label input {
+        border-radius: 5px;
+        border: none; }
+    .main-login > div button {
+      align-self: flex-end;
+      border: none; }
 
 footer .footer-container {
   display: flex;
