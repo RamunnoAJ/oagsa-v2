@@ -1,0 +1,31 @@
+.main-login {
+  max-width: 75rem;
+  width: 95%;
+  margin-inline: auto;
+  @include flex(column, center, center);
+  & > div {
+    @include flex(column, center, center);
+    gap: 1rem;
+    h1 {
+      font-size: var(--fs-secondary-heading);
+      font-weight: $fw-bold;
+      font-family: $ff-heading;
+    }
+    .label {
+      @include flex(column, center, flex-start);
+      font-weight: $fw-bold;
+      font-size: var(--fs-300);
+      gap: 0.5rem;
+      width: 100%;
+
+      input {
+        border-radius: 5px;
+        border: none;
+      }
+    }
+    button {
+      align-self: flex-end;
+      border: none;
+    }
+  }
+}
