@@ -38,35 +38,75 @@
       </nav>
     </header>
 
-
-  <main class="main-title mt-28">
-    <div class="main-container">
-      <div class="main-image">
-        <div class="title py-4 px-12">
-          <h1 class="uppercase">Somos OAGSA</h1>
-          <p class="mb-8">
-            OSCAR A. GONZALEZ S.A. es una empresa especializada en la
-            importación y distribución mayorista de repuestos para
-            Ciclomotores, Scooters, Motos, Cuatriciclos y Bicicletas.
-          </p>
-          <a class="button bg-secondary-300 text-black bg-hover-secondary-400" href="./pages/about-us.html">Lee Más</a>
+    <main class="main-title mt-28 mb-30">
+      <div class="main-container">
+        <div class="main-image">
+          <div class="title py-4 px-12">
+            <h1 class="uppercase">Somos OAGSA</h1>
+            <p class="mb-8">
+              OSCAR A. GONZALEZ S.A. es una empresa especializada en la importación y distribución mayorista de
+              repuestos para Ciclomotores, Scooters, Motos, Cuatriciclos y Bicicletas.
+            </p>
+            <a class="button bg-secondary-300 text-black bg-hover-secondary-400" href="./pages/about-us.html"
+              >Lee Más</a
+            >
+          </div>
         </div>
       </div>
     </main>
 
-    <section><!-- ESPACIO PARA BANNER DE PUBLICIDAD --></section>
+    <section class="carousel">
+      <button class="carousel__button carousel__button--left visually-hidden">
+        <img src="./assets/chevron-left-solid.svg" alt="" />
+      </button>
 
-    <section>
-      
-        <h2>Nuestros Productos</h2>
-        <a href="./pages/store.html">Ver Más</a>
-      
+      <div class="carousel__track-container">
+        <ul class="carousel__track">
+          <li class="carousel__slide current-slide">
+            <img class="carousel__image" src="./assets/oagsa-banner-1.png" alt="" />
+          </li>
+          <li class="carousel__slide">
+            <img class="carousel__image" src="./assets/oagsa-banner-2.png" alt="" />
+          </li>
+          <li class="carousel__slide">
+            <img class="carousel__image" src="./assets/oagsa-banner-3.png" alt="" />
+          </li>
+          <li class="carousel__slide">
+            <img class="carousel__image" src="./assets/oagsa-banner-4.png" alt="" />
+          </li>
+          <li class="carousel__slide">
+            <img class="carousel__image" src="./assets/oagsa-banner-5.png" alt="" />
+          </li>
+          <li class="carousel__slide">
+            <img class="carousel__image" src="./assets/oagsa-banner-6.png" alt="" />
+          </li>
+        </ul>
+      </div>
+
+      <button class="carousel__button carousel__button--right">
+        <img src="./assets/chevron-right-solid.svg" alt="" />
+      </button>
+
+      <div class="carousel__nav mt-8">
+        <button class="carousel__indicator current-slide"></button>
+        <button class="carousel__indicator"></button>
+        <button class="carousel__indicator"></button>
+        <button class="carousel__indicator"></button>
+        <button class="carousel__indicator"></button>
+        <button class="carousel__indicator"></button>
+      </div>
+    </section>
+
+    <section class="mt-30">
+      <h2>Nuestros Productos</h2>
+      <a href="./pages/store.html">Ver Más</a>
+
       <div><!-- CARRUSEL CON PRODUCTOS --></div>
     </section>
 
     <section class="contact-banner mt-20">
       <h2 class="mb-8">¿Tienes alguna consulta?</h2>
-        <a class="button bg-secondary-300 bg-hover-secondary-400 text-black" href="./pages/contact.html">Contáctanos</a>
+      <a class="button bg-secondary-300 bg-hover-secondary-400 text-black" href="./pages/contact.html">Contáctanos</a>
     </section>
 
     <footer class="px-4 pt-5 mt-20 bg-primary">
@@ -110,5 +150,6 @@
     </footer>
 
     <script src="./src/menu.js"></script>
+    <script src="./src/ad-carousel.js"></script>
   </body>
 </html>

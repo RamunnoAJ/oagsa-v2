@@ -86,4 +86,34 @@
       }
     }
   }
+
+  .carousel {
+    height: 250px;
+    width: 50%;
+
+    .carousel__button {
+      background: transparent;
+      background-color: transparent;
+
+      img {
+        width: 35px;
+        height: 35px;
+        padding: 5px;
+      }
+    }
+
+    .carousel__button--left {
+      left: -50px;
+    }
+
+    .carousel__button--right {
+      right: -50px;
+    }
+
+    .carousel__nav {
+      .carousel__indicator {
+        display: block;
+      }
+    }
+  }
 }

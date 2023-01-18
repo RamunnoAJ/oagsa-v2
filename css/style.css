@@ -3197,6 +3197,65 @@ template {
     font-weight: 700;
     font-size: var(--fs-secondary-heading); }
 
+.carousel {
+  position: relative;
+  height: 125px;
+  width: 90%;
+  margin: 0 auto; }
+  .carousel .carousel__track-container {
+    height: 100%;
+    position: relative;
+    overflow: hidden; }
+    .carousel .carousel__track-container .carousel__track {
+      padding: 0;
+      margin: 0;
+      list-style: none;
+      position: relative;
+      height: 100%;
+      transition: transform 300ms ease-in; }
+      .carousel .carousel__track-container .carousel__track .carousel__slide {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 100%; }
+        .carousel .carousel__track-container .carousel__track .carousel__slide .carousel__image {
+          width: 100%;
+          height: 100%;
+          object-fit: cover; }
+  .carousel .carousel__button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: #ff9c35;
+    border-radius: 50%;
+    border: 0;
+    cursor: pointer;
+    z-index: 2; }
+    .carousel .carousel__button img {
+      width: 25px;
+      height: 25px;
+      padding: 5px; }
+  .carousel .carousel__button--left {
+    left: -12px; }
+  .carousel .carousel__button--right {
+    right: -12px; }
+  .carousel .carousel__nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 0.65rem; }
+    .carousel .carousel__nav .carousel__indicator {
+      border: 0;
+      border-radius: 50%;
+      display: none;
+      width: 12.5px;
+      height: 12.5px;
+      background: #7b7b7b76;
+      cursor: pointer; }
+    .carousel .carousel__nav .current-slide {
+      background: #5b5b5b; }
+
 header {
   width: 100%;
   padding-block: 2rem;
@@ -3385,4 +3444,20 @@ footer ul {
         position: absolute;
         transform: translateY(-50%) translateX(-50%);
         top: 50%;
-        left: 0; } }
+        left: 0; }
+  .carousel {
+    height: 250px;
+    width: 50%; }
+    .carousel .carousel__button {
+      background: transparent;
+      background-color: transparent; }
+      .carousel .carousel__button img {
+        width: 35px;
+        height: 35px;
+        padding: 5px; }
+    .carousel .carousel__button--left {
+      left: -50px; }
+    .carousel .carousel__button--right {
+      right: -50px; }
+    .carousel .carousel__nav .carousel__indicator {
+      display: block; } }
