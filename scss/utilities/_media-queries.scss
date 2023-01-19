@@ -86,4 +86,35 @@
       }
     }
   }
+
+  .main-about-us {
+    position: relative;
+    width: 100%;
+    top: -2rem;
+    min-height: 60vh;
+    padding-top: 8rem;
+
+    .main-about-us__center {
+      position: relative;
+      .about-us__card {
+        position: absolute;
+        min-height: 37.5rem;
+        gap: 2rem;
+        margin-top: 4rem;
+
+        .about-us__card-image {
+          background-color: #d9d5d599;
+          flex-shrink: 0;
+        }
+        & > * {
+          flex-basis: 50%;
+        }
+      }
+    }
+  }
+
+  .about-us__footer {
+    position: relative;
+    top: 30vh;
+  }
 }
