@@ -1,0 +1,46 @@
+.main-about-us {
+  background-color: #a7a4a4;
+  padding-top: 2rem;
+
+  .main-about-us__center {
+    max-width: 75rem;
+    width: 95%;
+    margin-inline: auto;
+    position: relative;
+
+    h1 {
+      font-weight: $fw-bold;
+      font-size: var(--fs-primary-heading);
+      text-align: center;
+      mix-blend-mode: darken;
+    }
+
+    .about-us__card {
+      @include flex(row, center, center);
+      background-color: #fff;
+      box-shadow: 5px 5px 10px 1px rgba(0, 0, 0, 0.2);
+      -webkit-box-shadow: 5px 5px 10px 1px rgba(0, 0, 0, 0.2);
+      -moz-box-shadow: 5px 5px 10px 1px rgba(0, 0, 0, 0.2);
+      margin-top: 2rem;
+      height: 100%;
+
+      .about-us__card-title {
+        h2 {
+          font-weight: $fw-semi-bold;
+          font-size: var(--fs-secondary-heading);
+          text-align: center;
+        }
+
+        p {
+          color: #414141;
+        }
+      }
+
+      .about-us__card-image {
+        background-color: grey;
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
+}
