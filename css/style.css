@@ -3256,6 +3256,55 @@ template {
     .carousel .carousel__nav .current-slide {
       background: #5b5b5b; }
 
+.product-carousel {
+  position: relative;
+  margin: 0 auto; }
+  .product-carousel .product-carousel__track-container {
+    height: 100%;
+    position: relative;
+    overflow: hidden; }
+    .product-carousel .product-carousel__track-container .product-carousel__track {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      gap: 1rem;
+      list-style: none;
+      position: relative;
+      height: 100%;
+      transition: all 300ms ease-in-out; }
+      .product-carousel .product-carousel__track-container .product-carousel__track .product-carousel__slide {
+        scale: 0.75;
+        transition: all 300ms ease-in-out; }
+        .product-carousel .product-carousel__track-container .product-carousel__track .product-carousel__slide img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover; }
+  .product-carousel .product-carousel__button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: #ffd37c;
+    border-radius: 50%;
+    border: 0;
+    cursor: pointer;
+    z-index: 2;
+    transition: all 300ms ease-in-out; }
+    .product-carousel .product-carousel__button:hover {
+      background-color: #ff9c35; }
+    .product-carousel .product-carousel__button img {
+      width: 80px;
+      height: 80px;
+      padding: 20px; }
+  .product-carousel .product-carousel__button--left {
+    left: 20px; }
+    .product-carousel .product-carousel__button--left:hover {
+      transform: translateY(-50%) translateX(-20px); }
+  .product-carousel .product-carousel__button--right {
+    right: 20px; }
+    .product-carousel .product-carousel__button--right:hover {
+      transform: translateY(-50%) translateX(20px); }
+
 header {
   width: 100%;
   padding-block: 2rem;

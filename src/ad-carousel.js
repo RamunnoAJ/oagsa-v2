@@ -81,3 +81,9 @@ dotsNav.addEventListener('click', (e) => {
   updateDots(currentDot, targetDot);
   hideShowArrows(slides, prevButton, nextButton, targetIndex);
 });
+
+//? Product Carousel
+const productTrack = document.querySelector('.product-carousel__track');
+const productSlides = Array.from(productTrack.children);
+const productNextButton = document.querySelector('.product-carousel__button-right');
+const productPrevButton = document.querySelector('.product-carousel__button-left');
