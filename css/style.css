@@ -42,7 +42,8 @@ body {
   height: 100%; }
 
 body {
-  text-rendering: optimizeSpeed; }
+  text-rendering: optimizeSpeed;
+  position: relative; }
 
 /**
  * Render the `main` element consistently in IE.
@@ -3201,6 +3202,186 @@ body {
     font-weight: 700;
     font-size: var(--fs-secondary-heading); }
 
+.carousel {
+  position: relative;
+  height: 125px;
+  width: 90%;
+  margin: 0 auto; }
+  .carousel .carousel__track-container {
+    height: 100%;
+    position: relative;
+    overflow: hidden; }
+    .carousel .carousel__track-container .carousel__track {
+      padding: 0;
+      margin: 0;
+      list-style: none;
+      position: relative;
+      height: 100%;
+      transition: transform 300ms ease-in; }
+      .carousel .carousel__track-container .carousel__track .carousel__slide {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 100%; }
+        .carousel .carousel__track-container .carousel__track .carousel__slide .carousel__image {
+          width: 100%;
+          height: 100%;
+          object-fit: cover; }
+  .carousel .carousel__button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: #ff9c35;
+    border-radius: 50%;
+    border: 0;
+    cursor: pointer;
+    z-index: 2; }
+    .carousel .carousel__button img {
+      width: 25px;
+      height: 25px;
+      padding: 5px; }
+  .carousel .carousel__button--left {
+    left: -12px; }
+  .carousel .carousel__button--right {
+    right: -12px; }
+  .carousel .carousel__nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 0.65rem; }
+    .carousel .carousel__nav .carousel__indicator {
+      border: 0;
+      border-radius: 50%;
+      display: none;
+      width: 12.5px;
+      height: 12.5px;
+      background: #7b7b7b76;
+      cursor: pointer; }
+    .carousel .carousel__nav .current-slide {
+      background: #5b5b5b; }
+
+.animate-item {
+  transition: all 0.3s; }
+
+.hero-wrapper {
+  width: 100%;
+  display: block;
+  margin: auto;
+  overflow: hidden; }
+
+.swiper-slide-active {
+  justify-content: center; }
+
+.swiper-slide-active .card {
+  background-color: #ffffff;
+  opacity: 1; }
+
+.swiper-slide-next .card {
+  filter: blur(7px); }
+
+.swiper-slide-prev .card {
+  margin-left: 55%;
+  filter: blur(7px); }
+
+.swiper-slide .card__content {
+  opacity: 0;
+  transform: scale(1.2);
+  transition: all 0.3s; }
+
+.swiper-slide-active .card__content {
+  opacity: 1; }
+
+.swiper-slide-next .card__banner,
+.swiper-slide-prev .card__banner {
+  box-shadow: none; }
+
+.swiper-slide {
+  position: relative;
+  height: 70vh;
+  width: 100vw;
+  perspective: 1000px;
+  display: flex;
+  align-items: center; }
+
+.card {
+  position: relative;
+  width: 400px;
+  height: 500px;
+  border-radius: 50px;
+  transform-style: preserve-3d;
+  transition: transform 0.2s linear;
+  font-family: "Inter", sans-serif; }
+
+.card__content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transform: translateZ(80px); }
+
+.card__banner {
+  width: 100%;
+  height: 100%;
+  padding: 40px;
+  box-shadow: 0px 7px 20px 0px rgba(0, 0, 0, 0.1);
+  border-radius: 50px; }
+
+.card__banner img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; }
+
+.card__title {
+  position: absolute;
+  left: -20px;
+  top: 15px;
+  font-size: var(--fs-secondary-heading);
+  font-weight: 500;
+  color: #242323;
+  text-transform: uppercase; }
+
+.card__price {
+  position: absolute;
+  bottom: 45px;
+  right: 15px;
+  font-weight: 700; }
+
+@media screen and (max-width: 992px) {
+  .swiper-slide-next .card {
+    margin-left: unset;
+    opacity: 0; } }
+
+@media screen and (max-width: 576px) {
+  .swiper-slide {
+    perspective: none;
+    width: auto;
+    padding: 20px; }
+  .swiper-wrapper {
+    width: 100%; }
+  .card {
+    width: 100%;
+    height: auto;
+    border-radius: 20px; }
+  .card__content {
+    position: relative;
+    transform: translateZ(0px);
+    height: 100px;
+    width: calc(100% - 40px);
+    margin-left: 20px; }
+  .card__banner {
+    padding: 12px;
+    border-radius: 20px;
+    box-shadow: 0px 7px 20px 0px rgba(0, 0, 0, 0.08);
+    height: 320px; }
+  .card__title {
+    left: 0;
+    top: 16px; }
+  .card__price {
+    bottom: 15px;
+    right: 0px; } }
+
 header {
   width: 100%;
   padding-block: 2rem;
@@ -3290,6 +3471,22 @@ header {
         .main-title .main-container .main-image .title a {
           align-self: flex-end; }
 
+
+.our-products__container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 75rem;
+  margin: 0 auto;
+  width: 95%; }
+  .our-products__container h2 {
+    font-size: var(--fs-secondary-heading);
+    font-family: "Inter", sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    line-height: 1.3; }
+
 .main-login {
   max-width: 75rem;
   width: 95%;
@@ -3356,6 +3553,7 @@ header {
         color: #414141; }
       .main-about-us .main-about-us__center .about-us__card .about-us__card-image {
         display: none; }
+
 
 footer .footer-container {
   display: flex;
@@ -3458,6 +3656,24 @@ footer ul {
         transform: translateY(-50%) translateX(-50%);
         top: 50%;
         left: 0; }
+
+  .carousel {
+    height: 250px;
+    width: 50%; }
+    .carousel .carousel__button {
+      background: transparent;
+      background-color: transparent; }
+      .carousel .carousel__button img {
+        width: 35px;
+        height: 35px;
+        padding: 5px; }
+    .carousel .carousel__button--left {
+      left: -50px; }
+    .carousel .carousel__button--right {
+      right: -50px; }
+    .carousel .carousel__nav .carousel__indicator {
+      display: block; } }
+
   .main-about-us {
     position: relative;
     width: 100%;
@@ -3481,3 +3697,4 @@ footer ul {
   .about-us__footer {
     position: relative;
     top: 30vh; } }
+
