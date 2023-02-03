@@ -82,8 +82,49 @@ dotsNav.addEventListener('click', (e) => {
   hideShowArrows(slides, prevButton, nextButton, targetIndex);
 });
 
-//? Product Carousel
-const productTrack = document.querySelector('.product-carousel__track');
-const productSlides = Array.from(productTrack.children);
-const productNextButton = document.querySelector('.product-carousel__button-right');
-const productPrevButton = document.querySelector('.product-carousel__button-left');
+// ? Product carousel
+
+document.addEventListener('mouseout', disableCardAnimate);
+document.addEventListener('DOMContentLoaded', animateStatus);
+const wrapper = document.querySelector('.swiper-wrapper');
+
+const swiper = new Swiper('.hero-slider', {
+  slidesPerView: 1,
+  breakpoints: {
+    768: {
+      slidesPerView: 2,
+    },
+  },
+  slideToClickedSlide: true,
+  centeredSlides: true,
+  observer: true,
+  observeParents: true,
+});
+
+function cardAnimate(e) {
+  this.querySelectorAll('.swiper-slide-active .product').forEach(function (boxMove) {
+    const x = -(wrapper.offsetWidth / 3 - e.pageX) / 90;
+    const y = (wrapper.offsetHeight / 3 - e.pageY) / 120;
+
+    boxMove.style.transform = 'rotateY(' + x + 'deg) rotateX(' + y + 'deg)';
+  });
+  this.querySelectorAll('.animate-item').forEach(function (itemMove) {
+    const movingValue = itemMove.getAttribute('data-value');
+    console.log(movingValue);
+    const x = (wrapper.offsetWidth - e.pageX * movingValue) / 230;
+    const y = (wrapper.offsetHeight - e.pageY * movingValue) / 230;
+    itemMove.style.transform = 'translate(' + y + 'px,' + x + 'px)';
+  });
+}
+
+function disableCardAnimate() {
+  this.querySelectorAll('.swiper-slide-active .product').forEach(function (boxMove) {
+    boxMove.style.transform = 'rotateY(0deg) rotateX(0deg)';
+  });
+}
+
+function animateStatus() {
+  if (window.innerWidth > 768) {
+    wrapper.addEventListener('mousemove', cardAnimate);
+  }
+}

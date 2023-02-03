@@ -12,6 +12,8 @@
 
   <title>Inicio | OAGSA</title>
 
+
+  <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.css" />
   <link rel="stylesheet" href="./css/style.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" />
 </head>
@@ -99,26 +101,79 @@
     <h2>Nuestros Productos</h2>
     <a href="./pages/store.html">Ver Más</a>
 
-    <div class="product-carousel">
-      <button class="product-carousel__button product-carousel__button--left">
-        <img src="./assets/chevron-left-solid.svg" alt="" />
-      </button>
-
-      <div class="product-carousel__track-container">
-        <ul class="product-carousel__track">
-          <li class="product-carousel__slide"><img src="./assets/products-carousel/neumaticos.jpg" alt="" /></li>
-          <li class="product-carousel__slide"><img src="./assets/products-carousel/neumaticos.jpg" alt="" /></li>
-          <li class="product-carousel__slide product__current-slide"><img
-              src="./assets/products-carousel/neumaticos.jpg" alt="" /></li>
-          <li class="product-carousel__slide"><img src="./assets/products-carousel/neumaticos.jpg" alt="" /></li>
-          <li class="product-carousel__slide"><img src="./assets/products-carousel/neumaticos.jpg" alt="" /></li>
-        </ul>
+    <div class="hero-wrapper">
+      <div class="hero-slider">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide">
+            <div class="product">
+              <div class="product__banner">
+                <img class="product-image" src="./assets//products-carousel/carousel-image-1.png" alt="">
+              </div>
+              <div class="product__content">
+                <p class="product__title ">Neumático Genérico</p>
+                <span class="product__price ">$80.000 c/u</span>
+              </div>
+            </div>
+          </div>
+          <div class="swiper-slide">
+            <div class="product">
+              <div class="product__banner">
+                <img class="product-image" src="./assets//products-carousel/carousel-image-1.png" alt="">
+              </div>
+              <div class="product__content">
+                <p class="product__title ">Neumático Genérico</p>
+                <span class="product__price ">$80.000 c/u</span>
+              </div>
+            </div>
+          </div>
+          <div class="swiper-slide">
+            <div class="product">
+              <div class="product__banner">
+                <img class="product-image" src="./assets//products-carousel/carousel-image-1.png" alt="">
+              </div>
+              <div class="product__content">
+                <p class="product__title ">Neumático Genérico</p>
+                <span class="product__price ">$80.000 c/u</span>
+              </div>
+            </div>
+          </div>
+          <div class="swiper-slide">
+            <div class="product">
+              <div class="product__banner">
+                <img class="product-image" src="./assets//products-carousel/carousel-image-1.png" alt="">
+              </div>
+              <div class="product__content">
+                <p class="product__title ">Neumático Genérico</p>
+                <span class="product__price ">$80.000 c/u</span>
+              </div>
+            </div>
+          </div>
+          <div class="swiper-slide">
+            <div class="product">
+              <div class="product__banner">
+                <img class="product-image" src="./assets//products-carousel/carousel-image-1.png" alt="">
+              </div>
+              <div class="product__content">
+                <p class="product__title ">Neumático Genérico</p>
+                <span class="product__price ">$80.000 c/u</span>
+              </div>
+            </div>
+          </div>
+          <div class="swiper-slide">
+            <div class="product">
+              <div class="product__banner">
+                <img class="product-image" src="./assets//products-carousel/carousel-image-1.png" alt="">
+              </div>
+              <div class="product__content">
+                <p class="product__title ">Neumático Genérico</p>
+                <span class="product__price ">$80.000 c/u</span>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-
-      <button class="product-carousel__button product-carousel__button--right">
-        <img src="./assets/chevron-right-solid.svg" alt="" />
-      </button>
     </div>
+
   </section>
 
   <section class="contact-banner mt-20">
@@ -161,8 +216,9 @@
     </div>
   </footer>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/9.0.1/swiper-bundle.min.js"></script>
   <script src="./src/menu.js"></script>
-  <script src="./src/ad-carousel.js"></script>
+  <script src="./src/carousels.js"></script>
 </body>
 
 </html>
