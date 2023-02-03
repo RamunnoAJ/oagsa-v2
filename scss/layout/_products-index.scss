@@ -1,0 +1,14 @@
+.our-products__container {
+  @include flex(row, space-between, center);
+  max-width: 75rem;
+  margin: 0 auto;
+  width: 95%;
+
+  h2 {
+    font-size: var(--fs-secondary-heading);
+    font-family: $ff-heading;
+    font-weight: $fw-bold;
+    text-transform: uppercase;
+    line-height: 1.3;
+  }
+}
