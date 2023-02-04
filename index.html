@@ -13,7 +13,7 @@
   <title>Inicio | OAGSA</title>
 
 
-  <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
   <link rel="stylesheet" href="./css/style.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" />
 </head>
@@ -100,21 +100,19 @@
   <section class="mt-50 mb-10">
     <div class="our-products__container">
       <h2>Nuestros <br> Productos</h2>
-      <a href="./pages/store.html" class="button bg-secondary-300 bg-hover-secondary-400 text-black">Ver
+      <a href="./pages/store.html" class="button button-lg bg-secondary-300 bg-hover-secondary-400 text-black">Ver
         Más</a>
     </div>
 
     <div class="hero-wrapper">
-      <div class="hero-slider">
+      <div class="swiper mySwiper">
         <div class="swiper-wrapper">
+
           <div class="swiper-slide">
             <div class="card">
               <div class="card__banner">
                 <img class="card-image" src="./assets//products-carousel/carousel-image-1.png" alt="">
-              </div>
-              <div class="card__content">
-                <p class="card__title ">Neumático Genérico</p>
-                <span class="card__price ">$80.000 c/u</span>
+                <p class="card__title ">Neumático</p>
               </div>
             </div>
           </div>
@@ -122,10 +120,7 @@
             <div class="card">
               <div class="card__banner">
                 <img class="card-image" src="./assets//products-carousel/carousel-image-1.png" alt="">
-              </div>
-              <div class="card__content">
-                <p class="card__title ">Neumático Genérico</p>
-                <span class="card__price ">$80.000 c/u</span>
+                <p class="card__title ">Neumático</p>
               </div>
             </div>
           </div>
@@ -133,10 +128,7 @@
             <div class="card">
               <div class="card__banner">
                 <img class="card-image" src="./assets//products-carousel/carousel-image-1.png" alt="">
-              </div>
-              <div class="card__content">
-                <p class="card__title ">Neumático Genérico</p>
-                <span class="card__price ">$80.000 c/u</span>
+                <p class="card__title ">Neumático</p>
               </div>
             </div>
           </div>
@@ -144,10 +136,7 @@
             <div class="card">
               <div class="card__banner">
                 <img class="card-image" src="./assets//products-carousel/carousel-image-1.png" alt="">
-              </div>
-              <div class="card__content">
-                <p class="card__title ">Neumático Genérico</p>
-                <span class="card__price ">$80.000 c/u</span>
+                <p class="card__title ">Neumático</p>
               </div>
             </div>
           </div>
@@ -155,10 +144,7 @@
             <div class="card">
               <div class="card__banner">
                 <img class="card-image" src="./assets//products-carousel/carousel-image-1.png" alt="">
-              </div>
-              <div class="card__content">
-                <p class="card__title ">Neumático Genérico</p>
-                <span class="card__price ">$80.000 c/u</span>
+                <p class="card__title ">Neumático</p>
               </div>
             </div>
           </div>
@@ -166,13 +152,16 @@
             <div class="card">
               <div class="card__banner">
                 <img class="card-image" src="./assets//products-carousel/carousel-image-1.png" alt="">
-              </div>
-              <div class="card__content">
-                <p class="card__title ">Neumático Genérico</p>
-                <span class="card__price ">$80.000 c/u</span>
+                <p class="card__title ">Neumático</p>
               </div>
             </div>
           </div>
+        </div>
+        <div class="swiper-button-next visually-hidden-mobile">
+          <img src="./assets/chevron-right-solid.svg" alt="" />
+        </div>
+        <div class="swiper-button-prev visually-hidden-mobile">
+          <img src="./assets/chevron-left-solid.svg" alt="" />
         </div>
       </div>
     </div>
@@ -219,7 +208,7 @@
     </div>
   </footer>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/9.0.1/swiper-bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
   <script src="./src/menu.js"></script>
   <script src="./src/carousels.js"></script>
 </body>

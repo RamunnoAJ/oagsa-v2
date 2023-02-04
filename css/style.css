@@ -3126,6 +3126,13 @@ template {
 .visually-hidden {
   display: none; }
 
+.visually-hidden-mobile {
+  display: none; }
+
+@media (min-width: 45rem) {
+  .visually-hidden-mobile {
+    display: block; } }
+
 .uppercase {
   text-transform: uppercase; }
 
@@ -3142,6 +3149,10 @@ body {
   font-weight: 700;
   transition: all 0.3s ease-in-out;
   cursor: pointer; }
+
+.button-lg {
+  padding: 1.25rem 2rem;
+  font-size: var(--fs-400); }
 
 .btn-menu {
   display: flex;
@@ -3261,72 +3272,62 @@ body {
     .carousel .carousel__nav .current-slide {
       background: #5b5b5b; }
 
-.animate-item {
-  transition: all 0.3s; }
-
 .hero-wrapper {
-  width: 100%;
-  display: block;
-  margin: auto;
-  overflow: hidden; }
+  max-width: 75rem;
+  width: 95%;
+  margin: 0 auto; }
+
+.animate-item {
+  transition: all 0.5s ease-in-out; }
 
 .swiper-slide-active {
   justify-content: center; }
 
-.swiper-slide-active .card {
-  background-color: #ffffff;
+.swiper-slide .card__title {
+  opacity: 0; }
+
+.swiper-slide-active .card__title {
   opacity: 1; }
-
-.swiper-slide-next .card {
-  filter: blur(7px); }
-
-.swiper-slide-prev .card {
-  margin-left: 55%;
-  filter: blur(7px); }
-
-.swiper-slide .card__content {
-  opacity: 0;
-  transform: scale(1.2);
-  transition: all 0.3s; }
-
-.swiper-slide-active .card__content {
-  opacity: 1; }
-
-.swiper-slide-next .card__banner,
-.swiper-slide-prev .card__banner {
-  box-shadow: none; }
 
 .swiper-slide {
-  position: relative;
-  height: 70vh;
   width: 100vw;
-  perspective: 1000px;
   display: flex;
   align-items: center; }
 
+.swiper-slide .card {
+  transform: scale(0.8);
+  filter: blur(3px); }
+
+.swiper-slide-active .card {
+  background-color: #ffffff;
+  opacity: 1;
+  transform: scale(1);
+  filter: blur(0); }
+
 .card {
-  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
   width: 400px;
   height: 500px;
   border-radius: 50px;
-  transform-style: preserve-3d;
-  transition: transform 0.2s linear;
+  transition: transform 0.5s ease-in-out;
   font-family: "Inter", sans-serif; }
 
-.card__content {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  transform: translateZ(80px); }
-
 .card__banner {
-  width: 100%;
-  height: 100%;
-  padding: 40px;
-  box-shadow: 0px 7px 20px 0px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.75rem;
+  width: 18rem;
+  height: 22rem;
+  padding: 2rem;
   border-radius: 50px; }
+
+.swiper-slide-active .card__banner {
+  box-shadow: 0px 7px 20px 0px rgba(0, 0, 0, 0.1); }
 
 .card__banner img {
   width: 100%;
@@ -3334,53 +3335,51 @@ body {
   object-fit: contain; }
 
 .card__title {
-  position: absolute;
-  left: -20px;
-  top: 15px;
-  font-size: var(--fs-secondary-heading);
+  font-size: var(--fs-400);
   font-weight: 500;
   color: #242323;
   text-transform: uppercase; }
 
-.card__price {
-  position: absolute;
-  bottom: 45px;
-  right: 15px;
-  font-weight: 700; }
-
-@media screen and (max-width: 992px) {
-  .swiper-slide-next .card {
-    margin-left: unset;
-    opacity: 0; } }
-
-@media screen and (max-width: 576px) {
+@media screen and (max-width: 768px) {
   .swiper-slide {
-    perspective: none;
+    margin-block: 2rem;
     width: auto;
+    height: auto;
     padding: 20px; }
   .swiper-wrapper {
     width: 100%; }
+  .swiper-slide-next .card,
+  .swiper-slide-prev .card {
+    margin-left: unset;
+    opacity: 0; }
   .card {
     width: 100%;
     height: auto;
     border-radius: 20px; }
-  .card__content {
-    position: relative;
-    transform: translateZ(0px);
-    height: 100px;
-    width: calc(100% - 40px);
-    margin-left: 20px; }
   .card__banner {
-    padding: 12px;
+    height: 100%;
+    width: 100%;
+    padding: 2rem 0.5rem;
     border-radius: 20px;
     box-shadow: 0px 7px 20px 0px rgba(0, 0, 0, 0.08);
-    height: 320px; }
-  .card__title {
-    left: 0;
-    top: 16px; }
-  .card__price {
-    bottom: 15px;
-    right: 0px; } }
+    height: 320px; } }
+
+.swiper {
+  width: 100%;
+  height: 100%; }
+
+.swiper-slide {
+  text-align: center;
+  font-size: 18px;
+  background: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center; }
+
+.swiper-slide img {
+  display: block;
+  padding: 1rem;
+  width: 100%; }
 
 header {
   width: 100%;
@@ -3471,7 +3470,6 @@ header {
         .main-title .main-container .main-image .title a {
           align-self: flex-end; }
 
-
 .our-products__container {
   display: flex;
   flex-direction: row;
@@ -3553,7 +3551,6 @@ header {
         color: #414141; }
       .main-about-us .main-about-us__center .about-us__card .about-us__card-image {
         display: none; }
-
 
 footer .footer-container {
   display: flex;
@@ -3656,7 +3653,6 @@ footer ul {
         transform: translateY(-50%) translateX(-50%);
         top: 50%;
         left: 0; }
-
   .carousel {
     height: 250px;
     width: 50%; }
@@ -3672,29 +3668,27 @@ footer ul {
     .carousel .carousel__button--right {
       right: -50px; }
     .carousel .carousel__nav .carousel__indicator {
-      display: block; } }
-
-  .main-about-us {
-    position: relative;
-    width: 100%;
-    top: -2rem;
-    min-height: 60vh;
-    padding-top: 8rem; }
-    .main-about-us .main-about-us__center {
-      position: relative; }
-      .main-about-us .main-about-us__center .about-us__card {
-        position: absolute;
-        min-height: 37.5rem;
-        gap: 2rem;
-        margin-top: 4rem; }
-        .main-about-us .main-about-us__center .about-us__card .about-us__card-image {
-          display: block;
-          background-color: #d9d5d5;
-          width: 100%;
-          height: 100%; }
-        .main-about-us .main-about-us__center .about-us__card > * {
-          flex-basis: 50%; }
-  .about-us__footer {
-    position: relative;
-    top: 30vh; } }
-
+      display: block; }
+    .carousel .main-about-us {
+      position: relative;
+      width: 100%;
+      top: -2rem;
+      min-height: 60vh;
+      padding-top: 8rem; }
+      .carousel .main-about-us .main-about-us__center {
+        position: relative; }
+        .carousel .main-about-us .main-about-us__center .about-us__card {
+          position: absolute;
+          min-height: 37.5rem;
+          gap: 2rem;
+          margin-top: 4rem; }
+          .carousel .main-about-us .main-about-us__center .about-us__card .about-us__card-image {
+            display: block;
+            background-color: #d9d5d5;
+            width: 100%;
+            height: 100%; }
+          .carousel .main-about-us .main-about-us__center .about-us__card > * {
+            flex-basis: 50%; }
+    .carousel .about-us__footer {
+      position: relative;
+      top: 30vh; } }
