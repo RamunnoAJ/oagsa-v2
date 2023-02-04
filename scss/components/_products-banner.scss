@@ -71,14 +71,10 @@
   @include flex(row, center, center);
   transform: translateY(-50%);
   // background-color: $secondary-color-300;
-  // width: 20px;
   padding: 3rem;
   border-radius: 50%;
   transition: all 0.3s ease-in-out;
 
-  &:hover {
-    // background-color: $secondary-color-400;
-  }
   &.swiper-button-prev:hover {
     transform: translateY(-50%) translateX(-5px);
   }
