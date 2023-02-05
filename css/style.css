@@ -3484,7 +3484,6 @@ header {
         .main-title .main-container .main-image .title a {
           align-self: flex-end; }
 
-
 .contact-container {
   width: 75%;
   margin: 0 auto; }
@@ -3567,7 +3566,8 @@ header {
     .contact-form div textarea {
       resize: none; }
   .contact-form .submit-button {
-    width: 100%;
+    width: 100%; }
+
 .our-products__container {
   display: flex;
   flex-direction: row;
@@ -3751,7 +3751,6 @@ footer ul {
         transform: translateY(-50%) translateX(-50%);
         top: 50%;
         left: 0; }
-
   .contact-container {
     max-width: 75rem;
     width: 90%;
@@ -3788,8 +3787,7 @@ footer ul {
           height: 0.5rem;
           margin: 1rem 0 0 3rem; }
       .contact-container .contact-info .contact-data {
-        padding-top: 8rem; } }
-
+        padding-top: 8rem; }
   .carousel {
     height: 250px;
     width: 50%; }
@@ -3811,7 +3809,8 @@ footer ul {
     width: 100%;
     top: -2rem;
     min-height: 60vh;
-    padding-top: 8rem; }
+    padding-top: 8rem;
+    margin-bottom: 20rem; }
     .main-about-us .main-about-us__center {
       position: relative; }
       .main-about-us .main-about-us__center .about-us__card {
