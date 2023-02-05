@@ -7,15 +7,22 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build-css": "node-sass --include-path scss scss/style.scss css/style.css",
     "watch-css": "nodemon -e scss -x \"npm run build-css\"",
-    "format": "npx prettier --write ."
+    "format": "prettier --write .",
+    "lint": "eslint --fix . --ext .js"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "eslint": "^8.33.0",
+    "eslint-config-prettier": "^8.6.0",
+    "eslint-config-standard": "^17.0.0",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-n": "^15.6.1",
+    "eslint-plugin-promise": "^6.1.1",
     "husky": "^8.0.2",
     "node-sass": "^8.0.0",
     "nodemon": "^2.0.20",
-    "prettier": "^2.8.1"
+    "prettier": "^2.8.3"
   },
   "husky": {
     "hooks": {

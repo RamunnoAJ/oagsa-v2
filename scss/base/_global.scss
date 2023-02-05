@@ -90,6 +90,16 @@ $colors: (
   display: none;
 }
 
+.visually-hidden-mobile {
+  display: none;
+}
+
+@media (min-width: 45rem) {
+  .visually-hidden-mobile {
+    display: block;
+  }
+}
+
 .uppercase {
   text-transform: uppercase;
 }

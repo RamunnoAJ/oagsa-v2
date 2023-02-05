@@ -143,4 +143,66 @@
       }
     }
   }
-} //!LLAVE FINAL, NO BORRAR!!!!
+  
+  .carousel {
+    height: 250px;
+    width: 50%;
+
+    .carousel__button {
+      background: transparent;
+      background-color: transparent;
+
+      img {
+        width: 35px;
+        height: 35px;
+        padding: 5px;
+      }
+    }
+
+    .carousel__button--left {
+      left: -50px;
+    }
+
+    .carousel__button--right {
+      right: -50px;
+    }
+
+    .carousel__nav {
+      .carousel__indicator {
+        display: block;
+      }
+    }
+  }
+  .main-about-us {
+    position: relative;
+    width: 100%;
+    top: -2rem;
+    min-height: 60vh;
+    padding-top: 8rem;
+
+    .main-about-us__center {
+      position: relative;
+      .about-us__card {
+        position: absolute;
+        min-height: 37.5rem;
+        gap: 2rem;
+        margin-top: 4rem;
+
+        .about-us__card-image {
+          display: block;
+          background-color: #d9d5d5;
+          width: 100%;
+          height: 100%;
+        }
+        & > * {
+          flex-basis: 50%;
+        }
+      }
+    }
+  }
+
+  .about-us__footer {
+    position: relative;
+    top: 30vh;
+  }
+}
