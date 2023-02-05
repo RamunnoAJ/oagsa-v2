@@ -3152,8 +3152,8 @@ body {
   cursor: pointer; }
 
 .button-lg {
-  padding: 1.25rem 2rem;
-  font-size: var(--fs-400); }
+  padding: 0.75rem 2rem;
+  font-size: var(--fs-200); }
 
 .btn-menu {
   display: flex;
@@ -3571,9 +3571,10 @@ header {
 .our-products__container {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
   max-width: 75rem;
+  gap: 2rem;
   margin: 0 auto;
   width: 95%; }
   .our-products__container h2 {
