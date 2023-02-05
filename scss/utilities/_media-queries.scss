@@ -86,4 +86,61 @@
       }
     }
   }
-}
+
+  .contact-container {
+    max-width: 75rem;
+    width: 90%;
+    gap: 4rem;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+
+    .contact-form {
+      margin-top: 12rem;
+      grid-column: 1/2;
+      grid-row: 1/2;
+      gap: 1rem;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+
+      .contact-form__large {
+        grid-column: 1/3;
+      }
+
+      input.button {
+        grid-column: 2/3;
+      }
+
+      h2 {
+        display: none;
+      }
+    }
+
+    .contact-info {
+      grid-column: 2/3;
+      background-color: $primary-color;
+      padding: 2rem 4rem;
+      position: relative;
+
+      .contact-title {
+        position: absolute;
+        top: -5px;
+        left: -8rem;
+
+        h1 {
+          margin: 2.5rem 0 0 0;
+        }
+
+        .contact-line {
+          width: 10rem;
+          height: 0.5rem;
+          margin: 1rem 0 0 3rem;
+        }
+      }
+
+      .contact-data {
+        padding-top: 8rem;
+      }
+    }
+  }
+} //!LLAVE FINAL, NO BORRAR!!!!
