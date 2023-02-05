@@ -87,7 +87,6 @@ dotsNav.addEventListener('click', e => {
 // eslint-disable-next-line no-unused-vars, no-undef
 const swiper = new Swiper('.mySwiper', {
   slidesPerView: 1,
-  slideToClickedSlide: true,
   loop: 'true',
   navigation: {
     nextEl: '.swiper-button-next',
