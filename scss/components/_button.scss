@@ -10,7 +10,8 @@
   cursor: pointer;
 }
 
-.button-lg {
+.button-carousel {
   padding: 0.75rem 2rem;
   font-size: var(--fs-200);
+  flex-shrink: 0;
 }

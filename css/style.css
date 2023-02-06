@@ -3034,22 +3034,22 @@ template {
   padding-right: 16rem; }
 
 .bg-primary {
-  background-color: #fef8ea; }
+  background-color: #faeed3; }
 
 .bg-hover-primary {
   transition: all 0.3s ease-in-out; }
 
 .bg-hover-primary:hover {
-  background-color: #fef8ea; }
+  background-color: #faeed3; }
 
 .text-primary {
-  color: #fef8ea; }
+  color: #faeed3; }
 
 .text-hover-primary {
   transition: all 0.3s ease-in-out; }
 
 .text-hover-primary:hover {
-  color: #fef8ea; }
+  color: #faeed3; }
 
 .bg-secondary-300 {
   background-color: #ffd37c; }
@@ -3151,9 +3151,10 @@ body {
   transition: all 0.3s ease-in-out;
   cursor: pointer; }
 
-.button-lg {
+.button-carousel {
   padding: 0.75rem 2rem;
-  font-size: var(--fs-200); }
+  font-size: var(--fs-200);
+  flex-shrink: 0; }
 
 .btn-menu {
   display: flex;
@@ -3336,20 +3337,6 @@ body {
   color: #242323;
   text-transform: uppercase; }
 
-.swiper-arrows {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  transform: translateY(-50%);
-  padding: 3rem;
-  border-radius: 50%;
-  transition: all 0.3s ease-in-out; }
-  .swiper-arrows.swiper-button-prev:hover {
-    transform: translateY(-50%) translateX(-5px); }
-  .swiper-arrows.swiper-button-next:hover {
-    transform: translateY(-50%) translateX(5px); }
-
 .swiper-arrows i {
   font-size: 2rem;
   color: black; }
@@ -3371,12 +3358,25 @@ body {
     height: auto;
     border-radius: 20px; }
   .card__banner {
-    height: 100%;
-    width: 100%;
-    padding: 2rem 0.5rem;
     border-radius: 20px;
     box-shadow: 0px 7px 20px 0px rgba(0, 0, 0, 0.08);
-    height: 320px; } }
+    height: 320px;
+    gap: 0; } }
+
+@media (min-width: 45rem) {
+  .swiper-arrows {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    transform: translateY(-50%);
+    padding: 3rem;
+    border-radius: 50%;
+    transition: all 0.3s ease-in-out; }
+    .swiper-arrows.swiper-button-prev:hover {
+      transform: translateY(-50%) translateX(-5px); }
+    .swiper-arrows.swiper-button-next:hover {
+      transform: translateY(-50%) translateX(5px); } }
 
 .swiper {
   width: 100%;
@@ -3562,7 +3562,7 @@ header {
       padding: 1rem;
       border-radius: 10px;
       border: none;
-      background-color: #fef8ea; }
+      background-color: #faeed3; }
     .contact-form div textarea {
       resize: none; }
   .contact-form .submit-button {
@@ -3701,7 +3701,7 @@ footer ul {
       left: 50%;
       top: 1rem;
       transform: translateX(-50%);
-      background-color: #fef8ea;
+      background-color: #faeed3;
       padding: 0 6rem 1rem 6rem;
       border-bottom-left-radius: 4rem;
       border-bottom-right-radius: 4rem; }
@@ -3774,7 +3774,7 @@ footer ul {
         display: none; }
     .contact-container .contact-info {
       grid-column: 2/3;
-      background-color: #fef8ea;
+      background-color: #faeed3;
       padding: 2rem 4rem;
       position: relative; }
       .contact-container .contact-info .contact-title {

@@ -92,6 +92,9 @@ const swiper = new Swiper('.mySwiper', {
     nextEl: '.swiper-button-next',
     prevEl: '.swiper-button-prev',
   },
+  autoplay: {
+    delay: 2500,
+  },
   initialSlide: 2,
   speed: 500,
   breakpoints: {
