@@ -179,7 +179,7 @@
     top: -2rem;
     min-height: 60vh;
     padding-top: 8rem;
-    margin-bottom: 20rem;
+    margin-bottom: 10rem;
 
     .main-about-us__center {
       position: relative;
@@ -205,5 +205,23 @@
   .about-us__footer {
     position: relative;
     top: 30vh;
+  }
+
+  .dashboard-container .dashboard-wrapper {
+    flex-direction: row;
+    .profile-container {
+      flex-basis: 30%;
+      gap: 6rem;
+      padding: 4rem 2rem;
+    }
+
+    .profile-info {
+      flex-basis: 70%;
+      padding: 4rem 8rem;
+
+      .profile-info__title {
+        margin-bottom: 4rem;
+      }
+    }
   }
 }
