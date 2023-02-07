@@ -1,0 +1,12 @@
+.select {
+  border-radius: 1rem;
+  padding: 0.5rem 2rem;
+  color: gray;
+  border: none;
+}
+
+@media (min-width: 75rem) {
+  .select {
+    width: 25rem;
+  }
+}
