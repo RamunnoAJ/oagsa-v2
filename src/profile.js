@@ -10,7 +10,6 @@ $profileList.addEventListener('click', e => {
 
   switch ($profileTitle.textContent) {
     case 'Lista de clientes':
-      $profileInfoContainer.innerHTML = ''
       profileClientList($profileInfoContainer)
       break
 

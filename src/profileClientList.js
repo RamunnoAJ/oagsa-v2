@@ -1,8 +1,12 @@
 import getDataFromDB from './utils/getDataFromDB.js'
 
 export const profileClientList = $profileInfoContainer => {
-  getDataFromDB('http://api.oagsa.com/api/cliente/vendedor?pVendedor=1').then(
-    data => {
+  $profileInfoContainer.innerHTML = '<span class="loader"></span>'
+
+  getDataFromDB('http://api.oagsa.com/api/cliente/vendedor?pVendedor=1')
+    .then(data => {
+      $profileInfoContainer.innerHTML = ''
+
       const clientsFromData = data.data
       const searchInput = document.createElement('div')
       searchInput.classList.add('search-input')
@@ -34,8 +38,10 @@ export const profileClientList = $profileInfoContainer => {
           renderClients(clients, clientsContainer)
         }
       })
-    }
-  )
+    })
+    .catch(error => {
+      console.log(error)
+    })
 }
 
 const renderClients = (clients, parent) => {
