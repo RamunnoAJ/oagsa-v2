@@ -95,6 +95,10 @@ $colors: (
 }
 
 @media (min-width: 45rem) {
+  .visually-hidden-desktop {
+    display: none;
+  }
+
   .visually-hidden-mobile {
     display: block;
   }

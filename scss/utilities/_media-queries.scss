@@ -213,14 +213,19 @@
       flex-basis: 30%;
       gap: 6rem;
       padding: 4rem 2rem;
+
+      .profile-container__list {
+        align-items: flex-start;
+      }
     }
 
     .profile-info {
       flex-basis: 70%;
-      padding: 4rem 8rem;
+      // padding: 4rem 8rem;
 
       .profile-info__title {
         margin-bottom: 4rem;
+        margin-top: 2rem;
       }
     }
   }
