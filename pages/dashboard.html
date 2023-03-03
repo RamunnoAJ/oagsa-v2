@@ -49,7 +49,7 @@
     <div class="dashboard-wrapper">
       <div class="profile-container">
         <h1>Tu perfil</h1>
-        <ul class="profile-container__list">
+        <ul class="profile-container__list" id="profileList">
           <li>Cuenta corriente</li>
           <li>Historial de pedidos</li>
           <li>Borrador de pedidos</li>
@@ -65,19 +65,23 @@
         </div>
       </div>
       <div class="profile-info">
-        <h2 class="profile-info__title uppercase">cuenta corriente</h2>
-        <div>
+        <h2 class="profile-info__title uppercase" id="profileTitle"></h2>
+        <div class="profile-info__container" id="profileInfoContainer">
 
-          <span class="profile-info__subtitle">Razón social:</span>
+          <!-- <span class="profile-info__subtitle">Razón social:</span>
           <div class="profile-info__search">
-            <select name="" id="" class="select bg-primary mr-4">
+            <select id="" class="select bg-primary mr-4">
               <option disabled selected>Selecione una opción...</option>
               <option value="a">A</option>
               <option value="a">B</option>
               <option value="a">C</option>
             </select>
-            <button class="button bg-secondary-300 bg-hover-secondary-400">Buscar</button>
-          </div>
+            <button class="button bg-secondary-300 bg-hover-secondary-400" id="btnSearch"> <span
+                class="visually-hidden-mobile">Buscar</span>
+              <span class="visually-hidden-desktop">
+                <i class="fa-solid fa-magnifying-glass"></i>
+              </span> </button>
+          </div> -->
         </div>
       </div>
     </div>
@@ -127,6 +131,7 @@
   </footer>
 
   <script type="module" src="../src/profile.js"></script>
+  <script type="module" src="../src/utils/getDataFromDB.js"></script>
 </body>
 
 </html>
