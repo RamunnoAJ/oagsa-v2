@@ -1,3 +1,4 @@
+import { profileClientAccount } from './profileClientAccount.js'
 import { profileClientList } from './profileClientList.js'
 
 const $profileTitle = document.querySelector('#profileTitle')
@@ -9,6 +10,10 @@ $profileList.addEventListener('click', e => {
   $profileTitle.textContent = e.target.textContent
 
   switch ($profileTitle.textContent) {
+    case 'Cuenta corriente':
+      profileClientAccount($profileInfoContainer)
+      break
+
     case 'Lista de clientes':
       profileClientList($profileInfoContainer)
       break
