@@ -1,4 +1,5 @@
 import getDataFromDB from './utils/getDataFromDB.js'
+import { sortClients } from './utils/sortClients.js'
 
 export const profileClientList = $profileInfoContainer => {
   $profileInfoContainer.innerHTML = '<span class="loader"></span>'
@@ -64,15 +65,4 @@ const renderClients = (clients, parent) => {
 
 const filterClients = (array, param) => {
   return array.filter(item => item.razonSocial.toLowerCase().includes(param))
-}
-
-const sortClients = clients => {
-  clients.sort((a, b) => {
-    if (a.razonSocial < b.razonSocial) {
-      return -1
-    } else if (a.razonSocial > b.razonSocial) {
-      return 1
-    }
-    return 0
-  })
 }
