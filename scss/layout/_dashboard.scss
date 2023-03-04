@@ -5,6 +5,7 @@
 
   .dashboard-wrapper {
     @include flex(column, center, flex-start);
+    position: relative;
 
     .profile-info__container {
       @include flex(column, center, center);
@@ -60,7 +61,7 @@
       @include flex(column, center, center);
       gap: 0.75rem;
       width: 100%;
-      padding: 2rem;
+      padding: 2rem 0;
       height: 100%;
 
       .profile-info__title {

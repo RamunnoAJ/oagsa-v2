@@ -3426,10 +3426,9 @@ body {
     max-width: 300px;
     min-height: 150px; }
     .client-cards__container .client-card .client-card__title {
-      align-self: center;
+      margin-bottom: 0.5rem;
       font-weight: 500;
       font-size: var(--fs-300);
-      text-align: center;
       text-transform: uppercase; }
     .client-cards__container .client-card .client-card__address,
     .client-cards__container .client-card .client-card__zone,
@@ -3446,16 +3445,17 @@ body {
   align-items: center;
   gap: 1rem;
   background-color: #e2e8f0;
-  padding: 0.25rem 2rem;
+  padding: 0.5rem 1rem;
   border-radius: 1rem; }
   .search-input input {
-    padding: 0.5rem;
+    padding: 0.75rem 0.5rem;
     border: none;
-    border-radius: 0.75rem; }
+    border-radius: 1rem; }
 
 @media (min-width: 48rem) {
   .search-input {
-    align-self: flex-end; } }
+    align-self: flex-end;
+    padding-inline: 2rem; } }
 
 .loader {
   width: 48px;
@@ -3758,7 +3758,8 @@ header {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: flex-start; }
+    align-items: flex-start;
+    position: relative; }
     .dashboard-container .dashboard-wrapper .profile-info__container {
       display: flex;
       flex-direction: column;
@@ -3813,7 +3814,7 @@ header {
       align-items: center;
       gap: 0.75rem;
       width: 100%;
-      padding: 2rem;
+      padding: 2rem 0;
       height: 100%; }
       .dashboard-container .dashboard-wrapper .profile-info .profile-info__title {
         font-weight: 700;
@@ -4009,15 +4010,29 @@ footer ul {
     position: relative;
     top: 30vh; }
   .dashboard-container .dashboard-wrapper {
-    flex-direction: row; }
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-start;
+    flex-direction: row;
+    min-height: 70vh; }
+    .dashboard-container .dashboard-wrapper .profile-info__container .client-cards__container {
+      overflow-y: scroll;
+      max-height: 480px; }
     .dashboard-container .dashboard-wrapper .profile-container {
       flex-basis: 30%;
       gap: 6rem;
-      padding: 4rem 2rem; }
+      padding: 4rem 1rem;
+      position: absolute;
+      max-width: 360px;
+      top: 0;
+      left: 0;
+      bottom: 0; }
       .dashboard-container .dashboard-wrapper .profile-container .profile-container__list {
         align-items: flex-start; }
     .dashboard-container .dashboard-wrapper .profile-info {
-      flex-basis: 70%; }
+      flex-basis: 70%;
+      left: 0; }
       .dashboard-container .dashboard-wrapper .profile-info .profile-info__title {
-        margin-bottom: 4rem;
+        margin-bottom: 2rem;
         margin-top: 2rem; } }
