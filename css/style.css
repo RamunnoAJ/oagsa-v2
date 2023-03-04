@@ -3123,6 +3123,9 @@ template {
 .text-hover-black:hover {
   color: #000; }
 
+.fw-bold {
+  font-weight: 700; }
+
 .visually-hidden {
   display: none; }
 
@@ -3498,6 +3501,10 @@ body {
     clip-path: polygon(50% 50%, 0 0, 100% 0, 100% 100%, 100% 100%, 100% 100%); } }
 
 .table-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   width: 90%;
   margin-inline: auto; }
 
