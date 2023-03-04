@@ -52,12 +52,14 @@ const renderOptions = clients => {
 }
 
 const renderClientAccount = async client => {
+  const $tableContainer = document.querySelector('.table-container')
+  $tableContainer.innerHTML = '<span class="loader"></span>'
+
   const data = await getDataFromDB(
     `http://api.oagsa.com/api/cliente/cuenta-corriente?pCodigoCliente=${client}`
   )
   const accountMovements = await data.data
 
-  const $tableContainer = document.querySelector('.table-container')
   $tableContainer.innerHTML = ''
 
   if (accountMovements.length > 0) {
@@ -81,9 +83,25 @@ const renderClientAccount = async client => {
     $tableContainer.appendChild(table)
     const $tableBody = document.querySelector('#table-body')
 
+    const prices = []
+
     accountMovements.forEach(item => {
       renderTableRows(item, $tableBody)
+      prices.push(item.importePendiente)
     })
+
+    const totalPriceRow = document.createElement('tr')
+    totalPriceRow.innerHTML = `
+      <td class="fw-bold">Importe total:</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td class="fw-bold">$${getTotalPrice(prices)}</td>
+      `
+
+    $tableBody.appendChild(totalPriceRow)
+  } else {
+    $tableContainer.innerHTML = `<span>No se encontraron resultados</span>`
   }
 }
 
@@ -101,7 +119,23 @@ const renderTableRows = (item, parent) => {
       <td>${item.fechaVencimiento.slice(0, 10)}</td>
       <td>${item.numero}</td>
       <td>$${trimPrice(item.importe)}</td>
-      <td>$${trimPrice(item.importePendiente)}</td>
+      <td class="fw-bold">$${trimPrice(item.importePendiente)}</td>
       `
   parent.appendChild(tableRow)
+}
+
+const getTotalPrice = prices => {
+  let totalPrice = 0
+
+  for (let index = 0; index < prices.length; index++) {
+    const element = prices[index]
+
+    totalPrice += element
+  }
+
+  if (totalPrice < 0) {
+    return totalPrice * -1
+  }
+
+  return totalPrice
 }
