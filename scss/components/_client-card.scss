@@ -16,10 +16,9 @@
     min-height: 150px;
 
     .client-card__title {
-      align-self: center;
+      margin-bottom: 0.5rem;
       font-weight: $fw-semi-bold;
       font-size: var(--fs-300);
-      text-align: center;
       text-transform: uppercase;
     }
 

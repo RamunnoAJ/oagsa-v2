@@ -10,8 +10,8 @@ export const profileClientList = $profileInfoContainer => {
       const clientsFromData = data.data
       const searchInput = document.createElement('div')
       searchInput.classList.add('search-input')
-      searchInput.innerHTML = `<label for="clients-filter">Ingrese razón social</label> 
-    <input type="text" id="clients-filter" /> 
+      searchInput.innerHTML = ` 
+    <input type="text" id="clients-filter" placeholder="Ingrese razón social" /> 
     <button class="button bg-secondary-300 bg-hover-secondary-400">Buscar</button>`
       $profileInfoContainer.appendChild(searchInput)
 
