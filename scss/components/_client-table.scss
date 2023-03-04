@@ -1,4 +1,5 @@
 .table-container {
+  @include flex(column, center, center);
   width: 90%;
   margin-inline: auto;
 }
