@@ -58,6 +58,9 @@ $colors: (
   'secondary-400': $secondary-color-400,
   'white': $white,
   'black': $black,
+  'dark-grey': $dark-grey,
+  'slate': $slate,
+  'error': $error-color,
 );
 
 @each $color, $value in $colors {
@@ -91,7 +94,7 @@ $colors: (
 }
 
 .visually-hidden {
-  display: none;
+  display: none !important;
 }
 
 .visually-hidden-mobile {

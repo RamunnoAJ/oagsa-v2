@@ -1,31 +1,51 @@
-.main-login {
-  max-width: 75rem;
-  width: 95%;
-  margin-inline: auto;
-  @include flex(column, center, center);
-  & > div {
-    @include flex(column, center, center);
-    gap: 1rem;
-    h1 {
-      font-size: var(--fs-secondary-heading);
-      font-weight: $fw-bold;
-      font-family: $ff-heading;
-    }
-    .label {
-      @include flex(column, center, flex-start);
-      font-weight: $fw-bold;
-      font-size: var(--fs-300);
-      gap: 0.5rem;
-      width: 100%;
+.login-container-fluid {
+  @include flex(column, space-between, stretch);
+  min-height: 100vh;
 
-      input {
-        border-radius: 5px;
+  .main-login {
+    max-width: 75rem;
+    width: 95%;
+    margin-inline: auto;
+    @include flex(column, center, center);
+    & > form {
+      width: 100%;
+      max-width: 30rem;
+      padding: 2rem;
+      @include flex(column, center, center);
+      gap: 1rem;
+      h1 {
+        font-size: var(--fs-secondary-heading);
+        font-weight: $fw-bold;
+        font-family: $ff-heading;
+      }
+      .label {
+        @include flex(column, center, flex-start);
+        font-weight: $fw-bold;
+        font-size: var(--fs-300);
+        gap: 0.5rem;
+        width: 100%;
+
+        input {
+          border-radius: 5px;
+          border: none;
+          width: 100%;
+        }
+      }
+      button {
+        align-self: flex-end;
         border: none;
       }
-    }
-    button {
-      align-self: flex-end;
-      border: none;
+
+      .login-error {
+        padding: 0.5rem;
+        @include flex(column, center, center);
+        text-align: left;
+        width: 100%;
+        gap: 0.25rem;
+        background-color: $error-color;
+        border-radius: 0.25rem;
+        font-weight: $fw-semi-bold;
+      }
     }
   }
 }

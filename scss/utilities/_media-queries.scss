@@ -242,6 +242,12 @@
       }
     }
   }
+
+  .main-login {
+    form {
+      padding-inline: 4rem;
+    }
+  }
 }
 
 @media (min-width: 75rem) {
