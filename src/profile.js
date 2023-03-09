@@ -35,8 +35,6 @@ $profileList.addEventListener('click', e => {
       profileClientList($profileInfoContainer)
       break
 
-    case 'Precarga de clientes':
-      break
     default:
       $profileInfoContainer.innerHTML = ''
       break
