@@ -31,10 +31,10 @@ const handleSubmit = e => {
   ).then(({ data }) => {
     if (data) {
       if (checkbox) {
-        localStorage.setItem('sessionID', data.id)
+        localStorage.setItem('sessionID', data.codigoBejerman)
         localStorage.setItem('session', data.nivelAcceso)
       } else {
-        sessionStorage.setItem('sessionID', data.id)
+        sessionStorage.setItem('sessionID', data.codigoBejerman)
         sessionStorage.setItem('session', data.nivelAcceso)
       }
 

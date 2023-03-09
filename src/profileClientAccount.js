@@ -1,10 +1,27 @@
 import getDataFromDB from './utils/getDataFromDB.js'
 import { sortClients } from './utils/sortClients.js'
 
+const localStorageID = Number(localStorage.getItem('sessionID'))
+const localStorageSession = Number(localStorage.getItem('session'))
+
+const sessionStorageID = Number(sessionStorage.getItem('sessionID'))
+const sessionStorageSession = Number(sessionStorage.getItem('session'))
+
 export const profileClientAccount = async $profileInfoContainer => {
   $profileInfoContainer.innerHTML = '<span class="loader"></span>'
 
-  const data = await getDataFromDB('http://api.oagsa.com/api/cliente/all')
+  let sellerID
+  if (localStorageID) {
+    sellerID = localStorageID
+  }
+
+  if (sessionStorageID) {
+    sellerID = sessionStorageID
+  }
+
+  const data = await getDataFromDB(
+    `http://api.oagsa.com/api/cliente/vendedor?pVendedor=${sellerID}`
+  )
   const clients = await data.data
 
   $profileInfoContainer.innerHTML = `
@@ -137,5 +154,5 @@ const getTotalPrice = prices => {
     return totalPrice * -1
   }
 
-  return totalPrice
+  return totalPrice.toFixed(2)
 }
