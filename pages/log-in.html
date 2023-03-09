@@ -17,99 +17,104 @@
 </head>
 
 <body>
-  <header class="bg-primary">
-    <nav>
-      <div class="nav-icons">
-        <a href="../index.html"><img class="logo" src="../assets/logo-oagsa.png" alt="Logo OAGSA" /></a>
-        <button class="btn-menu" type="button">
-          <i class="btn-menu__bars" aria-hidden="true"></i>
-          <span class="visually-hidden">Menu</span>
+  <div class="login-container-fluid">
+    <header class="bg-primary">
+      <nav>
+        <div class="nav-icons">
+          <a href="../index.html"><img class="logo" src="../assets/logo-oagsa.png" alt="Logo OAGSA" /></a>
+          <button class="btn-menu" type="button">
+            <i class="btn-menu__bars" aria-hidden="true"></i>
+            <span class="visually-hidden">Menu</span>
+          </button>
+        </div>
+        <ul class="nav-bar bg-primary">
+          <li>
+            <a href="./about-us.html" class="text-hover-secondary-400">Nosotros</a>
+          </li>
+          <li>
+            <a href="./store.html" class="text-hover-secondary-400">Tienda</a>
+          </li>
+          <li>
+            <a href="./contact.html" class="text-hover-secondary-400">Contacto</a>
+          </li>
+          <li id="account-icon">
+            <a href="#" class="button mt-1 bg-secondary-300 bg-hover-secondary-400 text-black"><span>Log In</span> <i
+                class="fa-solid fa-lock"></i></a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+    <main class="mt-28 main-login">
+      <form class="bg-primary" id="login-form">
+        <h1 class="uppercase">Iniciar Sesión</h1>
+        <div class="label">
+          <label for="user">Usuario:</label>
+          <input type="text" id="user" name="user" class="p-2" />
+        </div>
+        <div class="label">
+          <label for="password">Contraseña:</label>
+          <input type="password" id="password" name="password" class="p-2" />
+        </div>
+        <p></p>
+        <div class="label-checkbox">
+          <input type="checkbox" id="checkbox" name="checkbox" />
+          <label for="checkbox">Recordarme en este dispositivo.</label>
+        </div>
+        <button class="button bg-secondary-300 bg-hover-secondary-400">
+          Log In
         </button>
-      </div>
-      <ul class="nav-bar bg-primary">
-        <li>
-          <a href="./about-us.html" class="text-hover-secondary-400">Nosotros</a>
-        </li>
-        <li>
-          <a href="./store.html" class="text-hover-secondary-400">Tienda</a>
-        </li>
-        <li>
-          <a href="./contact.html" class="text-hover-secondary-400">Contacto</a>
-        </li>
-        <li>
-          <a href="#" class="button mt-1 bg-secondary-300 bg-hover-secondary-400 text-black"><span>Log In</span> <i
-              class="fa-solid fa-lock"></i></a>
-        </li>
-      </ul>
-    </nav>
-  </header>
+        <div class="login-error visually-hidden" id="error-container"></div>
+      </form>
+    </main>
 
-  <main class="mt-28 main-login">
-    <div class="bg-primary px-20 py-16">
-      <h1 class="uppercase">Iniciar Sesión</h1>
-      <div class="label">
-        <label for="email">Email:</label>
-        <input type="email" id="email" class="p-2" />
-      </div>
-      <div class="label">
-        <label for="password">Contraseña:</label>
-        <input type="password" id="password" class="p-2" />
-      </div>
-      <p></p>
-      <div class="label-checkbox">
-        <input type="checkbox" id="checkbox" />
-        <label for="checkbox">Recordarme en este dispositivo.</label>
-      </div>
-      <button class="button bg-secondary-300 bg-hover-secondary-400">
-        Log In
-      </button>
-    </div>
-  </main>
+    <footer class="px-4 pt-5 mt-20 bg-primary">
+      <div class="footer-container">
+        <div>
+          <a href="../index.html"><img class="logo-footer pr-4" src="../assets/logo-oagsa.png" alt="Logo OAGSA" /></a>
+        </div>
 
-  <footer class="px-4 pt-5 mt-20 bg-primary">
-    <div class="footer-container">
-      <div>
-        <a href="../index.html"><img class="logo-footer pr-4" src="../assets/logo-oagsa.png" alt="Logo OAGSA" /></a>
-      </div>
-
-      <ul class="icons">
-        <li>
-          <a class="text-hover-secondary-400" target="_blank" href="https://www.instagram.com/oag.s.a/"><i
-              class="fa-brands fa-instagram footer-icons"></i></a>
-        </li>
-        <li>
-          <a class="text-hover-secondary-400" target="_blank" href=""><i
-              class="fa-brands fa-whatsapp footer-icons"></i></a>
-        </li>
-        <li>
-          <a class="text-hover-secondary-400" target="_blank"
-            href="https://www.facebook.com/people/Oscar-A-Gonzalez/100063653886728/"><i
-              class="fa-brands fa-facebook footer-icons"></i></a>
-        </li>
-      </ul>
-
-      <div>
-        <ul class="mb-4 uppercase">
+        <ul class="icons">
           <li>
-            <a class="text-hover-secondary-400" href="./about-us.html">Nosotros</a>
+            <a class="text-hover-secondary-400" target="_blank" href="https://www.instagram.com/oag.s.a/"><i
+                class="fa-brands fa-instagram footer-icons"></i></a>
           </li>
           <li>
-            <a class="text-hover-secondary-400" href="./store.html">Tienda</a>
+            <a class="text-hover-secondary-400" target="_blank" href=""><i
+                class="fa-brands fa-whatsapp footer-icons"></i></a>
           </li>
           <li>
-            <a class="text-hover-secondary-400" href="./contact.html">Contacto</a>
-          </li>
-          <li>
-            <a class="text-hover-secondary-400" href="./log-in.html">Log In</a>
+            <a class="text-hover-secondary-400" target="_blank"
+              href="https://www.facebook.com/people/Oscar-A-Gonzalez/100063653886728/"><i
+                class="fa-brands fa-facebook footer-icons"></i></a>
           </li>
         </ul>
 
-        <p>OSCAR A. GONZALEZ S. A. Todos los derechos reservados - 2022</p>
+        <div>
+          <ul class="mb-4 uppercase">
+            <li>
+              <a class="text-hover-secondary-400" href="./about-us.html">Nosotros</a>
+            </li>
+            <li>
+              <a class="text-hover-secondary-400" href="./store.html">Tienda</a>
+            </li>
+            <li>
+              <a class="text-hover-secondary-400" href="./contact.html">Contacto</a>
+            </li>
+            <li>
+              <a class="text-hover-secondary-400" href="./log-in.html">Log In</a>
+            </li>
+          </ul>
+
+          <p>OSCAR A. GONZALEZ S. A. Todos los derechos reservados - 2022</p>
+        </div>
       </div>
-    </div>
-  </footer>
+    </footer>
+  </div>
 
   <script src="../src/menu.js"></script>
+  <script src="../src/user.js"></script>
+  <script type="module" src="../src/login.js"></script>
 </body>
 
 </html>
