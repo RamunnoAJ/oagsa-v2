@@ -19,30 +19,41 @@ export const profileClientAccount = async $profileInfoContainer => {
     sellerID = sessionStorageID
   }
 
-  const data = await getDataFromDB(
-    `http://api.oagsa.com/api/cliente/vendedor?pVendedor=${sellerID}`
-  )
-  const clients = await data.data
+  let response
 
-  $profileInfoContainer.innerHTML = `
-  <span class="profile-info__subtitle">Razón social:</span>
-    <form class="profile-info__search" id='client-form'>
-      <select id="selectClient" name='selectedClient' class="select bg-primary mr-4">
-        <option disabled selected value=''>Selecione una opción...</option>
-      </select>
-      <button class="button bg-secondary-300 bg-hover-secondary-400" id="btnSearch"> <span
-          class="visually-hidden-mobile">Buscar</span>
-        <span class="visually-hidden-desktop">
-          <i class="fa-solid fa-magnifying-glass"></i>
-        </span> </button>
-        </form>
-        <div class='table-container'></div>
-        `
+  if (sessionStorageSession === 1 || localStorageSession === 1) {
+    response = await getDataFromDB('http://api.oagsa.com/api/cliente/all')
+  } else {
+    response = await getDataFromDB(
+      `http://api.oagsa.com/api/cliente/vendedor?pVendedor=${sellerID}`
+    )
+  }
 
-  renderOptions(clients)
+  const clients = await response.data
 
-  const $btnSearch = document.querySelector('#btnSearch')
-  $btnSearch.addEventListener('click', handleSubmit)
+  if (clients.length > 0) {
+    $profileInfoContainer.innerHTML = `
+    <span class="profile-info__subtitle">Razón social:</span>
+      <form class="profile-info__search" id='client-form'>
+        <select id="selectClient" name='selectedClient' class="select bg-primary mr-4">
+          <option disabled selected value=''>Selecione una opción...</option>
+        </select>
+        <button class="button bg-secondary-300 bg-hover-secondary-400" id="btnSearch"> <span
+            class="visually-hidden-mobile">Buscar</span>
+          <span class="visually-hidden-desktop">
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </span> </button>
+          </form>
+          <div class='table-container'></div>
+          `
+
+    renderOptions(clients)
+
+    const $btnSearch = document.querySelector('#btnSearch')
+    $btnSearch.addEventListener('click', handleSubmit)
+  } else {
+    $profileInfoContainer.innerHTML = `<div>No se encontraron resultados</div>`
+  }
 }
 
 const handleSubmit = e => {
@@ -72,10 +83,10 @@ const renderClientAccount = async client => {
   const $tableContainer = document.querySelector('.table-container')
   $tableContainer.innerHTML = '<span class="loader"></span>'
 
-  const data = await getDataFromDB(
+  const response = await getDataFromDB(
     `http://api.oagsa.com/api/cliente/cuenta-corriente?pCodigoCliente=${client}`
   )
-  const accountMovements = await data.data
+  const accountMovements = await response.data
 
   $tableContainer.innerHTML = ''
 
