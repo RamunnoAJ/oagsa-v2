@@ -3956,7 +3956,7 @@ header {
       padding: 2rem; }
       .dashboard-container .dashboard-wrapper .profile-container h1 {
         margin: 0;
-        font-size: var(--fs-secondary-heading);
+        font-size: var(--fs-500);
         font-weight: 700; }
       .dashboard-container .dashboard-wrapper .profile-container .profile-container__list {
         display: flex;
@@ -3979,7 +3979,6 @@ header {
         align-items: center;
         gap: 2rem; }
         .dashboard-container .dashboard-wrapper .profile-container .profile-container__buttons p {
-          background-color: #fff;
           font-weight: 500;
           padding: 0.5rem 1rem;
           border-radius: 1rem;
@@ -4055,7 +4054,6 @@ footer ul {
     header .nav-icons {
       position: absolute;
       left: 50%;
-      top: 1rem;
       transform: translateX(-50%);
       background-color: #faeed3;
       padding: 0 6rem 1rem 6rem;
