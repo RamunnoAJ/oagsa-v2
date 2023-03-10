@@ -23,7 +23,7 @@
 
       h1 {
         margin: 0;
-        font-size: var(--fs-secondary-heading);
+        font-size: var(--fs-500);
         font-weight: $fw-bold;
       }
 
@@ -49,7 +49,6 @@
         gap: 2rem;
 
         p {
-          background-color: $white;
           font-weight: $fw-semi-bold;
           padding: 0.5rem 1rem;
           border-radius: 1rem;
