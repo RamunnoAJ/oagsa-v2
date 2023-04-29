@@ -1,14 +1,10 @@
+import { checkLocalStorage } from './storage/login.js'
 import getDataFromDB from './utils/getDataFromDB.js'
 
 const $form = document.querySelector('#login-form')
 const $errorContainer = document.querySelector('#error-container')
 
-const localStorageID = Number(localStorage.getItem('sessionID'))
-const sessionStorageID = Number(sessionStorage.getItem('sessionID'))
-
-if (localStorageID !== 0 || sessionStorageID !== 0) {
-  window.location.replace('../pages/dashboard.html')
-}
+checkLocalStorage()
 
 const handleSubmit = e => {
   e.preventDefault()

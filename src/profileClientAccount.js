@@ -1,34 +1,15 @@
+import {
+  getStorageID,
+  getDataFromStorage,
+} from './storage/profileClientAccount.js'
 import getDataFromDB from './utils/getDataFromDB.js'
 import { sortClients } from './utils/sortClients.js'
-
-const localStorageID = Number(localStorage.getItem('sessionID'))
-const localStorageSession = Number(localStorage.getItem('session'))
-
-const sessionStorageID = Number(sessionStorage.getItem('sessionID'))
-const sessionStorageSession = Number(sessionStorage.getItem('session'))
 
 export const profileClientAccount = async $profileInfoContainer => {
   $profileInfoContainer.innerHTML = '<span class="loader"></span>'
 
-  let sellerID
-  if (localStorageID) {
-    sellerID = localStorageID
-  }
-
-  if (sessionStorageID) {
-    sellerID = sessionStorageID
-  }
-
-  let response
-
-  if (sessionStorageSession === 1 || localStorageSession === 1) {
-    response = await getDataFromDB('http://api.oagsa.com/api/cliente/all')
-  } else {
-    response = await getDataFromDB(
-      `http://api.oagsa.com/api/cliente/vendedor?pVendedor=${sellerID}`
-    )
-  }
-
+  const sellerID = getStorageID()
+  const response = await getDataFromStorage(sellerID)
   const clients = await response.data
 
   if (clients.length > 0) {

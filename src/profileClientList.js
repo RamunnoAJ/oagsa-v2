@@ -1,20 +1,11 @@
 import getDataFromDB from './utils/getDataFromDB.js'
 import { sortClients } from './utils/sortClients.js'
-
-const localStorageID = Number(localStorage.getItem('sessionID'))
-const sessionStorageID = Number(sessionStorage.getItem('sessionID'))
+import { getStorageID } from './storage/profileClientList.js'
 
 export const profileClientList = $profileInfoContainer => {
   $profileInfoContainer.innerHTML = '<span class="loader"></span>'
 
-  let sellerID
-  if (localStorageID) {
-    sellerID = localStorageID
-  }
-
-  if (sessionStorageID) {
-    sellerID = sessionStorageID
-  }
+  const sellerID = getStorageID()
 
   getDataFromDB(
     `http://api.oagsa.com/api/cliente/vendedor?pVendedor=${sellerID}`

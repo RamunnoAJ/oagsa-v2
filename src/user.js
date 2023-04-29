@@ -1,5 +1,5 @@
-const sessionStorageID = sessionStorage.getItem('sessionID')
-const localStorageID = localStorage.getItem('sessionID')
+import { localStorageID, sessionStorageID } from './storage/storageData.js'
+
 const currentURL = window.location.href
 const $accountIcon = document.querySelector('#account-icon')
 

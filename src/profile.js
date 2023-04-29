@@ -1,5 +1,10 @@
 import { profileClientAccount } from './profileClientAccount.js'
 import { profileClientList } from './profileClientList.js'
+import { checkLocalStorage } from './storage/profile.js'
+import {
+  localStorageSession,
+  sessionStorageSession,
+} from './storage/storageData.js'
 import getDataFromDB from './utils/getDataFromDB.js'
 
 const $profileTitle = document.querySelector('#profileTitle')
@@ -8,28 +13,12 @@ const $profileInfoContainer = document.querySelector('#profileInfoContainer')
 const $btnContainer = document.querySelector('.profile-container__buttons')
 const $profileName = document.querySelector('#profile-name')
 
-const localStorageID = Number(localStorage.getItem('sessionID'))
-const localStorageSession = Number(localStorage.getItem('session'))
-
-const sessionStorageID = Number(sessionStorage.getItem('sessionID'))
-const sessionStorageSession = Number(sessionStorage.getItem('session'))
-
 renderAdminBtn()
 renderLogoutBtn()
+checkLocalStorage()
 
 const $logoutBtn = document.querySelector('#logout-btn')
 $logoutBtn.addEventListener('click', logOut)
-
-if (localStorageID === 0 && sessionStorageID === 0) {
-  window.location.replace('../pages/log-in.html')
-}
-
-if (sessionStorageID) {
-  renderUserName(sessionStorageID)
-}
-if (localStorageID) {
-  renderUserName(localStorageID)
-}
 
 $profileList.addEventListener('click', e => {
   if (e.target.closest('li') === null) return
@@ -83,7 +72,7 @@ function logOut() {
   window.location.replace('../pages/log-in.html')
 }
 
-async function renderUserName(id) {
+export async function renderUserName(id) {
   const response = await getDataFromDB(
     `http://api.oagsa.com/api/vendedor/vendedor?pVendedor=${id}`
   )
