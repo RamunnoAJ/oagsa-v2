@@ -1,4 +1,5 @@
 import { checkLocalStorage } from './storage/login.js'
+import { navigateToDashboard, renderErrors } from './ui/login.js'
 import getDataFromDB from './utils/getDataFromDB.js'
 
 const $form = document.querySelector('#login-form')
@@ -37,7 +38,7 @@ const handleSubmit = e => {
       navigateToDashboard()
     } else {
       errors.push('Usuario o contraseña incorrectos')
-      renderErrors(errors)
+      renderErrors(errors, $errorContainer)
     }
   })
 }
@@ -60,18 +61,4 @@ function validateLogin(user, password) {
   }
 
   return errors
-}
-
-function renderErrors(errors) {
-  $errorContainer.classList.remove('visually-hidden')
-
-  errors.forEach(error => {
-    const newError = document.createElement('p')
-    newError.textContent = error
-    $errorContainer.appendChild(newError)
-  })
-}
-
-function navigateToDashboard() {
-  window.location.replace('../pages/dashboard.html')
 }

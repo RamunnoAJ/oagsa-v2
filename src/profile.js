@@ -1,10 +1,8 @@
 import { profileClientAccount } from './profileClientAccount.js'
 import { profileClientList } from './profileClientList.js'
 import { checkLocalStorage } from './storage/profile.js'
-import {
-  localStorageSession,
-  sessionStorageSession,
-} from './storage/storageData.js'
+
+import { renderAdminBtn, renderLogoutBtn } from './ui/profile.js'
 import getDataFromDB from './utils/getDataFromDB.js'
 
 const $profileTitle = document.querySelector('#profileTitle')
@@ -13,8 +11,8 @@ const $profileInfoContainer = document.querySelector('#profileInfoContainer')
 const $btnContainer = document.querySelector('.profile-container__buttons')
 const $profileName = document.querySelector('#profile-name')
 
-renderAdminBtn()
-renderLogoutBtn()
+renderAdminBtn($btnContainer)
+renderLogoutBtn($btnContainer)
 checkLocalStorage()
 
 const $logoutBtn = document.querySelector('#logout-btn')
@@ -33,35 +31,14 @@ $profileList.addEventListener('click', e => {
       profileClientList($profileInfoContainer)
       break
 
+    case 'Lista de precios':
+      break
+
     default:
       $profileInfoContainer.innerHTML = ''
       break
   }
 })
-
-function renderLogoutBtn() {
-  const logoutBtn = document.createElement('button')
-  logoutBtn.classList.add(
-    'button',
-    'text-black',
-    'bg-secondary-300',
-    'bg-hover-secondary-400',
-    'uppercase'
-  )
-  logoutBtn.id = 'logout-btn'
-  logoutBtn.innerHTML = `log out <i
-  class="fa-solid fa-power-off"></i>`
-  $btnContainer.appendChild(logoutBtn)
-}
-
-function renderAdminBtn() {
-  if (localStorageSession === 1 || sessionStorageSession === 1) {
-    const adminBtn = document.createElement('p')
-    adminBtn.classList.add('button', 'bg-white', 'bg-hover-slate', 'uppercase')
-    adminBtn.textContent = 'Admin'
-    $btnContainer.appendChild(adminBtn)
-  }
-}
 
 function logOut() {
   localStorage.removeItem('sessionID')
