@@ -1,4 +1,4 @@
-import { renderUserName } from '../profile.js'
+import { renderUserName } from '../ui/profile.js'
 import { localStorageID, sessionStorageID } from './storageData.js'
 
 export function checkLocalStorage() {

@@ -1,4 +1,4 @@
-import getDataFromDB from '../utils/getDataFromDB.js'
+import { getClientsFromSeller } from '../api/profileClientList.js'
 import {
   localStorageID,
   localStorageSession,
@@ -14,10 +14,8 @@ export function getStorageID() {
 
 export async function getDataFromStorage(sellerID) {
   if (sessionStorageSession === 1 || localStorageSession === 1) {
-    return await getDataFromDB('http://api.oagsa.com/api/cliente/all')
+    return await getClientsFromSeller('all')
   } else {
-    return await getDataFromDB(
-      `http://api.oagsa.com/api/cliente/vendedor?pVendedor=${sellerID}`
-    )
+    return await getClientsFromSeller(`vendedor?pVendedor=${sellerID}`)
   }
 }

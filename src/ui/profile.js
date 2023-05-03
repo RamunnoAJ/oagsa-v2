@@ -2,6 +2,9 @@ import {
   localStorageSession,
   sessionStorageSession,
 } from '../storage/storageData.js'
+import getDataFromDB from '../utils/getDataFromDB.js'
+
+const $profileName = document.querySelector('#profile-name')
 
 export function renderLogoutBtn($btnContainer) {
   const logoutBtn = document.createElement('button')
@@ -25,4 +28,11 @@ export function renderAdminBtn($btnContainer) {
     adminBtn.textContent = 'Admin'
     $btnContainer.appendChild(adminBtn)
   }
+}
+
+export async function renderUserName(id) {
+  const response = await getDataFromDB(`vendedor/vendedor?pVendedor=${id}`)
+  const clientName = await response.data.razonSocial
+
+  if (clientName) $profileName.textContent = clientName
 }

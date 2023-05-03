@@ -11,8 +11,7 @@ export const profileClientAccount = async $profileInfoContainer => {
   $profileInfoContainer.innerHTML = '<span class="loader"></span>'
 
   const sellerID = getStorageID()
-  const response = await getDataFromStorage(sellerID)
-  const clients = await response.data
+  const clients = await getDataFromStorage(sellerID)
 
   if (clients.length > 0) {
     $profileInfoContainer.innerHTML = `

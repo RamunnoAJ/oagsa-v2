@@ -1,20 +1,18 @@
-import getDataFromDB from './utils/getDataFromDB.js'
 import { getStorageID } from './storage/profileClientList.js'
 import { filterClients, renderClients } from './ui/profileClientList.js'
+import { getClientsFromSeller } from './api/profileClientList.js'
 
 export const profileClientList = $profileInfoContainer => {
   $profileInfoContainer.innerHTML = '<span class="loader"></span>'
 
   const sellerID = getStorageID()
 
-  getDataFromDB(
-    `http://api.oagsa.com/api/cliente/vendedor?pVendedor=${sellerID}`
-  )
+  getClientsFromSeller(`vendedor?pVendedor=${sellerID}`)
     .then(response => {
       $profileInfoContainer.innerHTML = ''
 
-      if (response.data.length > 0) {
-        const clientsFromData = response.data
+      if (response.length > 0) {
+        const clientsFromData = response
         const searchInput = document.createElement('div')
         searchInput.classList.add('search-input')
         searchInput.innerHTML = ` 

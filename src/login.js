@@ -23,24 +23,24 @@ const handleSubmit = e => {
     return
   }
 
-  getDataFromDB(
-    `http://api.oagsa.com/api/login/login?pUsuario=${user}&pPassword=${password}`
-  ).then(({ data }) => {
-    if (data) {
-      if (checkbox) {
-        localStorage.setItem('sessionID', data.codigoBejerman)
-        localStorage.setItem('session', data.nivelAcceso)
-      } else {
-        sessionStorage.setItem('sessionID', data.codigoBejerman)
-        sessionStorage.setItem('session', data.nivelAcceso)
-      }
+  getDataFromDB(`login/login?pUsuario=${user}&pPassword=${password}`).then(
+    ({ data }) => {
+      if (data) {
+        if (checkbox) {
+          localStorage.setItem('sessionID', data.codigoBejerman)
+          localStorage.setItem('session', data.nivelAcceso)
+        } else {
+          sessionStorage.setItem('sessionID', data.codigoBejerman)
+          sessionStorage.setItem('session', data.nivelAcceso)
+        }
 
-      navigateToDashboard()
-    } else {
-      errors.push('Usuario o contraseña incorrectos')
-      renderErrors(errors, $errorContainer)
+        navigateToDashboard()
+      } else {
+        errors.push('Usuario o contraseña incorrectos')
+        renderErrors(errors, $errorContainer)
+      }
     }
-  })
+  )
 }
 
 $form.addEventListener('submit', handleSubmit)

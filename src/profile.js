@@ -1,15 +1,14 @@
 import { profileClientAccount } from './profileClientAccount.js'
 import { profileClientList } from './profileClientList.js'
+import { profilePricesList } from './profilePricesList.js'
 import { checkLocalStorage } from './storage/profile.js'
 
 import { renderAdminBtn, renderLogoutBtn } from './ui/profile.js'
-import getDataFromDB from './utils/getDataFromDB.js'
 
 const $profileTitle = document.querySelector('#profileTitle')
 const $profileList = document.querySelector('#profileList')
 const $profileInfoContainer = document.querySelector('#profileInfoContainer')
 const $btnContainer = document.querySelector('.profile-container__buttons')
-const $profileName = document.querySelector('#profile-name')
 
 renderAdminBtn($btnContainer)
 renderLogoutBtn($btnContainer)
@@ -32,6 +31,7 @@ $profileList.addEventListener('click', e => {
       break
 
     case 'Lista de precios':
+      profilePricesList($profileInfoContainer)
       break
 
     default:
@@ -47,15 +47,4 @@ function logOut() {
   sessionStorage.removeItem('session')
 
   window.location.replace('../pages/log-in.html')
-}
-
-export async function renderUserName(id) {
-  const response = await getDataFromDB(
-    `http://api.oagsa.com/api/vendedor/vendedor?pVendedor=${id}`
-  )
-  const clientName = await response.data.razonSocial
-
-  if (clientName) {
-    $profileName.textContent = clientName
-  }
 }

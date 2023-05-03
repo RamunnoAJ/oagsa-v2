@@ -19,7 +19,7 @@ export const renderClientAccount = async client => {
   $tableContainer.innerHTML = '<span class="loader"></span>'
 
   const response = await getDataFromDB(
-    `http://api.oagsa.com/api/cliente/cuenta-corriente?pCodigoCliente=${client}`
+    `cliente/cuenta-corriente?pCodigoCliente=${client}`
   )
   const accountMovements = await response.data
 
