@@ -1,6 +1,6 @@
 import { sortClients } from '../utils/sortClients.js'
 
-export const renderClients = (clients, parentElement) => {
+const renderClients = (clients, parentElement) => {
   parentElement.innerHTML = ''
   sortClients(clients)
 
@@ -18,7 +18,7 @@ export const renderClients = (clients, parentElement) => {
   })
 }
 
-export const filterClients = (array, param) => {
+const filterClients = (array, param) => {
   return array.filter(item => item.razonSocial.toLowerCase().includes(param))
 }
 
