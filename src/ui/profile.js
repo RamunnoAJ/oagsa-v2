@@ -6,7 +6,7 @@ import getDataFromDB from '../utils/getDataFromDB.js'
 
 const $profileName = document.querySelector('#profile-name')
 
-export function renderLogoutBtn($btnContainer) {
+export function renderLogoutBtn(parentElement) {
   const logoutBtn = document.createElement('button')
   logoutBtn.classList.add(
     'button',
@@ -18,15 +18,15 @@ export function renderLogoutBtn($btnContainer) {
   logoutBtn.id = 'logout-btn'
   logoutBtn.innerHTML = `log out <i
   class="fa-solid fa-power-off"></i>`
-  $btnContainer.appendChild(logoutBtn)
+  parentElement.appendChild(logoutBtn)
 }
 
-export function renderAdminBtn($btnContainer) {
+export function renderAdminBtn(parentElement) {
   if (localStorageSession === 1 || sessionStorageSession === 1) {
     const adminBtn = document.createElement('p')
     adminBtn.classList.add('button', 'bg-white', 'bg-hover-slate', 'uppercase')
     adminBtn.textContent = 'Admin'
-    $btnContainer.appendChild(adminBtn)
+    parentElement.appendChild(adminBtn)
   }
 }
 

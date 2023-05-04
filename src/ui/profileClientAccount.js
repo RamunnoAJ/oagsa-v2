@@ -1,7 +1,42 @@
-import getDataFromDB from '../utils/getDataFromDB.js'
+import { getAccountMovements } from '../api/profileClientAccount.js'
 import { sortClients } from '../utils/sortClients.js'
 
-export const renderOptions = clients => {
+export const renderProfileClientAccount = (clients, parentElement) => {
+  if (clients.length > 0) {
+    parentElement.innerHTML = `
+    <span class="profile-info__subtitle">Razón social:</span>
+      <form class="profile-info__search" id='client-form'>
+        <select id="selectClient" name='selectedClient' class="select bg-primary mr-4">
+          <option disabled selected value=''>Selecione una opción...</option>
+        </select>
+        <button class="button bg-secondary-300 bg-hover-secondary-400" id="btnSearch"> <span
+            class="visually-hidden-mobile">Buscar</span>
+          <span class="visually-hidden-desktop">
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </span> </button>
+          </form>
+          <div class='table-container'></div>
+          `
+    renderOptions(clients)
+
+    const $btnSearch = document.querySelector('#btnSearch')
+    $btnSearch.addEventListener('click', handleSubmit)
+  } else {
+    parentElement.innerHTML = `<div>No se encontraron resultados</div>`
+  }
+}
+
+const handleSubmit = e => {
+  e.preventDefault()
+  const $form = document.querySelector('#client-form')
+  const selectedClient = $form.selectedClient.value
+
+  if (selectedClient) {
+    renderClientAccount(selectedClient)
+  }
+}
+
+const renderOptions = clients => {
   const $selectClient = document.querySelector('#selectClient')
   sortClients(clients)
 
@@ -14,14 +49,11 @@ export const renderOptions = clients => {
   })
 }
 
-export const renderClientAccount = async client => {
+const renderClientAccount = async client => {
   const $tableContainer = document.querySelector('.table-container')
   $tableContainer.innerHTML = '<span class="loader"></span>'
 
-  const response = await getDataFromDB(
-    `cliente/cuenta-corriente?pCodigoCliente=${client}`
-  )
-  const accountMovements = await response.data
+  const accountMovements = await getAccountMovements(client)
 
   $tableContainer.innerHTML = ''
 
@@ -68,7 +100,7 @@ export const renderClientAccount = async client => {
   }
 }
 
-const renderTableRows = (item, parent) => {
+const renderTableRows = (item, parentElement) => {
   const trimPrice = price => {
     if (price < 0) {
       return price * -1
@@ -84,7 +116,7 @@ const renderTableRows = (item, parent) => {
       <td>$${trimPrice(item.importe)}</td>
       <td class="fw-bold">$${trimPrice(item.importePendiente)}</td>
       `
-  parent.appendChild(tableRow)
+  parentElement.appendChild(tableRow)
 }
 
 const getTotalPrice = prices => {

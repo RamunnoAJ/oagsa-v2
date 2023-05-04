@@ -1,10 +1,10 @@
-export function renderErrors(errors, $errorContainer) {
-  $errorContainer.classList.remove('visually-hidden')
+export function renderErrors(errors, parentElement) {
+  parentElement.classList.remove('visually-hidden')
 
   errors.forEach(error => {
     const newError = document.createElement('p')
     newError.textContent = error
-    $errorContainer.appendChild(newError)
+    parentElement.appendChild(newError)
   })
 }
 

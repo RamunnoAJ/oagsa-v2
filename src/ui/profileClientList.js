@@ -1,7 +1,7 @@
 import { sortClients } from '../utils/sortClients.js'
 
-export const renderClients = (clients, parent) => {
-  parent.innerHTML = ''
+export const renderClients = (clients, parentElement) => {
+  parentElement.innerHTML = ''
   sortClients(clients)
 
   clients.forEach(client => {
@@ -14,10 +14,51 @@ export const renderClients = (clients, parent) => {
     </article>`
     const card = document.createElement('div')
     card.innerHTML = cardContent
-    parent.appendChild(card)
+    parentElement.appendChild(card)
   })
 }
 
 export const filterClients = (array, param) => {
   return array.filter(item => item.razonSocial.toLowerCase().includes(param))
+}
+
+export const renderClientsFromSeller = (clients, parentElement) => {
+  parentElement.innerHTML = ''
+
+  if (clients.length > 0) {
+    const searchInput = document.createElement('div')
+    searchInput.classList.add('search-input')
+    searchInput.innerHTML = ` 
+      <input type="text" id="clients-filter" placeholder="Ingrese razón social" /> 
+      <button class="button bg-secondary-300 bg-hover-secondary-400">Buscar</button>`
+    parentElement.appendChild(searchInput)
+
+    const clientsContainer = document.createElement('section')
+    clientsContainer.classList.add('client-cards__container')
+    parentElement.appendChild(clientsContainer)
+
+    const $filterClients = document.querySelector('#clients-filter')
+
+    const newClients = clients.filter(
+      client => !client.razonSocial.toUpperCase().includes('ANULADA')
+    )
+
+    renderClients(newClients, clientsContainer)
+
+    $filterClients.addEventListener('change', e => {
+      const inputValue = e.target.value
+      if (inputValue.length) {
+        const filteredClients = filterClients(
+          newClients,
+          inputValue.toLowerCase()
+        )
+
+        renderClients(filteredClients, clientsContainer)
+      } else {
+        renderClients(newClients, clientsContainer)
+      }
+    })
+  } else {
+    parentElement.innerHTML = `<div>No se encontraro resultados.</div>`
+  }
 }

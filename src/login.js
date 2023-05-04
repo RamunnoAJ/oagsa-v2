@@ -1,13 +1,13 @@
+import { getUserLogin } from './api/login.js'
 import { checkLocalStorage } from './storage/login.js'
 import { navigateToDashboard, renderErrors } from './ui/login.js'
-import getDataFromDB from './utils/getDataFromDB.js'
 
 const $form = document.querySelector('#login-form')
 const $errorContainer = document.querySelector('#error-container')
 
 checkLocalStorage()
 
-const handleSubmit = e => {
+const handleSubmit = async e => {
   e.preventDefault()
   $errorContainer.innerHTML = ''
   $errorContainer.classList.add('visually-hidden')
@@ -23,24 +23,23 @@ const handleSubmit = e => {
     return
   }
 
-  getDataFromDB(`login/login?pUsuario=${user}&pPassword=${password}`).then(
-    ({ data }) => {
-      if (data) {
-        if (checkbox) {
-          localStorage.setItem('sessionID', data.codigoBejerman)
-          localStorage.setItem('session', data.nivelAcceso)
-        } else {
-          sessionStorage.setItem('sessionID', data.codigoBejerman)
-          sessionStorage.setItem('session', data.nivelAcceso)
-        }
+  const loggedUser = await getUserLogin(user, password)
+  console.log(loggedUser)
 
-        navigateToDashboard()
-      } else {
-        errors.push('Usuario o contraseña incorrectos')
-        renderErrors(errors, $errorContainer)
-      }
+  if (loggedUser) {
+    if (checkbox) {
+      localStorage.setItem('sessionID', loggedUser.codigoBejerman)
+      localStorage.setItem('session', loggedUser.nivelAcceso)
+    } else {
+      sessionStorage.setItem('sessionID', loggedUser.codigoBejerman)
+      sessionStorage.setItem('session', loggedUser.nivelAcceso)
     }
-  )
+
+    navigateToDashboard()
+  } else {
+    errors.push('Usuario o contraseña incorrectos')
+    renderErrors(errors, $errorContainer)
+  }
 }
 
 $form.addEventListener('submit', handleSubmit)

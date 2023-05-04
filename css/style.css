@@ -4054,6 +4054,7 @@ footer ul {
     header .nav-icons {
       position: absolute;
       left: 50%;
+      top: 0;
       transform: translateX(-50%);
       background-color: #faeed3;
       padding: 0 6rem 1rem 6rem;
