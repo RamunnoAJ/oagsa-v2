@@ -6,3 +6,10 @@ export async function getProducts(url) {
 
   return products
 }
+
+export async function getCategories(url) {
+  const response = await getDataFromDB(url)
+  const categories = await response.data
+
+  return categories
+}

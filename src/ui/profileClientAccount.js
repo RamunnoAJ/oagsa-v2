@@ -5,17 +5,17 @@ export const renderProfileClientAccount = (clients, parentElement) => {
   if (clients.length > 0) {
     parentElement.innerHTML = `
     <span class="profile-info__subtitle">Razón social:</span>
-      <form class="profile-info__search" id='client-form'>
-        <select id="selectClient" name='selectedClient' class="select bg-primary mr-4">
-          <option disabled selected value=''>Selecione una opción...</option>
-        </select>
-        <button class="button bg-secondary-300 bg-hover-secondary-400" id="btnSearch"> <span
+    <form class="profile-info__search" id='client-form'>
+      <select id="selectClient" name='selectedClient' class="select bg-primary mr-4">
+        <option disabled selected value=''>Selecione una opción...</option>
+      </select>
+      <button class="button bg-secondary-300 bg-hover-secondary-400" id="btnSearch"> <span
             class="visually-hidden-mobile">Buscar</span>
-          <span class="visually-hidden-desktop">
-            <i class="fa-solid fa-magnifying-glass"></i>
-          </span> </button>
-          </form>
-          <div class='table-container'></div>
+        <span class="visually-hidden-desktop">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </span> </button>
+    </form>
+    <div class='table-container'></div>
           `
     renderOptions(clients)
 
