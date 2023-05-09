@@ -4,7 +4,6 @@ import * as storage from '../storage/profilePricesList.js'
 export const renderProductPrices = async (products, parentElement) => {
   if (products.length > 0) {
     parentElement.innerHTML = `
-      <span class="profile-info__subtitle">Lista de Precios</span>
         <form class="profile-info__search search__prices" id="prices-form">
 
           <select id='select-rubro' name='selectedRubro' class="select bg-primary">
@@ -112,7 +111,11 @@ const renderOptions = (options, selectID) => {
   $select.innerHTML = `<option disabled selected value=''>Seleccione un rubro...</option>
   <option value='all'> -- TODOS -- </option>`
 
-  options.forEach(option => {
+  const sortedOptions = options.sort((a, b) =>
+    a.descripcion.localeCompare(b.descripcion)
+  )
+
+  sortedOptions.forEach(option => {
     const $option = document.createElement('option')
     if (option.codigoRubro && option.codigoSubRubro) {
       $option.value = option.codigoSubRubro.trim()

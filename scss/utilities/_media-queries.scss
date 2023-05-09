@@ -211,6 +211,7 @@
     @include flex(column, flex-end, flex-start);
     flex-direction: row;
     min-height: 70vh;
+    gap: 1rem;
 
     .profile-info__container {
       margin-top: 1rem;

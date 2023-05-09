@@ -3571,7 +3571,7 @@ body {
   font-weight: normal;
   border: 1px solid #e2e8f0;
   border-collapse: collapse;
-  width: 100%;
+  width: 95%;
   white-space: nowrap;
   background-color: #fff;
   max-height: 500px;
@@ -3929,7 +3929,7 @@ header {
 
 .dashboard-container {
   max-width: 75rem;
-  width: 95%;
+  width: 100%;
   margin-inline: auto; }
   .dashboard-container .dashboard-wrapper {
     display: flex;
@@ -3943,7 +3943,7 @@ header {
       justify-content: center;
       align-items: center;
       gap: 1rem;
-      width: 100%; }
+      width: 95%; }
     .dashboard-container .dashboard-wrapper .profile-container {
       display: flex;
       flex-direction: column;
@@ -4200,7 +4200,8 @@ footer ul {
     justify-content: flex-end;
     align-items: flex-start;
     flex-direction: row;
-    min-height: 70vh; }
+    min-height: 70vh;
+    gap: 1rem; }
     .dashboard-container .dashboard-wrapper .profile-info__container {
       margin-top: 1rem; }
       .dashboard-container .dashboard-wrapper .profile-info__container .client-cards__container {

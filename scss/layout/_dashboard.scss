@@ -1,6 +1,6 @@
 .dashboard-container {
   max-width: 75rem;
-  width: 95%;
+  width: 100%;
   margin-inline: auto;
 
   .dashboard-wrapper {
@@ -10,7 +10,7 @@
     .profile-info__container {
       @include flex(column, center, center);
       gap: 1rem;
-      width: 100%;
+      width: 95%;
     }
 
     .profile-container {
