@@ -240,6 +240,14 @@
         margin-bottom: 2rem;
         margin-top: 2rem;
       }
+
+      .search__prices {
+        @include flex(row, center, center);
+
+        .select {
+          max-width: 300px;
+        }
+      }
     }
   }
 
@@ -252,9 +260,6 @@
 
 @media (min-width: 75rem) {
   .dashboard-container .dashboard-wrapper .profile-container {
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
+    height: 100%;
   }
 }

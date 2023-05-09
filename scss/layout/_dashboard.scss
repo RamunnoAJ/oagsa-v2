@@ -78,6 +78,19 @@
       .profile-info__search {
         @include flex(row, center, center);
       }
+
+      .search__prices {
+        @include flex(column, center, center);
+        gap: 1rem;
+
+        .select {
+          min-width: 230px;
+        }
+
+        button {
+          align-self: flex-end;
+        }
+      }
     }
   }
 }

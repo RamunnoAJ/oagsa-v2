@@ -3572,7 +3572,6 @@ body {
   border: 1px solid #e2e8f0;
   border-collapse: collapse;
   width: 100%;
-  max-width: 100%;
   white-space: nowrap;
   background-color: #fff;
   max-height: 500px;
@@ -3611,7 +3610,8 @@ body {
   .fl-table thead,
   .fl-table tbody,
   .fl-table thead th {
-    display: block; }
+    display: block;
+    position: sticky; }
   .fl-table thead th:last-child {
     border-bottom: none; }
   .fl-table thead {
@@ -4005,6 +4005,16 @@ header {
         flex-direction: row;
         justify-content: center;
         align-items: center; }
+      .dashboard-container .dashboard-wrapper .profile-info .search__prices {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem; }
+        .dashboard-container .dashboard-wrapper .profile-info .search__prices .select {
+          min-width: 230px; }
+        .dashboard-container .dashboard-wrapper .profile-info .search__prices button {
+          align-self: flex-end; }
 
 footer .footer-container {
   display: flex;
@@ -4209,12 +4219,16 @@ footer ul {
       .dashboard-container .dashboard-wrapper .profile-info .profile-info__title {
         margin-bottom: 2rem;
         margin-top: 2rem; }
+      .dashboard-container .dashboard-wrapper .profile-info .search__prices {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center; }
+        .dashboard-container .dashboard-wrapper .profile-info .search__prices .select {
+          max-width: 300px; }
   .main-login form {
     padding-inline: 4rem; } }
 
 @media (min-width: 75rem) {
   .dashboard-container .dashboard-wrapper .profile-container {
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0; } }
+    height: 100%; } }
