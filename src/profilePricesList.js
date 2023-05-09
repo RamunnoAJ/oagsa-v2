@@ -6,7 +6,5 @@ export const profilePricesList = async $profileInfoContainer => {
 
   const products = await getProducts('precio/rubro?pCodigoRubro=A001')
 
-  console.log(products)
-
   renderProductPrices(products, $profileInfoContainer)
 }

@@ -1,17 +1,18 @@
 import { getCategories, getProducts } from '../api/profilePricesList.js'
+import * as storage from '../storage/profilePricesList.js'
 
 export const renderProductPrices = async (products, parentElement) => {
   if (products.length > 0) {
     parentElement.innerHTML = `
       <span class="profile-info__subtitle">Lista de Precios</span>
-        <form class="profile-info__search" id="prices-form">
+        <form class="profile-info__search search__prices" id="prices-form">
 
-          <select id='select-rubro' name='selectedRubro'>
+          <select id='select-rubro' name='selectedRubro' class="select bg-primary">
             <option disabled selected value=''>Seleccione un rubro...</option>
             <option value='all'> -- TODOS -- </option>
           </select>
 
-          <select id='select-subrubro' name='selectedSubrubro'>
+          <select id='select-subrubro' name='selectedSubrubro' class="select bg-primary">
             <option disabled selected value=''>Seleccione un subrubro...</option>
             <option value='all'> -- TODOS -- </option>
           </select>
@@ -27,7 +28,8 @@ export const renderProductPrices = async (products, parentElement) => {
         <div class="table-container"></div>
     `
 
-    const rubros = await getCategories('clase/all')
+    const rubros = await getCategories('articulo/rubros')
+    storage.saveRubros(rubros)
 
     renderOptions(rubros, '#select-rubro')
 
@@ -52,14 +54,16 @@ const handleSubmit = async e => {
 
   let products
 
-  if (selectedRubro && selectedSubrubro) {
+  if (selectedRubro && selectedSubrubro && selectedSubrubro !== 'all') {
     products = await getProducts(
-      `articulo-rubro?pCodigoRubro=${selectedRubro}&pCodigoSubRubro=${selectedSubrubro}`
+      `articulo/articulo-rubro?pCodigoRubro=${selectedRubro}&pCodigoSubRubro=${selectedSubrubro}`
     )
 
     renderPrices(products)
-  } else if (selectedRubro) {
-    products = await getProducts(`articulo-rubro?pCodigoRubro=${selectedRubro}`)
+  } else if (selectedRubro || (selectedRubro && selectedSubrubro === 'all')) {
+    products = await getProducts(
+      `articulo/articulo-rubro?pCodigoRubro=${selectedRubro}`
+    )
 
     renderPrices(products)
   }
@@ -97,18 +101,20 @@ const renderPrices = async products => {
     products.forEach(product => {
       renderTableRows(product, $tableBody)
     })
+  } else {
+    $tableContainer.innerHTML = 'No se encontraron resultados.'
   }
 }
 
 const renderOptions = (options, selectID) => {
   const $select = document.querySelector(selectID)
 
+  $select.innerHTML = `<option disabled selected value=''>Seleccione un rubro...</option>
+  <option value='all'> -- TODOS -- </option>`
+
   options.forEach(option => {
     const $option = document.createElement('option')
-    if (option.idSuperRubro) {
-      $option.value = option.idSuperRubro.trim()
-      $option.textContent = option.nombre.trim()
-    } else if (option.codigoRubro && option.codigoSubRubro) {
+    if (option.codigoRubro && option.codigoSubRubro) {
       $option.value = option.codigoSubRubro.trim()
       $option.textContent = option.descripcion.trim()
     } else {
@@ -120,28 +126,41 @@ const renderOptions = (options, selectID) => {
   })
 }
 
-const renderTableRows = (item, parentElement) => {
+const renderTableRows = async (item, parentElement) => {
+  const codigoRubro = item.codigoRubro.trim()
+  const codigoSubrubro = item.codigoSubRubro.trim()
+
+  const rubros = storage.getRubros('rubros')
+  const subrubros = storage.getSubrubros(codigoRubro)
+
+  const rubro = rubros.filter(rubro => {
+    return rubro.codigoRubro === codigoRubro
+  })
+
+  const subrubro = subrubros.filter(subrubro => {
+    return subrubro.codigoSubRubro === codigoSubrubro
+  })
+
   const tableRow = document.createElement('tr')
   tableRow.innerHTML = `
-    <td>${item.nombre}</td>
+    <td>${item.codigoArticulo}</td>
     <td>${item.descripcion}</td>
     <td>${item.marca}</td>
-    <td>${item.precio}</td>
-    <td>${item.rubro}</td>
-    <td>${item.subrubro}</td>
+    <td>$${item.precio}</td>
+    <td>${rubro[0].descripcion}</td>
+    <td>${subrubro[0].descripcion}</td>
   `
 
   parentElement.appendChild(tableRow)
 }
 
-const handleChange = async (e, subrubro) => {
+const handleChange = async (e, codigoRubro) => {
   e.preventDefault()
 
-  const categories = await getCategories(
-    `articulo/subrubros?pCodigoRubro=${subrubro}`
+  const subrubros = await getCategories(
+    `articulo/subrubros?pCodigoRubro=${codigoRubro}`
   )
 
-  console.log(categories)
-
-  renderOptions(categories, '#select-subrubro')
+  storage.saveSubrubros(subrubros, codigoRubro)
+  renderOptions(subrubros, '#select-subrubro')
 }
