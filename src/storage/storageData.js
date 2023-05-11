@@ -1,5 +1,11 @@
-export const sessionStorageID = sessionStorage.getItem('sessionID')
-export const localStorageID = localStorage.getItem('sessionID')
+const cookies = document.cookie.split('; ')
+export let userFromCookie
 
-export const localStorageSession = Number(localStorage.getItem('session'))
-export const sessionStorageSession = Number(sessionStorage.getItem('session'))
+for (let i = 0; i < cookies.length; i++) {
+  const cookie = cookies[i].split('=')
+  if (cookie[0] === 'user') {
+    const usuarioDesencriptado = cookie[1]
+    userFromCookie = JSON.parse(usuarioDesencriptado)
+    break
+  }
+}

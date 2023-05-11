@@ -1,7 +1,7 @@
-import { localStorageID, sessionStorageID } from './storageData.js'
+import { userFromCookie } from './storageData.js'
 
 export function checkLocalStorage() {
-  if (localStorageID !== null || sessionStorageID !== null) {
+  if (userFromCookie) {
     window.location.replace('../pages/dashboard.html')
   }
 }

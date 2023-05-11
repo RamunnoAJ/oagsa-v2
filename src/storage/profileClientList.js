@@ -1,7 +1,6 @@
-import { localStorageID, sessionStorageID } from './storageData.js'
+import { userFromCookie } from './storageData.js'
 
 export function getStorageID() {
-  if (localStorageID) return localStorageID
-  if (sessionStorageID) return sessionStorageID
+  if (userFromCookie) return userFromCookie.id
   return null
 }
