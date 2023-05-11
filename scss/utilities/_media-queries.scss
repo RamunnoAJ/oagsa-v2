@@ -207,6 +207,14 @@
     top: 30vh;
   }
 
+  .main-login {
+    form {
+      padding-inline: 4rem;
+    }
+  }
+}
+
+@media (min-width: 75rem) {
   .dashboard-container .dashboard-wrapper {
     @include flex(column, flex-end, flex-start);
     flex-direction: row;
@@ -252,14 +260,6 @@
     }
   }
 
-  .main-login {
-    form {
-      padding-inline: 4rem;
-    }
-  }
-}
-
-@media (min-width: 75rem) {
   .dashboard-container .dashboard-wrapper .profile-container {
     height: 100%;
   }

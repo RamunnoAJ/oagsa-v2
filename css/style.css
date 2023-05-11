@@ -4194,6 +4194,10 @@ footer ul {
   .about-us__footer {
     position: relative;
     top: 30vh; }
+  .main-login form {
+    padding-inline: 4rem; } }
+
+@media (min-width: 75rem) {
   .dashboard-container .dashboard-wrapper {
     display: flex;
     flex-direction: column;
@@ -4227,9 +4231,5 @@ footer ul {
         align-items: center; }
         .dashboard-container .dashboard-wrapper .profile-info .search__prices .select {
           max-width: 300px; }
-  .main-login form {
-    padding-inline: 4rem; } }
-
-@media (min-width: 75rem) {
   .dashboard-container .dashboard-wrapper .profile-container {
     height: 100%; } }
