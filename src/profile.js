@@ -41,10 +41,10 @@ $profileList.addEventListener('click', e => {
 })
 
 function logOut() {
-  localStorage.removeItem('sessionID')
-  localStorage.removeItem('session')
-  sessionStorage.removeItem('sessionID')
-  sessionStorage.removeItem('session')
+  const expirationDate = new Date()
+  expirationDate.setHours(expirationDate.getDate() - 1)
+
+  document.cookie = `user=; expires=${expirationDate.toUTCString()}; path=/; secure`
 
   window.location.replace('../pages/log-in.html')
 }

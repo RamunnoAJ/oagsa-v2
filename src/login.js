@@ -12,27 +12,30 @@ const handleSubmit = async e => {
   $errorContainer.innerHTML = ''
   $errorContainer.classList.add('visually-hidden')
 
-  const user = $form.user.value
+  const username = $form.user.value
   const password = $form.password.value
   const checkbox = $form.checkbox.checked
 
-  const errors = validateLogin(user, password)
+  const errors = validateLogin(username, password)
 
   if (errors.length > 0) {
     renderErrors(errors)
     return
   }
 
-  const loggedUser = await getUserLogin(user, password)
-  console.log(loggedUser)
+  const loggedUser = await getUserLogin(username, password)
 
   if (loggedUser) {
+    const user = {
+      id: loggedUser.codigoBejerman,
+      role: loggedUser.nivelAcceso,
+      checkbox,
+    }
+    const cookieValue = JSON.stringify(user)
     if (checkbox) {
-      localStorage.setItem('sessionID', loggedUser.codigoBejerman)
-      localStorage.setItem('session', loggedUser.nivelAcceso)
+      document.cookie = `user=${cookieValue}; max-age=360000000; secure; path=/`
     } else {
-      sessionStorage.setItem('sessionID', loggedUser.codigoBejerman)
-      sessionStorage.setItem('session', loggedUser.nivelAcceso)
+      document.cookie = `user=${cookieValue}; max-age=3600; secure; path=/`
     }
 
     navigateToDashboard()

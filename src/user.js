@@ -1,4 +1,4 @@
-import { localStorageID, sessionStorageID } from './storage/storageData.js'
+import { userFromCookie } from './storage/storageData.js'
 
 const currentURL = window.location.href
 const $accountIcon = document.querySelector('#account-icon')
@@ -9,7 +9,7 @@ if (currentURL.includes('/pages/')) {
   buttonURL = './dashboard.html'
 }
 
-if (localStorageID || sessionStorageID) {
+if (userFromCookie) {
   $accountIcon.innerHTML = `
   <div>
   <button class="button button-sm mt-1 bg-white bg-hover-slate"><i class="fa-solid fa-envelope"></i></button>

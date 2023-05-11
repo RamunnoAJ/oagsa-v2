@@ -1,7 +1,4 @@
-import {
-  localStorageSession,
-  sessionStorageSession,
-} from '../storage/storageData.js'
+import { userFromCookie } from '../storage/storageData.js'
 import getDataFromDB from '../utils/getDataFromDB.js'
 
 const $profileName = document.querySelector('#profile-name')
@@ -22,11 +19,18 @@ export function renderLogoutBtn(parentElement) {
 }
 
 export function renderAdminBtn(parentElement) {
-  if (localStorageSession === 1 || sessionStorageSession === 1) {
-    const adminBtn = document.createElement('p')
-    adminBtn.classList.add('button', 'bg-white', 'bg-hover-slate', 'uppercase')
-    adminBtn.textContent = 'Admin'
-    parentElement.appendChild(adminBtn)
+  if (userFromCookie) {
+    if (userFromCookie.role === 1) {
+      const adminBtn = document.createElement('p')
+      adminBtn.classList.add(
+        'button',
+        'bg-white',
+        'bg-hover-slate',
+        'uppercase'
+      )
+      adminBtn.textContent = 'Admin'
+      parentElement.appendChild(adminBtn)
+    }
   }
 }
 
