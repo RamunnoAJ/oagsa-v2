@@ -79,36 +79,36 @@
         </div>
       </aside>
 
-      <form class="contact-form mt-20">
+      <form class="contact-form mt-20" method="post" action="https://formsubmit.co/ramunnoagustin@gmail.com">
         <h2>Envíanos un mensaje</h2>
 
         <div>
           <label for="name">Nombre:</label>
-          <input type="text" id="name" />
+          <input type="text" id="name" name="nombre" />
         </div>
         <div>
           <label for="surname">Apellido:</label>
-          <input type="text" id="surname" />
+          <input type="text" id="surname" name="apellido" />
         </div>
         <div>
           <label for="company">Empresa:</label>
-          <input type="text" id="company" />
+          <input type="text" id="company" name="empresa" />
         </div>
         <div>
           <label for="phone">Teléfono:</label>
-          <input type="tel" id="phone" />
+          <input type="tel" id="phone" name="telefono" />
         </div>
         <div class="contact-form__large">
           <label for="email">Email:</label>
-          <input type="email" id="email" />
+          <input type="email" id="email" name="email" />
         </div>
         <div class="contact-form__large">
           <label for="location">Localidad:</label>
-          <input type="text" id="location" />
+          <input type="text" id="location" name="localidad" />
         </div>
         <div class="contact-form__large">
           <label for="message">Mensaje:</label>
-          <textarea id="message" rows="5"></textarea>
+          <textarea id="message" rows="5" name="mensaje"></textarea>
         </div>
         <input class="button submit-button bg-secondary-300 bg-hover-secondary-400 contact-form__large" type="submit"
           value="enviar" />
