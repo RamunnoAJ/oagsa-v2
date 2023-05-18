@@ -8,7 +8,6 @@ export const renderProductPrices = async (products, parentElement) => {
 
           <select id='select-rubro' name='selectedRubro' class="select bg-primary">
             <option disabled selected value=''>Seleccione un rubro...</option>
-            <option value='all'> -- TODOS -- </option>
           </select>
 
           <select id='select-subrubro' name='selectedSubrubro' class="select bg-primary">
@@ -107,9 +106,12 @@ const renderPrices = async products => {
 
 const renderOptions = (options, selectID) => {
   const $select = document.querySelector(selectID)
-
-  $select.innerHTML = `<option disabled selected value=''>Seleccione un rubro...</option>
-  <option value='all'> -- TODOS -- </option>`
+  if (selectID === '#select-rubro') {
+    $select.innerHTML = `<option disabled selected value=''>Seleccione un rubro...</option>`
+  } else {
+    $select.innerHTML = `<option disabled selected value=''>Seleccione un subrubro...</option>
+    <option value='all'> -- TODOS -- </option>`
+  }
 
   const sortedOptions = options.sort((a, b) =>
     a.descripcion.localeCompare(b.descripcion)
