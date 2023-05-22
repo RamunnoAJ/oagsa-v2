@@ -1,4 +1,4 @@
-import userFromCookie from '../storage/storageData.js'
+import getCookie from '../storage/storageData.js'
 import getDataFromDB from '../utils/getDataFromDB.js'
 
 const $profileName = document.querySelector('#profile-name')
@@ -19,6 +19,8 @@ export function renderLogoutBtn(parentElement) {
 }
 
 export function renderAdminBtn(parentElement) {
+  const userFromCookie = JSON.parse(getCookie('user'))
+
   if (userFromCookie) {
     if (userFromCookie.role === 1) {
       const adminBtn = document.createElement('p')

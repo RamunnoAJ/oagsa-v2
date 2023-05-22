@@ -5,8 +5,6 @@ import { navigateToDashboard, renderErrors } from './ui/login.js'
 const $form = document.querySelector('#login-form')
 const $errorContainer = document.querySelector('#error-container')
 
-checkLocalStorage()
-
 const handleSubmit = async e => {
   e.preventDefault()
   $errorContainer.innerHTML = ''
@@ -32,6 +30,7 @@ const handleSubmit = async e => {
       checkbox,
     }
     const cookieValue = JSON.stringify(user)
+    console.log(cookieValue)
     if (checkbox) {
       document.cookie = `user=${cookieValue}; max-age=360000000; secure; path=/`
     } else {
@@ -64,3 +63,5 @@ function validateLogin(user, password) {
 
   return errors
 }
+
+checkLocalStorage()
