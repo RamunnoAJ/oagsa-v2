@@ -1,0 +1,116 @@
+@for $i from 1 through 64 {
+  .m-#{$i} {
+    margin: (0.25rem * $i);
+  }
+  .mx-#{$i} {
+    margin-inline: (0.25rem * $i);
+  }
+  .my-#{$i} {
+    margin-block: (0.25rem * $i);
+  }
+
+  .p-#{$i} {
+    padding: (0.25rem * $i);
+  }
+  .px-#{$i} {
+    padding-inline: (0.25rem * $i);
+  }
+  .py-#{$i} {
+    padding-block: (0.25rem * $i);
+  }
+
+  .mt-#{$i} {
+    margin-top: (0.25rem * $i);
+  }
+
+  .mb-#{$i} {
+    margin-bottom: (0.25rem * $i);
+  }
+
+  .ml-#{$i} {
+    margin-left: (0.25rem * $i);
+  }
+
+  .mr-#{$i} {
+    margin-right: (0.25rem * $i);
+  }
+
+  .pt-#{$i} {
+    padding-top: (0.25rem * $i);
+  }
+
+  .pb-#{$i} {
+    padding-bottom: (0.25rem * $i);
+  }
+
+  .pl-#{$i} {
+    padding-left: (0.25rem * $i);
+  }
+
+  .pr-#{$i} {
+    padding-right: (0.25rem * $i);
+  }
+}
+
+$colors: (
+  'primary': $primary-color,
+  'secondary-300': $secondary-color-300,
+  'secondary-400': $secondary-color-400,
+  'white': $white,
+  'black': $black,
+  'dark-grey': $dark-grey,
+  'slate': $slate,
+  'error': $error-color,
+);
+
+@each $color, $value in $colors {
+  .bg-#{$color} {
+    background-color: $value;
+  }
+
+  .bg-hover-#{$color} {
+    transition: all 0.3s ease-in-out;
+  }
+
+  .bg-hover-#{$color}:hover {
+    background-color: $value;
+  }
+
+  .text-#{$color} {
+    color: $value;
+  }
+
+  .text-hover-#{$color} {
+    transition: all 0.3s ease-in-out;
+  }
+
+  .text-hover-#{$color}:hover {
+    color: $value;
+  }
+}
+
+.fw-bold {
+  font-weight: $fw-bold;
+}
+
+.visually-hidden {
+  display: none !important;
+}
+
+.visually-hidden-mobile {
+  display: none;
+}
+
+@media (min-width: 45rem) {
+  .visually-hidden-desktop {
+    display: none;
+  }
+
+  .visually-hidden-mobile {
+    display: block;
+  }
+}
+
+.uppercase {
+  text-transform: uppercase;
+}

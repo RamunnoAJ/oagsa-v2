@@ -19,10 +19,12 @@ html {
 html,
 body {
   height: 100%;
+  min-height: 100vh;
 }
 
 body {
   text-rendering: optimizeSpeed;
+  position: relative;
 }
 
 /**
@@ -149,7 +151,7 @@ sup {
 img,
 picture,
 svg {
-  min-width: 100%;
+  max-width: 100%;
   display: block;
 }
 
@@ -362,4 +364,10 @@ template {
   margin: 0;
   padding: 0;
   font: inherit;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }

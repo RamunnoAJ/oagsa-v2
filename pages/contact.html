@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Sitio web OAGSA" />
+  <meta name="keywords" content="Neumáticos, tienda, mar del plata, Motos, Bicicletas, Cuatriciclos, accesorios" />
+  <meta name="author" content="Stefanía Sanchez Golfieri - Agustín Julián Ramunno" />
+  <meta name="copyright" content="Oscar A. González" />
+
+  <title>Inicio | OAGSA</title>
+
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" />
+</head>
+
+<body>
+  <header class="bg-primary">
+    <nav>
+      <div class="nav-icons">
+        <a href="../index.html"><img class="logo" src="../assets/logo-oagsa.png" alt="Logo OAGSA" /></a>
+        <button class="btn-menu" type="button">
+          <i class="btn-menu__bars" aria-hidden="true"></i>
+          <span class="visually-hidden">Menu</span>
+        </button>
+      </div>
+      <ul class="nav-bar bg-primary">
+        <li><a href="./about-us.html" class="text-hover-secondary-400">Nosotros</a></li>
+        <li><a href="./store.html" class="text-hover-secondary-400">Tienda</a></li>
+        <li><a href="#" class="text-hover-secondary-400">Contacto</a></li>
+        <li id="account-icon">
+          <a href="./log-in.html" class="button mt-1 bg-secondary-300 bg-hover-secondary-400 text-black"><span>Log
+              In</span> <i class="fa-solid fa-lock"></i></a>
+        </li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="mt-14">
+    <div class="contact-container">
+      <aside class="contact-info mt-10">
+        <div class="contact-title">
+          <h1>Contáctanos</h1>
+          <div class="contact-line"></div>
+        </div>
+        <div class="contact-data">
+          <p>
+            Para comprar nuestros productos, previamente debe registrarse como cliente y obtener su clave de acceso.
+            Para ello contáctenos y estaremos a su disposición para resolver todas sus necesidades. <br />
+          </p>
+          <p>Si usted ya es un cliente que posee usuario y contraseña y quiere cambiarla, haga click <a>aquí.</a></p>
+          <p>
+            Nuestra empresa solamente realiza ventas al por mayor, si usted es un consumidor final, igualmente puede
+            contactarnos y le indicaremos el lugar mas próximo a su domicilio para adquirir nuestros productos. <br />
+          </p>
+          <p>Gracias por su elección.</p>
+
+          <div class="line mt-10"></div>
+
+          <div class="contact-icons mt-6">
+            <div class="flex-icons">
+              <i class="fa-solid fa-at"></i>
+              <p>info@oagsa.com</p>
+            </div>
+            <div class="flex-icons">
+              <i class="fa-solid fa-phone"></i>
+              <p>0800 666 2462</p>
+            </div>
+            <div class="flex-icons">
+              <i class="fa-solid fa-location-dot"></i>
+              <p>
+                Namuncurá 232, 7600 Mar del Plata, <br />
+                Buenos Aires, Argentina.
+              </p>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <form class="contact-form mt-20" method="post" action="https://formsubmit.co/ramunnoagustin@gmail.com">
+        <h2>Envíanos un mensaje</h2>
+
+        <div>
+          <label for="name">Nombre:</label>
+          <input type="text" id="name" name="nombre" />
+        </div>
+        <div>
+          <label for="surname">Apellido:</label>
+          <input type="text" id="surname" name="apellido" />
+        </div>
+        <div>
+          <label for="company">Empresa:</label>
+          <input type="text" id="company" name="empresa" />
+        </div>
+        <div>
+          <label for="phone">Teléfono:</label>
+          <input type="tel" id="phone" name="telefono" />
+        </div>
+        <div class="contact-form__large">
+          <label for="email">Email:</label>
+          <input type="email" id="email" name="email" />
+        </div>
+        <div class="contact-form__large">
+          <label for="location">Localidad:</label>
+          <input type="text" id="location" name="localidad" />
+        </div>
+        <div class="contact-form__large">
+          <label for="message">Mensaje:</label>
+          <textarea id="message" rows="5" name="mensaje"></textarea>
+        </div>
+        <input class="button submit-button bg-secondary-300 bg-hover-secondary-400 contact-form__large" type="submit"
+          value="enviar" />
+      </form>
+    </div>
+  </main>
+
+  <footer class="px-4 pt-5 mt-20 bg-primary">
+    <div class="footer-container">
+      <div>
+        <a href="../index.html"><img class="logo-footer pr-4" src="../assets/logo-oagsa.png" alt="Logo OAGSA" /></a>
+      </div>
+
+      <ul class="icons">
+        <li>
+          <a class="text-hover-secondary-400" target="_blank" href="https://www.instagram.com/oag.s.a/"><i
+              class="fa-brands fa-instagram footer-icons"></i></a>
+        </li>
+        <li>
+          <a class="text-hover-secondary-400" target="_blank" href=""><i
+              class="fa-brands fa-whatsapp footer-icons"></i></a>
+        </li>
+        <li>
+          <a class="text-hover-secondary-400" target="_blank"
+            href="https://www.facebook.com/people/Oscar-A-Gonzalez/100063653886728/"><i
+              class="fa-brands fa-facebook footer-icons"></i></a>
+        </li>
+      </ul>
+
+      <div>
+        <ul class="mb-4 uppercase">
+          <li><a class="text-hover-secondary-400" href="./about-us.html">Nosotros</a></li>
+          <li><a class="text-hover-secondary-400" href="./store.html">Tienda</a></li>
+          <li><a class="text-hover-secondary-400" href="#">Contacto</a></li>
+          <li><a class="text-hover-secondary-400" href="./log-in.html">Log In</a></li>
+        </ul>
+
+        <p>OSCAR A. GONZALEZ S. A. Todos los derechos reservados - 2022</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../src/ui/menu.js"></script>
+  <script type="module" src="../src/user.js"></script>
+</body>
+
+</html>

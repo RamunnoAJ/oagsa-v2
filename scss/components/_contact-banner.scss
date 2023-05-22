@@ -1,0 +1,12 @@
+.contact-banner {
+  width: 95%;
+  max-width: 75rem;
+  margin-inline: auto;
+  @include flex(column, center, center);
+
+  h2 {
+    font-family: $ff-heading;
+    font-weight: $fw-bold;
+    font-size: var(--fs-secondary-heading);
+  }
+}

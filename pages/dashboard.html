@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Sitio web OAGSA" />
+  <meta name="keywords" content="Neumáticos, tienda, mar del plata, Motos, Bicicletas, Cuatriciclos, accesorios" />
+  <meta name="author" content="Stefanía Sanchez Golfieri - Agustín Julián Ramunno" />
+  <meta name="copyright" content="Oscar A. González" />
+
+  <title>Inicio | OAGSA</title>
+
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" />
+</head>
+
+<body>
+  <header class="bg-primary">
+    <nav>
+      <div class="nav-icons">
+        <a href="../index.html"><img class="logo" src="../assets/logo-oagsa.png" alt="Logo OAGSA" /></a>
+        <button class="btn-menu" type="button">
+          <i class="btn-menu__bars" aria-hidden="true"></i>
+          <span class="visually-hidden">Menu</span>
+        </button>
+      </div>
+      <ul class="nav-bar bg-primary">
+        <li>
+          <a href="./about-us.html" class="text-hover-secondary-400">Nosotros</a>
+        </li>
+        <li>
+          <a href="./store.html" class="text-hover-secondary-400">Tienda</a>
+        </li>
+        <li>
+          <a href="./contact.html" class="text-hover-secondary-400">Contacto</a>
+        </li>
+        <li id="account-icon">
+          <a href="./log-in.html" class="button mt-1 bg-secondary-300 bg-hover-secondary-400 text-black"><span>Log
+              In</span> <i class="fa-solid fa-lock"></i></a>
+        </li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="dashboard-container mt-20">
+    <div class="dashboard-wrapper">
+      <div class="profile-container">
+        <h1 id="profile-name">Tu perfil</h1>
+        <ul class="profile-container__list" id="profileList">
+          <li>Cuenta corriente</li>
+          <li>Historial de pedidos</li>
+          <li>Borrador de pedidos</li>
+          <li>Lista de precios</li>
+          <li>Lista de clientes</li>
+        </ul>
+        <div class="profile-container__buttons">
+
+        </div>
+      </div>
+      <div class="profile-info">
+        <h2 class="profile-info__title uppercase" id="profileTitle"></h2>
+        <div class="profile-info__container" id="profileInfoContainer">
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="px-4 pt-5 mt-20 bg-primary">
+    <div class="footer-container">
+      <div>
+        <a href="../index.html"><img class="logo-footer pr-4" src="../assets/logo-oagsa.png" alt="Logo OAGSA" /></a>
+      </div>
+
+      <ul class="icons">
+        <li>
+          <a class="text-hover-secondary-400" target="_blank" href="https://www.instagram.com/oag.s.a/"><i
+              class="fa-brands fa-instagram footer-icons"></i></a>
+        </li>
+        <li>
+          <a class="text-hover-secondary-400" target="_blank" href="#"><i
+              class="fa-brands fa-whatsapp footer-icons"></i></a>
+        </li>
+        <li>
+          <a class="text-hover-secondary-400" target="_blank"
+            href="https://www.facebook.com/people/Oscar-A-Gonzalez/100063653886728/"><i
+              class="fa-brands fa-facebook footer-icons"></i></a>
+        </li>
+      </ul>
+
+      <div>
+        <ul class="mb-4 uppercase">
+          <li>
+            <a class="text-hover-secondary-400" href="./about-us.html">Nosotros</a>
+          </li>
+          <li>
+            <a class="text-hover-secondary-400" href="./store.html">Tienda</a>
+          </li>
+          <li>
+            <a class="text-hover-secondary-400" href="./contact.html">Contacto</a>
+          </li>
+          <li>
+            <a class="text-hover-secondary-400" href="./log-in.html">Log In</a>
+          </li>
+        </ul>
+
+        <p>OSCAR A. GONZALEZ S. A. Todos los derechos reservados - 2022</p>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module" src="../src/user.js"></script>
+  <script src="../src/ui/menu.js"></script>
+  <script type="module" src="../src/profile.js"></script>
+</body>
+
+</html>
