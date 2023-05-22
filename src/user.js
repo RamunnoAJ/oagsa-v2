@@ -1,4 +1,4 @@
-import { userFromCookie } from './storage/storageData.js'
+import userFromCookie from './storage/storageData.js'
 
 const currentURL = window.location.href
 const $accountIcon = document.querySelector('#account-icon')

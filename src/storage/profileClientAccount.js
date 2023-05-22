@@ -1,5 +1,5 @@
-import { userFromCookie } from './storageData.js'
 import { getClientsFromSeller } from '../api/profileClientList.js'
+import userFromCookie from './storageData.js'
 
 export function getStorageID() {
   if (userFromCookie) return userFromCookie.id

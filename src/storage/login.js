@@ -1,4 +1,4 @@
-import { userFromCookie } from './storageData.js'
+import userFromCookie from './storageData.js'
 
 export function checkLocalStorage() {
   if (userFromCookie) {

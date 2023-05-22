@@ -1,4 +1,4 @@
-import { userFromCookie } from '../storage/storageData.js'
+import userFromCookie from '../storage/storageData.js'
 import getDataFromDB from '../utils/getDataFromDB.js'
 
 const $profileName = document.querySelector('#profile-name')
