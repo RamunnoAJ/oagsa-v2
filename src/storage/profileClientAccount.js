@@ -1,5 +1,7 @@
 import { getClientsFromSeller } from '../api/profileClientList.js'
-import userFromCookie from './storageData.js'
+import getCookie from './storageData.js'
+
+const userFromCookie = JSON.parse(getCookie('user'))
 
 export function getStorageID() {
   if (userFromCookie) return userFromCookie.id

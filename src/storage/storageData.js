@@ -4,5 +4,4 @@ function getCookie(name) {
   if (parts.length === 2) return parts.pop().split(';').shift()
 }
 
-const userFromCookie = JSON.parse(getCookie('user'))
-export default userFromCookie
+export default getCookie
