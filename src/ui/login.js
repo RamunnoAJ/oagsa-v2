@@ -11,3 +11,7 @@ export function renderErrors(errors, parentElement) {
 export function navigateToDashboard() {
   window.location.replace('../pages/dashboard.html')
 }
+
+export function navigateToLogin() {
+  window.location.replace('../pages/login.html')
+}

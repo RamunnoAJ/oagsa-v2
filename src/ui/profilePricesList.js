@@ -1,19 +1,33 @@
 import { getCategories, getProducts } from '../api/profilePricesList.js'
 import * as storage from '../storage/profilePricesList.js'
+import { removeDuplicates } from '../utils/removeDuplicates.js'
 
 export const renderProductPrices = async (products, parentElement) => {
   if (products.length > 0) {
     parentElement.innerHTML = `
         <form class="profile-info__search search__prices" id="prices-form">
+          <div>
+            <select id='select-rubro' name='selectedRubro' class="select bg-primary">
+              <option disabled selected value=''>Seleccione un rubro...</option>
+            </select>
 
-          <select id='select-rubro' name='selectedRubro' class="select bg-primary">
-            <option disabled selected value=''>Seleccione un rubro...</option>
-          </select>
+            <select id='select-subrubro' name='selectedSubrubro' class="select bg-primary">
+              <option disabled selected value=''>Seleccione un subrubro...</option>
+              <option value=''> -- TODOS -- </option>
+            </select>
+          </div>
 
-          <select id='select-subrubro' name='selectedSubrubro' class="select bg-primary">
-            <option disabled selected value=''>Seleccione un subrubro...</option>
-            <option value='all'> -- TODOS -- </option>
-          </select>
+          <div>
+            <select id='select-brand' name='selectedBrand' class="select bg-primary">
+              <option disabled selected value=''>Seleccione una marca...</option>
+              <option value=''> -- TODOS -- </option>
+            </select>
+
+            <select id='select-diametro' name='selectedDiametro' class="select bg-primary">
+              <option disabled selected value=''>Seleccione un diametro...</option>
+              <option value=''> -- TODOS -- </option>
+            </select>
+          </div>
 
           <button class="button bg-secondary-300 bg-hover-secondary-400" id="btnSearch">
             <span class="visually-hidden-mobile">Buscar</span>
@@ -28,50 +42,47 @@ export const renderProductPrices = async (products, parentElement) => {
 
     const rubros = await getCategories('articulo/rubros')
     storage.saveRubros(rubros)
-
     renderOptions(rubros, '#select-rubro')
 
-    const $selectRubro = document.querySelector('#select-rubro')
-
-    $selectRubro.addEventListener('change', e => {
-      handleChange(e, e.target.value)
-    })
-
+    const $form = document.querySelector('#prices-form')
     const $btnSearch = document.querySelector('#btnSearch')
-    $btnSearch.addEventListener('click', handleSubmit)
+    $form.addEventListener('change', handleChangeForm)
+    $btnSearch.addEventListener('click', handleChangeForm)
+
+    const $selectRubro = document.querySelector('#select-rubro')
+    const $selectSubrubro = document.querySelector('#select-subrubro')
+
+    $selectSubrubro.addEventListener('change', handleChangeSubrubro)
+    $selectRubro.addEventListener('change', e => {
+      handleChangeRubro(e, e.target.value)
+    })
   } else {
     parentElement.innerHTML = '<div>No se encontraron resultados.</div>'
   }
 }
 
-const handleSubmit = async e => {
+const handleChangeForm = async e => {
   e.preventDefault()
   const $form = document.querySelector('#prices-form')
   const selectedRubro = $form.selectedRubro.value
   const selectedSubrubro = $form.selectedSubrubro.value
+  const selectedBrand = $form.selectedBrand.value
+  const selectedDiametro = $form.selectedDiametro.value
 
-  let products
+  let productString = `articulo/articulo-rubro?pCodigoRubro=${selectedRubro}`
+  storage.saveProducts(productString)
 
-  if (selectedRubro && selectedSubrubro && selectedSubrubro !== 'all') {
-    products = await getProducts(
-      `articulo/articulo-rubro?pCodigoRubro=${selectedRubro}&pCodigoSubRubro=${selectedSubrubro}`
-    )
+  if (selectedSubrubro) productString += `&pCodigoSubRubro=${selectedSubrubro}`
+  if (selectedBrand) productString += `&pMarca=${selectedBrand}`
+  if (selectedDiametro) productString += `&pDiametro=${selectedDiametro}`
 
-    renderPrices(products)
-  } else if (selectedRubro || (selectedRubro && selectedSubrubro === 'all')) {
-    products = await getProducts(
-      `articulo/articulo-rubro?pCodigoRubro=${selectedRubro}`
-    )
+  const products = await getProducts(productString)
 
-    renderPrices(products)
-  }
+  renderPrices(products)
 }
 
-const renderPrices = async products => {
-  parent.innerHTML = ''
+const renderPrices = products => {
   const $tableContainer = document.querySelector('.table-container')
-  $tableContainer.innerHTML = '<span class="loader"></span>'
-
   $tableContainer.innerHTML = ''
 
   if (products.length > 0) {
@@ -106,11 +117,26 @@ const renderPrices = async products => {
 
 const renderOptions = (options, selectID) => {
   const $select = document.querySelector(selectID)
-  if (selectID === '#select-rubro') {
-    $select.innerHTML = `<option disabled selected value=''>Seleccione un rubro...</option>`
-  } else {
-    $select.innerHTML = `<option disabled selected value=''>Seleccione un subrubro...</option>
-    <option value='all'> -- TODOS -- </option>`
+
+  switch (selectID) {
+    case '#select-rubro':
+      $select.innerHTML = `<option disabled selected value=''>Seleccione un rubro...</option>`
+      break
+
+    case '#select-subrubro':
+      $select.innerHTML = `<option disabled selected value=''>Seleccione un subrubro...</option>
+      <option value=''> -- TODOS -- </option>`
+      break
+
+    case '#select-brand':
+      $select.innerHTML = `<option disabled selected value=''>Seleccione una marca...</option>
+      <option value=''> -- TODOS -- </option>`
+      break
+
+    case '#select-diametro':
+      $select.innerHTML = `<option disabled selected value=''>Seleccione un diametro...</option>
+      <option value=''> -- TODOS -- </option>`
+      break
   }
 
   const sortedOptions = options.sort((a, b) =>
@@ -119,19 +145,34 @@ const renderOptions = (options, selectID) => {
 
   sortedOptions.forEach(option => {
     const $option = document.createElement('option')
-    if (option.codigoRubro && option.codigoSubRubro) {
-      $option.value = option.codigoSubRubro.trim()
-      $option.textContent = option.descripcion.trim()
-    } else {
-      $option.value = option.codigoRubro.trim()
-      $option.textContent = option.descripcion.trim()
+
+    switch (selectID) {
+      case '#select-rubro':
+        $option.value = option.codigoRubro.trim()
+        $option.textContent = option.descripcion.trim()
+        break
+
+      case '#select-subrubro':
+        $option.value = option.codigoSubRubro.trim()
+        $option.textContent = option.descripcion.trim()
+        break
+
+      case '#select-brand':
+        $option.value = option.descripcion.trim()
+        $option.textContent = option.descripcion.trim()
+        break
+
+      case '#select-diametro':
+        $option.value = option.descripcion.trim()
+        $option.textContent = option.descripcion.trim()
+        break
     }
 
     $select.appendChild($option)
   })
 }
 
-const renderTableRows = async (item, parentElement) => {
+const renderTableRows = (item, parentElement) => {
   const codigoRubro = item.codigoRubro.trim()
   const codigoSubrubro = item.codigoSubRubro.trim()
 
@@ -159,7 +200,7 @@ const renderTableRows = async (item, parentElement) => {
   parentElement.appendChild(tableRow)
 }
 
-const handleChange = async (e, codigoRubro) => {
+const handleChangeRubro = async (e, codigoRubro) => {
   e.preventDefault()
 
   const subrubros = await getCategories(
@@ -168,4 +209,37 @@ const handleChange = async (e, codigoRubro) => {
 
   storage.saveSubrubros(subrubros, codigoRubro)
   renderOptions(subrubros, '#select-subrubro')
+}
+
+const handleChangeSubrubro = async e => {
+  e.preventDefault()
+  const productString = storage.getProducts()
+  const products = await getProducts(productString)
+
+  const marcas = removeDuplicates(products.map(product => product.marca))
+  const arrayMarcas = []
+
+  for (let i = 0; i < marcas.length; i++) {
+    const marca = { descripcion: marcas[i] }
+
+    if (marca.descripcion.length > 0) {
+      arrayMarcas.push(marca)
+    }
+  }
+
+  const diametros = removeDuplicates(products.map(product => product.diametro))
+  const arrayDiametros = []
+
+  for (let i = 0; i < diametros.length; i++) {
+    const diametro = { descripcion: diametros[i] }
+
+    if (diametro.descripcion !== '0') {
+      arrayDiametros.push(diametro)
+    }
+  }
+
+  arrayDiametros.sort()
+
+  renderOptions(arrayMarcas, '#select-brand')
+  renderOptions(arrayDiametros, '#select-diametro')
 }

@@ -2,6 +2,7 @@ import { profileClientAccount } from './profileClientAccount.js'
 import { profileClientList } from './profileClientList.js'
 import { profilePricesList } from './profilePricesList.js'
 import { checkLocalStorage } from './storage/profile.js'
+import { navigateToLogin } from './ui/login.js'
 
 import { renderAdminBtn, renderLogoutBtn } from './ui/profile.js'
 
@@ -46,5 +47,5 @@ function logOut() {
 
   document.cookie = `user=; expires=${expirationDate.toUTCString()}; path=/; secure`
 
-  window.location.replace('../pages/log-in.html')
+  navigateToLogin()
 }

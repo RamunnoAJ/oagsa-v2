@@ -30,11 +30,10 @@ const handleSubmit = async e => {
       checkbox,
     }
     const cookieValue = JSON.stringify(user)
-    console.log(cookieValue)
     if (checkbox) {
       document.cookie = `user=${cookieValue}; max-age=360000000; secure; path=/`
     } else {
-      document.cookie = `user=${cookieValue}; max-age=3600; secure; path=/`
+      document.cookie = `user=${cookieValue}; max-age=36000; secure; path=/`
     }
 
     navigateToDashboard()
