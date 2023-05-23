@@ -30,3 +30,14 @@ export function saveSubrubros(subrubros, id) {
 
   localStorage.setItem(getSubrubrosKey(id), JSON.stringify(subrubros))
 }
+
+export function getProducts() {
+  return JSON.parse(localStorage.getItem('products'))
+}
+export function saveProducts(products) {
+  if (products === undefined || typeof products !== 'string') {
+    throw new Error('You should pass a valid object to save on local storage')
+  }
+
+  localStorage.setItem('products', JSON.stringify(products))
+}
