@@ -251,10 +251,14 @@
       }
 
       .search__prices {
-        @include flex(row, center, center);
+        @include flex(column, center, center);
 
         .select {
           max-width: 300px;
+        }
+
+        div {
+          @include flex(row, center, center);
         }
       }
     }

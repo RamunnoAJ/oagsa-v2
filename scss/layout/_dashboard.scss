@@ -76,7 +76,7 @@
       }
 
       .profile-info__search {
-        @include flex(row, center, center);
+        @include flex(column, center, center);
       }
 
       .search__prices {
@@ -89,6 +89,11 @@
 
         button {
           align-self: flex-end;
+        }
+
+        div {
+          @include flex(column, center, center);
+          gap: 1rem;
         }
       }
     }

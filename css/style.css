@@ -4002,7 +4002,7 @@ header {
         font-weight: 500; }
       .dashboard-container .dashboard-wrapper .profile-info .profile-info__search {
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
         justify-content: center;
         align-items: center; }
       .dashboard-container .dashboard-wrapper .profile-info .search__prices {
@@ -4015,6 +4015,12 @@ header {
           min-width: 230px; }
         .dashboard-container .dashboard-wrapper .profile-info .search__prices button {
           align-self: flex-end; }
+        .dashboard-container .dashboard-wrapper .profile-info .search__prices div {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          gap: 1rem; }
 
 footer .footer-container {
   display: flex;
@@ -4226,10 +4232,15 @@ footer ul {
         margin-top: 2rem; }
       .dashboard-container .dashboard-wrapper .profile-info .search__prices {
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
         justify-content: center;
         align-items: center; }
         .dashboard-container .dashboard-wrapper .profile-info .search__prices .select {
           max-width: 300px; }
+        .dashboard-container .dashboard-wrapper .profile-info .search__prices div {
+          display: flex;
+          flex-direction: row;
+          justify-content: center;
+          align-items: center; }
   .dashboard-container .dashboard-wrapper .profile-container {
     height: 100%; } }
