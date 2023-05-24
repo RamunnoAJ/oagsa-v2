@@ -1,8 +1,7 @@
-import { getFromSessionStorage } from './sessionData.js'
-import getCookie from './storageData.js'
+import { getUserFromStorage } from './storageData.js'
 
 export function getStorageID() {
-  const user = getCookie('user') || getFromSessionStorage('user')
+  const user = getUserFromStorage()
   if (user) {
     const userFromCookie = JSON.parse(user)
 

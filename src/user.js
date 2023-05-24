@@ -1,9 +1,9 @@
-import getCookie from './storage/storageData.js'
+import { getUserFromStorage } from './storage/storageData.js'
 
 const currentURL = window.location.href
 const $accountIcon = document.querySelector('#account-icon')
-const user = getCookie('user')
 
+const user = getUserFromStorage()
 let buttonURL = './pages/dashboard.html'
 
 if (currentURL.includes('/pages/')) {

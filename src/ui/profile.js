@@ -1,4 +1,4 @@
-import getCookie from '../storage/storageData.js'
+import { getUserFromStorage } from '../storage/storageData.js'
 import getDataFromDB from '../utils/getDataFromDB.js'
 
 const $profileName = document.querySelector('#profile-name')
@@ -19,7 +19,7 @@ export function renderLogoutBtn(parentElement) {
 }
 
 export function renderAdminBtn(parentElement) {
-  const user = getCookie('user')
+  const user = getUserFromStorage()
   if (user) {
     const userFromCookie = JSON.parse(user)
 
