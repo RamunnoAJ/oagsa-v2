@@ -19,19 +19,22 @@ export function renderLogoutBtn(parentElement) {
 }
 
 export function renderAdminBtn(parentElement) {
-  const userFromCookie = JSON.parse(getCookie('user'))
+  const user = getCookie('user')
+  if (user) {
+    const userFromCookie = JSON.parse(user)
 
-  if (userFromCookie) {
-    if (userFromCookie.role === 1) {
-      const adminBtn = document.createElement('p')
-      adminBtn.classList.add(
-        'button',
-        'bg-white',
-        'bg-hover-slate',
-        'uppercase'
-      )
-      adminBtn.textContent = 'Admin'
-      parentElement.appendChild(adminBtn)
+    if (userFromCookie) {
+      if (userFromCookie.role === 1) {
+        const adminBtn = document.createElement('p')
+        adminBtn.classList.add(
+          'button',
+          'bg-white',
+          'bg-hover-slate',
+          'uppercase'
+        )
+        adminBtn.textContent = 'Admin'
+        parentElement.appendChild(adminBtn)
+      }
     }
   }
 }
