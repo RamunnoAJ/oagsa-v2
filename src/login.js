@@ -1,5 +1,6 @@
 import { getUserLogin } from './api/login.js'
 import { checkLocalStorage } from './storage/login.js'
+import { saveToSessionStorage } from './storage/sessionData.js'
 import { navigateToDashboard, renderErrors } from './ui/login.js'
 
 const $form = document.querySelector('#login-form')
@@ -30,10 +31,11 @@ const handleSubmit = async e => {
       checkbox,
     }
     const cookieValue = JSON.stringify(user)
+    saveToSessionStorage(cookieValue)
     if (checkbox) {
       document.cookie = `user=${cookieValue}; max-age=360000000; secure; path=/`
     } else {
-      document.cookie = `user=${cookieValue}; max-age=36000; secure; path=/`
+      document.cookie = `user=${cookieValue}; max-age=99999; secure; path=/`
     }
 
     navigateToDashboard()
