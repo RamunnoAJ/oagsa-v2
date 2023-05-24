@@ -5,7 +5,7 @@ export function checkLocalStorage() {
   const user = getCookie('user')
 
   if (user) {
-    const userFromCookie = JSON.parse(getCookie('user'))
+    const userFromCookie = JSON.parse(user)
 
     if (userFromCookie) {
       navigateToDashboard()

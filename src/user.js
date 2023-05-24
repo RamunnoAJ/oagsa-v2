@@ -11,7 +11,7 @@ if (currentURL.includes('/pages/')) {
 }
 
 if (user) {
-  const userFromCookie = JSON.parse(getCookie('user'))
+  const userFromCookie = JSON.parse(user)
 
   if (userFromCookie) {
     $accountIcon.innerHTML = `

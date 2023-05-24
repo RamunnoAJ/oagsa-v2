@@ -3,10 +3,14 @@ import { renderUserName } from '../ui/profile.js'
 import getCookie from './storageData.js'
 
 export function checkLocalStorage() {
-  const userFromCookie = JSON.parse(getCookie('user'))
-  if (!userFromCookie) {
-    navigateToLogin()
+  const user = getCookie('user')
 
-    renderUserName(userFromCookie.id)
+  if (user) {
+    const userFromCookie = JSON.parse(user)
+    if (!userFromCookie) {
+      navigateToLogin()
+
+      renderUserName(userFromCookie.id)
+    }
   }
 }
