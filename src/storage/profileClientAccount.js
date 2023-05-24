@@ -1,8 +1,10 @@
 import { getClientsFromSeller } from '../api/profileClientList.js'
+import { getFromSessionStorage } from './sessionData.js'
 import getCookie from './storageData.js'
 
-const user = getCookie('user')
 export function getStorageID() {
+  const user = getCookie('user') || getFromSessionStorage('user')
+
   if (user) {
     const userFromCookie = JSON.parse(user)
     if (userFromCookie) return userFromCookie.id
@@ -11,6 +13,8 @@ export function getStorageID() {
 }
 
 export async function getDataFromStorage(sellerID) {
+  const user = getCookie('user') || getFromSessionStorage('user')
+
   if (user) {
     const userFromCookie = JSON.parse(user)
     if (userFromCookie) {

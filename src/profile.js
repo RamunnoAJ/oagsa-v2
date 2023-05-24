@@ -2,6 +2,7 @@ import { profileClientAccount } from './profileClientAccount.js'
 import { profileClientList } from './profileClientList.js'
 import { profilePricesList } from './profilePricesList.js'
 import { checkLocalStorage } from './storage/profile.js'
+import { deleteFromSessionStorage } from './storage/sessionData.js'
 import { navigateToLogin } from './ui/login.js'
 
 import { renderAdminBtn, renderLogoutBtn } from './ui/profile.js'
@@ -45,6 +46,7 @@ function logOut() {
   const expirationDate = new Date()
   expirationDate.setHours(expirationDate.getDate() - 1)
 
+  deleteFromSessionStorage('user')
   document.cookie = `user=; expires=${expirationDate.toUTCString()}; path=/; secure`
 
   navigateToLogin()
