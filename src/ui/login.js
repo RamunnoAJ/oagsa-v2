@@ -13,5 +13,5 @@ export function navigateToDashboard() {
 }
 
 export function navigateToLogin() {
-  window.location.replace('../pages/login.html')
+  window.location.replace('../pages/log-in.html')
 }
