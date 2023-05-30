@@ -29,12 +29,20 @@ export const renderProductPrices = async (products, parentElement) => {
             </select>
           </div>
 
-          <button class="button bg-secondary-300 bg-hover-secondary-400" id="btnSearch">
-            <span class="visually-hidden-mobile">Buscar</span>
-            <span class="visually-hidden-desktop">
-              <i class="fa-solid fa-magnifying-glass"></i>
-            </span>
-          </button>
+          <div>
+            <select id='select-medida' name='selectedMedida' class="select bg-primary">
+              <option disabled selected value=''>Seleccione una medida...</option>
+              <option value=''> -- TODOS -- </option>
+            </select>
+            <button class="button bg-secondary-300 bg-hover-secondary-400" id="btnSearch">
+              <span class="visually-hidden-mobile">Buscar</span>
+              <span class="visually-hidden-desktop">
+                <i class="fa-solid fa-magnifying-glass"></i>
+              </span>
+            </button>
+          </div>
+
+          
         </form>
 
         <div class="table-container"></div>
@@ -55,6 +63,7 @@ export const renderProductPrices = async (products, parentElement) => {
     $selectSubrubro.addEventListener('change', handleChangeSubrubro)
     $selectRubro.addEventListener('change', e => {
       handleChangeRubro(e, e.target.value)
+      handleChangeSubrubro(e)
     })
   } else {
     parentElement.innerHTML = '<div>No se encontraron resultados.</div>'
@@ -68,6 +77,7 @@ const handleChangeForm = async e => {
   const selectedSubrubro = $form.selectedSubrubro.value
   const selectedBrand = $form.selectedBrand.value
   const selectedDiametro = $form.selectedDiametro.value
+  const selectedMedida = $form.selectedMedida.value
 
   let productString = `articulo/articulo-rubro?pCodigoRubro=${selectedRubro}`
   storage.saveProducts(productString)
@@ -75,6 +85,7 @@ const handleChangeForm = async e => {
   if (selectedSubrubro) productString += `&pCodigoSubRubro=${selectedSubrubro}`
   if (selectedBrand) productString += `&pMarca=${selectedBrand}`
   if (selectedDiametro) productString += `&pDiametro=${selectedDiametro}`
+  if (selectedMedida) productString += `&pMedida=${selectedMedida}`
 
   const products = await getProducts(productString)
 
@@ -95,8 +106,8 @@ const renderPrices = products => {
         <th>Descripción</th>
         <th>Marca</th>
         <th>Precio</th>
-        <th>Rubro</th>
-        <th>Subrubro</th>
+        <th>Diametro</th>
+        <th>Medidas</th>
       </tr>
     </thead>
     <tbody id='table-body'>
@@ -137,6 +148,11 @@ const renderOptions = (options, selectID) => {
       $select.innerHTML = `<option disabled selected value=''>Seleccione un diametro...</option>
       <option value=''> -- TODOS -- </option>`
       break
+
+    case '#select-medida':
+      $select.innerHTML = `<option disabled selected value=''>Seleccione una medida...</option>
+      <option value=''> -- TODOS -- </option>`
+      break
   }
 
   const sortedOptions = options.sort((a, b) =>
@@ -166,6 +182,11 @@ const renderOptions = (options, selectID) => {
         $option.value = option.descripcion.trim()
         $option.textContent = option.descripcion.trim()
         break
+
+      case '#select-medida':
+        $option.value = option.descripcion.trim()
+        $option.textContent = option.descripcion.trim()
+        break
     }
 
     $select.appendChild($option)
@@ -173,28 +194,14 @@ const renderOptions = (options, selectID) => {
 }
 
 const renderTableRows = (item, parentElement) => {
-  const codigoRubro = item.codigoRubro.trim()
-  const codigoSubrubro = item.codigoSubRubro.trim()
-
-  const rubros = storage.getRubros('rubros')
-  const subrubros = storage.getSubrubros(codigoRubro)
-
-  const rubro = rubros.filter(rubro => {
-    return rubro.codigoRubro === codigoRubro
-  })
-
-  const subrubro = subrubros.filter(subrubro => {
-    return subrubro.codigoSubRubro === codigoSubrubro
-  })
-
   const tableRow = document.createElement('tr')
   tableRow.innerHTML = `
     <td>${item.codigoArticulo}</td>
     <td>${item.descripcion}</td>
     <td>${item.marca}</td>
     <td>$${item.precio}</td>
-    <td>${rubro[0].descripcion}</td>
-    <td>${subrubro[0].descripcion}</td>
+    <td>${item.diametro}</td>
+    <td>${item.medidas}</td>
   `
 
   parentElement.appendChild(tableRow)
@@ -240,6 +247,18 @@ const handleChangeSubrubro = async e => {
 
   arrayDiametros.sort()
 
+  const medidas = removeDuplicates(products.map(product => product.medidas))
+  const arrayMedidas = []
+
+  for (let i = 0; i < medidas.length; i++) {
+    const medida = { descripcion: medidas[i] }
+
+    if (medida.descripcion !== '0' && medida.descripcion !== 'Sin medidas') {
+      arrayMedidas.push(medida)
+    }
+  }
+
   renderOptions(arrayMarcas, '#select-brand')
   renderOptions(arrayDiametros, '#select-diametro')
+  renderOptions(arrayMedidas, '#select-medida')
 }
