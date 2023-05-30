@@ -63,7 +63,6 @@ export const renderProductPrices = async (products, parentElement) => {
     $selectSubrubro.addEventListener('change', handleChangeSubrubro)
     $selectRubro.addEventListener('change', e => {
       handleChangeRubro(e, e.target.value)
-      handleChangeSubrubro(e)
     })
   } else {
     parentElement.innerHTML = '<div>No se encontraron resultados.</div>'
