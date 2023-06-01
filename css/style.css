@@ -3984,6 +3984,8 @@ header {
     flex-direction: row;
     justify-content: center;
     align-items: center; }
+    .store-container .select-store select {
+      color: black; }
   .store-container .store__rubros {
     display: flex;
     align-items: center;
@@ -3998,6 +4000,35 @@ header {
       transition: 300ms ease-in-out all; }
       .store-container .store__rubros .store__rubros__item.active {
         background-color: #ffd37c; }
+  .store-container .store__search__input {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%; }
+    .store-container .store__search__input .search__input {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem; }
+      .store-container .store__search__input .search__input input {
+        padding: 0.75rem;
+        border-radius: 2rem;
+        border: none; }
+    .store-container .store__search__input .store__search__input__select {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 1rem; }
+      .store-container .store__search__input .store__search__input__select select {
+        background-color: #ffd37c;
+        border: none;
+        padding: 0.125rem 0.25rem;
+        border-radius: 0.25rem;
+        max-width: 5.625rem; }
   .store-container .grid-store {
     display: grid;
     justify-items: center;

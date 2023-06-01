@@ -68,8 +68,27 @@
 
   <section class="mt-10 store-container store" id="store">
     <ul class="store__rubros">
-
     </ul>
+    <div class="store__search__input bg-primary py-4">
+      <div class="search__input">
+        <input type="text">
+        <button class="button bg-secondary-300 bg-hover-secondary-400">Buscar</button>
+      </div>
+      <div class="store__search__input__select">
+        <p>Seleccione:</p>
+        <div>
+          <select name="marca" id="marca">
+            <option value="" disabled selected>Marca</option>
+          </select>
+          <select name="medida" id="medida">
+            <option value="" disabled selected>Medida</option>
+          </select>
+          <select name="diametro" id="diametro">
+            <option value="" disabled selected>Diametro</option>
+          </select>
+        </div>
+      </div>
+    </div>
   </section>
 
   <footer class="px-4 pt-5 mt-24 bg-primary about-us__footer">
