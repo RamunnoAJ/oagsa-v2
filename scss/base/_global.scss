@@ -98,12 +98,12 @@ $colors: (
 }
 
 .visually-hidden-mobile {
-  display: none;
+  display: none !important;
 }
 
 @media (min-width: 45rem) {
   .visually-hidden-desktop {
-    display: none;
+    display: none !important;
   }
 
   .visually-hidden-mobile {
