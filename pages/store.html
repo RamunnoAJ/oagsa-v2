@@ -42,12 +42,16 @@
     </nav>
   </header>
 
-  <main class="pb-10 mt-10">
+  <main class="mt-10">
     <div class="store-container">
+      <div class="store__hero"></div>
+
       <h1 class="uppercase fw-bold">Tienda</h1>
       <div class="select-store visually-hidden-desktop">
+        <i class="fa-solid fa-filter"></i>
+
         <select name="clases" id="clases" class="select select-lg bg-primary">
-          <option value="" disabled selected>Seleccione una clase...</option>
+          <option value="" disabled selected>Seleccione una clase</option>
         </select>
       </div>
 
@@ -67,8 +71,12 @@
   </main>
 
   <section class="mt-10 store-container store" id="store">
-    <ul class="store__rubros">
-    </ul>
+    <div class="store__rubros select-store visually-hidden">
+      <i class="fa-solid fa-filter"></i>
+      <select class="select select-lg bg-primary">
+        <option value="" disabled selected>Seleccione un rubro</option>
+      </select>
+    </div>
     <div class="store__search__input bg-primary py-4">
       <div class="search__input">
         <input type="text">
