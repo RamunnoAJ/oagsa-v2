@@ -1,0 +1,47 @@
+.store-container {
+  margin-top: 1rem;
+  margin-inline: auto;
+  width: 95%;
+  min-height: 10vh;
+
+  h1 {
+    text-align: center;
+  }
+
+  .select-store {
+    @include flex(row, center, center);
+  }
+
+  .store__rubros {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    overflow-x: auto;
+    gap: 1rem;
+    min-height: 60px;
+
+    .store__rubros__item {
+      flex-shrink: 0;
+      padding: 0.25rem 0.5rem;
+      border-radius: 2rem;
+
+      &.active {
+        background-color: $secondary-color-300;
+      }
+    }
+  }
+
+  .grid-store {
+    display: grid;
+    justify-items: center;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+
+    .grid__image {
+      @include flex(row, center, flex-end);
+      min-width: 160px;
+      min-height: 160px;
+      background-color: grey;
+    }
+  }
+}
