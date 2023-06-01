@@ -10,6 +10,10 @@
 
   .select-store {
     @include flex(row, center, center);
+
+    select {
+      color: black;
+    }
   }
 
   .store__rubros {
@@ -28,6 +32,36 @@
 
       &.active {
         background-color: $secondary-color-300;
+      }
+    }
+  }
+
+  .store__search__input {
+    @include flex(column, center, center);
+    width: 100%;
+
+    .search__input {
+      @include flex(row, center, center);
+      gap: 1rem;
+      margin-bottom: 1rem;
+
+      input {
+        padding: 0.75rem;
+        border-radius: 2rem;
+        border: none;
+      }
+    }
+
+    .store__search__input__select {
+      @include flex(column, center, center);
+      gap: 1rem;
+
+      select {
+        background-color: $secondary-color-300;
+        border: none;
+        padding: 0.125rem 0.25rem;
+        border-radius: 0.25rem;
+        max-width: 5.625rem;
       }
     }
   }
