@@ -24,6 +24,7 @@
       flex-shrink: 0;
       padding: 0.25rem 0.5rem;
       border-radius: 2rem;
+      transition: 300ms ease-in-out all;
 
       &.active {
         background-color: $secondary-color-300;

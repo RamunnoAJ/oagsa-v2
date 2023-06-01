@@ -3994,7 +3994,8 @@ header {
     .store-container .store__rubros .store__rubros__item {
       flex-shrink: 0;
       padding: 0.25rem 0.5rem;
-      border-radius: 2rem; }
+      border-radius: 2rem;
+      transition: 300ms ease-in-out all; }
       .store-container .store__rubros .store__rubros__item.active {
         background-color: #ffd37c; }
   .store-container .grid-store {

@@ -33,6 +33,10 @@ async function renderRubros(idClase) {
     $rubro.classList = 'store__rubros__item bg-primary fw-bold'
     $rubro.textContent = rubro.descripcion
     $rubro.dataset.rubro = rubro.codigoRubro
+    $rubro.onclick = e => {
+      removeActiveClasses()
+      e.target.classList.toggle('active')
+    }
 
     $storeRubros.appendChild($rubro)
   })
@@ -42,3 +46,10 @@ const $select = document.querySelector('#clases')
 $select.addEventListener('change', e => {
   renderRubros(e.target.value)
 })
+
+function removeActiveClasses() {
+  const $rubros = document.querySelectorAll('.store__rubros__item')
+  $rubros.forEach(rubro => {
+    rubro.classList.remove('active')
+  })
+}
