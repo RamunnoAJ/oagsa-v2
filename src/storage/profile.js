@@ -7,11 +7,7 @@ export function checkLocalStorage() {
 
   if (user) {
     const userFromCookie = JSON.parse(user)
-    if (!userFromCookie) {
-      navigateToLogin()
-
-      renderUserName(userFromCookie.id)
-    }
+    renderUserName(userFromCookie.id)
   } else {
     navigateToLogin()
   }

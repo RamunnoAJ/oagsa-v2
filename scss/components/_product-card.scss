@@ -1,0 +1,5 @@
+.store__products {
+  @include flex(row, center, center);
+  width: 100%;
+  gap: 1rem;
+}
