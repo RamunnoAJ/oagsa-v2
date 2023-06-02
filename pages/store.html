@@ -10,7 +10,7 @@
   <meta name="author" content="Stefanía Sanchez Golfieri - Agustín Julián Ramunno" />
   <meta name="copyright" content="Oscar A. González" />
 
-  <title>Sobre Nosotros | OAGSA</title>
+  <title>Tienda | OAGSA</title>
 
   <link rel="stylesheet" href="../css/style.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" />
@@ -77,24 +77,22 @@
         <option value="" disabled selected>Seleccione un rubro</option>
       </select>
     </div>
-    <div class="store__search__input bg-primary py-4">
+    <div class="store__search__input bg-primary py-4 mt-4 visually-hidden">
       <div class="search__input">
-        <input type="text">
-        <button class="button bg-secondary-300 bg-hover-secondary-400">Buscar</button>
+        <button class="button bg-secondary-300 bg-hover-secondary-400"><i class="fa-magnifying-glass fa-solid"></i>
+        </button>
+        <input type="text" placeholder="Buscar producto">
       </div>
       <div class="store__search__input__select">
-        <p>Seleccione:</p>
-        <div>
-          <select name="marca" id="marca">
-            <option value="" disabled selected>Marca</option>
-          </select>
-          <select name="medida" id="medida">
-            <option value="" disabled selected>Medida</option>
-          </select>
-          <select name="diametro" id="diametro">
-            <option value="" disabled selected>Diametro</option>
-          </select>
-        </div>
+        <select name="marca" id="marcas">
+          <option value="" disabled selected>Marca</option>
+        </select>
+        <select name="medida" id="medidas">
+          <option value="" disabled selected>Medida</option>
+        </select>
+        <select name="diametro" id="diametros">
+          <option value="" disabled selected>Diametro</option>
+        </select>
       </div>
     </div>
   </section>
