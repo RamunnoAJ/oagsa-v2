@@ -1,5 +1,8 @@
 import { getCategories, getProducts } from '../api/profilePricesList.js'
+import { checkLocalStorage } from '../storage/profile.js'
 import { capitalizeFirstLetter } from '../utils/capitalizeFirstLetter.js'
+
+checkLocalStorage()
 
 export async function renderClases() {
   const clases = await getCategories('clase/all')

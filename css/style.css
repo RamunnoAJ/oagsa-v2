@@ -3828,6 +3828,62 @@ header {
   .contact-form .submit-button {
     width: 100%; }
 
+.login-container-fluid {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: stretch;
+  min-height: 100vh; }
+  .login-container-fluid .main-login {
+    max-width: 75rem;
+    width: 95%;
+    margin-inline: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; }
+    .login-container-fluid .main-login > form {
+      width: 100%;
+      max-width: 30rem;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 1rem; }
+      .login-container-fluid .main-login > form h1 {
+        font-size: var(--fs-secondary-heading);
+        font-weight: 700;
+        font-family: "Inter", sans-serif; }
+      .login-container-fluid .main-login > form .label {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        font-weight: 700;
+        font-size: var(--fs-300);
+        gap: 0.5rem;
+        width: 100%; }
+        .login-container-fluid .main-login > form .label input {
+          border-radius: 5px;
+          border: none;
+          width: 100%; }
+      .login-container-fluid .main-login > form button {
+        align-self: flex-end;
+        border: none; }
+      .login-container-fluid .main-login > form .login-error {
+        padding: 0.5rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: left;
+        width: 100%;
+        gap: 0.25rem;
+        background-color: #fca5a5;
+        border-radius: 0.25rem;
+        font-weight: 500; }
+
 .our-products__container {
   display: flex;
   flex-direction: row;
@@ -4033,7 +4089,9 @@ header {
         padding: 0.5rem;
         border-radius: 0.25rem;
         max-width: 100px;
-        font-size: var(--fs-200); }
+        font-size: var(--fs-200);
+        color: black;
+        font-weight: 500; }
   .store-container .grid-store {
     display: grid;
     justify-items: center;
