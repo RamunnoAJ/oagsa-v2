@@ -3,5 +3,3 @@ export function capitalizeFirstLetter(str) {
 
   return capitalized
 }
-
-console.log(capitalizeFirstLetter('asd AMIGOS'))
