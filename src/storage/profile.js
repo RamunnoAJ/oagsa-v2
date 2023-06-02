@@ -12,5 +12,7 @@ export function checkLocalStorage() {
 
       renderUserName(userFromCookie.id)
     }
+  } else {
+    navigateToLogin()
   }
 }
