@@ -4,7 +4,11 @@ import { profilePricesList } from './profilePricesList.js'
 import { checkLocalStorage } from './storage/profile.js'
 import { navigateToLogin } from './ui/login.js'
 
-import { renderAdminBtn, renderLogoutBtn } from './ui/profile.js'
+import {
+  renderAdminBtn,
+  renderLogoutBtn,
+  renderUserName,
+} from './ui/profile.js'
 
 const $profileTitle = document.querySelector('#profileTitle')
 const $profileList = document.querySelector('#profileList')
@@ -13,7 +17,8 @@ const $btnContainer = document.querySelector('.profile-container__buttons')
 
 renderAdminBtn($btnContainer)
 renderLogoutBtn($btnContainer)
-checkLocalStorage()
+const user = checkLocalStorage()
+renderUserName(user.id)
 
 const $logoutBtn = document.querySelector('#logout-btn')
 $logoutBtn.addEventListener('click', logOut)

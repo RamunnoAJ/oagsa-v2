@@ -97,8 +97,10 @@ $colors: (
   display: none !important;
 }
 
-.visually-hidden-mobile {
-  display: none !important;
+@media (max-width: 45rem) {
+  .visually-hidden-mobile {
+    display: none !important;
+  }
 }
 
 @media (min-width: 45rem) {
