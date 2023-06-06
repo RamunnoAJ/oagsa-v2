@@ -1,8 +1,13 @@
 .store-container {
-  margin-top: 1rem;
   margin-inline: auto;
   width: 95%;
   min-height: 10vh;
+  max-width: 1200px;
+
+  .store__button-search {
+    @include flex(row, center, center);
+    gap: 1rem;
+  }
 
   .store__hero {
     width: 100%;
@@ -48,7 +53,6 @@
       button {
         flex-basis: 10%;
         border: none;
-        background-color: $secondary-color-300;
         color: black;
         cursor: pointer;
       }
@@ -74,14 +78,48 @@
   .grid-store {
     display: grid;
     justify-items: center;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(4, 200px);
+    place-content: center;
     gap: 1rem;
 
     .grid__image {
       @include flex(row, center, flex-end);
-      min-width: 160px;
+      width: 100%;
+      height: 100%;
       min-height: 160px;
       background-color: grey;
+    }
+
+    .grid-span-2 {
+      grid-column: span 2;
+      grid-row: span 2;
+    }
+  }
+}
+
+@media (min-width: 75rem) {
+  .store-container {
+    .store__button-search {
+      flex-direction: row-reverse;
+    }
+    .store__search__input {
+      .search__input {
+        flex-direction: row-reverse;
+
+        input {
+          max-width: 600px;
+          padding-inline: 1rem;
+        }
+      }
+
+      .store__search__input__select {
+        select {
+          min-width: 200px;
+          padding: 1rem 2rem;
+          font-size: var(--fs-300);
+          text-align: center;
+        }
+      }
     }
   }
 }
