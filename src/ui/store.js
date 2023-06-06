@@ -26,7 +26,16 @@ $rubrosImages.addEventListener('click', e => {
 async function handleChangeForm(e) {
   e.preventDefault()
 
-  const selectedSubrubro = await $form.rubros.value
+  let selectedSubrubro = ''
+
+  if ($form.rubros) {
+    selectedSubrubro = $form.rubros.value
+  } else {
+    selectedSubrubro = document.querySelector(
+      '.store__rubros__desktop__items.active'
+    ).dataset.rubro
+  }
+
   const selectedMarca = await $form.marca.value
   const selectedDiametro = await $form.diametro.value
   const selectedMedida = await $form.medida.value
@@ -76,7 +85,9 @@ function renderOptions(options, selectID) {
     case '#clases':
       sortedOptions = options.sort((a, b) => a.nombre.localeCompare(b.nombre))
 
-      $select.innerHTML = `<option disabled selected value=''>Seleccione una clase</option>`
+      $select.innerHTML = `<option disabled selected value=''>Seleccione una clase</option>
+      <option value=''>-- TODOS --</option>
+      `
 
       sortedOptions.forEach(option => {
         const $option = document.createElement('option')
@@ -88,7 +99,8 @@ function renderOptions(options, selectID) {
       break
     case '#marcas':
       sortedOptions = options.sort((a, b) => a.localeCompare(b))
-      $select.innerHTML = `<option disabled selected value=''>Marca</option>`
+      $select.innerHTML = `<option disabled selected value=''>Marca</option>
+      <option value=''>-- TODOS --</option>`
 
       sortedOptions.forEach(marca => {
         const $option = document.createElement('option')
@@ -99,7 +111,8 @@ function renderOptions(options, selectID) {
       break
     case '#medidas':
       sortedOptions = options.sort((a, b) => a.localeCompare(b))
-      $select.innerHTML = `<option disabled selected value=''>Medida</option>`
+      $select.innerHTML = `<option disabled selected value=''>Medida</option>
+      <option value=''>-- TODOS --</option>`
 
       sortedOptions.forEach(medida => {
         if (medida !== 'Sin medidas' && medida) {
@@ -112,7 +125,8 @@ function renderOptions(options, selectID) {
       break
     case '#diametros':
       sortedOptions = options.sort((a, b) => a.localeCompare(b))
-      $select.innerHTML = `<option disabled selected value=''>Diametro</option>`
+      $select.innerHTML = `<option disabled selected value=''>Diametro</option>
+      <option value=''>-- TODOS --</option>`
 
       sortedOptions.forEach(diametro => {
         if (diametro !== '0' && diametro) {
@@ -132,6 +146,7 @@ async function renderRubros(idClase) {
         <option value="" disabled selected>Seleccione un rubro</option>
       </select>`
 
+  $storeRubros.classList.add('select-store')
   $storeRubros.classList.remove('visually-hidden')
 
   const rubros = await getCategories(`clase/rubro?pIdClase=${idClase}`)
@@ -154,21 +169,25 @@ async function renderRubros(idClase) {
 
 async function renderRubrosDesktop(idClase) {
   const $storeRubros = document.querySelector('.store__rubros')
-  $storeRubros.innerHTML = `<div class="store__rubros__desktop"></div>`
+  $storeRubros.innerHTML = `<span class="loader"></span>`
 
   $storeRubros.classList.remove('visually-hidden')
+  $storeRubros.classList.remove('select-store')
 
   const rubros = await getCategories(`clase/rubro?pIdClase=${idClase}`)
+  $storeRubros.innerHTML = `<div class="store__rubros__desktop"></div>`
   const $storeRubrosDesktop = $storeRubros.querySelector(
     '.store__rubros__desktop'
   )
 
   rubros.forEach(rubro => {
-    const $option = document.createElement('div')
-    $option.classList = 'store__rubros__desktop__items bg-primary'
+    const $option = document.createElement('span')
+    $option.classList =
+      'store__rubros__desktop__items bg-primary bg-hover-secondary-300'
     $option.textContent = capitalizeFirstLetter(rubro.descripcion.toLowerCase())
     $option.value = rubro.codigoRubro
     $option.dataset.rubro = rubro.codigoRubro
+    $option.addEventListener('click', highlightRubro)
 
     $storeRubrosDesktop.appendChild($option)
   })
@@ -245,6 +264,41 @@ const renderProductCard = (item, parentElement) => {
   `
 
   parentElement.appendChild($card)
+}
+
+async function highlightRubro(e) {
+  const $rubros = document.querySelectorAll('.store__rubros__desktop__items')
+  $rubros.forEach(rubro => rubro.classList.remove('active'))
+  e.target.classList.add('active')
+
+  const $selectedSubrubro = document.querySelector(
+    '.store__rubros__desktop__items.active'
+  )
+  renderInputs($selectedSubrubro.dataset.rubro)
+
+  const selectedSubrubro = $selectedSubrubro.dataset.rubro
+
+  let productsString = `articulo/articulo-rubro?pCodigoRubro=${selectedSubrubro}`
+
+  const selectedMarca = $form.marca.value
+  const selectedDiametro = $form.diametro.value
+  const selectedMedida = $form.medida.value
+
+  if (selectedSubrubro) {
+    if (selectedMarca) {
+      productsString += `&pMarca=${selectedMarca}`
+    }
+    if (selectedDiametro) {
+      productsString += `&pDiametro=${selectedDiametro}`
+    }
+    if (selectedMedida) {
+      productsString += `&pMedida=${selectedMedida}`
+    }
+
+    const products = await getProducts(productsString)
+    storage.saveToLocalStorage('products_store', products)
+    renderProducts(products)
+  }
 }
 
 function switchImage(condition) {
