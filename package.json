@@ -28,5 +28,8 @@
     "hooks": {
       "pre-commit": "pretty-quick --staged"
     }
+  },
+  "dependencies": {
+    "toastify-js": "^1.12.0"
   }
 }
