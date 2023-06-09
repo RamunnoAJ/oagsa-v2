@@ -2,6 +2,7 @@ import { getCategories, getProducts } from '../api/profilePricesList.js'
 import { checkLocalStorage } from '../storage/profile.js'
 import { capitalizeFirstLetter } from '../utils/capitalizeFirstLetter.js'
 import * as storage from '../storage/store.js'
+import { addToCart } from '../cart.js'
 
 checkLocalStorage()
 renderRubrosList()
@@ -161,7 +162,6 @@ async function renderRubrosList() {
 
   const rubros = await getCategories('clase/all')
   const sortedRubros = rubros.sort((a, b) => a.nombre.localeCompare(b.nombre))
-  console.log(rubros)
 
   sortedRubros.forEach(rubro => {
     const $item = document.createElement('li')
@@ -256,6 +256,12 @@ const renderProducts = async products => {
 }
 
 const renderProductCard = (item, parentElement) => {
+  const $card = createProductCard(item)
+
+  parentElement.appendChild($card)
+}
+
+function createProductCard(item) {
   const $card = document.createElement('article')
   $card.classList = 'store__product__card'
   let image = item.url[0]
@@ -264,28 +270,84 @@ const renderProductCard = (item, parentElement) => {
     image = switchImage(item.codigoRubro.trim())
   }
 
-  $card.innerHTML = `<img src="${'https://' + image}" alt="${
-    item.descripcion
-  }" class="store__product__card__image">
-  <div class="store__product__card__info">
-    <h3 class="fw-bold">${item.descripcion}</h3>
-    <div>
-      <span>${item.codigoArticulo}</span>
-      <span class="fw-bold">$${item.precio}</span>
-    </div>
-    <p>Unidades en stock <span>${item.stockUnidades}</span></span></p>
-    <div class="quantity">
-      <button class="quantity__handler" type="button" onclick="this.nextElementSibling.stepDown()">-</button>
-      <input type="number" id="quantity-${item.codigoArticulo}" min="0" max="${
-    item.stockUnidades
-  }" value="0">
-    <button class="quantity__handler" type="button" onclick="this.previousElementSibling.stepUp()">+</button>
-    </div>
-    <button class="button-sm bg-secondary-300 bg-hover-secondary-400 mt-2">Añadir al carro <i class="fa-solid fa-cart-plus"></i></button>
-  </div>
-  `
+  const $image = document.createElement('img')
+  $image.src = 'https://' + image
+  $image.alt = item.descripcion
+  $image.classList = 'store__product__card__image'
+  $card.appendChild($image)
 
-  parentElement.appendChild($card)
+  const $info = document.createElement('div')
+  $info.classList = 'store__product__card__info'
+  $card.appendChild($info)
+
+  const $title = document.createElement('h3')
+  $title.textContent = item.descripcion
+  $info.appendChild($title)
+
+  const $price = document.createElement('div')
+  $info.appendChild($price)
+  const $article = document.createElement('span')
+  $article.textContent = item.codigoArticulo
+  $price.appendChild($article)
+
+  const $priceValue = document.createElement('span')
+  $priceValue.classList = 'fw-bold'
+  $priceValue.textContent = ` $${item.precio}`
+  $price.appendChild($priceValue)
+
+  const $stock = document.createElement('p')
+  $stock.textContent = 'Unidades en stock: '
+  $info.appendChild($stock)
+
+  const $stockQuantity = document.createElement('span')
+  $stockQuantity.textContent = item.stockUnidades
+  $stock.appendChild($stockQuantity)
+
+  const $quantity = document.createElement('div')
+  $quantity.classList = 'quantity'
+  $info.appendChild($quantity)
+
+  const $quantityHandler = document.createElement('button')
+  $quantityHandler.classList = 'quantity__handler'
+  $quantityHandler.type = 'button'
+  $quantityHandler.textContent = '-'
+  $quantityHandler.addEventListener('click', () => {
+    $quantityHandler.nextElementSibling.stepDown()
+  })
+  $quantity.appendChild($quantityHandler)
+
+  const $quantityInput = document.createElement('input')
+  $quantityInput.type = 'number'
+  $quantityInput.id = `quantity-${item.codigoArticulo}`
+  $quantityInput.min = 0
+  $quantityInput.max = item.stockUnidades
+  $quantityInput.value = 0
+  $quantity.appendChild($quantityInput)
+
+  const $quantityHandler2 = document.createElement('button')
+  $quantityHandler2.classList = 'quantity__handler'
+  $quantityHandler2.type = 'button'
+  $quantityHandler2.textContent = '+'
+  $quantityHandler2.addEventListener('click', () => {
+    $quantityHandler2.previousElementSibling.stepUp()
+  })
+
+  $quantity.appendChild($quantityHandler2)
+
+  const $addToCart = document.createElement('button')
+  $addToCart.classList =
+    'button-sm bg-secondary-300 bg-hover-secondary-400 mt-2'
+  $addToCart.textContent = 'Añadir al carro'
+  $addToCart.addEventListener('click', () => {
+    addToCart(item)
+  })
+  $info.appendChild($addToCart)
+
+  const $icon = document.createElement('i')
+  $icon.classList = 'fa-solid fa-cart-plus'
+  $addToCart.appendChild($icon)
+
+  return $card
 }
 
 async function highlightRubro(e) {
