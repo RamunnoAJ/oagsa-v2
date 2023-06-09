@@ -10,6 +10,7 @@
 
   .store__rubros__items {
     @include flex(column, center, center);
+    gap: 1rem;
     gap: 0.25rem;
     list-style: none;
 
@@ -19,7 +20,7 @@
       transition: 300ms ease-in-out all;
       font-weight: bold;
       &:hover {
-        color: $secondary-color-300;
+        color: $secondary-color-400;
       }
       &.active {
         color: $secondary-color-400;
