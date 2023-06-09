@@ -9,7 +9,39 @@
   .store__product__card {
     @include flex(column, space-between, center);
     gap: 0.5rem;
-    // height: 350px;
+
+    .quantity {
+      @include flex(row, center, center);
+      gap: 0.25rem;
+
+      input[type='number'] {
+        -webkit-appearance: textfield;
+        -moz-appearance: textfield;
+        appearance: textfield;
+        width: 3rem;
+        text-align: center;
+        background: none;
+        border: none;
+        padding: 0.25rem;
+      }
+      input[type='number']::-webkit-inner-spin-button,
+      input[type='number']::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+      }
+
+      .quantity__handler {
+        padding: 0.25rem 0.5rem;
+        cursor: pointer;
+        border-radius: 4rem;
+        border: none;
+        background-color: $slate;
+        transition: all 200ms ease-in-out;
+
+        &:hover {
+          background-color: $primary-color;
+        }
+      }
+    }
 
     .store__product__card__image {
       width: 160px;
@@ -22,12 +54,7 @@
       width: 100%;
       text-align: center;
 
-      input {
-        width: 80%;
-        padding: 0.125rem 0.25rem;
-      }
-
-      button {
+      .button-sm {
         padding: 0.5rem 1rem;
       }
     }

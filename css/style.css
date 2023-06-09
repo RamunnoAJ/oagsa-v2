@@ -3675,6 +3675,33 @@ body {
     justify-content: space-between;
     align-items: center;
     gap: 0.5rem; }
+    .store__products .store__product__card .quantity {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      gap: 0.25rem; }
+      .store__products .store__product__card .quantity input[type='number'] {
+        -webkit-appearance: textfield;
+        -moz-appearance: textfield;
+        appearance: textfield;
+        width: 3rem;
+        text-align: center;
+        background: none;
+        border: none;
+        padding: 0.25rem; }
+      .store__products .store__product__card .quantity input[type='number']::-webkit-inner-spin-button,
+      .store__products .store__product__card .quantity input[type='number']::-webkit-outer-spin-button {
+        -webkit-appearance: none; }
+      .store__products .store__product__card .quantity .quantity__handler {
+        padding: 0.25rem 0.5rem;
+        cursor: pointer;
+        border-radius: 4rem;
+        border: none;
+        background-color: #e2e8f0;
+        transition: all 200ms ease-in-out; }
+        .store__products .store__product__card .quantity .quantity__handler:hover {
+          background-color: #faeed3; }
     .store__products .store__product__card .store__product__card__image {
       width: 160px;
       height: 160px; }
@@ -3686,10 +3713,7 @@ body {
       gap: 0.25rem;
       width: 100%;
       text-align: center; }
-      .store__products .store__product__card .store__product__card__info input {
-        width: 80%;
-        padding: 0.125rem 0.25rem; }
-      .store__products .store__product__card .store__product__card__info button {
+      .store__products .store__product__card .store__product__card__info .button-sm {
         padding: 0.5rem 1rem; }
 
 @media (min-width: 680px) {
@@ -4084,6 +4108,24 @@ header {
   width: 95%;
   min-height: 10vh;
   max-width: 1200px; }
+  .store-container .store {
+    width: 100%; }
+  .store-container .store__rubros__items {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0.25rem;
+    list-style: none; }
+    .store-container .store__rubros__items .store__rubros__item {
+      cursor: pointer;
+      padding: 0.25rem 0.5rem;
+      transition: 300ms ease-in-out all;
+      font-weight: bold; }
+      .store-container .store__rubros__items .store__rubros__item:hover {
+        color: #ffd37c; }
+      .store-container .store__rubros__items .store__rubros__item.active {
+        color: #ff9c35; }
   .store-container .store__button-search {
     display: flex;
     flex-direction: row;
@@ -4108,10 +4150,6 @@ header {
     .store-container .select-store select {
       color: black; }
   .store-container .store__search__input {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
     width: 100%; }
     .store-container .store__search__input .search__input {
       display: flex;
@@ -4148,25 +4186,6 @@ header {
         font-size: var(--fs-200);
         color: black;
         font-weight: 500; }
-  .store-container .grid-store {
-    display: grid;
-    justify-items: center;
-    grid-template-columns: repeat(4, 200px);
-    place-content: center;
-    gap: 1rem; }
-    .store-container .grid-store .grid__image {
-      display: flex;
-      flex-direction: row;
-      justify-content: center;
-      align-items: flex-end;
-      width: 100%;
-      height: 100%;
-      min-height: 160px;
-      background-color: grey;
-      cursor: pointer; }
-    .store-container .grid-store .grid-span-2 {
-      grid-column: span 2;
-      grid-row: span 2; }
   .store-container .store__rubros__desktop {
     display: flex;
     flex-direction: row;
@@ -4181,6 +4200,23 @@ header {
       border-radius: 0.5rem; }
       .store-container .store__rubros__desktop .store__rubros__desktop__items.active {
         background-color: #ff9c35; }
+
+@media (min-width: 45rem) {
+  .store-container .store {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: stretch; }
+    .store-container .store > .store__search {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      flex-grow: 0;
+      gap: 1rem;
+      flex-basis: 80%; }
+    .store-container .store > .store__rubros__items {
+      flex-basis: 20%; } }
 
 @media (min-width: 55rem) {
   .store-container .store__button-search {

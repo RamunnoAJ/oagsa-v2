@@ -4,6 +4,7 @@ import { capitalizeFirstLetter } from '../utils/capitalizeFirstLetter.js'
 import * as storage from '../storage/store.js'
 
 checkLocalStorage()
+renderRubrosList()
 
 const $form = document.querySelector('#store')
 $form.addEventListener('change', handleChangeForm)
@@ -11,17 +12,6 @@ $form.addEventListener('submit', handleSubmitSearch)
 
 const $searchInput = document.querySelector('#searchByCode')
 $searchInput.addEventListener('submit', handleSubmitSearch)
-
-const $rubrosImages = document.querySelector('.grid-store')
-$rubrosImages.addEventListener('click', e => {
-  if (
-    e.target.closest('div') === null ||
-    !e.target.closest('div').className.includes('grid__image')
-  )
-    return
-
-  renderRubrosDesktop(e.target.closest('div').dataset.rubro)
-})
 
 async function handleChangeForm(e) {
   e.preventDefault()
@@ -85,9 +75,7 @@ function renderOptions(options, selectID) {
     case '#clases':
       sortedOptions = options.sort((a, b) => a.nombre.localeCompare(b.nombre))
 
-      $select.innerHTML = `<option disabled selected value=''>Seleccione una clase</option>
-      <option value=''>-- TODOS --</option>
-      `
+      $select.innerHTML = `<option disabled selected value=''>Seleccione una clase</option>`
 
       sortedOptions.forEach(option => {
         const $option = document.createElement('option')
@@ -165,6 +153,36 @@ async function renderRubros(idClase) {
   $selectRubros.addEventListener('change', e => {
     renderInputs(e.target.value)
   })
+}
+
+async function renderRubrosList() {
+  const $storeRubros = document.querySelector('.store__rubros__items')
+  $storeRubros.innerHTML = ''
+
+  const rubros = await getCategories('clase/all')
+  const sortedRubros = rubros.sort((a, b) => a.nombre.localeCompare(b.nombre))
+  console.log(rubros)
+
+  sortedRubros.forEach(rubro => {
+    const $item = document.createElement('li')
+    $item.className = 'store__rubros__item'
+    $item.dataset.rubro = rubro.idSuperRubro
+    $item.textContent = capitalizeFirstLetter(rubro.nombre.toLowerCase())
+    $item.addEventListener('click', e => {
+      renderRubrosDesktop(e.target.dataset.rubro)
+      highlightClase(e)
+    })
+
+    $storeRubros.appendChild($item)
+  })
+}
+
+function highlightClase(e) {
+  const $items = document.querySelectorAll('.store__rubros__item')
+  $items.forEach(item => {
+    item.classList.remove('active')
+  })
+  e.target.classList.add('active')
 }
 
 async function renderRubrosDesktop(idClase) {
@@ -256,9 +274,13 @@ const renderProductCard = (item, parentElement) => {
       <span class="fw-bold">$${item.precio}</span>
     </div>
     <p>Unidades en stock <span>${item.stockUnidades}</span></span></p>
-    <input type="number" id="quantity-${item.codigoArticulo}" min="1" max="${
+    <div class="quantity">
+      <button class="quantity__handler" type="button" onclick="this.nextElementSibling.stepDown()">-</button>
+      <input type="number" id="quantity-${item.codigoArticulo}" min="0" max="${
     item.stockUnidades
-  }" placeholder="Ingrese cantidad">
+  }" value="0">
+    <button class="quantity__handler" type="button" onclick="this.previousElementSibling.stepUp()">+</button>
+    </div>
     <button class="button-sm bg-secondary-300 bg-hover-secondary-400 mt-2">Añadir al carro <i class="fa-solid fa-cart-plus"></i></button>
   </div>
   `
