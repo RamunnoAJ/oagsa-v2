@@ -42,63 +42,52 @@
     </nav>
   </header>
 
-  <main class="mt-10">
-    <div class="store-container">
-      <h1 class="uppercase fw-bold">Tienda</h1>
+  <main class="mt-10 store-container">
+    <h1 class="uppercase fw-bold">Tienda</h1>
 
-      <div class="grid-store visually-hidden-mobile">
-        <div data-rubro="010" class="grid__image grid-span-2">Cubiertas de moto</div>
-        <div data-rubro="011" class="grid__image">Accesorios de moto</div>
-        <div data-rubro="020" class="grid__image">Cámaras de Moto</div>
-        <div data-rubro="050" class="grid__image">Cámaras y Protección</div>
-        <div data-rubro="080" class="grid__image">Transmisión</div>
-        <div data-rubro="060" class="grid__image">Aceites</div>
-        <div data-rubro="090" class="grid__image">Baterias</div>
-        <div data-rubro="030" class="grid__image grid-span-2">Bicicleta</div>
-        <div data-rubro="095" class="grid__image">Contrapesos</div>
-        <div data-rubro="100" class="grid__image">Artículos de Gomería</div>
+    <form class="mt-10 store" id="store">
+      <ul class="store__rubros__items visually-hidden-mobile">
+      </ul>
+
+      <div class="store__search">
+        <div class="select-store visually-hidden-desktop mb-4">
+          <i class="fa-solid fa-filter"></i>
+          <select name="clases" id="clases" class="select select-lg bg-primary">
+            <option value="" disabled selected>Seleccione una clase</option>
+          </select>
+        </div>
+        <div class="store__rubros select-store visually-hidden">
+          <i class="fa-solid fa-filter"></i>
+          <select class="select select-lg bg-primary" name="rubros" id="rubros">
+            <option value="" disabled selected>Seleccione un rubro</option>
+          </select>
+        </div>
+        <div class="store__search__input bg-primary py-4 mt-4 visually-hidden">
+          <div class="search__input">
+            <button class="button bg-secondary-300 bg-hover-secondary-400 store__button-search"><i
+                class="fa-magnifying-glass fa-solid"></i>
+              <span class="visually-hidden-mobile">Buscar</span>
+            </button>
+            <input type="text" id="searchByCode" placeholder="Ingrese código del producto">
+          </div>
+          <div class="store__search__input__select">
+            <select name="marca" id="marcas">
+              <option value="" disabled selected>Marca</option>
+            </select>
+            <select name="medida" id="medidas">
+              <option value="" disabled selected>Medida</option>
+            </select>
+            <select name="diametro" id="diametros">
+              <option value="" disabled selected>Diametro</option>
+            </select>
+          </div>
+        </div>
       </div>
-    </div>
+    </form>
+
+    <section class="store__products" id="products">
+    </section>
   </main>
-
-  <form class="mt-10 store-container store" id="store">
-    <div class="select-store visually-hidden-desktop">
-      <i class="fa-solid fa-filter"></i>
-
-      <select name="clases" id="clases" class="select select-lg bg-primary">
-        <option value="" disabled selected>Seleccione una clase</option>
-      </select>
-    </div>
-    <div class="store__rubros select-store visually-hidden mt-4">
-      <i class="fa-solid fa-filter"></i>
-      <select class="select select-lg bg-primary" name="rubros" id="rubros">
-        <option value="" disabled selected>Seleccione un rubro</option>
-      </select>
-    </div>
-    <div class="store__search__input bg-primary py-4 mt-4 visually-hidden">
-      <div class="search__input">
-        <button class="button bg-secondary-300 bg-hover-secondary-400 store__button-search"><i
-            class="fa-magnifying-glass fa-solid"></i>
-          <span class="visually-hidden-mobile">Buscar</span>
-        </button>
-        <input type="text" id="searchByCode" placeholder="Ingrese código del producto">
-      </div>
-      <div class="store__search__input__select">
-        <select name="marca" id="marcas">
-          <option value="" disabled selected>Marca</option>
-        </select>
-        <select name="medida" id="medidas">
-          <option value="" disabled selected>Medida</option>
-        </select>
-        <select name="diametro" id="diametros">
-          <option value="" disabled selected>Diametro</option>
-        </select>
-      </div>
-    </div>
-  </form>
-
-  <section class="store-container store__products" id="products">
-  </section>
 
   <footer class="px-4 pt-5 mt-24 bg-primary about-us__footer">
     <div class="footer-container">
