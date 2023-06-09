@@ -41,6 +41,11 @@
           &.active {
             color: $secondary-color-400;
           }
+
+          a {
+            color: black;
+            text-decoration: none;
+          }
         }
       }
 
