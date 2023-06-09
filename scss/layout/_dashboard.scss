@@ -82,6 +82,7 @@
 
       .profile-info__search {
         @include flex(column, center, center);
+        gap: 0.5rem;
       }
 
       .search__prices {

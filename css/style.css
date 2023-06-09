@@ -4088,7 +4088,8 @@ header {
         display: flex;
         flex-direction: column;
         justify-content: center;
-        align-items: center; }
+        align-items: center;
+        gap: 0.5rem; }
       .dashboard-container .dashboard-wrapper .profile-info .search__prices {
         display: flex;
         flex-direction: column;
@@ -4441,6 +4442,8 @@ footer ul {
     .dashboard-container .dashboard-wrapper .profile-info {
       flex-basis: 70%;
       left: 0; }
+      .dashboard-container .dashboard-wrapper .profile-info .profile-info__search {
+        flex-direction: row; }
       .dashboard-container .dashboard-wrapper .profile-info .profile-info__title {
         margin-bottom: 2rem;
         margin-top: 2rem; }

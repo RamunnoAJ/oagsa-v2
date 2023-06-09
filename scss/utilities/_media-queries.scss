@@ -245,6 +245,10 @@
       flex-basis: 70%;
       left: 0;
 
+      .profile-info__search {
+        flex-direction: row;
+      }
+
       .profile-info__title {
         margin-bottom: 2rem;
         margin-top: 2rem;
