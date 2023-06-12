@@ -51,3 +51,12 @@ export function updateQuantity(item, quantity) {
   cart[index].quantity = quantity
   saveCart(cart)
 }
+
+export function calculateDiscount(total, discount) {
+  return total - (total * discount) / 100
+}
+
+export function calculateDelivery(total, delivery) {
+  if (delivery < 0) return total
+  return total + delivery
+}
