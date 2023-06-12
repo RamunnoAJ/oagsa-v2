@@ -1,11 +1,14 @@
 import { getCart, saveCart, clearCart } from './storage/cart.js'
+import { checkLocalStorage } from './storage/profile.js'
 import { showToast } from './ui/cart.js'
 
+checkLocalStorage()
+
 export function addToCart(item) {
-  const $quantityInput = document.getElementById(
-    `quantity-${item.codigoArticulo}`
-  )
+  const quantityInputId = `quantity-${item.codigoArticulo}`
+  const $quantityInput = document.getElementById(quantityInputId)
   const quantity = $quantityInput.value
+
   if (quantity > 0) {
     const cart = getCart() || []
     const index = cart.findIndex(i => i.codigoArticulo === item.codigoArticulo)
@@ -15,6 +18,7 @@ export function addToCart(item) {
     } else {
       updateQuantity(item, quantity)
     }
+
     showToast()
   } else {
     alert('La cantidad debe ser mayor a 0')
@@ -22,18 +26,16 @@ export function addToCart(item) {
 }
 
 function addProductToCart(item, quantity) {
-  const cart = getCart() || []
-  cart.push({
-    ...item,
-    quantity,
-  })
-  saveCart(cart)
+  const cart = getCart() ?? []
+  const newItem = { ...item, quantity }
+  const updatedCart = [...cart, newItem]
+  saveCart(updatedCart)
 }
 
 export function removeFromCart(item) {
   const cart = getCart() || []
-  cart.splice(cart.indexOf(item), 1)
-  saveCart(cart)
+  const updatedCart = cart.filter(cartItem => cartItem !== item)
+  saveCart(updatedCart)
 }
 
 export function emptyCart() {
