@@ -1,0 +1,19 @@
+.cart__icon {
+  position: relative;
+  width: 45px;
+  height: 45px;
+  cursor: pointer;
+  z-index: 2;
+  background-color: $secondary-color-300;
+  border-radius: 50%;
+  left: 85vw;
+  top: 75vh;
+  color: $dark-grey;
+  @include flex(column, center, center);
+  transition: all 0.3s ease-in-out;
+
+  &:hover {
+    background-color: $secondary-color-400;
+    color: $black;
+  }
+}

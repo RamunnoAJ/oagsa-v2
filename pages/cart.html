@@ -10,7 +10,7 @@
   <meta name="author" content="Stefanía Sanchez Golfieri - Agustín Julián Ramunno" />
   <meta name="copyright" content="Oscar A. González" />
 
-  <title>Tienda | OAGSA</title>
+  <title>Carrito de Compras | OAGSA</title>
 
   <link rel="stylesheet" href="../css/style.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" />
@@ -43,59 +43,6 @@
     </nav>
   </header>
 
-  <a href="./cart.html">
-    <div class="cart__icon">
-
-      <i class="fa-solid fa-cart-shopping"></i>
-    </div>
-  </a>
-
-  <main class="mt-10 store-container">
-    <h1 class="uppercase fw-bold">Tienda</h1>
-
-    <form class="mt-10 store" id="store">
-      <ul class="store__rubros__items visually-hidden-mobile">
-      </ul>
-
-      <div class="store__search">
-        <div class="select-store visually-hidden-desktop mb-4">
-          <i class="fa-solid fa-filter"></i>
-          <select name="clases" id="clases" class="select select-lg bg-primary">
-            <option value="" disabled selected>Seleccione una clase</option>
-          </select>
-        </div>
-        <div class="store__rubros select-store visually-hidden">
-          <i class="fa-solid fa-filter"></i>
-          <select class="select select-lg bg-primary" name="rubros" id="rubros">
-            <option value="" disabled selected>Seleccione un rubro</option>
-          </select>
-        </div>
-        <div class="store__search__input bg-primary py-4 mt-4 visually-hidden">
-          <div class="search__input">
-            <button class="button bg-secondary-300 bg-hover-secondary-400 store__button-search"><i
-                class="fa-magnifying-glass fa-solid"></i>
-              <span class="visually-hidden-mobile">Buscar</span>
-            </button>
-            <input type="text" id="searchByCode" placeholder="Ingrese código del producto">
-          </div>
-          <div class="store__search__input__select">
-            <select name="marca" id="marcas">
-              <option value="" disabled selected>Marca</option>
-            </select>
-            <select name="medida" id="medidas">
-              <option value="" disabled selected>Medida</option>
-            </select>
-            <select name="diametro" id="diametros">
-              <option value="" disabled selected>Diametro</option>
-            </select>
-          </div>
-        </div>
-      </div>
-    </form>
-
-    <section class="store__products" id="products">
-    </section>
-  </main>
 
   <footer class="px-4 pt-5 mt-24 bg-primary about-us__footer">
     <div class="footer-container">
@@ -139,7 +86,7 @@
   </footer>
 
   <script type="module" src="../src/user.js"></script>
-  <script type="module" src="../src/store.js"></script>
+  <script type="module" src="../src/cart.js"></script>
   <script src="../src/ui/menu.js"></script>
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 </body>

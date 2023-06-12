@@ -3730,6 +3730,26 @@ body {
       width: 220px;
       height: 200px; } }
 
+.cart__icon {
+  position: relative;
+  width: 45px;
+  height: 45px;
+  cursor: pointer;
+  z-index: 2;
+  background-color: #ffd37c;
+  border-radius: 50%;
+  left: 85vw;
+  top: 75vh;
+  color: #5b5b5b;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.3s ease-in-out; }
+  .cart__icon:hover {
+    background-color: #ff9c35;
+    color: #000; }
+
 header {
   width: 100%;
   padding-block: 2rem;
