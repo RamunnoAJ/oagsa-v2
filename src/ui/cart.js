@@ -1,4 +1,4 @@
-import { emptyCart, getTotalPrice, removeFromCart } from '../cart.js'
+import { checkout, emptyCart, updateQuantity, getTotalPrice, removeFromCart } from '../cart.js'
 import { getCart } from '../storage/cart.js'
 
 export function showToast(message) {
@@ -35,11 +35,15 @@ function renderCart(cart) {
   $cart.appendChild($table)
   $cart.appendChild(createTotalAmount())
 
-  renderEmptyCart()
+  renderButtons()
 }
 
-function renderEmptyCart() {
+function renderButtons() {
   const $cart = document.getElementById('cart')
+
+    const $container = document.createElement('div')
+    $container.classList.add('buttons')
+    $cart.appendChild($container)
 
   const $emptyCartButton = document.createElement('button')
   $emptyCartButton.textContent = 'Vaciar carrito'
@@ -48,8 +52,16 @@ function renderEmptyCart() {
     renderCart(getCart())
   })
 
-  $cart.appendChild($emptyCartButton)
+  const $checkoutButton = document.createElement('button')
+  $checkoutButton.textContent = 'Finalizar compra'
+  $checkoutButton.addEventListener('click', () => {
+    checkout()
+  })
+
+  $container.appendChild($emptyCartButton)
+  $container.appendChild($checkoutButton)
 }
+
 
 function createTotalAmount() {
   const $totalAmount = document.createElement('div')
@@ -93,13 +105,29 @@ function createProductRow(item) {
   const $description = document.createElement('td')
   const $price = document.createElement('td')
   const $quantity = document.createElement('td')
+  const $quantityInput = document.createElement('input')
+  $quantityInput.type = 'number'
+    $quantityInput.min = 0
+    $quantityInput.max = item.stockUnidades
+  $quantityInput.value = item.quantity
+  $quantityInput.addEventListener('change', () => {
+    if ( $quantityInput.value <= item.stockUnidades ) {
+      updateQuantity(item, $quantityInput.value)
+    renderCart(getCart())
+    } else {
+      alert('Cantidad no válida. Stock disponible: ' + item.stockUnidades)
+        $quantityInput.value = item.stockUnidades
+    }
+  })
+
+  $quantity.appendChild($quantityInput)
+
   const $total = document.createElement('td')
   const $delete = document.createElement('td')
   $article.textContent = item.codigoArticulo
   $description.textContent = item.descripcion
-  $price.textContent = `$${item.precio}`
-  $quantity.textContent = item.quantity
-  $total.textContent = `$${item.precio * item.quantity}`
+  $price.textContent = `$${item.precio.toFixed(2)}`
+  $total.textContent = `$${(item.precio * item.quantity).toFixed(2)}`
   $delete.textContent = '✕'
   $row.appendChild($article)
   $row.appendChild($description)
