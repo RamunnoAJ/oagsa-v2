@@ -4,6 +4,13 @@ import { showToast } from './ui/cart.js'
 
 checkLocalStorage()
 
+export function checkout() {
+    const cart = getCart() || []
+    saveCart(cart)
+    clearCart()
+    showToast('Compra finalizada.')
+}
+
 export function addToCart(item) {
   const quantityInputId = `quantity-${item.codigoArticulo}`
   const $quantityInput = document.getElementById(quantityInputId)
