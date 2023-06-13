@@ -3,7 +3,7 @@ export function getCart() {
 }
 
 export function clearCart() {
-  localStorage.removeItem('cart')
+  localStorage.setItem('cart', '[]')
 }
 
 export function saveCart(cart) {

@@ -19,7 +19,7 @@ export function addToCart(item) {
       updateQuantity(item, quantity)
     }
 
-    showToast()
+    showToast('Objeto añadido correctamente.')
   } else {
     alert('La cantidad debe ser mayor a 0')
   }
@@ -34,7 +34,9 @@ function addProductToCart(item, quantity) {
 
 export function removeFromCart(item) {
   const cart = getCart() || []
-  const updatedCart = cart.filter(cartItem => cartItem !== item)
+  const updatedCart = cart.filter(
+    cartItem => cartItem.codigoArticulo !== item.codigoArticulo
+  )
   saveCart(updatedCart)
 }
 
@@ -44,7 +46,9 @@ export function emptyCart() {
 
 export function getTotalPrice() {
   const cart = getCart() || []
-  return cart.reduce((acc, item) => acc + item.precio * item.quantity, 0)
+  return cart
+    .reduce((acc, item) => acc + item.precio * item.quantity, 0)
+    .toFixed(2)
 }
 
 export function updateQuantity(item, quantity) {
