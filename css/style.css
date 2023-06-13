@@ -3730,6 +3730,10 @@ body {
       width: 220px;
       height: 200px; } }
 
+a {
+  text-decoration: none;
+  color: #5b5b5b; }
+
 .cart__icon {
   position: relative;
   width: 45px;
