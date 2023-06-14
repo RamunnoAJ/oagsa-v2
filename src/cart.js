@@ -6,8 +6,8 @@ checkLocalStorage()
 
 export function checkout() {
     const cart = getCart() || []
-    saveCart(cart)
-    clearCart()
+  console.log(cart)
+//    clearCart()
     showToast('Compra finalizada.')
 }
 

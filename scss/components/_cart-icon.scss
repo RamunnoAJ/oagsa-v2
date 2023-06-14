@@ -1,18 +1,13 @@
-a {
-  text-decoration: none;
-  color: $dark-grey;
-}
-
 .cart__icon {
-  position: relative;
+  text-decoration: none;
+  position: fixed;
   width: 45px;
   height: 45px;
   cursor: pointer;
-  z-index: 2;
   background-color: $secondary-color-300;
   border-radius: 50%;
-  left: 85vw;
-  top: 75vh;
+  right: 3rem;
+  bottom: 5rem;
   color: $dark-grey;
   @include flex(column, center, center);
   transition: all 0.3s ease-in-out;
