@@ -4244,6 +4244,15 @@ header {
       flex-grow: 0;
       gap: 1rem;
       flex-basis: 80%; }
+      .store-container .store > .store__search > .store__search__select {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
+        width: 100%; }
+        .store-container .store > .store__search > .store__search__select > div {
+          width: 100%; }
     .store-container .store > .store__rubros__items {
       flex-basis: 20%; } }
 

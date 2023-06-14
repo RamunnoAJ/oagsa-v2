@@ -3,8 +3,6 @@ import { capitalizeFirstLetter } from '../utils/capitalizeFirstLetter.js'
 import * as storage from '../storage/store.js'
 import { addToCart } from '../cart.js'
 
-renderRubrosList()
-
 const $form = document.querySelector('#store')
 $form.addEventListener('change', handleChangeForm)
 $form.addEventListener('submit', handleSubmitSearch)
@@ -151,27 +149,6 @@ async function renderRubros(idClase) {
 
   $selectRubros.addEventListener('change', e => {
     renderInputs(e.target.value)
-  })
-}
-
-async function renderRubrosList() {
-  const $storeRubros = document.querySelector('.store__rubros__items')
-  $storeRubros.innerHTML = ''
-
-  const rubros = await getCategories('clase/all')
-  const sortedRubros = rubros.sort((a, b) => a.nombre.localeCompare(b.nombre))
-
-  sortedRubros.forEach(rubro => {
-    const $item = document.createElement('li')
-    $item.className = 'store__rubros__item'
-    $item.dataset.rubro = rubro.idSuperRubro
-    $item.textContent = capitalizeFirstLetter(rubro.nombre.toLowerCase())
-    $item.addEventListener('click', e => {
-      renderRubrosDesktop(e.target.dataset.rubro)
-      highlightClase(e)
-    })
-
-    $storeRubros.appendChild($item)
   })
 }
 
