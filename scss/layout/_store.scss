@@ -125,6 +125,16 @@
       flex-grow: 0;
       gap: 1rem;
       flex-basis: 80%;
+
+      & > .store__search__select {
+        @include flex(row, center, center); 
+        gap: 1rem;
+        width: 100%; 
+
+        & > div {
+          width: 100%;
+        }
+      }
     }
 
     & > .store__rubros__items {
