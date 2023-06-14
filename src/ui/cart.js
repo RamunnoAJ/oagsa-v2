@@ -2,7 +2,6 @@ import { checkout, emptyCart, updateQuantity, getTotalPrice, removeFromCart } fr
 import { getCart, saveToDraft } from '../storage/cart.js'
 
 export function showToast(message) {
-  // eslint-disable-next-line no-undef
   Toastify({
     text: message,
     duration: 3000,
@@ -35,7 +34,17 @@ function renderCart(cart) {
   $cart.appendChild($table)
   $cart.appendChild(createTotalAmount())
 
+  renderObservations()
   renderButtons()
+}
+
+function renderObservations() {
+  const $cart = document.getElementById('cart')
+  const $observations = document.createElement('textarea')
+  $observations.classList.add('observations')
+  $observations.id = 'observations'  
+  $observations.placeholder = 'Observaciones'
+  $cart.appendChild($observations)
 }
 
 function renderButtons() {

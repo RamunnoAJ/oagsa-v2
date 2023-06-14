@@ -3730,20 +3730,16 @@ body {
       width: 220px;
       height: 200px; } }
 
-a {
-  text-decoration: none;
-  color: #5b5b5b; }
-
 .cart__icon {
-  position: relative;
+  text-decoration: none;
+  position: fixed;
   width: 45px;
   height: 45px;
   cursor: pointer;
-  z-index: 2;
   background-color: #ffd37c;
   border-radius: 50%;
-  left: 85vw;
-  top: 75vh;
+  right: 3rem;
+  bottom: 5rem;
   color: #5b5b5b;
   display: flex;
   flex-direction: column;
@@ -4132,6 +4128,7 @@ header {
           gap: 1rem; }
 
 .store-container {
+  position: relative;
   margin-inline: auto;
   width: 95%;
   min-height: 10vh;
