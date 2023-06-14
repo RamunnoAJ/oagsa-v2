@@ -1,5 +1,5 @@
 import { checkout, emptyCart, updateQuantity, getTotalPrice, removeFromCart } from '../cart.js'
-import { getCart } from '../storage/cart.js'
+import { getCart, saveToDraft } from '../storage/cart.js'
 
 export function showToast(message) {
   // eslint-disable-next-line no-undef
@@ -46,10 +46,17 @@ function renderButtons() {
     $cart.appendChild($container)
 
   const $emptyCartButton = document.createElement('button')
-  $emptyCartButton.textContent = 'Vaciar carrito'
+  $emptyCartButton.textContent = 'Cancelar'
   $emptyCartButton.addEventListener('click', () => {
     emptyCart()
     renderCart(getCart())
+  })
+
+  const $sendToDraft = document.createElement('button')
+  $sendToDraft.textContent = 'Enviar a borrador'
+  $sendToDraft.addEventListener('click', () => {
+    saveToDraft(getCart())
+    emptyCart()
   })
 
   const $checkoutButton = document.createElement('button')
@@ -59,6 +66,7 @@ function renderButtons() {
   })
 
   $container.appendChild($emptyCartButton)
+  $container.appendChild($sendToDraft)
   $container.appendChild($checkoutButton)
 }
 
