@@ -5,10 +5,10 @@ import { showToast } from './ui/cart.js'
 checkLocalStorage()
 
 export function checkout() {
-    const cart = getCart() || []
+  const cart = getCart() || []
   console.log(cart)
 //    clearCart()
-    showToast('Compra finalizada.')
+  showToast('Compra finalizada.')
 }
 
 export function addToCart(item) {

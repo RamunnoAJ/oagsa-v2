@@ -1,5 +1,5 @@
 import { checkout, emptyCart, updateQuantity, getTotalPrice, removeFromCart } from '../cart.js'
-import { getCart, saveCart, saveToDraft, getDrafts, getDraftCart, removeFromDraft } from '../storage/cart.js'
+import { getCart, saveToDraft, getDrafts, removeFromDraft, saveCart } from '../storage/cart.js'
 
 export function showToast(message) {
   Toastify({
@@ -85,7 +85,6 @@ function renderButtons() {
   const $draftsButton = document.createElement('button')
   $draftsButton.textContent = 'Borradores'
   $draftsButton.addEventListener('click', () => {
-    // render a list with all the carts on drafts
     renderDraftsList()
   })
 
@@ -97,24 +96,28 @@ function renderButtons() {
 }
 
 function renderDraftsList() {
-  // render a list with all the carts on drafts
   const drafts = getDrafts()
-  console.log(drafts)
-
   const $list = document.createElement('ul')
   $list.classList.add('drafts')
-  drafts.forEach((item, i) => {
-    const $li = document.createElement('li')
-    $li.textContent = i + 1
-    $li.addEventListener('click', () => {
-      saveCart(getDraftCart(i))
-      renderCart(getCart())
-    })
-    $list.appendChild($li)
+  drafts.forEach((item) => {
+    $list.appendChild(createDraftCard(item))
   })
-
   const $cart = document.getElementById('cart')
   $cart.appendChild($list)
+}
+
+function createDraftCard(item) {
+  const $card = document.createElement('li')
+  $card.classList.add('drafts__card')
+  const $button = document.createElement('button')
+  $button.textContent = 'Ver'
+  $button.addEventListener('click', () => {
+    saveCart(item)
+    renderCart(item)
+  })
+
+  $card.appendChild($button)
+  return $card
 }
 
 function createTotalAmount() {
@@ -167,7 +170,7 @@ function createProductRow(item) {
   $quantityInput.addEventListener('change', () => {
     if ( $quantityInput.value <= item.stockUnidades ) {
       updateQuantity(item, $quantityInput.value)
-    renderCart(getCart())
+      renderCart(getCart())
     } else {
       alert('Cantidad no válida. Stock disponible: ' + item.stockUnidades)
         $quantityInput.value = item.stockUnidades
