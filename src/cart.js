@@ -1,4 +1,4 @@
-import { getCart, saveCart, clearCart } from './storage/cart.js'
+import { getCart, getDrafts, saveToDraft, saveCart, clearCart } from './storage/cart.js'
 import { checkLocalStorage } from './storage/profile.js'
 import { showToast } from './ui/cart.js'
 
@@ -74,4 +74,3 @@ export function calculateDelivery(total, delivery) {
   return total + delivery
 }
 
-// testing push command
