@@ -1,5 +1,5 @@
 import { checkout, emptyCart, updateQuantity, getTotalPrice, removeFromCart } from '../cart.js'
-import { getCart, saveToDraft } from '../storage/cart.js'
+import { getCart, saveCart, saveToDraft, getDrafts, getDraftCart, removeFromDraft } from '../storage/cart.js'
 
 export function showToast(message) {
   Toastify({
@@ -47,16 +47,18 @@ function renderObservations() {
   $cart.appendChild($observations)
 }
 
+
 function renderButtons() {
   const $cart = document.getElementById('cart')
 
-    const $container = document.createElement('div')
-    $container.classList.add('buttons')
-    $cart.appendChild($container)
+  const $container = document.createElement('div')
+  $container.classList.add('buttons')
+  $cart.appendChild($container)
 
   const $emptyCartButton = document.createElement('button')
-  $emptyCartButton.textContent = 'Cancelar'
+  $emptyCartButton.textContent = 'Eliminar borrador'
   $emptyCartButton.addEventListener('click', () => {
+    removeFromDraft(getCart())
     emptyCart()
     renderCart(getCart())
   })
@@ -65,7 +67,7 @@ function renderButtons() {
   $sendToDraft.textContent = 'Enviar a borrador'
   $sendToDraft.addEventListener('click', () => {
     saveToDraft(getCart())
-    emptyCart()
+    renderCart(getCart())
   })
 
   const $checkoutButton = document.createElement('button')
@@ -74,11 +76,46 @@ function renderButtons() {
     checkout()
   })
 
+  const $navigateToStore = document.createElement('button')
+  $navigateToStore.textContent = 'Volver a la tienda'
+  $navigateToStore.addEventListener('click', () => {
+    window.location.href = '/pages/store.html'
+  })
+
+  const $draftsButton = document.createElement('button')
+  $draftsButton.textContent = 'Borradores'
+  $draftsButton.addEventListener('click', () => {
+    // render a list with all the carts on drafts
+    renderDraftsList()
+  })
+
   $container.appendChild($emptyCartButton)
   $container.appendChild($sendToDraft)
+  $container.appendChild($draftsButton)
+  $container.appendChild($navigateToStore)
   $container.appendChild($checkoutButton)
 }
 
+function renderDraftsList() {
+  // render a list with all the carts on drafts
+  const drafts = getDrafts()
+  console.log(drafts)
+
+  const $list = document.createElement('ul')
+  $list.classList.add('drafts')
+  drafts.forEach((item, i) => {
+    const $li = document.createElement('li')
+    $li.textContent = i + 1
+    $li.addEventListener('click', () => {
+      saveCart(getDraftCart(i))
+      renderCart(getCart())
+    })
+    $list.appendChild($li)
+  })
+
+  const $cart = document.getElementById('cart')
+  $cart.appendChild($list)
+}
 
 function createTotalAmount() {
   const $totalAmount = document.createElement('div')
