@@ -11,13 +11,9 @@ export function saveCart(cart) {
 }
 
 export function saveToDraft(cart) {
+  if (cart.length === 0) return
   const drafts = getDrafts() || []
-  const index = drafts.findIndex(i => i.codigoArticulo === cart.codigoArticulo)
-  if (index === -1) {
-    drafts.push(cart)
-  } else {
-    drafts[index] = cart
-  }
+  drafts.push(cart)
   localStorage.setItem('draft_cart', JSON.stringify(drafts))
   clearCart()
 }
