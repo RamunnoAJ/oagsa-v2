@@ -5,6 +5,16 @@
   min-height: 10vh;
   max-width: 1200px;
 
+.store__search__select {
+  @include flex(column, center, center);
+  gap: 1rem;
+  width: 100%;
+
+  &> div {
+    width: 100%;
+  }
+}
+
   .store {
     width: 100%;
   }
