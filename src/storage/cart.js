@@ -1,9 +1,11 @@
+import { v4 as uuidv4 } from 'https://cdn.skypack.dev/uuid'
+
 export function getCart() {
-  return JSON.parse(localStorage.getItem('cart'))
+  return JSON.parse(localStorage.getItem('cart')) || {listaDetalle: []}
 }
 
 export function clearCart() {
-  localStorage.setItem('cart', '[]')
+  localStorage.setItem('cart', '{"listaDetalle": []}')
 }
 
 export function saveCart(cart) {
@@ -11,8 +13,10 @@ export function saveCart(cart) {
 }
 
 export function saveToDraft(cart) {
-  if (cart.length === 0) return
-  const drafts = getDrafts() || []
+  if (cart.listaDetalle.length === 0) return
+  cart.id = uuidv4()
+  cart.numeroNota = Date.now()
+  const drafts = getDrafts() || [] 
   drafts.push(cart)
   localStorage.setItem('draft_cart', JSON.stringify(drafts))
   clearCart()
@@ -23,13 +27,12 @@ export function getDrafts() {
   return JSON.parse(localStorage.getItem('draft_cart'))
 }
 
-export function getDraftCart(index){
-  return JSON.parse(localStorage.getItem('draft_cart'))[index]
+export function getDraftCart(id){
+  return getDrafts().find(cart => cart.id === id)
 }
 
-export function removeFromDraft(cart) {
-  const drafts = getDrafts() || []
-  const index = drafts.findIndex(i => i.codigoArticulo === cart.codigoArticulo)
-  drafts.splice(index, 1)
-  localStorage.setItem('draft_cart', JSON.stringify(drafts))
+export function removeFromDraft(id) {
+  const drafts = getDrafts()
+  const newDrafts = drafts.filter(cart => cart.id !== id)
+  localStorage.setItem('draft_cart', JSON.stringify(newDrafts))
 }
