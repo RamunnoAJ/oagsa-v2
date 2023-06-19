@@ -1,4 +1,4 @@
-import { checkout, emptyCart, updateQuantity, getTotalPrice, removeFromCart } from '../cart.js'
+import { checkout, emptyCart, updateQuantity, getTotalQuantity, getTotalPrice, removeFromCart, updateDiscount, calculateDiscount } from '../cart.js'
 import { getCart, saveToDraft, getDrafts, removeFromDraft, saveCart } from '../storage/cart.js'
 
 export function showToast(message) {
@@ -17,7 +17,7 @@ export function showToast(message) {
 }
 
 if (window.location.href.includes('cart')) {
-  const cart = getCart() || []
+  const cart = getCart() || {}
   renderCart(cart)
 }
 
@@ -26,13 +26,13 @@ function renderCart(cart) {
   const $table = createTable()
   $cart.innerHTML = ''
 
-  cart.forEach(item => {
+  cart.listaDetalle.forEach(item => {
     const $row = createProductRow(item)
     $table.appendChild($row)
   })
 
   $cart.appendChild($table)
-  $cart.appendChild(createTotalAmount())
+  $table.appendChild(createFinalRow())
 
   renderObservations()
   renderButtons()
@@ -44,9 +44,11 @@ function renderObservations() {
   $observations.classList.add('observations')
   $observations.id = 'observations'  
   $observations.placeholder = 'Observaciones'
+  $observations.addEventListener('change', () => {
+    saveCart( { ...getCart(), observaciones: $observations.value } )
+  })
   $cart.appendChild($observations)
 }
-
 
 function renderButtons() {
   const $cart = document.getElementById('cart')
@@ -58,7 +60,7 @@ function renderButtons() {
   const $emptyCartButton = document.createElement('button')
   $emptyCartButton.textContent = 'Eliminar borrador'
   $emptyCartButton.addEventListener('click', () => {
-    removeFromDraft(getCart())
+    removeFromDraft(getCart().id)
     emptyCart()
     renderCart(getCart())
   })
@@ -110,7 +112,7 @@ function createDraftCard(item) {
   const $card = document.createElement('li')
   $card.classList.add('drafts__card')
   const $button = document.createElement('button')
-  $button.textContent = 'Ver'
+  $button.textContent = `${item.id}` 
   $button.addEventListener('click', () => {
     saveCart(item)
     renderCart(item)
@@ -120,15 +122,9 @@ function createDraftCard(item) {
   return $card
 }
 
-function createTotalAmount() {
-  const $totalAmount = document.createElement('div')
-  $totalAmount.classList.add('total-amount')
-  $totalAmount.textContent = `$${getTotalPrice()}`
-  return $totalAmount
-}
-
 function createTable() {
   const $table = document.createElement('table')
+  $table.id = 'cart-table'
   $table.classList.add('cart__table')
 
   const $head = document.createElement('thead')
@@ -136,17 +132,20 @@ function createTable() {
   const $article = document.createElement('th')
   const $description = document.createElement('th')
   const $price = document.createElement('th')
+  const $discount = document.createElement('th')
   const $quantity = document.createElement('th')
   const $total = document.createElement('th')
   const $delete = document.createElement('th')
   $article.textContent = 'Artículo'
   $description.textContent = 'Descripción'
   $price.textContent = 'Precio'
+  $discount.textContent = 'Descuento (%)'
   $quantity.textContent = 'Cantidad'
   $total.textContent = 'Total'
   $row.appendChild($article)
   $row.appendChild($description)
   $row.appendChild($price)
+  $row.appendChild($discount)
   $row.appendChild($quantity)
   $row.appendChild($total)
   $row.appendChild($delete)
@@ -156,17 +155,49 @@ function createTable() {
   return $table
 }
 
+function createFinalRow() {
+  const $row = document.createElement('tr')
+  const $total = document.createElement('td')
+  $total.textContent = 'Total: '
+  $row.appendChild($total)
+  for (let i = 0; i < 6; i++) {
+    const $newRow = document.createElement('td')
+    if (i === 3) {
+      $newRow.textContent = getTotalQuantity()
+    }
+    if (i === 4) {
+      $newRow.textContent = `$${getTotalPrice()}`
+    }
+    $row.appendChild($newRow)
+  }
+  return $row
+}
+
 function createProductRow(item) {
+  console.log(item)
   const $row = document.createElement('tr')
   const $article = document.createElement('td')
   const $description = document.createElement('td')
   const $price = document.createElement('td')
+  const $discount = document.createElement('td')
+
+  const $discountInput = document.createElement('input')
+  $discountInput.value = item.porcentajeDescuento
+  $discountInput.type = 'number'
+  $discountInput.min = 0
+  $discountInput.max = 100
+  $discountInput.value = item.porcentajeDescuento
+  $discountInput.addEventListener('change', () => {
+    updateDiscount(item, $discountInput.value)
+    renderCart(getCart())
+  })
+  $discount.appendChild($discountInput)
   const $quantity = document.createElement('td')
   const $quantityInput = document.createElement('input')
   $quantityInput.type = 'number'
-    $quantityInput.min = 0
-    $quantityInput.max = item.stockUnidades
-  $quantityInput.value = item.quantity
+  $quantityInput.min = 0
+  $quantityInput.max = item.stockUnidades
+  $quantityInput.value = item.cantidad
   $quantityInput.addEventListener('change', () => {
     if ( $quantityInput.value <= item.stockUnidades ) {
       updateQuantity(item, $quantityInput.value)
@@ -182,13 +213,14 @@ function createProductRow(item) {
   const $total = document.createElement('td')
   const $delete = document.createElement('td')
   $article.textContent = item.codigoArticulo
-  $description.textContent = item.descripcion
+  $description.textContent = item.descripcionArticulo
   $price.textContent = `$${item.precio.toFixed(2)}`
-  $total.textContent = `$${(item.precio * item.quantity).toFixed(2)}`
+  $total.textContent = `$${(calculateDiscount(item.porcentajeDescuento, item.precio) * $quantityInput.value).toFixed(2)}`
   $delete.textContent = '✕'
   $row.appendChild($article)
   $row.appendChild($description)
   $row.appendChild($price)
+  $row.appendChild($discount)
   $row.appendChild($quantity)
   $row.appendChild($total)
   $row.appendChild($delete)
