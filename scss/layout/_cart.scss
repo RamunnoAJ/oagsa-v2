@@ -6,6 +6,7 @@
 
   .cart__header {
     @include flex(row, space-between, center);
+    margin-bottom: 1.5rem;
 
     a {
       text-decoration: none;
@@ -21,8 +22,9 @@
       font-weight: $fw-bold;
     }
   }
+
+  .total-row {
+
+  }
 }
 
-#cart {
-
-}

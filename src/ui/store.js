@@ -152,40 +152,6 @@ async function renderRubros(idClase) {
   })
 }
 
-function highlightClase(e) {
-  const $items = document.querySelectorAll('.store__rubros__item')
-  $items.forEach(item => {
-    item.classList.remove('active')
-  })
-  e.target.classList.add('active')
-}
-
-async function renderRubrosDesktop(idClase) {
-  const $storeRubros = document.querySelector('.store__rubros')
-  $storeRubros.innerHTML = `<span class="loader"></span>`
-
-  $storeRubros.classList.remove('visually-hidden')
-  $storeRubros.classList.remove('select-store')
-
-  const rubros = await getCategories(`clase/rubro?pIdClase=${idClase}`)
-  $storeRubros.innerHTML = `<div class="store__rubros__desktop"></div>`
-  const $storeRubrosDesktop = $storeRubros.querySelector(
-    '.store__rubros__desktop'
-  )
-
-  rubros.forEach(rubro => {
-    const $option = document.createElement('span')
-    $option.classList =
-      'store__rubros__desktop__items bg-primary bg-hover-secondary-300'
-    $option.textContent = capitalizeFirstLetter(rubro.descripcion.toLowerCase())
-    $option.value = rubro.codigoRubro
-    $option.dataset.rubro = rubro.codigoRubro
-    $option.addEventListener('click', highlightRubro)
-
-    $storeRubrosDesktop.appendChild($option)
-  })
-}
-
 const $select = document.querySelector('#clases')
 $select.addEventListener('change', e => {
   renderRubros(e.target.value)
