@@ -3197,6 +3197,14 @@ template {
 .uppercase {
   text-transform: uppercase; }
 
+@media (max-width: 45rem) {
+  body {
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: stretch; } }
+
 body {
   font-size: var(--fs-body);
   font-family: "Inter", sans-serif; }
@@ -4275,6 +4283,28 @@ header {
     padding: 1rem 2rem;
     font-size: var(--fs-300);
     text-align: center; } }
+
+.cart__container {
+  max-width: 75rem;
+  width: 90%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch; }
+  .cart__container .cart__header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center; }
+    .cart__container .cart__header a {
+      text-decoration: none;
+      color: #000; }
+    .cart__container .cart__header i {
+      font-size: var(--fs-500); }
+    .cart__container .cart__header .cart__title {
+      font-size: var(--fs-body);
+      font-weight: 700; }
 
 footer .footer-container {
   display: flex;
