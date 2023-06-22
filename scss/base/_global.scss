@@ -116,3 +116,10 @@ $colors: (
 .uppercase {
   text-transform: uppercase;
 }
+
+@media (max-width: 45rem) {
+  body {
+    overflow-x: hidden;
+    @include flex(column, space-between, stretch); 
+  }
+}

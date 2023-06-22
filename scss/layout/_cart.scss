@@ -1,0 +1,28 @@
+.cart__container {
+  max-width: 75rem;
+  width: 90%;
+  margin: 0 auto;
+  @include flex(column, center, stretch);
+
+  .cart__header {
+    @include flex(row, space-between, center);
+
+    a {
+      text-decoration: none;
+      color: $black;
+    }
+
+    i {
+      font-size: var(--fs-500)
+    }
+
+    .cart__title {
+      font-size: var(--fs-body);
+      font-weight: $fw-bold;
+    }
+  }
+}
+
+#cart {
+
+}
