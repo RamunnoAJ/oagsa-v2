@@ -3746,7 +3746,11 @@ body {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  gap: 1rem;
   margin-bottom: 1.5rem; }
+  .cart__card > * {
+    flex-shrink: 1;
+    flex-grow: 0; }
   .cart__card img {
     width: 100%;
     height: 5.3125rem;
@@ -3756,6 +3760,7 @@ body {
     flex-direction: column;
     justify-content: space-between;
     align-items: flex-start;
+    width: 100%;
     gap: 0.3125rem;
     font-size: 0.6875rem; }
   .cart__card .quantity input {
@@ -3765,6 +3770,11 @@ body {
     max-width: 1.5rem;
     text-align: center;
     height: 1.5rem; }
+    .cart__card .quantity input::-webkit-outer-spin-button, .cart__card .quantity input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0; }
+  .cart__card .quantity input[type="number"] {
+    -moz-appearance: textfield; }
   .cart__card .quantity .quantity__button {
     background: none;
     border: none;
@@ -3777,6 +3787,10 @@ body {
     border: none;
     padding: 0.125rem;
     color: #5b5b5b; }
+  .cart__card .total__article {
+    font-size: 0.875rem;
+    min-width: 3.875rem;
+    text-align: center; }
 
 .cart__icon {
   text-decoration: none;
@@ -4337,7 +4351,7 @@ header {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 1.5rem; }
+    margin-block: 1.5rem; }
     .cart__container .cart__header a {
       text-decoration: none;
       color: #000; }
@@ -4346,6 +4360,19 @@ header {
     .cart__container .cart__header .cart__title {
       font-size: var(--fs-body);
       font-weight: 700; }
+  .cart__container .total-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-top: 1rem; }
+    .cart__container .total-row .total-row__price,
+    .cart__container .total-row .total-row__items {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.5rem; }
 
 footer .footer-container {
   display: flex;

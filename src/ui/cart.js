@@ -1,9 +1,9 @@
-import { checkout, emptyCart, updateQuantity, removeFromCart, updateDiscount, calculateDiscount } from '../cart.js'
+import { checkout, emptyCart, removeFromCart, getTotalPrice, updateCart, getTotalQuantity } from '../cart.js'
 import { getCart, saveToDraft, getDrafts, removeFromDraft, saveCart } from '../storage/cart.js'
 
 const defaultImage = 'https://firebasestorage.googleapis.com/v0/b/oagsa-1d9e9.appspot.com/o/Web%20Oagsa%20Iconos%2FOAGSA%20-%20Iconos%20Web%2011%20-%20HERRAMIENTA.png?alt=media&token=b06bbe3a-cd7e-4a80-a4e7-3bccb9a8df33'
 
-export function showToast(message) {
+export function showToast(message, url = '') {
   Toastify({
     text: message,
     duration: 3000,
@@ -15,6 +15,11 @@ export function showToast(message) {
       background: 'linear-gradient(to right, #ffd37c, #ff9c35)',
       color: '#000000',
     },
+    onClick: () => {
+      if (url) {
+        window.location.replace = url
+      }
+    }
   }).showToast()
 }
 
@@ -118,21 +123,38 @@ function createDraftCard(item) {
 
 function createTotalRow() {
   const $row = document.createElement('div')
-  $row.className = 'total-row fw-semi-bold'
+  $row.className = 'total-row'
 
   const $total = document.createElement('div')
-  $total.className = 'total'
   $total.textContent = 'Total'
 
   const $container = document.createElement('div')
 
-  const $price = document.createElement('p')
-  $price.className = 'price '
-  $price.textContent = 'Precio: $0'
+  const $price = document.createElement('div')
+  $price.className = 'total-row__price'
+  const $priceText = document.createElement('span')
+  const $priceTotal = document.createElement('span')
+  $priceTotal.className = 'fw-semi-bold'
+  $priceText.textContent = 'Precio:'
+  $priceTotal.textContent = `$${getTotalPrice()}`
+  $price.appendChild($priceText)
+  $price.appendChild($priceTotal)
+
+  const $items = document.createElement('div')
+  $items.className = 'total-row__items'
+  const $itemsText = document.createElement('span')
+  const $itemsTotal = document.createElement('span')
+  $itemsTotal.className = 'fw-semi-bold'
+  $itemsText.textContent = 'Items:'
+  $itemsTotal.textContent = getTotalQuantity()
+
+  $items.appendChild($itemsText)
+  $items.appendChild($itemsTotal)
 
   $container.appendChild($price)
-  $total.appendChild($container)
+  $container.appendChild($items)
   $row.appendChild($total)
+  $row.appendChild($container)
 
   return $row
 }
@@ -163,7 +185,13 @@ function createProductCard(item) {
 
   const $price = document.createElement('p')
   $price.classList.add('fw-bold')
-  $price.textContent = `$${item.precio}`
+  $price.textContent = `$${item.precio.toFixed(2)}`
+
+  const $discount = document.createElement('p')
+  $discount.className = 'fw-semi-bold cart__discount'
+
+  const $discountText = document.createElement('p')
+  $discountText.textContent = 'Descuento (%): '
 
   const $discountInput = document.createElement('input')
   $discountInput.value = item.porcentajeDescuento
@@ -171,9 +199,11 @@ function createProductCard(item) {
   $discountInput.min = 0
   $discountInput.max = 100
   $discountInput.addEventListener('change', () => {
-    updateDiscount(item, $discountInput.value)
-    renderCart(getCart())
+    updateCart(item, $quantityInput.value, $discountInput.value, renderCart)
   })
+
+  $discount.appendChild($discountText)
+  $discount.appendChild($discountInput)
 
   const $quantity = document.createElement('p')
   $quantity.classList.add('quantity')
@@ -186,8 +216,7 @@ function createProductCard(item) {
   $quantityInput.value = item.cantidad
   $quantityInput.addEventListener('change', () => {
     if ( $quantityInput.value <= item.stockUnidades ) {
-      updateQuantity(item, $quantityInput.value)
-      renderCart(getCart())
+      updateCart(item, $quantityInput.value, $discountInput.value, renderCart)
     } else {
       alert('Cantidad no válida. Stock disponible: ' + item.stockUnidades)
         $quantityInput.value = item.stockUnidades
@@ -198,6 +227,7 @@ function createProductCard(item) {
     $removeQuantity.textContent = '-'
     $removeQuantity.addEventListener('click', () => {
       $quantityInput.stepDown()
+      updateCart(item, $quantityInput.value, $discountInput.value, renderCart)
   })
   $removeQuantity.className = 'quantity__button quantity__button--remove'
 
@@ -205,6 +235,7 @@ function createProductCard(item) {
   $addQuantity.textContent = '+'
   $addQuantity.addEventListener('click', () => {
     $quantityInput.stepUp()
+    updateCart(item, $quantityInput.value, $discountInput.value, renderCart)
   })
   $addQuantity.className = 'quantity__button quantity__button--add'
 
@@ -212,8 +243,9 @@ function createProductCard(item) {
   $quantity.appendChild($quantityInput)
   $quantity.appendChild($addQuantity)
 
-  const $total = document.createElement('p')
-  $total.textContent = `$${calculateDiscount((item.porcentajeDescuento, item.precio) * $quantityInput.value).toFixed(2)}`
+  const $totalArticle = document.createElement('p')
+  $totalArticle.className = 'total__article fw-bold'
+  $totalArticle.textContent = `$${item.montoTotal.toFixed(2)}`
 
   const $delete = document.createElement('button')
   $delete.innerHTML = `<i class="fa fa-trash-alt"></i>`
@@ -229,11 +261,12 @@ function createProductCard(item) {
   $info.appendChild($title)
   $info.appendChild($code)
   $info.appendChild($price)
-  $info.appendChild($discountInput)
+  $info.appendChild($discount)
   $info.appendChild($quantity)
 
   $card.appendChild($image)
   $card.appendChild($info)
+  $card.appendChild($totalArticle)
   $card.appendChild($delete)
 
   return $card
