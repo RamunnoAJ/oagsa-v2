@@ -291,41 +291,6 @@ function createProductCard(item) {
   return $card
 }
 
-async function highlightRubro(e) {
-  const $rubros = document.querySelectorAll('.store__rubros__desktop__items')
-  $rubros.forEach(rubro => rubro.classList.remove('active'))
-  e.target.classList.add('active')
-
-  const $selectedSubrubro = document.querySelector(
-    '.store__rubros__desktop__items.active'
-  )
-  renderInputs($selectedSubrubro.dataset.rubro)
-
-  const selectedSubrubro = $selectedSubrubro.dataset.rubro
-
-  let productsString = `articulo/articulo-rubro?pCodigoRubro=${selectedSubrubro}`
-
-  const selectedMarca = $form.marca.value
-  const selectedDiametro = $form.diametro.value
-  const selectedMedida = $form.medida.value
-
-  if (selectedSubrubro) {
-    if (selectedMarca) {
-      productsString += `&pMarca=${selectedMarca}`
-    }
-    if (selectedDiametro) {
-      productsString += `&pDiametro=${selectedDiametro}`
-    }
-    if (selectedMedida) {
-      productsString += `&pMedida=${selectedMedida}`
-    }
-
-    const products = await getProducts(productsString)
-    storage.saveToLocalStorage('products_store', products)
-    renderProducts(products)
-  }
-}
-
 function switchImage(condition) {
   switch (condition) {
     case 'U001':

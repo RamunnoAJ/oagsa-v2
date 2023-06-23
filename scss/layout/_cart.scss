@@ -6,7 +6,7 @@
 
   .cart__header {
     @include flex(row, space-between, center);
-    margin-bottom: 1.5rem;
+    margin-block: 1.5rem;
 
     a {
       text-decoration: none;
@@ -24,7 +24,14 @@
   }
 
   .total-row {
+    @include flex(row, space-between, flex-start);
+    margin-top: 1rem; 
 
+    .total-row__price,
+    .total-row__items {
+      @include flex(row, space-between, center); 
+      gap: 0.5rem;
+    }
   }
 }
 

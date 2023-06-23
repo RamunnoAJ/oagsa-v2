@@ -25,7 +25,6 @@ export function addToCart(item) {
   quantity = Number(quantity)
 
   const newItem = createArticle(item, quantity)
-  console.log(newItem)
   if (quantity > 0) {
     const cart = getCart() 
     const index = cart.listaDetalle.findIndex(i => i.codigoArticulo === item.codigoArticulo)
@@ -36,7 +35,7 @@ export function addToCart(item) {
       updateQuantity(newItem, quantity)
     }
 
-    showToast('Objeto añadido correctamente.')
+    showToast('Objeto añadido correctamente.', '../pages/cart.html')
   } else {
     alert('La cantidad debe ser mayor a 0')
   }
@@ -77,11 +76,17 @@ export function getTotalQuantity() {
 export function getTotalPrice() {
   const cart = getCart()
   const totalPrice = cart.listaDetalle
-    .reduce((acc, item) => acc + Number(item.precioConDescuento) * Number(item.cantidad), 0)
+    .reduce((acc, item) => acc + (item.precioConDescuento || item.precio) * Number(item.cantidad), 0)
     .toFixed(2)
   cart.totalPesos = Number(totalPrice)
   saveCart(cart)
-  return totalPrice
+  return Number(totalPrice)
+}
+
+export function updateCart(item, quantity, discount, callback = () => {}) {
+  updateQuantity(item, quantity)
+  updateDiscount(item, discount)
+  callback(getCart())
 }
 
 export function updateQuantity(item, quantity) {
@@ -97,13 +102,21 @@ export function calculateDiscount(discount, total) {
   return Number(totalPrice.toFixed(2)) 
 }
 
-
 export function calculateDelivery(total, delivery) {
   if (delivery < 0) return total
   return total + delivery
 }
 
 export function updateDiscount(item, discount) {
+  if (discount < 0) {
+    alert('El descuento debe ser mayor a 0')
+    return
+  }
+  if (discount > 100) {
+    alert('El descuento debe ser menor a 100')
+    return
+  }
+
   const cart = getCart()
   const index = cart.listaDetalle.findIndex(i => i.codigoArticulo === item.codigoArticulo)
   const listaDetalle = cart.listaDetalle[index]
@@ -116,6 +129,7 @@ export function updateDiscount(item, discount) {
   listaDetalle.descripcionDescuento = `${listaDetalle.porcentajeDescuento}%`
   listaDetalle.codigoDescuento = `${listaDetalle.porcentajeDescuento}`
   listaDetalle.importeDescuento = Number((listaDetalle.precioConDescuento * listaDetalle.cantidad).toFixed(2))
+  listaDetalle.montoTotal = listaDetalle.importeDescuento
   saveCart(cart)
 }
 
@@ -128,13 +142,13 @@ function createArticle(article, quantity) {
     cantidad: Number(quantity),
     cantidadDespachada: 0,
     stockUnidades: article.stockUnidades,
-    codigoDescuento: '',
-    descripcionDescuento: '',
+    codigoDescuento: '0',
+    descripcionDescuento: '0%',
     porcentajeDescuento: 0,
     importe: article.precio * quantity,
-    importeDescuento: 0,
-    precioConDescuento: 0,
-    montoTotal: 0,
+    importeDescuento: article.precio * quantity,
+    precioConDescuento: article.precio,
+    montoTotal: article.precio * quantity,
     numeroOrden: 0,
     eliminado: false,
     imagenesUrl: article.url
@@ -152,7 +166,7 @@ function createOrder(cart) {
     totalPesos: getTotalPrice(),
     totalItems: getTotalQuantity(),
     codigoVendedor: cart.codigoVendedor || 0,
-    fechaNota: new Date(),
+    fechaNota: new Date().toISOString(),
     borrador: 0,
     idFlete: 0,
     descripcionFlete: '',
