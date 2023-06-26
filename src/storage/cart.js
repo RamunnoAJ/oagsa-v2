@@ -1,5 +1,3 @@
-import { v4 as uuidv4 } from 'https://cdn.skypack.dev/uuid'
-
 export function getCart() {
   return JSON.parse(localStorage.getItem('cart')) || {listaDetalle: []}
 }
@@ -10,16 +8,6 @@ export function clearCart() {
 
 export function saveCart(cart) {
   localStorage.setItem('cart', JSON.stringify(cart))
-}
-
-export function saveToDraft(cart) {
-  if (cart.listaDetalle.length === 0) return
-  cart.id = uuidv4()
-  cart.numeroNota = Date.now()
-  const drafts = getDrafts() || [] 
-  drafts.push(cart)
-  localStorage.setItem('draft_cart', JSON.stringify(drafts))
-  clearCart()
 }
 
 export function getDrafts() {
