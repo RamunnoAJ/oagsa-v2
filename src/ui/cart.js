@@ -1,5 +1,8 @@
-import { checkout, emptyCart, removeFromCart, getTotalPrice, updateCart, getTotalQuantity } from '../cart.js'
-import { getCart, saveToDraft, getDrafts, removeFromDraft, saveCart } from '../storage/cart.js'
+import { getClientsFromSeller } from '../api/profileClientList.js'
+import { checkout, emptyCart, removeFromCart, getTotalPrice, updateCart, getTotalQuantity, sendToDraft } from '../cart.js'
+import { getCart, getDrafts, removeFromDraft, saveCart } from '../storage/cart.js'
+import { getStorageID } from '../storage/profileClientAccount.js'
+import { sortClients } from '../utils/sortClients.js'
 
 const defaultImage = 'https://firebasestorage.googleapis.com/v0/b/oagsa-1d9e9.appspot.com/o/Web%20Oagsa%20Iconos%2FOAGSA%20-%20Iconos%20Web%2011%20-%20HERRAMIENTA.png?alt=media&token=b06bbe3a-cd7e-4a80-a4e7-3bccb9a8df33'
 
@@ -28,9 +31,11 @@ if (window.location.href.includes('cart')) {
   renderCart(cart)
 }
 
-function renderCart(cart) {
+async function renderCart(cart) {
   const $cart = document.getElementById('cart')
   $cart.innerHTML = ''
+
+  await renderClients()
 
   cart.listaDetalle.forEach(item => {
     const $article = createProductCard(item)
@@ -40,6 +45,42 @@ function renderCart(cart) {
   renderObservations()
   renderTotalRow()
   renderButtons()
+}
+
+async function renderClients(){
+  const $cart = document.getElementById('cart')
+  const $clients = document.createElement('div')
+  $clients.classList.add('cart__clients')
+
+  const $clientsLabel = document.createElement('label')
+  $clientsLabel.textContent = 'Buscar cliente: '
+  $clientsLabel.classList.add('cart__clients-label')
+  $clients.appendChild($clientsLabel)
+
+  const $clientsSelect = document.createElement('select')
+  $clientsSelect.name = 'selectedClient'
+  $clientsSelect.id = 'selectClient'
+  $clientsSelect.classList.add('cart__clients-select')
+  $clients.appendChild($clientsSelect)
+
+  const sellerID = await getStorageID()
+  const clients = await getClientsFromSeller(sellerID)
+
+  $cart.appendChild($clients)
+}
+
+function renderOptions(clients) {
+  const $selectClient = document.querySelector('#selectClient') 
+  console.log($selectClient)
+  sortClients(clients)
+
+  clients.forEach(client => {
+    const option = document.createElement('option')
+    option.value = client.codigoCliente
+    option.textContent = `${client.codigoCliente} - ${client.razonSocial}`
+
+    $selectClient.appendChild(option)
+  })
 }
 
 function renderObservations() {
@@ -74,7 +115,7 @@ function renderButtons() {
   const $sendToDraft = document.createElement('button')
   $sendToDraft.textContent = 'Enviar a borrador'
   $sendToDraft.addEventListener('click', () => {
-    saveToDraft(getCart())
+    sendToDraft()
     renderCart(getCart())
   })
 
@@ -170,7 +211,12 @@ function createProductCard(item) {
   $card.classList.add('cart__card')
 
   const $image = document.createElement('img')
-  $image.src = `https://www.${item.imagenesUrl[0]}` || defaultImage
+  if (item.imagenesUrl[0]){
+    $image.src = `https://www.${item.imagenesUrl[0]}`
+  } else {
+    $image.src = defaultImage
+  }
+  $image.alt = item.descripcionArticulo
 
   const $info = document.createElement('div')
   $info.classList.add('cart__info')

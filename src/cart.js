@@ -18,6 +18,19 @@ export async function checkout() {
   showToast('Compra realizada exitosamente.');
 }
 
+export async function sendToDraft(){
+  const cart = getCart() || {}
+  if (cart.listaDetalle.length === 0) {
+    showToast('No hay productos en el carrito.')
+    return
+  }
+  const order = createOrder(cart)
+  order.borrador = 1
+  await postBuyOrder('orden-compra', order)
+  // clearCart()
+  showToast('Carrito guardado en borrador exitosamente.')
+}
+
 export function addToCart(item) {
   const quantityInputId = `quantity-${item.codigoArticulo}`
   const $quantityInput = document.getElementById(quantityInputId)
