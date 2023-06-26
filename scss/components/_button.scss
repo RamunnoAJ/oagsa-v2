@@ -1,6 +1,6 @@
 .button {
   padding: 0.75rem 1.25rem;
-  border-radius: 1.3rem;
+  border-radius: 0.5rem;
   border: none;
   text-transform: uppercase;
   text-decoration: none;
@@ -18,11 +18,15 @@
 
 .button-sm {
   border: none;
-  border-radius: 50rem;
+  border-radius: 0.5rem;
   padding: 0.75rem 1rem;
   text-decoration: none;
   font-family: $ff-body;
   font-weight: $fw-bold;
   transition: all 0.3s ease-in-out;
   cursor: pointer;
+
+  .fa-cart-plus {
+    margin-left: 0.5rem;
+  }
 }

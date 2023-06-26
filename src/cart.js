@@ -1,21 +1,21 @@
+import { postBuyOrder } from './api/cart.js'
 import { getCart, saveCart, clearCart } from './storage/cart.js'
 import { checkLocalStorage } from './storage/profile.js'
 import { showToast } from './ui/cart.js'
 
 checkLocalStorage()
 
-export function checkout() {
+export async function checkout() {
   const cart = getCart() || {}
-  console.log(cart)
   if (cart.listaDetalle.length === 0) {
     showToast('No hay productos en el carrito.')
     return
   }
   const order = createOrder(cart)
-  console.log(order)
-
+  
+  await postBuyOrder('orden-compra', order)
 //    clearCart()
-  showToast('Compra finalizada.')
+  showToast('Compra realizada exitosamente.');
 }
 
 export function addToCart(item) {
@@ -24,6 +24,7 @@ export function addToCart(item) {
   let quantity = $quantityInput.value
   quantity = Number(quantity)
 
+  console.log(item)
   const newItem = createArticle(item, quantity)
   if (quantity > 0) {
     const cart = getCart() 
@@ -151,25 +152,25 @@ function createArticle(article, quantity) {
     montoTotal: article.precio * quantity,
     numeroOrden: 0,
     eliminado: false,
-    imagenesUrl: article.url
+    imagenesUrl: []
   }
 }
 
 function createOrder(cart) {
   return {
     numeroNota: 0,
-    codigoCliente: cart.codigoCliente || 0,
-    codigoCondicionVenta: 0,
-    observaciones: cart.observaciones || '',
+    codigoCliente: 1,
+    codigoCondicionVenta: 1,
+    observaciones: 'string',
     origenPedido: 0,
-    estado: '',
+    estado: 'string',
     totalPesos: getTotalPrice(),
     totalItems: getTotalQuantity(),
-    codigoVendedor: cart.codigoVendedor || 0,
+    codigoVendedor: 1, 
     fechaNota: new Date().toISOString(),
     borrador: 0,
-    idFlete: 0,
-    descripcionFlete: '',
+    idFlete: 1,
+    descripcionFlete: 'string',
     listaDetalle: cart.listaDetalle
   }
 }

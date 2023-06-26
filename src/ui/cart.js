@@ -38,8 +38,8 @@ function renderCart(cart) {
   })
 
   renderObservations()
-  renderButtons()
   renderTotalRow()
+  renderButtons()
 }
 
 function renderObservations() {
@@ -60,7 +60,7 @@ function renderButtons() {
   const $cart = document.getElementById('cart')
 
   const $container = document.createElement('div')
-  $container.classList.add('buttons')
+  $container.className = 'buttons mt-4'
   $cart.appendChild($container)
 
   const $emptyCartButton = document.createElement('button')
