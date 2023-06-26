@@ -121,6 +121,10 @@ $colors: (
   text-transform: uppercase;
 }
 
+.full-rounded {
+  border-radius: 50rem !important;
+}
+
 @media (max-width: 45rem) {
   .cart__body {
     overflow-x: hidden;

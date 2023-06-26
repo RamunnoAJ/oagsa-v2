@@ -3200,6 +3200,9 @@ template {
 .uppercase {
   text-transform: uppercase; }
 
+.full-rounded {
+  border-radius: 50rem !important; }
+
 @media (max-width: 45rem) {
   .cart__body {
     overflow-x: hidden;
@@ -3214,7 +3217,7 @@ body {
 
 .button {
   padding: 0.75rem 1.25rem;
-  border-radius: 1.3rem;
+  border-radius: 0.5rem;
   border: none;
   text-transform: uppercase;
   text-decoration: none;
@@ -3230,13 +3233,15 @@ body {
 
 .button-sm {
   border: none;
-  border-radius: 50rem;
+  border-radius: 0.5rem;
   padding: 0.75rem 1rem;
   text-decoration: none;
   font-family: "Inter", sans-serif;
   font-weight: 700;
   transition: all 0.3s ease-in-out;
   cursor: pointer; }
+  .button-sm .fa-cart-plus {
+    margin-left: 0.5rem; }
 
 .btn-menu {
   display: flex;
@@ -3478,7 +3483,7 @@ body {
   width: 100%; }
 
 .select {
-  border-radius: 1rem;
+  border-radius: 0.5rem;
   padding: 0.5rem 1rem;
   color: gray;
   border: none;
@@ -3535,11 +3540,11 @@ body {
   gap: 1rem;
   background-color: #e2e8f0;
   padding: 0.5rem 1rem;
-  border-radius: 1rem; }
+  border-radius: 0.5rem; }
   .search-input input {
     padding: 0.75rem 0.5rem;
     border: none;
-    border-radius: 1rem; }
+    border-radius: 0.5rem; }
 
 @media (min-width: 48rem) {
   .search-input {
@@ -3807,7 +3812,8 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  transition: all 0.3s ease-in-out; }
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); }
   .cart__icon:hover {
     background-color: #ff9c35;
     color: #000; }

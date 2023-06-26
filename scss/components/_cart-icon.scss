@@ -11,6 +11,7 @@
   color: $dark-grey;
   @include flex(column, center, center);
   transition: all 0.3s ease-in-out;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
 
   &:hover {
     background-color: $secondary-color-400;
