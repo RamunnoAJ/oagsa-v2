@@ -1,7 +1,7 @@
-import { getClientsFromSeller } from '../api/profileClientList.js'
-import { checkout, emptyCart, removeFromCart, getTotalPrice, updateCart, getTotalQuantity, sendToDraft } from '../cart.js'
-import { getCart, getDrafts, removeFromDraft, saveCart } from '../storage/cart.js'
-import { getStorageID } from '../storage/profileClientAccount.js'
+import { getClients } from '../api/cart.js'
+import { checkout, removeFromCart, getTotalPrice, updateCart, getTotalQuantity, sendToDraft } from '../cart.js'
+import { getCart, saveCart } from '../storage/cart.js'
+import { getUserFromStorage } from '../storage/storageData.js'
 import { sortClients } from '../utils/sortClients.js'
 
 const defaultImage = 'https://firebasestorage.googleapis.com/v0/b/oagsa-1d9e9.appspot.com/o/Web%20Oagsa%20Iconos%2FOAGSA%20-%20Iconos%20Web%2011%20-%20HERRAMIENTA.png?alt=media&token=b06bbe3a-cd7e-4a80-a4e7-3bccb9a8df33'
@@ -33,17 +33,41 @@ if (window.location.href.includes('cart')) {
 
 async function renderCart(cart) {
   const $cart = document.getElementById('cart')
-  $cart.innerHTML = ''
+  $cart.innerHTML = '<span class="loader"></span>'
 
   await renderClients()
 
+  const user = getUserFromStorage()
+  const parsedUser = JSON.parse(user)
+  const clients = await getClients(parsedUser.id)
+
+  const $loader = document.querySelector('.loader')
+  $loader.remove()
+
+  const $cartClients = document.querySelector('.cart__clients')
+  $cartClients.classList.remove('visually-hidden')
+
+  renderOptions(clients)
+
+  const $cartContainer = document.createElement('div')
+  $cartContainer.classList.add('cart__articles__container')
+  $cart.appendChild($cartContainer)
+
+  renderArticles(cart)
+}
+
+function renderArticles(cart){
+  const $cartContainer = document.querySelector('.cart__articles__container')
+  $cartContainer.innerHTML = ''
+
   cart.listaDetalle.forEach(item => {
     const $article = createProductCard(item)
-    $cart.appendChild($article)
+    $cartContainer.appendChild($article)
   })
 
   renderObservations()
   renderTotalRow()
+  renderFields()
   renderButtons()
 }
 
@@ -51,28 +75,28 @@ async function renderClients(){
   const $cart = document.getElementById('cart')
   const $clients = document.createElement('div')
   $clients.classList.add('cart__clients')
+  $clients.classList.add('visually-hidden')
 
   const $clientsLabel = document.createElement('label')
-  $clientsLabel.textContent = 'Buscar cliente: '
-  $clientsLabel.classList.add('cart__clients-label')
+  $clientsLabel.textContent = 'Cliente'
+  $clientsLabel.className = 'cart__clients-label uppercase fw-bold'
+  $clientsLabel.htmlFor = 'selectClient'
   $clients.appendChild($clientsLabel)
 
   const $clientsSelect = document.createElement('select')
-  $clientsSelect.name = 'selectedClient'
+  $clientsSelect.name = 'selectClient'
   $clientsSelect.id = 'selectClient'
   $clientsSelect.classList.add('cart__clients-select')
   $clients.appendChild($clientsSelect)
-
-  const sellerID = await getStorageID()
-  const clients = await getClientsFromSeller(sellerID)
 
   $cart.appendChild($clients)
 }
 
 function renderOptions(clients) {
   const $selectClient = document.querySelector('#selectClient') 
-  console.log($selectClient)
   sortClients(clients)
+
+  $selectClient.innerHTML = '<option value="" selected disabled>Seleccione un cliente</option>'
 
   clients.forEach(client => {
     const option = document.createElement('option')
@@ -84,99 +108,127 @@ function renderOptions(clients) {
 }
 
 function renderObservations() {
+  if (document.querySelector('.observations__container')) {
+    const $observations = document.querySelector('.observations__container')
+    $observations.remove()
+  }
+
   const cart = getCart()
   const $cart = document.getElementById('cart')
+
+  const $observationsContainer = document.createElement('div')
+  $observationsContainer.classList.add('observations__container')
+
+  const $observationsLabel = document.createElement('label')
+  $observationsLabel.textContent = 'Observaciones:'
+  $observationsLabel.htmlFor = 'observations'
+  $observationsLabel.className = ' fw-bold'
+  $observationsContainer.appendChild($observationsLabel)
+
   const $observations = document.createElement('textarea')
   $observations.classList.add('observations')
   $observations.id = 'observations'  
-  $observations.placeholder = 'Observaciones'
   $observations.value = cart.observaciones || ''
   $observations.addEventListener('change', () => {
     saveCart( { ...getCart(), observaciones: $observations.value } )
   })
-  $cart.appendChild($observations)
+  $observationsContainer.appendChild($observations)
+
+  $cart.appendChild($observationsContainer)
+}
+
+function renderFields(){
+  if (document.querySelector('#fields')) {
+    const $fields = document.querySelector('#fields')
+    $fields.remove()
+  }
+
+  const cart = getCart()
+  const $cart = document.getElementById('cart')
+
+  const $fieldsContainer = document.createElement('div')
+  $fieldsContainer.id = 'fields'
+  $fieldsContainer.className = 'fields__container'
+
+  const $fleteContainer = document.createElement('div')
+  $fleteContainer.className = 'fields__flete'
+  $fieldsContainer.appendChild($fleteContainer)
+
+  const $fleteLabel = document.createElement('label')
+  $fleteLabel.textContent = 'Flete:'
+  $fleteLabel.htmlFor = 'flete'
+  $fleteLabel.className = 'fw-semi-bold'
+  $fieldsContainer.appendChild($fleteLabel)
+
+  const $flete = document.createElement('select')
+  $flete.name = 'flete'
+  $flete.id = 'flete'
+  $flete.classList.add('fields__select')
+  $fieldsContainer.appendChild($flete)
+
+
+  const $condicionVentaContainer = document.createElement('div')
+  $condicionVentaContainer.className = 'fields__condicion-venta'
+  $fieldsContainer.appendChild($condicionVentaContainer) 
+
+  $cart.appendChild($fieldsContainer)
 }
 
 function renderButtons() {
+  if (document.querySelector('#buttons')) {
+    const $buttons = document.querySelector('#buttons')
+    $buttons.remove()
+  }
+
   const $cart = document.getElementById('cart')
 
   const $container = document.createElement('div')
+  $container.id = 'buttons'
   $container.className = 'buttons mt-4'
   $cart.appendChild($container)
 
-  const $emptyCartButton = document.createElement('button')
-  $emptyCartButton.textContent = 'Eliminar borrador'
-  $emptyCartButton.addEventListener('click', () => {
-    removeFromDraft(getCart().id)
-    emptyCart()
-    renderCart(getCart())
+  const $buttonsContainer = document.createElement('div')
+  $buttonsContainer.className = 'buttons__container mb-2'
+
+  const $addProducts = document.createElement('button')
+  $addProducts.className = 'button-cart bg-secondary-300 uppercase fw-semi-bold bg-hover-secondary-400'
+  $addProducts.textContent = 'Agregar productos'
+  $addProducts.addEventListener('click', () => {
+    window.location.href = '/pages/store'
   })
 
   const $sendToDraft = document.createElement('button')
-  $sendToDraft.textContent = 'Enviar a borrador'
+  $sendToDraft.className = 'button-cart bg-secondary-300 uppercase fw-semi-bold bg-hover-secondary-400'
+  $sendToDraft.textContent = 'Guardar borrador'
   $sendToDraft.addEventListener('click', () => {
     sendToDraft()
     renderCart(getCart())
   })
 
   const $checkoutButton = document.createElement('button')
+  $checkoutButton.className = 'button-cart button-checkout bg-secondary-400 uppercase fw-semi-bold bg-hover-secondary-400 text-white'
   $checkoutButton.textContent = 'Finalizar compra'
   $checkoutButton.addEventListener('click', () => {
     checkout()
   })
 
-  const $draftsButton = document.createElement('button')
-  $draftsButton.textContent = 'Borradores'
-  $draftsButton.addEventListener('click', () => {
-    renderDraftsList()
-  })
+  $buttonsContainer.appendChild($addProducts)
+  $buttonsContainer.appendChild($sendToDraft)
 
-  $container.appendChild($emptyCartButton)
-  $container.appendChild($sendToDraft)
-  $container.appendChild($draftsButton)
+  $container.appendChild($buttonsContainer)
   $container.appendChild($checkoutButton)
-}
-
-function renderDraftsList() {
-  const drafts = getDrafts()
-  const $list = document.createElement('ul')
-  $list.classList.add('drafts')
-  drafts.forEach((item) => {
-    $list.appendChild(createDraftCard(item))
-  })
-  const $cart = document.getElementById('cart')
-  $cart.appendChild($list)
-}
-
-function createDraftCard(item) {
-  const $card = document.createElement('li')
-  $card.classList.add('drafts__card')
-  const $button = document.createElement('button')
-  $button.textContent = `${item.id}` 
-  $button.addEventListener('click', () => {
-    saveCart(item)
-    renderCart(item)
-  })
-
-  $card.appendChild($button)
-  return $card
 }
 
 function createTotalRow() {
   const $row = document.createElement('div')
   $row.className = 'total-row'
 
-  const $total = document.createElement('div')
-  $total.textContent = 'Total'
-
-  const $container = document.createElement('div')
-
   const $price = document.createElement('div')
   $price.className = 'total-row__price'
   const $priceText = document.createElement('span')
   const $priceTotal = document.createElement('span')
   $priceTotal.className = 'fw-semi-bold'
-  $priceText.textContent = 'Precio:'
+  $priceText.textContent = 'Precio Final:'
   $priceTotal.textContent = `$${getTotalPrice()}`
   $price.appendChild($priceText)
   $price.appendChild($priceTotal)
@@ -189,18 +241,25 @@ function createTotalRow() {
   $itemsText.textContent = 'Items:'
   $itemsTotal.textContent = getTotalQuantity()
 
+  const $hr = document.createElement('hr')
+  $hr.className = 'total-row__br mt-2 mb-2'
+
   $items.appendChild($itemsText)
   $items.appendChild($itemsTotal)
 
-  $container.appendChild($price)
-  $container.appendChild($items)
-  $row.appendChild($total)
-  $row.appendChild($container)
+  $row.appendChild($items)
+  $row.appendChild($price)
+  $row.appendChild($hr)
 
   return $row
 }
 
 function renderTotalRow() {
+  if (document.querySelector('.total-row')) {
+    const $totalRow = document.querySelector('.total-row')
+    $totalRow.remove()
+  }
+
   const $totalRow = createTotalRow()
   const $cart = document.getElementById('cart')
   $cart.appendChild($totalRow)
@@ -245,7 +304,7 @@ function createProductCard(item) {
   $discountInput.min = 0
   $discountInput.max = 100
   $discountInput.addEventListener('change', () => {
-    updateCart(item, $quantityInput.value, $discountInput.value, renderCart)
+    updateCart(item, $quantityInput.value, $discountInput.value, renderArticles)
   })
 
   $discount.appendChild($discountText)
@@ -262,7 +321,7 @@ function createProductCard(item) {
   $quantityInput.value = item.cantidad
   $quantityInput.addEventListener('change', () => {
     if ( $quantityInput.value <= item.stockUnidades ) {
-      updateCart(item, $quantityInput.value, $discountInput.value, renderCart)
+      updateCart(item, $quantityInput.value, $discountInput.value, renderArticles)
     } else {
       alert('Cantidad no válida. Stock disponible: ' + item.stockUnidades)
         $quantityInput.value = item.stockUnidades
@@ -273,7 +332,7 @@ function createProductCard(item) {
     $removeQuantity.textContent = '-'
     $removeQuantity.addEventListener('click', () => {
       $quantityInput.stepDown()
-      updateCart(item, $quantityInput.value, $discountInput.value, renderCart)
+      updateCart(item, $quantityInput.value, $discountInput.value, renderArticles)
   })
   $removeQuantity.className = 'quantity__button quantity__button--remove'
 
@@ -281,13 +340,16 @@ function createProductCard(item) {
   $addQuantity.textContent = '+'
   $addQuantity.addEventListener('click', () => {
     $quantityInput.stepUp()
-    updateCart(item, $quantityInput.value, $discountInput.value, renderCart)
+    updateCart(item, $quantityInput.value, $discountInput.value, renderArticles)
   })
   $addQuantity.className = 'quantity__button quantity__button--add'
 
   $quantity.appendChild($removeQuantity)
   $quantity.appendChild($quantityInput)
   $quantity.appendChild($addQuantity)
+
+  const $container = document.createElement('div')
+  $container.classList.add('cart__article__container')
 
   const $totalArticle = document.createElement('p')
   $totalArticle.className = 'total__article fw-bold'
@@ -298,11 +360,14 @@ function createProductCard(item) {
   $delete.addEventListener('click', (e) => {
     e.preventDefault()
     removeFromCart(item)
-    renderCart(getCart())
+    renderArticles(getCart())
 
     showToast('Artículo eliminado del carrito')
   })
   $delete.className = 'cart__delete'
+
+  $container.appendChild($delete)
+  $container.appendChild($totalArticle)
 
   $info.appendChild($title)
   $info.appendChild($code)
@@ -312,8 +377,7 @@ function createProductCard(item) {
 
   $card.appendChild($image)
   $card.appendChild($info)
-  $card.appendChild($totalArticle)
-  $card.appendChild($delete)
+  $card.appendChild($container)
 
   return $card
 }

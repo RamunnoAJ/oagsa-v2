@@ -3234,7 +3234,7 @@ body {
 .button-sm {
   border: none;
   border-radius: 0.5rem;
-  padding: 0.75rem 1rem;
+  padding: 0.5rem 0.75rem;
   text-decoration: none;
   font-family: "Inter", sans-serif;
   font-weight: 700;
@@ -3242,6 +3242,26 @@ body {
   cursor: pointer; }
   .button-sm .fa-cart-plus {
     margin-left: 0.5rem; }
+
+.button-cart {
+  border: none;
+  border-radius: 0.25rem;
+  padding: 0.5rem;
+  text-decoration: none;
+  font-size: var(--fs-200);
+  transition: all 0.3s ease-in-out;
+  cursor: pointer; }
+  .button-cart.button-checkout {
+    width: 100%; }
+
+.buttons__container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem; }
+  .buttons__container .button-cart {
+    width: 10.3125rem; }
 
 .btn-menu {
   display: flex;
@@ -3552,11 +3572,13 @@ body {
     padding-inline: 2rem; } }
 
 .loader {
+  display: block;
   width: 48px;
   height: 48px;
   border-radius: 50%;
   position: relative;
-  animation: rotate 1s linear infinite; }
+  animation: rotate 1s linear infinite;
+  align-self: center; }
 
 .loader::before,
 .loader::after {
@@ -3752,7 +3774,8 @@ body {
   justify-content: space-between;
   align-items: center;
   gap: 1rem;
-  margin-bottom: 1.5rem; }
+  margin-bottom: 1.5rem;
+  height: 100%; }
   .cart__card > * {
     flex-shrink: 1;
     flex-grow: 0; }
@@ -3779,7 +3802,8 @@ body {
       -webkit-appearance: none;
       margin: 0; }
   .cart__card .quantity input[type="number"] {
-    -moz-appearance: textfield; }
+    -moz-appearance: textfield;
+    appearance: textfield; }
   .cart__card .quantity .quantity__button {
     background: none;
     border: none;
@@ -3796,6 +3820,13 @@ body {
     font-size: 0.875rem;
     min-width: 3.875rem;
     text-align: center; }
+  .cart__card .cart__article__container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: flex-end;
+    height: 100%;
+    flex-shrink: 0; }
 
 .cart__icon {
   text-decoration: none;
@@ -4344,6 +4375,12 @@ header {
     font-size: var(--fs-300);
     text-align: center; } }
 
+#cart {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch; }
+
 .cart__container {
   max-width: 75rem;
   width: 90%;
@@ -4352,6 +4389,42 @@ header {
   flex-direction: column;
   justify-content: center;
   align-items: stretch; }
+  .cart__container .observations__container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 0.5rem; }
+    .cart__container .observations__container .observations {
+      width: 100%;
+      min-height: 3.625rem;
+      padding: 0.5rem;
+      border: none;
+      border-radius: 0.25rem;
+      background-color: #faeed3;
+      font-size: 0.75rem;
+      color: #5b5b5b;
+      margin-bottom: 0.5rem;
+      resize: none; }
+  .cart__container .cart__clients {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    font-size: 0.6875rem;
+    margin-bottom: 1.5rem;
+    background-color: #ffd37c;
+    padding: 0.5rem;
+    border-radius: 0.25rem;
+    max-width: 21.25rem; }
+    .cart__container .cart__clients .cart__clients-select {
+      max-width: 13.125rem;
+      padding: 0.5rem;
+      border: none;
+      border-radius: 0.25rem;
+      background-color: #fff; }
   .cart__container .cart__header {
     display: flex;
     flex-direction: row;
@@ -4368,17 +4441,27 @@ header {
       font-weight: 700; }
   .cart__container .total-row {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: space-between;
     align-items: flex-start;
-    margin-top: 1rem; }
+    gap: 1rem;
+    margin-top: 1rem;
+    width: 100%; }
     .cart__container .total-row .total-row__price,
     .cart__container .total-row .total-row__items {
       display: flex;
       flex-direction: row;
       justify-content: space-between;
       align-items: center;
+      width: 100%;
       gap: 0.5rem; }
+    .cart__container .total-row .total-row__br {
+      width: 90%;
+      margin-inline: auto;
+      height: 1px;
+      background-color: #ff9c35;
+      opacity: 0.5;
+      border-radius: 0.25rem; }
 
 footer .footer-container {
   display: flex;

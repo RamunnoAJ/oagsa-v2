@@ -2,6 +2,7 @@
   @include flex(row, space-between, center);
   gap: 1rem;
   margin-bottom: 1.5rem;
+  height: 100%;
 
   &>* {
     flex-shrink: 1;
@@ -39,6 +40,7 @@
 
     input[type="number"] {
       -moz-appearance: textfield;
+      appearance: textfield;
     }
 
     .quantity__button {
@@ -63,4 +65,12 @@
     min-width: 3.875rem;
     text-align: center;
   }
+
+  .cart__article__container {
+    @include flex(column, space-around, flex-end);
+    height: 100%;
+    flex-shrink: 0;
+  }
+
 }
+

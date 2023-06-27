@@ -1,8 +1,50 @@
+#cart {
+  @include flex(column, center, stretch);
+}
+
 .cart__container {
   max-width: 75rem;
   width: 90%;
   margin: 0 auto;
   @include flex(column, center, stretch);
+
+  .observations__container {
+    width: 100%;
+    @include flex(column, flex-start, flex-start);
+    gap: 0.5rem;
+
+    .observations {
+      width: 100%;
+      min-height: 3.625rem;
+      padding: 0.5rem;
+      border: none;
+      border-radius: 0.25rem;
+      background-color: $primary-color;
+      font-size: 0.75rem;
+      color: $dark-grey;
+      margin-bottom: 0.5rem;
+      resize: none;
+    } 
+  }
+
+  .cart__clients {
+    @include flex(row, center, center);
+    gap: 1rem;
+    font-size: 0.6875rem;
+    margin-bottom: 1.5rem;
+    background-color: $secondary-color-300;
+    padding: 0.5rem ;
+    border-radius: 0.25rem;
+    max-width: 21.25rem;
+
+    .cart__clients-select {
+      max-width: 13.125rem;
+      padding: 0.5rem;
+      border: none;
+      border-radius: 0.25rem;
+      background-color: $white;
+    }
+  }
 
   .cart__header {
     @include flex(row, space-between, center);
@@ -24,13 +66,25 @@
   }
 
   .total-row {
-    @include flex(row, space-between, flex-start);
+    @include flex(column, space-between, flex-start);
+    gap: 1rem;
     margin-top: 1rem; 
+    width: 100%;
 
     .total-row__price,
     .total-row__items {
       @include flex(row, space-between, center); 
+      width: 100%;
       gap: 0.5rem;
+    }
+
+    .total-row__br {
+      width: 90%;
+      margin-inline: auto;
+      height: 1px;
+      background-color: $secondary-color-400;
+      opacity: 0.5;
+      border-radius: 0.25rem;
     }
   }
 }

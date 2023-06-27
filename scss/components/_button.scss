@@ -19,7 +19,7 @@
 .button-sm {
   border: none;
   border-radius: 0.5rem;
-  padding: 0.75rem 1rem;
+  padding: 0.5rem 0.75rem;
   text-decoration: none;
   font-family: $ff-body;
   font-weight: $fw-bold;
@@ -28,5 +28,28 @@
 
   .fa-cart-plus {
     margin-left: 0.5rem;
+  }
+}
+
+.button-cart {
+  border: none;
+  border-radius: 0.25rem;
+  padding: 0.5rem;
+  text-decoration: none;
+  font-size: var(--fs-200);
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+
+  &.button-checkout {
+    width: 100%;
+  }
+}
+
+.buttons__container {
+  @include flex(row, space-between, center);
+  gap: 0.5rem;
+
+  .button-cart {
+    width: 10.3125rem;
   }
 }
