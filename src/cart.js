@@ -1,4 +1,4 @@
-import { postBuyOrder } from './api/cart.js'
+import { postBuyOrder, getClients } from './api/cart.js'
 import { getCart, saveCart, clearCart } from './storage/cart.js'
 import { checkLocalStorage } from './storage/profile.js'
 import { showToast } from './ui/cart.js'
@@ -14,7 +14,7 @@ export async function checkout() {
   const order = createOrder(cart)
   
   await postBuyOrder('orden-compra', order)
-//    clearCart()
+  // clearCart()
   showToast('Compra realizada exitosamente.');
 }
 
