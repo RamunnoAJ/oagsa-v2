@@ -1,5 +1,6 @@
 #cart {
   @include flex(column, center, stretch);
+  gap: 1.5rem;
 }
 
 .cart__container {
@@ -7,6 +8,28 @@
   width: 90%;
   margin: 0 auto;
   @include flex(column, center, stretch);
+
+  .fields__container {
+    @include flex(column, center, stretch);
+    width: 100%;
+    gap: 1rem;
+    margin-top: 1rem;
+    font-size: var(--fs-body);  
+
+    .fields {
+      @include flex(row, space-between, center); 
+      width: 100%;
+
+       .fields__select {
+        font-size: var(--fs-200);
+        width: 10rem;
+        padding: 0.5rem 1rem;
+        background-color: $slate;
+        border: none;
+        border-radius: 0.25rem;
+      }
+    }
+  }
 
   .observations__container {
     width: 100%;
@@ -31,7 +54,6 @@
     @include flex(row, center, center);
     gap: 1rem;
     font-size: 0.6875rem;
-    margin-bottom: 1.5rem;
     background-color: $secondary-color-300;
     padding: 0.5rem ;
     border-radius: 0.25rem;
@@ -56,7 +78,7 @@
     }
 
     i {
-      font-size: var(--fs-500)
+      font-size: var(--fs-400)
     }
 
     .cart__title {
@@ -65,10 +87,16 @@
     }
   }
 
+  .container__fluid {
+    @include flex(column, center, center);
+    gap: 1rem;
+  }
+
   .total-row {
     @include flex(column, space-between, flex-start);
+    font-weight: $fw-semi-bold;
+    font-size: var(--fs-body);
     gap: 1rem;
-    margin-top: 1rem; 
     width: 100%;
 
     .total-row__price,
@@ -89,3 +117,58 @@
   }
 }
 
+@media (min-width: 48rem) {
+  #cart {
+    gap: 3rem;
+  }
+
+  .cart__container {
+    .cart__header {
+      .cart__title {
+        font-size: var(--fs-400);
+      }
+    }
+
+    .cart__clients {
+      font-size: var(--fs-body);
+      max-width: 27.5rem;
+      margin-bottom: 3rem;
+
+      .cart__clients-select {
+        max-width: 18.375rem;
+      }
+    }
+
+    .fields__container .fields .fields__select {
+      width: 15rem;
+    }
+        
+    .container__fluid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+
+      .observations__container {
+        grid-row: span 2;
+        height: 100%;
+
+        .observations {
+          height: 100%;
+        }
+      }
+    }
+
+
+    .buttons {
+      width: 100%;
+      max-width: 38rem;
+      margin-inline: auto;
+
+      .button-cart {
+        width: 100%;
+        max-width: 100%;
+      }
+    }
+  } 
+
+}

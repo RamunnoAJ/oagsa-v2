@@ -1,4 +1,4 @@
-import { postBuyOrder, getClients } from './api/cart.js'
+import { postBuyOrder } from './api/cart.js'
 import { getCart, saveCart, clearCart } from './storage/cart.js'
 import { checkLocalStorage } from './storage/profile.js'
 import { showToast } from './ui/cart.js'
