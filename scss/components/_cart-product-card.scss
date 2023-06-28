@@ -68,9 +68,19 @@
 
   .cart__article__container {
     @include flex(column, space-around, flex-end);
-    height: 100%;
+    gap: 3rem;
     flex-shrink: 0;
   }
 
 }
 
+@media (min-width: 48rem) {
+
+  .cart__card {
+    img {
+      width: 100%;
+      height: 7.25rem;
+      max-width: 7.25rem;
+    }
+  }
+}

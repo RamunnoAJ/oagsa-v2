@@ -39,7 +39,7 @@ export async function getClients(url) {
   return data.data
 }
 
-export async function getField(url){
+export async function getFields(url){
   const response = await fetch(`${BASE_URL}${url}`)
   if (!response.ok) {
     throw new Error('Respuesta rechazada')

@@ -1,8 +1,7 @@
-import { getClients } from '../api/cart.js'
+import { getClients, getFields } from '../api/cart.js'
 import { checkout, removeFromCart, getTotalPrice, updateCart, getTotalQuantity, sendToDraft } from '../cart.js'
 import { getCart, saveCart } from '../storage/cart.js'
 import { getUserFromStorage } from '../storage/storageData.js'
-import { sortClients } from '../utils/sortClients.js'
 
 const defaultImage = 'https://firebasestorage.googleapis.com/v0/b/oagsa-1d9e9.appspot.com/o/Web%20Oagsa%20Iconos%2FOAGSA%20-%20Iconos%20Web%2011%20-%20HERRAMIENTA.png?alt=media&token=b06bbe3a-cd7e-4a80-a4e7-3bccb9a8df33'
 
@@ -47,7 +46,7 @@ async function renderCart(cart) {
   const $cartClients = document.querySelector('.cart__clients')
   $cartClients.classList.remove('visually-hidden')
 
-  renderOptions(clients)
+  renderOptions(clients, '#selectClient')
 
   const $cartContainer = document.createElement('div')
   $cartContainer.classList.add('cart__articles__container')
@@ -56,7 +55,7 @@ async function renderCart(cart) {
   renderArticles(cart)
 }
 
-function renderArticles(cart){
+async function renderArticles(cart){
   const $cartContainer = document.querySelector('.cart__articles__container')
   $cartContainer.innerHTML = ''
 
@@ -65,10 +64,20 @@ function renderArticles(cart){
     $cartContainer.appendChild($article)
   })
 
+  await renderContainer()
+  renderButtons()
+}
+
+async function renderContainer(){
+  const $cart = document.getElementById('cart')
+  const $container = document.createElement('div')
+  $container.classList.add('container__fluid')
+
+  $cart.appendChild($container)
+
   renderObservations()
   renderTotalRow()
-  renderFields()
-  renderButtons()
+  await renderFields()
 }
 
 async function renderClients(){
@@ -92,18 +101,54 @@ async function renderClients(){
   $cart.appendChild($clients)
 }
 
-function renderOptions(clients) {
-  const $selectClient = document.querySelector('#selectClient') 
-  sortClients(clients)
+function renderOptions(options, select) {
+  const $select = document.querySelector(select)
 
-  $selectClient.innerHTML = '<option value="" selected disabled>Seleccione un cliente</option>'
+  let value 
+  let textContent
+  let sortedOptions
+  
+  switch (select) {
+    case '#selectClient':
+      $select.innerHTML = '<option value="" selected disabled>Seleccione un cliente</option>'
+      value = "codigoCliente"
+      textContent = "razonSocial"
+      sortedOptions = options.sort(function (a, b) {
+        return a[textContent] > b[textContent] ? 1 : -1
+      })
+      break;
 
-  clients.forEach(client => {
-    const option = document.createElement('option')
-    option.value = client.codigoCliente
-    option.textContent = `${client.codigoCliente} - ${client.razonSocial}`
+    case '#flete':
+      $select.innerHTML = '<option value="" selected disabled>Seleccione...</option>'
+      value = "id"
+      textContent = "descripcion"
+      sortedOptions = options.sort(function (a, b) {
+        return a[value] > b[value] ? 1 : -1
+      })
+      break;
 
-    $selectClient.appendChild(option)
+    case '#condicionVenta':
+      $select.innerHTML = '<option value="" selected disabled>Seleccione...</option>'
+      value = "codigoCondicionVenta"
+      textContent = "descripcion"
+      sortedOptions = options.sort(function (a, b) {
+        return a[value] > b[value] ? 1 : -1
+      })
+      break;
+    default:
+      throw new Error(`El select ${select} no existe`)
+  }
+  
+  sortedOptions.forEach(option => {
+    const $option = document.createElement('option')
+    $option.value = option[value]
+    if (value === "codigoCliente") {
+      $option.textContent = `${option[textContent]} - ${option[value]}`
+    } else {
+      $option.textContent = option[textContent]
+    }
+
+    $select.appendChild($option)
   })
 }
 
@@ -114,7 +159,7 @@ function renderObservations() {
   }
 
   const cart = getCart()
-  const $cart = document.getElementById('cart')
+  const $cart = document.querySelector('.container__fluid')
 
   const $observationsContainer = document.createElement('div')
   $observationsContainer.classList.add('observations__container')
@@ -137,41 +182,57 @@ function renderObservations() {
   $cart.appendChild($observationsContainer)
 }
 
-function renderFields(){
+async function renderFields(){
   if (document.querySelector('#fields')) {
     const $fields = document.querySelector('#fields')
     $fields.remove()
   }
 
   const cart = getCart()
-  const $cart = document.getElementById('cart')
+  const $cart = document.querySelector('.container__fluid')
 
   const $fieldsContainer = document.createElement('div')
   $fieldsContainer.id = 'fields'
   $fieldsContainer.className = 'fields__container'
 
   const $fleteContainer = document.createElement('div')
-  $fleteContainer.className = 'fields__flete'
-  $fieldsContainer.appendChild($fleteContainer)
+  $fleteContainer.className = 'fields'
 
   const $fleteLabel = document.createElement('label')
   $fleteLabel.textContent = 'Flete:'
   $fleteLabel.htmlFor = 'flete'
   $fleteLabel.className = 'fw-semi-bold'
-  $fieldsContainer.appendChild($fleteLabel)
+  $fleteContainer.appendChild($fleteLabel)
 
+  const fletes = await getFields('orden-compra/flete')
   const $flete = document.createElement('select')
   $flete.name = 'flete'
   $flete.id = 'flete'
   $flete.classList.add('fields__select')
-  $fieldsContainer.appendChild($flete)
+  $fleteContainer.appendChild($flete)
 
-
+  const condicionVenta = await getFields('orden-compra/condicionventa')
   const $condicionVentaContainer = document.createElement('div')
-  $condicionVentaContainer.className = 'fields__condicion-venta'
+  $condicionVentaContainer.className = 'fields'
+
+  const $condicionVentaLabel = document.createElement('label')
+  $condicionVentaLabel.textContent = 'Condición de venta:'
+  $condicionVentaLabel.htmlFor = 'condicionVenta'
+  $condicionVentaLabel.className = 'fw-semi-bold'
+  $condicionVentaContainer.appendChild($condicionVentaLabel)
+
+  const $condicionVenta = document.createElement('select')
+  $condicionVenta.name = 'condicionVenta'
+  $condicionVenta.id = 'condicionVenta'
+  $condicionVenta.classList.add('fields__select')
+  $condicionVentaContainer.appendChild($condicionVenta)
+  
+  $fieldsContainer.appendChild($fleteContainer)
   $fieldsContainer.appendChild($condicionVentaContainer) 
 
   $cart.appendChild($fieldsContainer)
+  renderOptions(fletes, '#flete')
+  renderOptions(condicionVenta, '#condicionVenta')
 }
 
 function renderButtons() {
@@ -261,7 +322,7 @@ function renderTotalRow() {
   }
 
   const $totalRow = createTotalRow()
-  const $cart = document.getElementById('cart')
+  const $cart = document.querySelector('.container__fluid')
   $cart.appendChild($totalRow)
 }
 
