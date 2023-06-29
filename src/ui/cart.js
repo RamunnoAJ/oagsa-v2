@@ -34,7 +34,7 @@ async function renderCart(cart) {
   const $cart = document.getElementById('cart')
   $cart.innerHTML = '<span class="loader"></span>'
 
-  await renderClients()
+  await renderClients(cart)
 
   const user = getUserFromStorage()
   const parsedUser = JSON.parse(user)
@@ -69,6 +69,16 @@ async function renderArticles(cart){
 }
 
 async function renderContainer(){
+  if (document.querySelector('#buttons')){
+    const $buttons = document.querySelector('#buttons')
+    $buttons.remove()
+  }
+
+  if(document.querySelector('.container__fluid')){
+    const $containerFluid = document.querySelector('.container__fluid')
+    $containerFluid.remove()
+  }
+
   const $cart = document.getElementById('cart')
   const $container = document.createElement('div')
   $container.classList.add('container__fluid')
@@ -80,7 +90,7 @@ async function renderContainer(){
   await renderFields()
 }
 
-async function renderClients(){
+async function renderClients(cart){
   const $cart = document.getElementById('cart')
   const $clients = document.createElement('div')
   $clients.classList.add('cart__clients')
@@ -96,12 +106,18 @@ async function renderClients(){
   $clientsSelect.name = 'selectClient'
   $clientsSelect.id = 'selectClient'
   $clientsSelect.classList.add('cart__clients-select')
-  $clients.appendChild($clientsSelect)
+  $clientsSelect.select = cart.codigoCliente
 
+  $clientsSelect.addEventListener('change', () => {
+    saveCart( { ...getCart(), codigoCliente: Number($clientsSelect.value) }  )
+  })
+
+  $clients.appendChild($clientsSelect)
   $cart.appendChild($clients)
 }
 
 function renderOptions(options, select) {
+  const cart = getCart()
   const $select = document.querySelector(select)
 
   let value 
@@ -144,7 +160,16 @@ function renderOptions(options, select) {
     $option.value = option[value]
     if (value === "codigoCliente") {
       $option.textContent = `${option[textContent]} - ${option[value]}`
+      if($option.value == cart.codigoCliente){
+        $option.selected = true
+      }
     } else {
+      if($option.value == cart.codigoCondicionVenta){
+        $option.selected = true
+      } else if ($option.value == cart.idFlete){
+        $option.selected = true
+      } 
+
       $option.textContent = option[textContent]
     }
 
@@ -183,6 +208,11 @@ function renderObservations() {
 }
 
 async function renderFields(){
+  if (document.querySelector('#buttons')){
+    const $buttons = document.querySelector('#buttons')
+    $buttons.remove()
+  }
+
   if (document.querySelector('#fields')) {
     const $fields = document.querySelector('#fields')
     $fields.remove()
@@ -209,6 +239,9 @@ async function renderFields(){
   $flete.name = 'flete'
   $flete.id = 'flete'
   $flete.classList.add('fields__select')
+  $flete.addEventListener('change', () => {
+    saveCart( { ...getCart(), idFlete: Number($flete.value), descripcionFlete: $flete.options[$flete.selectedIndex].text } )
+  })
   $fleteContainer.appendChild($flete)
 
   const condicionVenta = await getFields('orden-compra/condicionventa')
@@ -225,6 +258,9 @@ async function renderFields(){
   $condicionVenta.name = 'condicionVenta'
   $condicionVenta.id = 'condicionVenta'
   $condicionVenta.classList.add('fields__select')
+  $condicionVenta.addEventListener('change', () => {
+    saveCart( { ...getCart(), codigoCondicionVenta: Number($condicionVenta.value) } )
+  })
   $condicionVentaContainer.appendChild($condicionVenta)
   
   $fieldsContainer.appendChild($fleteContainer)
@@ -253,14 +289,16 @@ function renderButtons() {
 
   const $addProducts = document.createElement('button')
   $addProducts.className = 'button-cart bg-secondary-300 uppercase fw-semi-bold bg-hover-secondary-400'
+  $addProducts.type = 'button'
   $addProducts.textContent = 'Agregar productos'
   $addProducts.addEventListener('click', () => {
-    window.location.href = '/pages/store'
+    window.location.href = '/pages/store.html'
   })
 
   const $sendToDraft = document.createElement('button')
   $sendToDraft.className = 'button-cart bg-secondary-300 uppercase fw-semi-bold bg-hover-secondary-400'
   $sendToDraft.textContent = 'Guardar borrador'
+  $sendToDraft.type = 'button'
   $sendToDraft.addEventListener('click', () => {
     sendToDraft()
     renderCart(getCart())
@@ -269,7 +307,9 @@ function renderButtons() {
   const $checkoutButton = document.createElement('button')
   $checkoutButton.className = 'button-cart button-checkout bg-secondary-400 uppercase fw-semi-bold bg-hover-secondary-400 text-white'
   $checkoutButton.textContent = 'Finalizar compra'
-  $checkoutButton.addEventListener('click', () => {
+  $checkoutButton.type = 'submit'
+  $checkoutButton.addEventListener('click', (e) => {
+    e.preventDefault()
     checkout()
   })
 
@@ -356,10 +396,14 @@ function createProductCard(item) {
   const $discount = document.createElement('p')
   $discount.className = 'fw-semi-bold cart__discount'
 
-  const $discountText = document.createElement('p')
-  $discountText.textContent = 'Descuento (%): '
+  const $discountText = document.createElement('label')
+  $discountText.htmlFor = 'porcentajeDescuento'
+  $discountText.textContent = 'Descuento: '
 
   const $discountInput = document.createElement('input')
+  $discountInput.className = 'ml-1'
+  $discountInput.name = 'porcentajeDescuento'
+  $discountInput.id = 'porcentajeDescuento'
   $discountInput.value = item.porcentajeDescuento
   $discountInput.type = 'number'
   $discountInput.min = 0
@@ -377,9 +421,9 @@ function createProductCard(item) {
 
   const $quantityInput = document.createElement('input')
   $quantityInput.type = 'number'
-  $quantityInput.min = 0
+  $quantityInput.min = 1
   $quantityInput.max = item.stockUnidades
-  $quantityInput.value = item.cantidad
+  $quantityInput.value = item.cantidadPedida
   $quantityInput.addEventListener('change', () => {
     if ( $quantityInput.value <= item.stockUnidades ) {
       updateCart(item, $quantityInput.value, $discountInput.value, renderArticles)
