@@ -1,5 +1,4 @@
 import { getUserFromStorage } from '../storage/storageData.js'
-import getDataFromDB from '../utils/getDataFromDB.js'
 
 const $profileName = document.querySelector('#profile-name')
 
@@ -13,7 +12,7 @@ export function renderLogoutBtn(parentElement) {
     'uppercase'
   )
   logoutBtn.id = 'logout-btn'
-  logoutBtn.innerHTML = `log out <i
+  logoutBtn.innerHTML = `Cerrar Sesión <i
   class="fa-solid fa-power-off"></i>`
   parentElement.appendChild(logoutBtn)
 }
@@ -39,9 +38,8 @@ export function renderAdminBtn(parentElement) {
   }
 }
 
-export async function renderUserName(id) {
-  const response = await getDataFromDB(`vendedor/vendedor?pVendedor=${id}`)
-  const clientName = await response.data.razonSocial
-
-  if (clientName) $profileName.textContent = clientName
+export async function renderUserName() {
+  $profileName.textContent = 'Funciones'
+  $profileName.classList.add('uppercase')
 }
+
