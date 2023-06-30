@@ -46,10 +46,16 @@
 }
 
 .buttons__container {
-  @include flex(row, space-between, center);
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
   gap: 0.5rem;
 
   .button-cart {
     width: 10.3125rem;
+
+    &.span-2 {
+      width: 100%;
+      grid-column: span 2;
+    }
   }
 }

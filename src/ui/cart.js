@@ -27,10 +27,20 @@ export function showToast(message, url = '') {
 
 if (window.location.href.includes('cart')) {
   const cart = getCart() || {}
-  renderCart(cart)
+  renderCart(cart, cart.borrador)
 }
 
 async function renderCart(cart) {
+  if (cart.borrador === 1) {
+    const $cartTitle = document.querySelector('.cart__title')
+    const $cartDraft = document.createElement('span')
+    $cartDraft.classList.add('ml-2')
+    $cartDraft.style = 'font-size: 10px;'
+    $cartDraft.textContent = '(Borrador)'
+
+    $cartTitle.appendChild($cartDraft)
+  }
+
   const $cart = document.getElementById('cart')
   $cart.innerHTML = '<span class="loader"></span>'
 
@@ -65,7 +75,7 @@ async function renderArticles(cart){
   })
 
   await renderContainer()
-  renderButtons()
+  renderButtons(cart)
 }
 
 async function renderContainer(){
@@ -271,7 +281,7 @@ async function renderFields(){
   renderOptions(condicionVenta, '#condicionVenta')
 }
 
-function renderButtons() {
+function renderButtons(cart) {
   if (document.querySelector('#buttons')) {
     const $buttons = document.querySelector('#buttons')
     $buttons.remove()
@@ -294,15 +304,53 @@ function renderButtons() {
   $addProducts.addEventListener('click', () => {
     window.location.href = '/pages/store.html'
   })
+  $buttonsContainer.appendChild($addProducts)
+
+  if(cart.borrador === 1){
+    const $deleteDraft = document.createElement('button')
+    $deleteDraft.className = 'button-cart bg-secondary-300 uppercase fw-semi-bold bg-hover-secondary-400'
+    $deleteDraft.type = 'button'
+    $deleteDraft.textContent = 'Eliminar borrador'
+    $buttonsContainer.appendChild($deleteDraft)
+
+    $deleteDraft.addEventListener('click', () => {
+      // TODO: using the delete endpoint, remove the draft from the DB and clear the cart after confirming
+      Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire(
+            'Deleted!',
+            'Your file has been deleted.',
+            'success'
+          )
+        }
+      })
+    })
+  }
 
   const $sendToDraft = document.createElement('button')
   $sendToDraft.className = 'button-cart bg-secondary-300 uppercase fw-semi-bold bg-hover-secondary-400'
   $sendToDraft.textContent = 'Guardar borrador'
+  if (cart.borrador === 1){
+    $sendToDraft.textContent = 'Guardar cambios'
+  }
   $sendToDraft.type = 'button'
   $sendToDraft.addEventListener('click', () => {
     sendToDraft()
-    renderCart(getCart())
+    renderCart(cart, cart.borrador)
   })
+
+  if(cart.borrador === 1){
+    $sendToDraft.classList.add('span-2')
+  }
+  $buttonsContainer.appendChild($sendToDraft)
 
   const $checkoutButton = document.createElement('button')
   $checkoutButton.className = 'button-cart button-checkout bg-secondary-400 uppercase fw-semi-bold bg-hover-secondary-400 text-white'
@@ -312,9 +360,6 @@ function renderButtons() {
     e.preventDefault()
     checkout()
   })
-
-  $buttonsContainer.appendChild($addProducts)
-  $buttonsContainer.appendChild($sendToDraft)
 
   $container.appendChild($buttonsContainer)
   $container.appendChild($checkoutButton)
@@ -397,13 +442,13 @@ function createProductCard(item) {
   $discount.className = 'fw-semi-bold cart__discount'
 
   const $discountText = document.createElement('label')
-  $discountText.htmlFor = 'porcentajeDescuento'
+  $discountText.htmlFor = `porcentajeDescuento-${item.codigoArticulo}`
   $discountText.textContent = 'Descuento: '
 
   const $discountInput = document.createElement('input')
   $discountInput.className = 'ml-1'
-  $discountInput.name = 'porcentajeDescuento'
-  $discountInput.id = 'porcentajeDescuento'
+  $discountInput.name = `porcentajeDescuento-${item.codigoArticulo}`
+  $discountInput.id = `porcentajeDescuento-${item.codigoArticulo}`
   $discountInput.value = item.porcentajeDescuento
   $discountInput.type = 'number'
   $discountInput.min = 0
@@ -420,6 +465,7 @@ function createProductCard(item) {
   $quantity.classList.add('fw-bold')
 
   const $quantityInput = document.createElement('input')
+  $quantityInput.id = `cantidad-${item.codigoArticulo}`
   $quantityInput.type = 'number'
   $quantityInput.min = 1
   $quantityInput.max = item.stockUnidades

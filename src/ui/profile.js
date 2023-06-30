@@ -2,21 +2,6 @@ import { getUserFromStorage } from '../storage/storageData.js'
 
 const $profileName = document.querySelector('#profile-name')
 
-export function renderLogoutBtn(parentElement) {
-  const logoutBtn = document.createElement('button')
-  logoutBtn.classList.add(
-    'button',
-    'text-black',
-    'bg-secondary-300',
-    'bg-hover-secondary-400',
-    'uppercase'
-  )
-  logoutBtn.id = 'logout-btn'
-  logoutBtn.innerHTML = `Cerrar Sesión <i
-  class="fa-solid fa-power-off"></i>`
-  parentElement.appendChild(logoutBtn)
-}
-
 export function renderAdminBtn(parentElement) {
   const user = getUserFromStorage()
   if (user) {
