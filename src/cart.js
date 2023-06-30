@@ -27,6 +27,7 @@ export async function sendToDraft(){
   }
   const order = createOrder(cart)
   order.borrador = 1
+  saveCart(order)
   await postBuyOrder('orden-compra', order)
   // clearCart()
   showToast('Carrito guardado en borrador exitosamente.')
