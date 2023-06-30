@@ -1,11 +1,11 @@
 import { profileClientAccount } from './profileClientAccount.js'
 import { profileClientList } from './profileClientList.js'
+import { profileDrafts } from './profileDrafts.js'
 import { profilePricesList } from './profilePricesList.js'
 import { navigateToLogin } from './ui/login.js'
 
 import {
   renderAdminBtn,
-  renderLogoutBtn,
   renderUserName,
 } from './ui/profile.js'
 
@@ -16,11 +16,7 @@ const $btnContainer = document.querySelector('.profile-container__buttons')
 
 if (window.location.href.includes('dashboard')) {
   renderAdminBtn($btnContainer)
-  renderLogoutBtn($btnContainer)
   renderUserName()
-
-  const $logoutBtn = document.querySelector('#logout-btn')
-  $logoutBtn.addEventListener('click', logOut)
 
   $profileList.addEventListener('click', e => {
     if (e.target.closest('li') === null) return
@@ -37,6 +33,10 @@ if (window.location.href.includes('dashboard')) {
 
       case 'Lista de precios':
         profilePricesList($profileInfoContainer)
+        break
+
+      case 'Borrador de pedidos':
+        profileDrafts($profileInfoContainer)
         break
 
       default:
