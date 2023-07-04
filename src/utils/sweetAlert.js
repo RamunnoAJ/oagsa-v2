@@ -8,7 +8,7 @@ export async function triggerSweetAlert(title, text, confirmButtonText, fireTitl
   cancelButtonColor: '#d33',
   confirmButtonText: confirmButtonText,
   cancelButtonText: 'Cancelar',
-  background: '#faeed3'
+  background: '#fff'
   }).then((result) => {
     if (result.isConfirmed) {
       callback()
