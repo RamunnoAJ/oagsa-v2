@@ -1,14 +1,11 @@
 import getDataFromDB from "../utils/getDataFromDB.js"
+import { BASE_URL } from "../utils/getDataFromDB.js"
 
 export async function getDrafts(id) {
-  const response = await getDataFromDB(`orden-compra/vendedor?pCodigoVendedor=${id}`)
-
+  const response = await getDataFromDB(`orden-compra/vendedor?pCodigoVendedor=${id}&pBorrador=1`)
   const drafts = await response.data
-  const filteredDrafts = drafts.filter(draft => {
-    return draft.borrador === 1 
-  })
 
-  return filteredDrafts
+  return drafts
 }
 
 export async function getDraft(id){

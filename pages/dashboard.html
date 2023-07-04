@@ -114,6 +114,15 @@
   <script src="../src/ui/menu.js"></script>
   <script type="module" src="../src/profile.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script>
+    const user = sessionStorage.getItem('user') || localStorage.getItem('user')
+    if (user) {
+      const profile = JSON.parse(user)
+    } else {
+      window.location.replace('../pages/log-in.html')
+    }
+
+  </script>
 </body>
 
 </html>

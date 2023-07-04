@@ -2,12 +2,14 @@ import { profileClientAccount } from './profileClientAccount.js'
 import { profileClientList } from './profileClientList.js'
 import { profileDrafts } from './profileDrafts.js'
 import { profilePricesList } from './profilePricesList.js'
+import { checkLocalStorage } from './storage/profile.js'
 import { navigateToLogin } from './ui/login.js'
-
 import {
   renderAdminBtn,
   renderUserName,
 } from './ui/profile.js'
+
+checkLocalStorage()
 
 const $profileTitle = document.querySelector('#profileTitle')
 const $profileList = document.querySelector('#profileList')
