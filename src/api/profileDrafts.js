@@ -8,11 +8,23 @@ export async function getDrafts(id) {
     return draft.borrador === 1 
   })
 
-  return drafts
+  return filteredDrafts
 }
 
 export async function getDraft(id){
   const response = await getDataFromDB(`orden-compra?pNumeroNota=${id}`) 
   const draft = await response.data
   return draft
+}
+
+export async function removeDraft(id) {
+  const response = await fetch(`${BASE_URL}orden-compra/delete-borrador?pNumeroOrden=${id}`, {
+    method: 'DELETE',
+  })
+
+  if (!response.ok) {
+    throw new Error('Respuesta rechazada')
+  }
+
+  return response
 }
