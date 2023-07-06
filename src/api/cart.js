@@ -19,11 +19,7 @@ export async function postBuyOrder(url, postBody) {
   if (!response.ok) {
     throw new Error('Respuesta rechazada')
   }
-
-  const data = await response.json()
-  console.log(data)
 }
-
 
 export async function getClients(url) {
   let response = ''

@@ -15,7 +15,7 @@ export async function profileDrafts($profileInfoContainer) {
 
 export function deleteDraft(draftID) {
   try {
-    triggerSweetAlert('Desea eliminar el borrador?', 'Esta acción no es reversible', 'Eliminar', 'Eliminado!', 'El borrador ha sido eliminado.', removeDraft(draftID))
+    triggerSweetAlert('Desea eliminar el borrador?', 'Esta acción no es reversible', 'Eliminar', 'Eliminado!', 'El borrador ha sido eliminado.', () => {removeDraft(draftID)})
   } catch (error) {
     Toastify({
       text: error.message,
