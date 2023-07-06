@@ -1,3 +1,6 @@
+import { emptyCart } from "../cart.js"
+import { navigateToDashboard } from "../ui/login.js"
+
 export async function triggerSweetAlert(title, text, confirmButtonText, fireTitle, fireText, callback = () => {}) {
   Swal.fire({
   title: title,
@@ -16,7 +19,10 @@ export async function triggerSweetAlert(title, text, confirmButtonText, fireTitl
         fireTitle,
         fireText,
         'success'
-      )
+      ).then(() => {
+        emptyCart()
+        navigateToDashboard()
+      })
     }
   })
 }

@@ -1,4 +1,5 @@
 import { postBuyOrder } from './api/cart.js'
+import { removeDraft } from './api/profileDrafts.js'
 import { getCart, saveCart, clearCart } from './storage/cart.js'
 import { checkLocalStorage } from './storage/profile.js'
 import { getUserFromStorage } from './storage/storageData.js'
@@ -13,10 +14,16 @@ export async function checkout() {
     return
   }
   const order = createOrder(cart)
+  if (order.borrador === 1) {
+    removeDraft(order.numeroNota)
+    order.borrador = 0
+  }
   
+  order.numeroNota = 0
   await postBuyOrder('orden-compra', order)
-  // clearCart()
+  clearCart()
   showToast('Compra realizada exitosamente.');
+  renderCart(cart)
 }
 
 export async function sendToDraft(){
@@ -29,7 +36,6 @@ export async function sendToDraft(){
   order.borrador = 1
   saveCart(order)
   await postBuyOrder('orden-compra', order)
-  // clearCart()
   showToast('Carrito guardado en borrador exitosamente.')
 }
 
@@ -38,6 +44,10 @@ export function addToCart(item) {
   const $quantityInput = document.getElementById(quantityInputId)
   let quantity = $quantityInput.value
   quantity = Number(quantity)
+  const numeroNota = getCart().numeroNota
+  if (numeroNota) {
+    item.numeroNota = numeroNota
+  }
 
   const newItem = createArticle(item, quantity)
   if (quantity > 0) {
@@ -59,7 +69,7 @@ export function addToCart(item) {
 function addProductToCart(item) {
   const cart = getCart()
   const newItem = { ...item }
-  const updatedCart = {listaDetalle: [...cart.listaDetalle, newItem]}
+  const updatedCart = { ...cart,listaDetalle: [...cart.listaDetalle, newItem]}
   saveCart(updatedCart)
 }
 

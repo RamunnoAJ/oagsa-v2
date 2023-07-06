@@ -1,7 +1,9 @@
 import { getClients, getFields } from '../api/cart.js'
+import { removeDraft } from '../api/profileDrafts.js'
 import { checkout, removeFromCart, getTotalPrice, updateCart, getTotalQuantity, sendToDraft } from '../cart.js'
 import { getCart, saveCart } from '../storage/cart.js'
 import { getUserFromStorage } from '../storage/storageData.js'
+import { triggerSweetAlert } from '../utils/sweetAlert.js'
 
 const defaultImage = 'https://firebasestorage.googleapis.com/v0/b/oagsa-1d9e9.appspot.com/o/Web%20Oagsa%20Iconos%2FOAGSA%20-%20Iconos%20Web%2011%20-%20HERRAMIENTA.png?alt=media&token=b06bbe3a-cd7e-4a80-a4e7-3bccb9a8df33'
 
@@ -19,7 +21,7 @@ export function showToast(message, url = '') {
     },
     onClick: () => {
       if (url) {
-        window.location.replace = url
+        window.location.replace(url)
       }
     }
   }).showToast()
@@ -32,6 +34,10 @@ if (window.location.href.includes('cart')) {
 
 async function renderCart(cart) {
   if (cart.borrador === 1) {
+    if (document.querySelector('.cart__title span')) {
+      const cartDraft = document.querySelector('.cart__title span')
+      cartDraft.remove()
+    }
     const $cartTitle = document.querySelector('.cart__title')
     const $cartDraft = document.createElement('span')
     $cartDraft.classList.add('ml-2')
@@ -314,24 +320,22 @@ function renderButtons(cart) {
     $buttonsContainer.appendChild($deleteDraft)
 
     $deleteDraft.addEventListener('click', () => {
-      // TODO: using the delete endpoint, remove the draft from the DB and clear the cart after confirming
-      Swal.fire({
-      title: 'Are you sure?',
-      text: "You won't be able to revert this!",
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!'
-      }).then((result) => {
-        if (result.isConfirmed) {
-          Swal.fire(
-            'Deleted!',
-            'Your file has been deleted.',
-            'success'
-          )
-        }
-      })
+      try {
+        triggerSweetAlert('Desea eliminar el borrador?', 'Esta acción no es reversible', 'Eliminar', 'Eliminado!', 'El borrador ha sido eliminado.', () => {removeDraft(cart.numeroNota)})
+      } catch (error) {
+        Toastify({
+          text: error.message,
+          duration: 3000,
+          close: false,
+          gravity: 'top',
+          position: 'right',
+          stopOnFocus: true,
+          style: {
+            background: 'linear-gradient(to right, #a25553, #79403e)',
+            color: '#000000',
+          }
+        }).showToast()
+      }
     })
   }
 
