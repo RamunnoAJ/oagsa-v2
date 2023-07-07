@@ -3768,7 +3768,7 @@ body {
 
 @media (min-width: 680px) {
   .store__products {
-    grid-template-columns: repeat(3, 200px);
+    grid-template-columns: repeat(4, 200px);
     gap: 2rem;
     margin-top: 5rem; } }
 
