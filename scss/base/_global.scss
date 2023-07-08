@@ -101,6 +101,10 @@ $colors: (
   display: none !important;
 }
 
+.cursor-pointer {
+  cursor: pointer;
+}
+
 @media (max-width: 45rem) {
   .visually-hidden-mobile {
     display: none !important;
@@ -128,6 +132,6 @@ $colors: (
 @media (max-width: 45rem) {
   .cart__body {
     overflow-x: hidden;
-    @include flex(column, space-between, stretch); 
+    @include flex(column, space-between, stretch);
   }
 }
