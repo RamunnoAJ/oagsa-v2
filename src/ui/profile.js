@@ -1,7 +1,5 @@
 import { getUserFromStorage } from '../storage/storageData.js'
 
-const $profileName = document.querySelector('#profile-name')
-
 export function renderAdminBtn(parentElement) {
   const user = getUserFromStorage()
   if (user) {
@@ -22,9 +20,3 @@ export function renderAdminBtn(parentElement) {
     }
   }
 }
-
-export async function renderUserName() {
-  $profileName.textContent = 'Funciones'
-  $profileName.classList.add('uppercase')
-}
-
