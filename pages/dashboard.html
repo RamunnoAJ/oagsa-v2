@@ -47,7 +47,7 @@
   <main class="dashboard-container mt-20">
     <div class="dashboard-wrapper">
       <div class="profile-container">
-        <h1 class="uppercase" id="profile-name">Funciones</h1>
+        <h1 class="uppercase">Funciones</h1>
         <ul class="profile-container__list" id="profileList">
           <li>Cuenta corriente</li>
           <li>Borrador de pedidos</li>
@@ -55,14 +55,11 @@
           <li>Lista de clientes</li>
           <li><a href="./store.html">Tienda</a></li>
         </ul>
-        <div class="profile-container__buttons">
-
-        </div>
+        <div class="profile-container__buttons"></div>
       </div>
       <div class="profile-info">
         <h2 class="profile-info__title uppercase" id="profileTitle"></h2>
-        <div class="profile-info__container" id="profileInfoContainer">
-        </div>
+        <div class="profile-info__container" id="profileInfoContainer"></div>
       </div>
     </div>
   </main>
@@ -115,13 +112,13 @@
   <script type="module" src="../src/profile.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script>
-    const user = sessionStorage.getItem('user') || localStorage.getItem('user')
+    const user =
+      sessionStorage.getItem('user') || localStorage.getItem('user')
     if (user) {
       const profile = JSON.parse(user)
     } else {
       window.location.replace('../pages/log-in.html')
     }
-
   </script>
 </body>
 
