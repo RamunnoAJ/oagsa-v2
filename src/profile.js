@@ -4,7 +4,7 @@ import { profileDrafts } from './profileDrafts.js'
 import { profilePricesList } from './profilePricesList.js'
 import { checkLocalStorage } from './storage/profile.js'
 import { navigateToLogin } from './ui/login.js'
-import { renderAdminBtn, renderUserName } from './ui/profile.js'
+import { renderAdminBtn } from './ui/profile.js'
 
 checkLocalStorage()
 
@@ -15,7 +15,6 @@ const $btnContainer = document.querySelector('.profile-container__buttons')
 
 if (window.location.href.includes('dashboard')) {
   renderAdminBtn($btnContainer)
-  renderUserName()
 
   $profileList.addEventListener('click', e => {
     if (e.target.closest('li') === null) return

@@ -3,7 +3,7 @@ import { removeDraft } from './api/profileDrafts.js'
 import { getCart, saveCart, clearCart } from './storage/cart.js'
 import { checkLocalStorage } from './storage/profile.js'
 import { getUserFromStorage } from './storage/storageData.js'
-import { showToast } from './ui/cart.js'
+import { renderCart, showToast } from './ui/cart.js'
 
 checkLocalStorage()
 
@@ -21,7 +21,7 @@ export async function checkout() {
   
   order.numeroNota = 0
   await postBuyOrder('orden-compra', order)
-  clearCart()
+  emptyCart()
   showToast('Compra realizada exitosamente.');
   renderCart(cart)
 }
@@ -36,6 +36,8 @@ export async function sendToDraft(){
   order.borrador = 1
   saveCart(order)
   await postBuyOrder('orden-compra', order)
+
+  emptyCart()
   showToast('Carrito guardado en borrador exitosamente.')
 }
 
@@ -82,7 +84,7 @@ export function removeFromCart(item) {
   saveCart(updatedCart)
 }
 
-export function emptyCart() {
+export async function emptyCart() {
   clearCart()
 }
 

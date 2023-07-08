@@ -25,7 +25,7 @@ function createTable() {
       <th scope="col">Fecha</th>
       <th scope="col">Artículos</th>
       <th scope="col">Precio</th>
-      <th scope="col"></th>
+      <th scope="col" class="visually-hidden-mobile"></th>
     </tr>
   </thead>
   <tbody id="table-body">
@@ -45,11 +45,15 @@ async function renderTableRows(drafts, parentElement){
       <td>${draft.fechaNota.split('T')[0]}</td>
       <td>${draft.totalItems}</td>
       <td>$${draft.totalPesos}</td>
-      <td class="fl-table__icons">
+      <td class="fl-table__icons visually-hidden-mobile">
         <i id="btn-edit-${draft.numeroNota}" class="fa-solid fa-pen"></i> 
         <i id="btn-delete-${draft.numeroNota}" class="fa-solid fa-trash"></i>
       </td>
     `
+    row.classList.add('cursor-pointer')
+    row.addEventListener('click', () => {
+      editDraft(draft.numeroNota)
+    })
 
     $table.appendChild(row)
 

@@ -1,5 +1,4 @@
-import getDataFromDB from "../utils/getDataFromDB.js"
-import { BASE_URL } from "../utils/getDataFromDB.js"
+import getDataFromDB, { BASE_URL } from "../utils/getDataFromDB.js"
 
 export async function getDrafts(id) {
   const response = await getDataFromDB(`orden-compra/vendedor?pCodigoVendedor=${id}&pBorrador=1`)

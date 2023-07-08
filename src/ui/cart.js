@@ -1,6 +1,6 @@
 import { getClients, getFields } from '../api/cart.js'
 import { removeDraft } from '../api/profileDrafts.js'
-import { checkout, removeFromCart, getTotalPrice, updateCart, getTotalQuantity, sendToDraft } from '../cart.js'
+import { checkout, removeFromCart, getTotalPrice, updateCart, getTotalQuantity, sendToDraft, emptyCart } from '../cart.js'
 import { getCart, saveCart } from '../storage/cart.js'
 import { getUserFromStorage } from '../storage/storageData.js'
 import { triggerSweetAlert } from '../utils/sweetAlert.js'
@@ -32,7 +32,7 @@ if (window.location.href.includes('cart')) {
   renderCart(cart, cart.borrador)
 }
 
-async function renderCart(cart) {
+export async function renderCart(cart) {
   if (cart.borrador === 1) {
     if (document.querySelector('.cart__title span')) {
       const cartDraft = document.querySelector('.cart__title span')
@@ -45,6 +45,11 @@ async function renderCart(cart) {
     $cartDraft.textContent = '(Borrador)'
 
     $cartTitle.appendChild($cartDraft)
+  } else {
+    if (document.querySelector('.cart__title span')) {
+      const cartDraft = document.querySelector('.cart__title span')
+      cartDraft.remove()
+    }
   }
 
   const $cart = document.getElementById('cart')
@@ -68,7 +73,7 @@ async function renderCart(cart) {
   $cartContainer.classList.add('cart__articles__container')
   $cart.appendChild($cartContainer)
 
-  renderArticles(cart)
+  await renderArticles(cart)
 }
 
 async function renderArticles(cart){
@@ -176,13 +181,13 @@ function renderOptions(options, select) {
     $option.value = option[value]
     if (value === "codigoCliente") {
       $option.textContent = `${option[textContent]} - ${option[value]}`
-      if($option.value == cart.codigoCliente){
+      if($option.value === cart.codigoCliente?.toString()){
         $option.selected = true
       }
     } else {
-      if($option.value == cart.codigoCondicionVenta){
+      if($option.value === cart.codigoCondicionVenta?.toString()){
         $option.selected = true
-      } else if ($option.value == cart.idFlete){
+      } else if ($option.value === cart.idFlete?.toString()){
         $option.selected = true
       } 
 
@@ -234,7 +239,6 @@ async function renderFields(){
     $fields.remove()
   }
 
-  const cart = getCart()
   const $cart = document.querySelector('.container__fluid')
 
   const $fieldsContainer = document.createElement('div')
@@ -321,7 +325,11 @@ function renderButtons(cart) {
 
     $deleteDraft.addEventListener('click', () => {
       try {
-        triggerSweetAlert('Desea eliminar el borrador?', 'Esta acción no es reversible', 'Eliminar', 'Eliminado!', 'El borrador ha sido eliminado.', () => {removeDraft(cart.numeroNota)})
+        triggerSweetAlert('Desea eliminar el borrador?', 'Esta acción no es reversible', 'Eliminar', 'Eliminado!', 'El borrador ha sido eliminado.', async () => {
+          await removeDraft(cart.numeroNota)
+          emptyCart()
+          renderCart(getCart())
+        })
       } catch (error) {
         Toastify({
           text: error.message,
@@ -346,9 +354,9 @@ function renderButtons(cart) {
     $sendToDraft.textContent = 'Guardar cambios'
   }
   $sendToDraft.type = 'button'
-  $sendToDraft.addEventListener('click', () => {
-    sendToDraft()
-    renderCart(cart, cart.borrador)
+  $sendToDraft.addEventListener('click', async () => {
+    await sendToDraft()
+    renderCart(getCart())
   })
 
   if(cart.borrador === 1){
