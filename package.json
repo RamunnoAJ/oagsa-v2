@@ -17,6 +17,7 @@
   "devDependencies": {
     "@babel/core": "^7.22.5",
     "@babel/preset-env": "^7.22.5",
+    "@types/jest": "^29.5.3",
     "babel-jest": "^29.5.0",
     "eslint": "^8.33.0",
     "eslint-config-prettier": "^8.6.0",
@@ -38,14 +39,6 @@
     }
   },
   "dependencies": {
-    "toastify-js": "^1.12.0",
-    "uuid": "^9.0.0"
-  },
-  "jest": {
-    "resetMocks": false,
-    "setupFiles": [
-      "jest-localstorage-mock"
-    ],
-    "testEnvironment": "jsdom"
+    "toastify-js": "^1.12.0"
   }
 }
