@@ -7,8 +7,7 @@ import { renderCart, showToast } from './ui/cart.js'
 
 checkLocalStorage()
 
-export async function checkout() {
-  const cart = getCart() || {}
+export async function checkout(cart) {
   if (cart.listaDetalle.length === 0) {
     showToast('No hay productos en el carrito.')
     return
@@ -18,16 +17,15 @@ export async function checkout() {
     removeDraft(order.numeroNota)
     order.borrador = 0
   }
-  
+
   order.numeroNota = 0
   await postBuyOrder('orden-compra', order)
   emptyCart()
-  showToast('Compra realizada exitosamente.');
+  showToast('Compra realizada exitosamente.')
   renderCart(cart)
 }
 
-export async function sendToDraft(){
-  const cart = getCart() || {}
+export async function sendToDraft(cart) {
   if (cart.listaDetalle.length === 0) {
     showToast('No hay productos en el carrito.')
     return
@@ -53,8 +51,10 @@ export function addToCart(item) {
 
   const newItem = createArticle(item, quantity)
   if (quantity > 0) {
-    const cart = getCart() 
-    const index = cart.listaDetalle.findIndex(i => i.codigoArticulo === item.codigoArticulo)
+    const cart = getCart()
+    const index = cart.listaDetalle.findIndex(
+      i => i.codigoArticulo === item.codigoArticulo
+    )
 
     if (index === -1) {
       addProductToCart(newItem)
@@ -71,16 +71,18 @@ export function addToCart(item) {
 function addProductToCart(item) {
   const cart = getCart()
   const newItem = { ...item }
-  const updatedCart = { ...cart,listaDetalle: [...cart.listaDetalle, newItem]}
+  const updatedCart = { ...cart, listaDetalle: [...cart.listaDetalle, newItem] }
   saveCart(updatedCart)
 }
 
 export function removeFromCart(item) {
   const cart = getCart()
-  const index = cart.listaDetalle.findIndex(i => i.codigoArticulo === item.codigoArticulo)
+  const index = cart.listaDetalle.findIndex(
+    i => i.codigoArticulo === item.codigoArticulo
+  )
   cart.listaDetalle.splice(index, 1)
 
-  const updatedCart = {listaDetalle: [...cart.listaDetalle]}
+  const updatedCart = { listaDetalle: [...cart.listaDetalle] }
   saveCart(updatedCart)
 }
 
@@ -92,18 +94,24 @@ export function getDiscount(percentage, price) {
   return (price * percentage) / 100
 }
 
-export function getTotalQuantity() {
-  const cart = getCart()
-  const totalQuantity = cart.listaDetalle.reduce((acc, item) => acc + Number(item.cantidadPedida), 0)
+export function getTotalQuantity(cart) {
+  const totalQuantity = cart.listaDetalle.reduce(
+    (acc, item) => acc + Number(item.cantidadPedida),
+    0
+  )
   cart.totalItems = totalQuantity
   saveCart(cart)
   return Number(totalQuantity)
 }
 
-export function getTotalPrice() {
-  const cart = getCart()
+export function getTotalPrice(cart) {
   const totalPrice = cart.listaDetalle
-    .reduce((acc, item) => acc + (item.precioConDescuento || item.precio) * Number(item.cantidadPedida), 0)
+    .reduce(
+      (acc, item) =>
+        acc +
+        (item.precioConDescuento || item.precio) * Number(item.cantidadPedida),
+      0
+    )
     .toFixed(2)
   cart.totalPesos = Number(totalPrice)
   saveCart(cart)
@@ -118,7 +126,9 @@ export function updateCart(item, quantity, discount, callback = () => {}) {
 
 export function updateQuantity(item, quantity) {
   const cart = getCart()
-  const index = cart.listaDetalle.findIndex(i => i.codigoArticulo === item.codigoArticulo)
+  const index = cart.listaDetalle.findIndex(
+    i => i.codigoArticulo === item.codigoArticulo
+  )
   cart.listaDetalle[index].cantidadPedida = Number(quantity)
   saveCart(cart)
 }
@@ -126,7 +136,7 @@ export function updateQuantity(item, quantity) {
 export function calculateDiscount(discount, total) {
   if (discount === 0) return total
   const totalPrice = total - (total * discount) / 100
-  return Number(totalPrice.toFixed(2)) 
+  return Number(totalPrice.toFixed(2))
 }
 
 export function calculateDelivery(total, delivery) {
@@ -134,14 +144,14 @@ export function calculateDelivery(total, delivery) {
   return total + delivery
 }
 
-export function handleClientChange(){
+export function handleClientChange() {
   const $selectClient = document.querySelector('#selectClient')
   const client = $selectClient.value
 
   console.log($selectClient.selectedOptions[0].value)
 
   const cart = getCart()
-  cart.codigoCliente = (client)
+  cart.codigoCliente = client
   saveCart(cart)
 }
 
@@ -156,17 +166,21 @@ export function updateDiscount(item, discount) {
   }
 
   const cart = getCart()
-  const index = cart.listaDetalle.findIndex(i => i.codigoArticulo === item.codigoArticulo)
+  const index = cart.listaDetalle.findIndex(
+    i => i.codigoArticulo === item.codigoArticulo
+  )
   const listaDetalle = cart.listaDetalle[index]
   const porcentajeDescuento = Number(discount)
-  listaDetalle.porcentajeDescuento = porcentajeDescuento 
+  listaDetalle.porcentajeDescuento = porcentajeDescuento
   listaDetalle.precioConDescuento = calculateDiscount(
     porcentajeDescuento,
     listaDetalle.precio
   )
   listaDetalle.descripcionDescuento = `${listaDetalle.porcentajeDescuento}%`
   listaDetalle.codigoDescuento = `${listaDetalle.porcentajeDescuento}`
-  listaDetalle.importeDescuento = Number((listaDetalle.precioConDescuento * listaDetalle.cantidadPedida).toFixed(2))
+  listaDetalle.importeDescuento = Number(
+    (listaDetalle.precioConDescuento * listaDetalle.cantidadPedida).toFixed(2)
+  )
   listaDetalle.montoTotal = listaDetalle.importeDescuento
   saveCart(cart)
 }
@@ -189,7 +203,7 @@ function createArticle(article, quantity) {
     montoTotal: article.precio * quantity,
     numeroOrden: article.numeroOrden || 0,
     eliminado: article.eliminado || false,
-    imagenesUrl: []
+    imagenesUrl: [],
   }
 }
 
@@ -202,12 +216,12 @@ function createOrder(cart) {
     origenPedido: 0,
     estado: cart.estado || 'Pendiente',
     totalPesos: getTotalPrice(),
-    totalItems: getTotalQuantity(),
-    codigoVendedor: JSON.parse(getUserFromStorage()).id, 
+    totalItems: getTotalQuantity(cart),
+    codigoVendedor: JSON.parse(getUserFromStorage()).id,
     fechaNota: cart.fechaNota || new Date().toISOString(),
     borrador: cart.borrador || 0,
     idFlete: cart.idFlete || '',
     descripcionFlete: cart.descripcionFlete || '',
-    listaDetalle: cart.listaDetalle
+    listaDetalle: cart.listaDetalle,
   }
 }

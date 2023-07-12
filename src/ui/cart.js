@@ -1,11 +1,20 @@
 import { getClients, getFields } from '../api/cart.js'
 import { removeDraft } from '../api/profileDrafts.js'
-import { checkout, removeFromCart, getTotalPrice, updateCart, getTotalQuantity, sendToDraft, emptyCart } from '../cart.js'
+import {
+  checkout,
+  removeFromCart,
+  getTotalPrice,
+  updateCart,
+  getTotalQuantity,
+  sendToDraft,
+  emptyCart,
+} from '../cart.js'
 import { getCart, saveCart } from '../storage/cart.js'
 import { getUserFromStorage } from '../storage/storageData.js'
 import { triggerSweetAlert } from '../utils/sweetAlert.js'
 
-const defaultImage = 'https://firebasestorage.googleapis.com/v0/b/oagsa-1d9e9.appspot.com/o/Web%20Oagsa%20Iconos%2FOAGSA%20-%20Iconos%20Web%2011%20-%20HERRAMIENTA.png?alt=media&token=b06bbe3a-cd7e-4a80-a4e7-3bccb9a8df33'
+const defaultImage =
+  'https://firebasestorage.googleapis.com/v0/b/oagsa-1d9e9.appspot.com/o/Web%20Oagsa%20Iconos%2FOAGSA%20-%20Iconos%20Web%2011%20-%20HERRAMIENTA.png?alt=media&token=b06bbe3a-cd7e-4a80-a4e7-3bccb9a8df33'
 
 export function showToast(message, url = '') {
   Toastify({
@@ -23,7 +32,7 @@ export function showToast(message, url = '') {
       if (url) {
         window.location.replace(url)
       }
-    }
+    },
   }).showToast()
 }
 
@@ -76,7 +85,7 @@ export async function renderCart(cart) {
   await renderArticles(cart)
 }
 
-async function renderArticles(cart){
+async function renderArticles(cart) {
   const $cartContainer = document.querySelector('.cart__articles__container')
   $cartContainer.innerHTML = ''
 
@@ -89,13 +98,13 @@ async function renderArticles(cart){
   renderButtons(cart)
 }
 
-async function renderContainer(){
-  if (document.querySelector('#buttons')){
+async function renderContainer() {
+  if (document.querySelector('#buttons')) {
     const $buttons = document.querySelector('#buttons')
     $buttons.remove()
   }
 
-  if(document.querySelector('.container__fluid')){
+  if (document.querySelector('.container__fluid')) {
     const $containerFluid = document.querySelector('.container__fluid')
     $containerFluid.remove()
   }
@@ -111,7 +120,7 @@ async function renderContainer(){
   await renderFields()
 }
 
-async function renderClients(cart){
+async function renderClients(cart) {
   const $cart = document.getElementById('cart')
   const $clients = document.createElement('div')
   $clients.classList.add('cart__clients')
@@ -130,7 +139,7 @@ async function renderClients(cart){
   $clientsSelect.select = cart.codigoCliente
 
   $clientsSelect.addEventListener('change', () => {
-    saveCart( { ...getCart(), codigoCliente: Number($clientsSelect.value) }  )
+    saveCart({ ...getCart(), codigoCliente: Number($clientsSelect.value) })
   })
 
   $clients.appendChild($clientsSelect)
@@ -141,55 +150,58 @@ function renderOptions(options, select) {
   const cart = getCart()
   const $select = document.querySelector(select)
 
-  let value 
+  let value
   let textContent
   let sortedOptions
-  
+
   switch (select) {
     case '#selectClient':
-      $select.innerHTML = '<option value="" selected disabled>Seleccione un cliente</option>'
-      value = "codigoCliente"
-      textContent = "razonSocial"
+      $select.innerHTML =
+        '<option value="" selected disabled>Seleccione un cliente</option>'
+      value = 'codigoCliente'
+      textContent = 'razonSocial'
       sortedOptions = options.sort(function (a, b) {
         return a[textContent] > b[textContent] ? 1 : -1
       })
-      break;
+      break
 
     case '#flete':
-      $select.innerHTML = '<option value="" selected disabled>Seleccione...</option>'
-      value = "id"
-      textContent = "descripcion"
+      $select.innerHTML =
+        '<option value="" selected disabled>Seleccione...</option>'
+      value = 'id'
+      textContent = 'descripcion'
       sortedOptions = options.sort(function (a, b) {
         return a[value] > b[value] ? 1 : -1
       })
-      break;
+      break
 
     case '#condicionVenta':
-      $select.innerHTML = '<option value="" selected disabled>Seleccione...</option>'
-      value = "codigoCondicionVenta"
-      textContent = "descripcion"
+      $select.innerHTML =
+        '<option value="" selected disabled>Seleccione...</option>'
+      value = 'codigoCondicionVenta'
+      textContent = 'descripcion'
       sortedOptions = options.sort(function (a, b) {
         return a[value] > b[value] ? 1 : -1
       })
-      break;
+      break
     default:
       throw new Error(`El select ${select} no existe`)
   }
-  
+
   sortedOptions.forEach(option => {
     const $option = document.createElement('option')
     $option.value = option[value]
-    if (value === "codigoCliente") {
+    if (value === 'codigoCliente') {
       $option.textContent = `${option[textContent]} - ${option[value]}`
-      if($option.value === cart.codigoCliente?.toString()){
+      if ($option.value === cart.codigoCliente?.toString()) {
         $option.selected = true
       }
     } else {
-      if($option.value === cart.codigoCondicionVenta?.toString()){
+      if ($option.value === cart.codigoCondicionVenta?.toString()) {
         $option.selected = true
-      } else if ($option.value === cart.idFlete?.toString()){
+      } else if ($option.value === cart.idFlete?.toString()) {
         $option.selected = true
-      } 
+      }
 
       $option.textContent = option[textContent]
     }
@@ -218,18 +230,18 @@ function renderObservations() {
 
   const $observations = document.createElement('textarea')
   $observations.classList.add('observations')
-  $observations.id = 'observations'  
+  $observations.id = 'observations'
   $observations.value = cart.observaciones || ''
   $observations.addEventListener('change', () => {
-    saveCart( { ...getCart(), observaciones: $observations.value } )
+    saveCart({ ...getCart(), observaciones: $observations.value })
   })
   $observationsContainer.appendChild($observations)
 
   $cart.appendChild($observationsContainer)
 }
 
-async function renderFields(){
-  if (document.querySelector('#buttons')){
+async function renderFields() {
+  if (document.querySelector('#buttons')) {
     const $buttons = document.querySelector('#buttons')
     $buttons.remove()
   }
@@ -260,7 +272,11 @@ async function renderFields(){
   $flete.id = 'flete'
   $flete.classList.add('fields__select')
   $flete.addEventListener('change', () => {
-    saveCart( { ...getCart(), idFlete: Number($flete.value), descripcionFlete: $flete.options[$flete.selectedIndex].text } )
+    saveCart({
+      ...getCart(),
+      idFlete: Number($flete.value),
+      descripcionFlete: $flete.options[$flete.selectedIndex].text,
+    })
   })
   $fleteContainer.appendChild($flete)
 
@@ -279,12 +295,15 @@ async function renderFields(){
   $condicionVenta.id = 'condicionVenta'
   $condicionVenta.classList.add('fields__select')
   $condicionVenta.addEventListener('change', () => {
-    saveCart( { ...getCart(), codigoCondicionVenta: Number($condicionVenta.value) } )
+    saveCart({
+      ...getCart(),
+      codigoCondicionVenta: Number($condicionVenta.value),
+    })
   })
   $condicionVentaContainer.appendChild($condicionVenta)
-  
+
   $fieldsContainer.appendChild($fleteContainer)
-  $fieldsContainer.appendChild($condicionVentaContainer) 
+  $fieldsContainer.appendChild($condicionVentaContainer)
 
   $cart.appendChild($fieldsContainer)
   renderOptions(fletes, '#flete')
@@ -308,7 +327,8 @@ function renderButtons(cart) {
   $buttonsContainer.className = 'buttons__container mb-2'
 
   const $addProducts = document.createElement('button')
-  $addProducts.className = 'button-cart bg-secondary-300 uppercase fw-semi-bold bg-hover-secondary-400'
+  $addProducts.className =
+    'button-cart bg-secondary-300 uppercase fw-semi-bold bg-hover-secondary-400'
   $addProducts.type = 'button'
   $addProducts.textContent = 'Agregar productos'
   $addProducts.addEventListener('click', () => {
@@ -316,20 +336,28 @@ function renderButtons(cart) {
   })
   $buttonsContainer.appendChild($addProducts)
 
-  if(cart.borrador === 1){
+  if (cart.borrador === 1) {
     const $deleteDraft = document.createElement('button')
-    $deleteDraft.className = 'button-cart bg-secondary-300 uppercase fw-semi-bold bg-hover-secondary-400'
+    $deleteDraft.className =
+      'button-cart bg-secondary-300 uppercase fw-semi-bold bg-hover-secondary-400'
     $deleteDraft.type = 'button'
     $deleteDraft.textContent = 'Eliminar borrador'
     $buttonsContainer.appendChild($deleteDraft)
 
     $deleteDraft.addEventListener('click', () => {
       try {
-        triggerSweetAlert('Desea eliminar el borrador?', 'Esta acción no es reversible', 'Eliminar', 'Eliminado!', 'El borrador ha sido eliminado.', async () => {
-          await removeDraft(cart.numeroNota)
-          emptyCart()
-          renderCart(getCart())
-        })
+        triggerSweetAlert(
+          'Desea eliminar el borrador?',
+          'Esta acción no es reversible',
+          'Eliminar',
+          'Eliminado!',
+          'El borrador ha sido eliminado.',
+          async () => {
+            await removeDraft(cart.numeroNota)
+            emptyCart()
+            renderCart(getCart())
+          }
+        )
       } catch (error) {
         Toastify({
           text: error.message,
@@ -341,36 +369,38 @@ function renderButtons(cart) {
           style: {
             background: 'linear-gradient(to right, #a25553, #79403e)',
             color: '#000000',
-          }
+          },
         }).showToast()
       }
     })
   }
 
   const $sendToDraft = document.createElement('button')
-  $sendToDraft.className = 'button-cart bg-secondary-300 uppercase fw-semi-bold bg-hover-secondary-400'
+  $sendToDraft.className =
+    'button-cart bg-secondary-300 uppercase fw-semi-bold bg-hover-secondary-400'
   $sendToDraft.textContent = 'Guardar borrador'
-  if (cart.borrador === 1){
+  if (cart.borrador === 1) {
     $sendToDraft.textContent = 'Guardar cambios'
   }
   $sendToDraft.type = 'button'
   $sendToDraft.addEventListener('click', async () => {
-    await sendToDraft()
+    await sendToDraft(cart)
     renderCart(getCart())
   })
 
-  if(cart.borrador === 1){
+  if (cart.borrador === 1) {
     $sendToDraft.classList.add('span-2')
   }
   $buttonsContainer.appendChild($sendToDraft)
 
   const $checkoutButton = document.createElement('button')
-  $checkoutButton.className = 'button-cart button-checkout bg-secondary-400 uppercase fw-semi-bold bg-hover-secondary-400 text-white'
+  $checkoutButton.className =
+    'button-cart button-checkout bg-secondary-400 uppercase fw-semi-bold bg-hover-secondary-400 text-white'
   $checkoutButton.textContent = 'Finalizar compra'
   $checkoutButton.type = 'submit'
-  $checkoutButton.addEventListener('click', (e) => {
+  $checkoutButton.addEventListener('click', e => {
     e.preventDefault()
-    checkout()
+    checkout(cart)
   })
 
   $container.appendChild($buttonsContainer)
@@ -387,7 +417,7 @@ function createTotalRow() {
   const $priceTotal = document.createElement('span')
   $priceTotal.className = 'fw-semi-bold'
   $priceText.textContent = 'Precio Final:'
-  $priceTotal.textContent = `$${getTotalPrice()}`
+  $priceTotal.textContent = `$${getTotalPrice(getCart())}`
   $price.appendChild($priceText)
   $price.appendChild($priceTotal)
 
@@ -397,7 +427,7 @@ function createTotalRow() {
   const $itemsTotal = document.createElement('span')
   $itemsTotal.className = 'fw-semi-bold'
   $itemsText.textContent = 'Items:'
-  $itemsTotal.textContent = getTotalQuantity()
+  $itemsTotal.textContent = getTotalQuantity(getCart())
 
   const $hr = document.createElement('hr')
   $hr.className = 'total-row__br mt-2 mb-2'
@@ -428,7 +458,7 @@ function createProductCard(item) {
   $card.classList.add('cart__card')
 
   const $image = document.createElement('img')
-  if (item.imagenesUrl[0]){
+  if (item.imagenesUrl[0]) {
     $image.src = `https://www.${item.imagenesUrl[0]}`
   } else {
     $image.src = defaultImage
@@ -483,19 +513,24 @@ function createProductCard(item) {
   $quantityInput.max = item.stockUnidades
   $quantityInput.value = item.cantidadPedida
   $quantityInput.addEventListener('change', () => {
-    if ( $quantityInput.value <= item.stockUnidades ) {
-      updateCart(item, $quantityInput.value, $discountInput.value, renderArticles)
+    if ($quantityInput.value <= item.stockUnidades) {
+      updateCart(
+        item,
+        $quantityInput.value,
+        $discountInput.value,
+        renderArticles
+      )
     } else {
       alert('Cantidad no válida. Stock disponible: ' + item.stockUnidades)
-        $quantityInput.value = item.stockUnidades
+      $quantityInput.value = item.stockUnidades
     }
   })
 
   const $removeQuantity = document.createElement('button')
-    $removeQuantity.textContent = '-'
-    $removeQuantity.addEventListener('click', () => {
-      $quantityInput.stepDown()
-      updateCart(item, $quantityInput.value, $discountInput.value, renderArticles)
+  $removeQuantity.textContent = '-'
+  $removeQuantity.addEventListener('click', () => {
+    $quantityInput.stepDown()
+    updateCart(item, $quantityInput.value, $discountInput.value, renderArticles)
   })
   $removeQuantity.className = 'quantity__button quantity__button--remove'
 
@@ -520,7 +555,7 @@ function createProductCard(item) {
 
   const $delete = document.createElement('button')
   $delete.innerHTML = `<i class="fa fa-trash-alt"></i>`
-  $delete.addEventListener('click', (e) => {
+  $delete.addEventListener('click', e => {
     e.preventDefault()
     removeFromCart(item)
     renderArticles(getCart())
