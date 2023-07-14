@@ -15,12 +15,12 @@ const $profileInfoContainer = document.querySelector('#profileInfoContainer')
 
 if (window.location.href.includes('dashboard')) {
   $profileList.innerHTML = ''
-  $profileList.innerHTML += '<li>Cuenta corriente</li>'
+  $profileList.innerHTML += '<li>Lista de precios</li>'
 
   const user = JSON.parse(getUserFromStorage())
 
-  if (user.role === 1) {
-    const itemsList = ['Lista de clientes', 'Lista de precios', 'Borrador de pedidos']
+  if (user.role === 1 || user.role === 2) {
+    const itemsList = ['Lista de clientes', 'Cuenta corriente', 'Borrador de pedidos']
 
     itemsList.forEach(item => {
       $profileList.innerHTML += `<li>${item}</li>`
@@ -35,7 +35,9 @@ if (window.location.href.includes('dashboard')) {
 
     switch ($profileTitle.textContent) {
       case 'Cuenta corriente':
-        profileClientAccount($profileInfoContainer)
+        if (user.role === 1 || user.role === 2) {
+          profileClientAccount($profileInfoContainer)
+        }
         break
 
       case 'Lista de clientes':
@@ -45,14 +47,12 @@ if (window.location.href.includes('dashboard')) {
         break
 
       case 'Lista de precios':
-        if (user.role === 1 || user.role === 2) {
-          profilePricesList($profileInfoContainer)
-        }
+        profilePricesList($profileInfoContainer)
         break
 
       case 'Borrador de pedidos':
         if (user.role === 1 || user.role === 2) {
-        profileDrafts($profileInfoContainer)
+          profileDrafts($profileInfoContainer)
         }
         break
 
