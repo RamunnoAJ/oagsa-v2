@@ -5,7 +5,7 @@ import { checkLocalStorage } from './storage/profile.js'
 import { getUserFromStorage } from './storage/storageData.js'
 import { renderCart, showToast } from './ui/cart.js'
 
-checkLocalStorage()
+await checkLocalStorage()
 
 export async function checkout(cart) {
   if (cart.listaDetalle.length === 0) {

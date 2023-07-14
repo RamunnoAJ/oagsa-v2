@@ -39,15 +39,21 @@ if (window.location.href.includes('dashboard')) {
         break
 
       case 'Lista de clientes':
-        profileClientList($profileInfoContainer)
+        if (user.role === 1 || user.role === 2) {
+          profileClientList($profileInfoContainer)
+        }
         break
 
       case 'Lista de precios':
-        profilePricesList($profileInfoContainer)
+        if (user.role === 1 || user.role === 2) {
+          profilePricesList($profileInfoContainer)
+        }
         break
 
       case 'Borrador de pedidos':
+        if (user.role === 1 || user.role === 2) {
         profileDrafts($profileInfoContainer)
+        }
         break
 
       default:

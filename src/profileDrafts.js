@@ -8,9 +8,10 @@ export async function profileDrafts($profileInfoContainer) {
   $profileInfoContainer.innerHTML = '<span class="loader"></span>'
 
   const sellerID = getStorageID()
-  const drafts = await getDrafts(sellerID)
-
-  renderDrafts(drafts, $profileInfoContainer)
+  if (sellerID) {
+    const drafts = await getDrafts(sellerID)
+    renderDrafts(drafts, $profileInfoContainer)
+  }
 }
 
 export function deleteDraft(draftID) {

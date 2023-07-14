@@ -2,6 +2,8 @@ import { getUserLogin } from './api/login.js'
 import { checkLocalStorage } from './storage/login.js'
 import { navigateToDashboard, renderErrors } from './ui/login.js'
 
+await checkLocalStorage()
+
 const $form = document.querySelector('#login-form')
 const $errorContainer = document.querySelector('#error-container')
 
@@ -61,5 +63,3 @@ function validateLogin(user, password) {
 
   return errors
 }
-
-checkLocalStorage()

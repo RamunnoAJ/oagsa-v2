@@ -3,7 +3,10 @@ import { deleteDraft, editDraft } from "../profileDrafts.js"
 import { getStorageID } from "../storage/profileClientAccount.js"
 
 const sellerID = getStorageID()
-const clients = await getClients(sellerID)
+let clients
+if (sellerID) {
+  clients = await getClients(sellerID)
+}
 
 export function renderDrafts(drafts, parentElement) {
   parentElement.innerHTML = ''

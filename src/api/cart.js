@@ -26,7 +26,7 @@ export async function getClients(url) {
   if (url === 1) {
     response = await fetch(`${BASE_URL}cliente/all`)
   } else {
-    response = await fetch(`${BASE_URL}cliente/${url}`)
+    response = await fetch(`${BASE_URL}cliente/vendedor?pVendedor=${url}`)
   }
   if (!response.ok) {
     throw new Error('Respuesta rechazada')
