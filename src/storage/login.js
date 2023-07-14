@@ -1,7 +1,7 @@
-import { navigateToDashboard } from '../ui/login.js'
-import { getUserFromStorage } from './storageData.js'
+import { navigateToDashboard } from "../ui/login.js"
+import { getUserFromStorage } from "./storageData.js"
 
-export function checkLocalStorage() {
+export async function checkLocalStorage(){
   const user = getUserFromStorage()
 
   if (user) {
