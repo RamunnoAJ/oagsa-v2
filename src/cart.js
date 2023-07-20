@@ -148,8 +148,6 @@ export function handleClientChange() {
   const $selectClient = document.querySelector('#selectClient')
   const client = $selectClient.value
 
-  console.log($selectClient.selectedOptions[0].value)
-
   const cart = getCart()
   cart.codigoCliente = client
   saveCart(cart)
@@ -203,7 +201,7 @@ function createArticle(article, quantity) {
     montoTotal: article.precio * quantity,
     numeroOrden: article.numeroOrden || 0,
     eliminado: article.eliminado || false,
-    imagenesUrl: [],
+    imagenesUrl: [...article.url],
   }
 }
 
@@ -215,7 +213,7 @@ function createOrder(cart) {
     observaciones: cart.observaciones || '',
     origenPedido: 0,
     estado: cart.estado || 'Pendiente',
-    totalPesos: getTotalPrice(),
+    totalPesos: getTotalPrice(cart),
     totalItems: getTotalQuantity(cart),
     codigoVendedor: JSON.parse(getUserFromStorage()).id,
     fechaNota: cart.fechaNota || new Date().toISOString(),

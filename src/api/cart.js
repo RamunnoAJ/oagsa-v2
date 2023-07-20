@@ -6,8 +6,6 @@ export async function postBuyOrder(url, postBody) {
     if (item.stockUnidades) delete item.stockUnidades
   })
 
-  console.log(postBody)
-  console.log(`POST ${BASE_URL}${url}`)
   const response = await fetch(`${BASE_URL}${url}`, {
     method: 'POST',
     headers: {
