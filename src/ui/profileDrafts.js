@@ -10,6 +10,9 @@ if (sellerID) {
 
 export function renderDrafts(drafts, parentElement) {
   parentElement.innerHTML = ''
+  const paragraph = document.createElement('p')
+  paragraph.textContent = 'Clickea un borrador para verlo'
+  parentElement.appendChild(paragraph)
 
   const table = createTable(drafts)
   parentElement.appendChild(table)
@@ -44,7 +47,7 @@ async function renderTableRows(drafts, parentElement){
     const row = document.createElement('tr')
     row.innerHTML = `
       <td>${draft.numeroNota}</td>
-      <td>${clients.filter(client => client.codigoCliente === draft.codigoCliente)[0].razonSocial} - ${draft.codigoCliente}</td>
+      <td>${clients.filter(client => client.codigoCliente === draft.codigoCliente)[0]?.razonSocial || 'Sin nombre'} - ${draft.codigoCliente}</td>
       <td>${draft.fechaNota.split('T')[0]}</td>
       <td>${draft.totalItems}</td>
       <td>$${draft.totalPesos}</td>
