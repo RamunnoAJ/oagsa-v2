@@ -4,6 +4,7 @@ export async function postBuyOrder(url, postBody) {
 
   postBody.listaDetalle.forEach(item => {
     if (item.stockUnidades) delete item.stockUnidades
+    if (item.imagenesUrl) item.imagenesUrl = []
   })
 
   const response = await fetch(`${BASE_URL}${url}`, {
