@@ -15,7 +15,6 @@ export async function setMaintenance(){
       'Accept': 'application/json'
     }
   })
-  console.log(response)
   if (!response.ok) {
     throw new Error('Respuesta rechazada')
   }

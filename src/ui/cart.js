@@ -274,7 +274,7 @@ async function renderFields() {
   $flete.addEventListener('change', () => {
     saveCart({
       ...getCart(),
-      idFlete: Number($flete.value),
+      idFlete: $flete.value,
       descripcionFlete: $flete.options[$flete.selectedIndex].text,
     })
   })
@@ -384,7 +384,7 @@ function renderButtons(cart) {
   }
   $sendToDraft.type = 'button'
   $sendToDraft.addEventListener('click', async () => {
-    await sendToDraft(cart)
+    await sendToDraft(getCart())
     renderCart(getCart())
   })
 
