@@ -1,5 +1,52 @@
-export async function renderOrders(orders, parentElement){
+import { getOrders } from "../api/profileOrdersHistory.js"
+import { getStorageID } from "../storage/profileClientAccount.js"
+import { sortClients } from "../utils/sortClients.js"
+
+export async function renderSelect(options, parentElement) {
   parentElement.innerHTML = ''
+  const select = await createSelect()
+  parentElement.appendChild(select)
+
+  renderOptions(options)
+}
+
+async function createSelect(){
+  const $select = document.createElement('select')
+  $select.innerHTML = '<option value="0" disabled selected>Seleccione un cliente...</option><option value="0">-- TODOS --</option>'
+  $select.id = 'selectClient'
+  $select.classList.add('select')
+  $select.addEventListener('change', handleSelect)
+
+  return $select
+}
+
+async function handleSelect() {
+  const $selectClient = document.querySelector('#selectClient')
+  const selectedClient = $selectClient.value
+  const sellerID = getStorageID()
+  const orders = await getOrders(sellerID, selectedClient)
+
+  const $profileInfoContainer = document.querySelector('#profileInfoContainer')
+  renderOrders(orders, $profileInfoContainer)
+}
+
+function renderOptions(clients) {
+  const $selectClient = document.querySelector('#selectClient')
+  sortClients(clients)
+
+  clients.forEach(client => {
+    const option = document.createElement('option')
+    option.value = client.codigoCliente
+    option.textContent = `${client.codigoCliente} - ${client.razonSocial}`
+
+    $selectClient.appendChild(option)
+  })
+}
+
+export async function renderOrders(orders, parentElement){
+  if (document.querySelector('.fl-table')){
+    document.querySelector('.fl-table').remove()
+  }
 
   const table = await createTable()
   parentElement.appendChild(table)
@@ -13,10 +60,10 @@ async function createTable(){
   table.innerHTML = `
   <thead>
     <tr>
-      <th scope="col">Numero de Nota</th>
+      <th scope="col">#</th>
       <th scope="col">Cliente</th>
       <th scope="col">Fecha</th>
-      <th scope="col">Cantidad Articulos</th>
+      <th scope="col">Articulos</th>
       <th scope="col">Precio</th>
     </tr>
   </thead>
