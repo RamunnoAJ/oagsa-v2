@@ -400,7 +400,7 @@ function renderButtons(cart) {
   $checkoutButton.type = 'submit'
   $checkoutButton.addEventListener('click', e => {
     e.preventDefault()
-    checkout(cart)
+    checkout(getCart())
   })
 
   $container.appendChild($buttonsContainer)
