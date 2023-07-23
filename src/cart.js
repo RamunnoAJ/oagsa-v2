@@ -12,6 +12,7 @@ export async function checkout(cart) {
     showToast('No hay productos en el carrito.')
     return
   }
+  console.log(cart)
   const order = createOrder(cart)
   if (order.borrador === 1) {
     removeDraft(order.numeroNota)
@@ -19,8 +20,9 @@ export async function checkout(cart) {
   }
 
   order.numeroNota = 0
+  console.log(order)
   await postBuyOrder('orden-compra', order)
-  emptyCart()
+  await emptyCart()
   showToast('Compra realizada exitosamente.')
   renderCart(cart)
 }
