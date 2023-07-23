@@ -3934,8 +3934,7 @@ header {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 2rem;
-    margin-top: 0.5rem;
+    gap: 1rem;
     position: fixed;
     top: 0;
     left: -100%;
@@ -3957,6 +3956,13 @@ header {
           margin-right: 0.3rem; }
   header .nav-bar.active {
     left: 0; }
+
+.nav-flex {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem; }
 
 .main-title {
   max-height: 60vh;
@@ -4345,6 +4351,10 @@ header {
     .store-container .select-store select {
       color: black; }
   .store-container .store__search__input {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     width: 100%; }
     .store-container .store__search__input .search__input {
       display: flex;
@@ -4356,7 +4366,6 @@ header {
       width: 100%; }
       .store-container .store__search__input .search__input input {
         flex-shrink: 0;
-        flex-basis: 80%;
         padding: 0.75rem;
         border-radius: 2rem;
         border: none;
@@ -4649,8 +4658,12 @@ footer ul {
       gap: 4rem; }
       header .nav-bar li {
         z-index: 20; }
-        header .nav-bar li:nth-child(3) {
-          margin-left: auto; }
+  .nav-flex {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem; }
   footer .footer-container {
     display: flex;
     flex-direction: row;

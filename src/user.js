@@ -9,8 +9,8 @@ if (user) {
 
   if (userFromCookie) {
     $accountIcon.innerHTML = `
-    <a href="#" class="button mt-1 bg-secondary-300 bg-hover-secondary-400 uppercase">
-      <span>Cerrar Sesión</span><i class="fa-solid fa-lock-open"></i>
+    <a href="#">
+      <span>Salir</span><i class="fa-solid fa-lock-open"></i>
     </a>
     `
   }
