@@ -14,7 +14,7 @@
 
   <link rel="stylesheet" href="../css/style.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" />
-  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css" />
 </head>
 
 <body>
@@ -28,49 +28,53 @@
         </button>
       </div>
       <ul class="nav-bar bg-primary">
-        <li><a href="#" class="text-hover-secondary-400">Nosotros</a></li>
-        <li>
-          <a href="./store.html" class="text-hover-secondary-400">Tienda</a>
-        </li>
-        <li>
-          <a href="./dashboard.html" class="text-hover-secondary-400">Funciones</a>
-        </li>
-        <li id="account-icon">
-          <a href="./log-in.html" class="button mt-1 bg-secondary-300 bg-hover-secondary-400 text-black"><span>Iniciar Sesión</span> <i class="fa-solid fa-lock"></i></a>
-        </li>
+        <div class="nav-flex">
+          <li><a href="#" class="text-hover-secondary-400">Nosotros</a></li>
+          <li>
+            <a href="./store.html" class="text-hover-secondary-400">Tienda</a>
+          </li>
+        </div>
+        <div class="nav-flex">
+          <li>
+            <a href="./dashboard.html" class="text-hover-secondary-400">Funciones</a>
+          </li>
+          <li id="account-icon" class="button bg-secondary-300 bg-hover-secondary-400 text-black">
+            <a href="./log-in.html"><span>Entrar</span><i class="fa-solid fa-lock"></i></a>
+          </li>
+        </div>
       </ul>
     </nav>
   </header>
 
   <main class="mt-10 store-container">
-  <a class="cart__icon" href="./cart.html">
+    <a class="cart__icon" href="./cart.html">
       <i class="fa-solid fa-cart-shopping"></i>
-  </a>
+    </a>
     <h1 class="uppercase fw-bold">Tienda</h1>
 
     <form class="mt-10 store" id="store">
       <div class="store__search">
         <div class="store__search__select">
-        <div class="select-store">
-          <i class="fa-solid fa-filter"></i>
-          <select name="clases" id="clases" class="select select-lg bg-primary">
-            <option value="" disabled selected>Seleccione una clase</option>
-          </select>
-        </div>
-        <div class="store__rubros select-store">
-          <i class="fa-solid fa-filter"></i>
-          <select class="select select-lg bg-primary" name="rubros" id="rubros">
-            <option value="" disabled selected>Seleccione un rubro</option>
-          </select>
-        </div>
+          <div class="select-store">
+            <i class="fa-solid fa-filter"></i>
+            <select name="clases" id="clases" class="select select-lg bg-primary">
+              <option value="" disabled selected>Seleccione una clase</option>
+            </select>
+          </div>
+          <div class="store__rubros select-store">
+            <i class="fa-solid fa-filter"></i>
+            <select class="select select-lg bg-primary" name="rubros" id="rubros">
+              <option value="" disabled selected>Seleccione un rubro</option>
+            </select>
+          </div>
         </div>
         <div class="store__search__input bg-primary py-4 mt-4 visually-hidden">
           <div class="search__input">
-            <button class="button bg-secondary-300 bg-hover-secondary-400 store__button-search"><i
-                class="fa-magnifying-glass fa-solid"></i>
+            <button class="button bg-secondary-300 bg-hover-secondary-400 store__button-search">
+              <i class="fa-magnifying-glass fa-solid"></i>
               <span class="visually-hidden-mobile">Buscar</span>
             </button>
-            <input type="text" id="searchByCode" placeholder="Ingrese código del producto">
+            <input type="text" id="searchByCode" placeholder="Ingrese código del producto" />
           </div>
           <div class="store__search__input__select">
             <select name="marca" id="marcas">
@@ -87,8 +91,7 @@
       </div>
     </form>
 
-    <section class="store__products" id="products">
-    </section>
+    <section class="store__products" id="products"></section>
   </main>
 
   <footer class="px-4 pt-5 mt-24 bg-primary">

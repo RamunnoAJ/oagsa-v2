@@ -36,11 +36,13 @@
 
       li {
         z-index: 20;
-        &:nth-child(3) {
-          margin-left: auto;
-        }
       }
     }
+  }
+
+  .nav-flex {
+    @include flex(row, space-between, center);
+    gap: 1rem;
   }
 
   footer {

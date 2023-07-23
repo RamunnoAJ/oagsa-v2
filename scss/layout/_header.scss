@@ -23,8 +23,7 @@ header {
   }
   .nav-bar {
     @include flex(column, center, center);
-    gap: 2rem;
-    margin-top: 0.5rem;
+    gap: 1rem;
     position: fixed;
     top: 0;
     left: -100%;
@@ -54,4 +53,9 @@ header {
   .nav-bar.active {
     left: 0;
   }
+}
+
+.nav-flex {
+  @include flex(column, center, center);
+  gap: 1rem;
 }
