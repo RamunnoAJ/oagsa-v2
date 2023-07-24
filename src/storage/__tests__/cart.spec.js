@@ -1,4 +1,4 @@
-import { getCart } from "../cart";
+import { clearCart, getCart } from "../cart";
 
 describe('getCart function', () => {
   beforeEach(() => {
@@ -15,5 +15,20 @@ describe('getCart function', () => {
     localStorage.setItem('cart', '{"listaDetalle": [{ "codigoArticulo": "1", "precio": 100, "cantidadPedida": 1 }]}')
 
     expect(getCart()).toEqual({ listaDetalle: [{ codigoArticulo: '1', precio: 100, cantidadPedida: 1 }] })
+  })
+})
+
+describe('clearCart function', () => {
+  beforeEach(() => {
+    localStorage.clear()
+    jest.clearAllMocks()
+    localStorage.setItem.mockClear()
+  })
+
+  test('should clear the cart', () => {
+    localStorage.setItem('cart', '{"listaDetalle": [{ "codigoArticulo": "1", "precio": 100, "cantidadPedida": 1 }]}')
+
+    clearCart()
+    expect(localStorage.setItem).toHaveBeenCalledWith('cart', '{"listaDetalle": []}')
   })
 })
