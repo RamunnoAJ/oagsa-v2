@@ -1,4 +1,4 @@
-import { clearCart, getCart } from "../cart";
+import { clearCart, getCart, saveCart } from "../cart";
 
 describe('getCart function', () => {
   beforeEach(() => {
@@ -30,5 +30,18 @@ describe('clearCart function', () => {
 
     clearCart()
     expect(localStorage.setItem).toHaveBeenCalledWith('cart', '{"listaDetalle": []}')
+  })
+})
+
+describe('saveCart function', () => {
+  beforeEach(() => {
+    localStorage.clear()
+    jest.clearAllMocks()
+    localStorage.setItem.mockClear()
+  })
+
+  test('should save the cart', () => {
+    saveCart({name:'john'})
+    expect(localStorage.setItem).toHaveBeenCalledWith('cart', "{\"name\":\"john\"}")
   })
 })
