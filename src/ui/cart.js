@@ -137,6 +137,7 @@ async function renderClients(cart) {
   $clientsSelect.id = 'selectClient'
   $clientsSelect.classList.add('cart__clients-select')
   $clientsSelect.select = cart.codigoCliente
+  if (cart.borrador === 1) $clientsSelect.disabled = true
 
   $clientsSelect.addEventListener('change', () => {
     saveCart({ ...getCart(), codigoCliente: Number($clientsSelect.value) })

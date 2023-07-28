@@ -7,9 +7,38 @@ import { renderCart, showToast } from './ui/cart.js'
 
 checkLocalStorage()
 
-export async function checkout(cart) {
+function validateCart(cart) {
+  const errors = []
+  if (!cart.codigoCliente) {
+    const error = 'Debe seleccionar un cliente.'
+    errors.push(error)
+  }
+
+  if(!cart.idFlete) {
+    const error = 'Debe seleccionar un flete.'
+    errors.push(error)
+  }
+
   if (cart.listaDetalle.length === 0) {
-    showToast('No hay productos en el carrito.')
+    const error = 'No hay productos en el carrito.'
+    errors.push(error)
+  }
+
+  if (!cart.codigoCondicionVenta) {
+    const error = 'Debe seleccionar una condicion de venta.'
+    errors.push(error)
+  }
+
+  if (errors.length > 0) {
+    errors.forEach(error => showToast(error))
+  }
+
+  return errors
+}
+
+export async function checkout(cart) {
+  const errors = validateCart(cart)
+  if (errors.length > 0) {
     return
   }
 
@@ -24,19 +53,19 @@ export async function checkout(cart) {
   await emptyCart()
   showToast('Compra realizada exitosamente.')
   renderCart(cart)
-  window.location.reload()
+  window.location.replace('../pages/store.html')
 }
 
 export async function sendToDraft(cart) {
-  if (cart.listaDetalle.length === 0) {
-    showToast('No hay productos en el carrito.')
+  const errors = validateCart(cart)
+  if (errors.length > 0) {
     return
   }
+
   const order = createOrder(cart)
   order.borrador = 1
   saveCart(order)
   await postBuyOrder('orden-compra', order)
-
   emptyCart()
   showToast('Carrito guardado en borrador exitosamente.')
 }
@@ -84,7 +113,7 @@ export function removeFromCart(item) {
   )
   cart.listaDetalle.splice(index, 1)
 
-  const updatedCart = { listaDetalle: [...cart.listaDetalle] }
+  const updatedCart = { ...cart, listaDetalle: [...cart.listaDetalle] }
   saveCart(updatedCart)
 }
 
