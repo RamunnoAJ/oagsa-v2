@@ -1,6 +1,6 @@
-import { getOrders } from "../api/profileOrdersHistory.js"
-import { getStorageID } from "../storage/profileClientAccount.js"
-import { sortClients } from "../utils/sortClients.js"
+import { getOrders } from '../api/profileOrdersHistory.js'
+import { getStorageID } from '../storage/profileClientAccount.js'
+import { sortClients } from '../utils/sortClients.js'
 
 export async function renderSelect(options, parentElement) {
   parentElement.innerHTML = ''
@@ -10,9 +10,10 @@ export async function renderSelect(options, parentElement) {
   renderOptions(options)
 }
 
-async function createSelect(){
+async function createSelect() {
   const $select = document.createElement('select')
-  $select.innerHTML = '<option value="0" disabled selected>Seleccione un cliente...</option><option value="0">-- TODOS --</option>'
+  $select.innerHTML =
+    '<option value="0" disabled selected>Seleccione un cliente...</option><option value="0">-- TODOS --</option>'
   $select.id = 'selectClient'
   $select.classList.add('select')
   $select.addEventListener('change', handleSelect)
@@ -20,14 +21,26 @@ async function createSelect(){
   return $select
 }
 
+function createLoader() {
+  const $loader = document.createElement('span')
+  $loader.classList.add('loader')
+  return $loader
+}
+
 async function handleSelect() {
   const $selectClient = document.querySelector('#selectClient')
+  const $profileInfoContainer = document.querySelector('#profileInfoContainer')
   const selectedClient = $selectClient.value
   const sellerID = getStorageID()
-  const orders = await getOrders(sellerID, selectedClient)
 
-  const $profileInfoContainer = document.querySelector('#profileInfoContainer')
-  renderOrders(orders, $profileInfoContainer)
+  const $loader = createLoader()
+  $profileInfoContainer.appendChild($loader)
+
+  const orders = await getOrders(sellerID, selectedClient)
+  const sortedOrders = orders.sort((a, b) => a.numeroNota - b.numeroNota)
+  $loader.remove()
+
+  renderOrders(sortedOrders, $profileInfoContainer)
 }
 
 function renderOptions(clients) {
@@ -43,8 +56,8 @@ function renderOptions(clients) {
   })
 }
 
-export async function renderOrders(orders, parentElement){
-  if (document.querySelector('.fl-table')){
+export async function renderOrders(orders, parentElement) {
+  if (document.querySelector('.fl-table')) {
     document.querySelector('.fl-table').remove()
   }
 
@@ -54,7 +67,7 @@ export async function renderOrders(orders, parentElement){
   renderTableRows(orders, '#table-body')
 }
 
-async function createTable(){
+async function createTable() {
   const table = document.createElement('table')
   table.classList.add('fl-table')
   table.innerHTML = `
@@ -65,6 +78,7 @@ async function createTable(){
       <th scope="col">Fecha</th>
       <th scope="col">Articulos</th>
       <th scope="col">Precio</th>
+      <th scope="col">Estado</th>
     </tr>
   </thead>
   <tbody id="table-body">
@@ -74,7 +88,7 @@ async function createTable(){
   return table
 }
 
-function renderTableRows(orders, parentElement){
+function renderTableRows(orders, parentElement) {
   const $table = document.querySelector(parentElement)
 
   if (orders.length <= 0) {
@@ -93,10 +107,10 @@ function renderTableRows(orders, parentElement){
         <td>${order.fechaNota.split('T')[0]}</td>
         <td>${order.totalItems}</td>
         <td>$${order.totalPesos}</td>
+        <td>${order.estado}</td>
       `
 
       $table.appendChild(row)
     })
   }
-
 }
