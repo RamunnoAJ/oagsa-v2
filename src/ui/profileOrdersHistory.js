@@ -32,11 +32,12 @@ async function handleSelect() {
   const $profileInfoContainer = document.querySelector('#profileInfoContainer')
   const selectedClient = $selectClient.value
   const sellerID = getStorageID()
+  const FIRST_PAGE = 1
 
   const $loader = createLoader()
   $profileInfoContainer.appendChild($loader)
 
-  const orders = await getOrders(sellerID, selectedClient)
+  const orders = await getOrders(sellerID, selectedClient, FIRST_PAGE)
   const sortedOrders = orders.sort((a, b) => a.numeroNota - b.numeroNota)
   $loader.remove()
 
