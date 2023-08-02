@@ -20,24 +20,14 @@ export function renderPaginationButtons(
   const $pagination = createPaginationButtons()
   parentElement.appendChild($pagination)
 
-  const $btnFirst = document.querySelector('#btn-first')
   const $btnPrev = document.querySelector('#btn-prev')
   const $btnNext = document.querySelector('#btn-next')
-  const $btnLast = document.querySelector('#btn-last')
-
-  $btnFirst.addEventListener('click', () => {
-    renderFunction(previous)
-  })
 
   $btnPrev.addEventListener('click', () => {
     renderFunction(previous)
   })
 
   $btnNext.addEventListener('click', () => {
-    renderFunction(next)
-  })
-
-  $btnLast.addEventListener('click', () => {
     renderFunction(next)
   })
 }
