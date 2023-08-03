@@ -1,6 +1,6 @@
-import { getClients } from "../api/cart.js"
-import { deleteDraft, editDraft } from "../profileDrafts.js"
-import { getStorageID } from "../storage/profileClientAccount.js"
+import { getClients } from '../api/cart.js'
+import { deleteDraft, editDraft } from '../profileDrafts.js'
+import { getStorageID } from '../storage/profileClientAccount.js'
 
 const sellerID = getStorageID()
 let clients
@@ -40,14 +40,18 @@ function createTable() {
   return table
 }
 
-async function renderTableRows(drafts, parentElement){
+async function renderTableRows(drafts, parentElement) {
   const $table = document.querySelector(parentElement)
 
   drafts.forEach(draft => {
     const row = document.createElement('tr')
     row.innerHTML = `
       <td>${draft.numeroNota}</td>
-      <td>${clients.filter(client => client.codigoCliente === draft.codigoCliente)[0]?.razonSocial || 'Sin nombre'} - ${draft.codigoCliente}</td>
+      <td>${
+        clients.filter(
+          client => client.codigoCliente === draft.codigoCliente
+        )[0]?.razonSocial || 'Sin nombre'
+      } - ${draft.codigoCliente}</td>
       <td>${draft.fechaNota.split('T')[0]}</td>
       <td>${draft.totalItems}</td>
       <td>$${draft.totalPesos}</td>
@@ -73,7 +77,6 @@ async function renderTableRows(drafts, parentElement){
     $btnEdit.addEventListener('click', () => {
       editDraft(draft.numeroNota)
     })
-
   })
 }
 
