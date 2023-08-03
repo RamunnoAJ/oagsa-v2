@@ -1,6 +1,7 @@
 import { getOrders } from '../api/profileOrdersHistory.js'
 import { getStorageID } from '../storage/profileClientAccount.js'
 import { sortClients } from '../utils/sortClients.js'
+import { renderPaginationButtons } from './pagination.js'
 
 export async function renderSelect(options, parentElement) {
   parentElement.innerHTML = ''
@@ -28,20 +29,31 @@ function createLoader() {
 }
 
 async function handleSelect() {
-  const $selectClient = document.querySelector('#selectClient')
   const $profileInfoContainer = document.querySelector('#profileInfoContainer')
-  const selectedClient = $selectClient.value
-  const sellerID = getStorageID()
   const FIRST_PAGE = 1
 
   const $loader = createLoader()
   $profileInfoContainer.appendChild($loader)
 
-  const orders = await getOrders(sellerID, selectedClient, FIRST_PAGE)
-  const sortedOrders = orders.sort((a, b) => a.numeroNota - b.numeroNota)
+  const response = await getOrdersPage(FIRST_PAGE)
   $loader.remove()
 
-  renderOrders(sortedOrders, $profileInfoContainer)
+  renderOrders(response, $profileInfoContainer)
+}
+
+async function getOrdersPage(page) {
+  const $selectClient = document.querySelector('#selectClient')
+  const selectedClient = $selectClient.value
+  const sellerID = getStorageID()
+
+  return await getOrders(sellerID, selectedClient, page)
+}
+
+async function renderOrdersPage(page) {
+  const $profileInfoContainer = document.querySelector('#profileInfoContainer')
+  const response = await getOrdersPage(page)
+
+  renderOrders(response, $profileInfoContainer)
 }
 
 function renderOptions(clients) {
@@ -62,10 +74,17 @@ export async function renderOrders(orders, parentElement) {
     document.querySelector('.fl-table').remove()
   }
 
+  const sortedOrders = orders.data.sort((a, b) => a.numeroNota - b.numeroNota)
   const table = await createTable()
   parentElement.appendChild(table)
 
-  renderTableRows(orders, '#table-body')
+  renderTableRows(sortedOrders, '#table-body')
+  renderPaginationButtons(
+    orders.previous,
+    orders.next,
+    renderOrdersPage,
+    parentElement
+  )
 }
 
 async function createTable() {
