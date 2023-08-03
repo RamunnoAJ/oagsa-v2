@@ -2,7 +2,7 @@ import { getCategories, getProducts } from '../api/profilePricesList.js'
 import * as storage from '../storage/profilePricesList.js'
 import { removeDuplicates } from '../utils/removeDuplicates.js'
 
-export const renderProductPrices = async (products, parentElement) => {
+export async function renderProductPrices(products, parentElement) {
   if (products.length > 0) {
     parentElement.innerHTML = `
         <form class="profile-info__search search__prices" id="prices-form">
@@ -69,7 +69,7 @@ export const renderProductPrices = async (products, parentElement) => {
   }
 }
 
-const handleChangeForm = async e => {
+async function handleChangeForm(e) {
   e.preventDefault()
   const $form = document.querySelector('#prices-form')
   const selectedRubro = $form.selectedRubro.value
@@ -91,30 +91,14 @@ const handleChangeForm = async e => {
   renderPrices(products)
 }
 
-const renderPrices = products => {
+function renderPrices(products) {
   const $tableContainer = document.querySelector('.table-container')
   $tableContainer.innerHTML = ''
 
   if (products.length > 0) {
-    const table = document.createElement('table')
-    table.classList.add('fl-table')
-    table.innerHTML = `
-    <thead>
-      <tr>
-        <th>Artículo</th>
-        <th>Descripción</th>
-        <th>Marca</th>
-        <th>Precio</th>
-        <th>Diametro</th>
-        <th>Medidas</th>
-      </tr>
-    </thead>
-    <tbody id='table-body'>
-    
-    </tbody>
-    `
+    const $table = createTable()
 
-    $tableContainer.appendChild(table)
+    $tableContainer.appendChild($table)
     const $tableBody = document.querySelector('#table-body')
 
     products.forEach(product => {
@@ -125,7 +109,28 @@ const renderPrices = products => {
   }
 }
 
-const renderOptions = (options, selectID) => {
+function createTable() {
+  const table = document.createElement('table')
+  table.classList.add('fl-table')
+  table.innerHTML = `
+  <thead>
+    <tr>
+      <th scope="col">Artículo</th>
+      <th scope="col">Descripción</th>
+      <th scope="col">Marca</th>
+      <th scope="col">Precio</th>
+      <th scope="col">Diametro</th>
+      <th scope="col">Medidas</th>
+    </tr>
+  </thead>
+  <tbody id="table-body">
+  </tbody>
+  `
+
+  return table
+}
+
+function renderOptions(options, selectID) {
   const $select = document.querySelector(selectID)
 
   switch (selectID) {
@@ -192,7 +197,7 @@ const renderOptions = (options, selectID) => {
   })
 }
 
-const renderTableRows = (item, parentElement) => {
+function renderTableRows(item, parentElement) {
   const tableRow = document.createElement('tr')
   tableRow.innerHTML = `
     <td>${item.codigoArticulo}</td>
@@ -206,7 +211,7 @@ const renderTableRows = (item, parentElement) => {
   parentElement.appendChild(tableRow)
 }
 
-const handleChangeRubro = async (e, codigoRubro) => {
+async function handleChangeRubro(e, codigoRubro) {
   e.preventDefault()
 
   const subrubros = await getCategories(
@@ -217,7 +222,7 @@ const handleChangeRubro = async (e, codigoRubro) => {
   renderOptions(subrubros, '#select-subrubro')
 }
 
-const handleChangeSubrubro = async e => {
+async function handleChangeSubrubro(e) {
   e.preventDefault()
   const productString = storage.getProducts()
   const products = await getProducts(productString)
