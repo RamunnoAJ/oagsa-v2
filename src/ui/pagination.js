@@ -33,7 +33,7 @@ export function renderPaginationButtons(
   const $btnLast = document.querySelector('#btn-last')
 
   if (!previous) $btnPrev.disabled = true
-  if (next > LAST_PAGE) $btnNext.disabled = true
+  if (next > LAST_PAGE || !next) $btnNext.disabled = true
 
   $btnPrev.addEventListener('click', () => {
     renderFunction(previous)
