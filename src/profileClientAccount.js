@@ -4,7 +4,7 @@ import {
 } from './storage/profileClientAccount.js'
 import { renderProfileClientAccount } from './ui/profileClientAccount.js'
 
-export const profileClientAccount = async $profileInfoContainer => {
+export async function profileClientAccount($profileInfoContainer) {
   $profileInfoContainer.innerHTML = '<span class="loader"></span>'
 
   const sellerID = getStorageID()
