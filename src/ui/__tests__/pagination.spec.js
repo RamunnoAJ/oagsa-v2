@@ -49,7 +49,7 @@ describe('renderPaginationButtons', () => {
     const renderFunction = jest.fn()
     const $parent = document.querySelector('.parent')
 
-    renderPaginationButtons(previous, next, renderFunction, $parent)
+    renderPaginationButtons(previous, next, renderFunction, $parent, 3)
 
     const $btnFirst = document.querySelector('#btn-first')
     const $btnPrev = document.querySelector('#btn-prev')
