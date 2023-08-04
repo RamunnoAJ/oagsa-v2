@@ -7,7 +7,7 @@ await checkLocalStorage()
 const $form = document.querySelector('#login-form')
 const $errorContainer = document.querySelector('#error-container')
 
-const handleSubmit = async e => {
+async function handleSubmit(e) {
   e.preventDefault()
   $errorContainer.innerHTML = ''
   $errorContainer.classList.add('visually-hidden')
