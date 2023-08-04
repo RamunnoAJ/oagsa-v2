@@ -1,6 +1,7 @@
 import { getOrders } from '../api/profileOrdersHistory.js'
 import { getStorageID } from '../storage/profileClientAccount.js'
 import { sortClients } from '../utils/sortClients.js'
+import { createModal, createOverlay, renderModalContent } from './modal.js'
 import { renderPaginationButtons } from './pagination.js'
 
 export async function renderSelect(options, parentElement) {
@@ -83,7 +84,8 @@ export async function renderOrders(orders, parentElement) {
     orders.previous,
     orders.next,
     renderOrdersPage,
-    parentElement
+    parentElement,
+    orders.totalPages
   )
 }
 
@@ -121,6 +123,7 @@ function renderTableRows(orders, parentElement) {
   } else {
     orders.forEach(order => {
       const row = document.createElement('tr')
+      row.dataset.id = order.numeroNota
       row.innerHTML = `
         <td>${order.numeroNota}</td>
         <td>${order.codigoCliente}</td>
@@ -130,7 +133,25 @@ function renderTableRows(orders, parentElement) {
         <td>${order.estado}</td>
       `
 
+      row.addEventListener('click', () => {
+        renderModal(order)
+      })
       $table.appendChild(row)
     })
   }
+}
+
+async function renderModal(order) {
+  if (document.querySelector('.modal')) {
+    document.querySelector('.modal').remove()
+    document.querySelector('.overlay').remove()
+  }
+
+  const $modal = await createModal()
+  const $overlay = await createOverlay()
+  const $profileInfo = document.querySelector('.profile-info')
+  $profileInfo.appendChild($modal)
+  $profileInfo.appendChild($overlay)
+
+  renderModalContent(order)
 }

@@ -15,14 +15,15 @@ export function renderPaginationButtons(
   previous,
   next,
   renderFunction,
-  parentElement
+  parentElement,
+  totalPages
 ) {
   if (document.querySelector('.pagination')) {
     document.querySelector('.pagination').remove()
   }
 
   const FIRST_PAGE = 1
-  const LAST_PAGE = 3
+  const LAST_PAGE = totalPages
 
   const $pagination = createPaginationButtons()
   parentElement.appendChild($pagination)

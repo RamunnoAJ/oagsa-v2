@@ -8,6 +8,18 @@ export async function getOrders(id = 0, idCliente = 0, offset = 1) {
   const orders = await response
   orders.next = offset + 1
   orders.previous = offset - 1 || null
+  orders.totalPages = Math.ceil(orders.total / 15)
 
   return orders
+}
+
+export async function getCondicionVenta(codigoCondicionVenta) {
+  const response = await getDataFromDB(`orden-compra/condicionventa`)
+  const condicionVenta = await response.data
+
+  const description = condicionVenta.filter(
+    object => object.codigoCondicionVenta === codigoCondicionVenta
+  )[0]?.descripcion
+
+  return description
 }
