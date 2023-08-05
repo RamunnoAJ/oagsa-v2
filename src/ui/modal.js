@@ -111,6 +111,8 @@ async function createModalContent(order) {
   )
 
   $modalContent.innerHTML = `
+    <p class="mb-2">Estado: <span>${order.estado}</span></p>
+    <p class="mb-2">Fecha: <span>${order.fechaNota.split('T')[0]}</span></p>
     <p class="mb-2">Descripción flete: <span>${
       order.descripcionFlete || 'No definido'
     }</span></p>
