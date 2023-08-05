@@ -105,6 +105,22 @@ $colors: (
   cursor: pointer;
 }
 
+.full-width {
+  width: 100%;
+}
+
+.text-start {
+  text-align: left;
+}
+
+.text-end {
+  text-align: right;
+}
+
+.text-center {
+  text-align: center;
+}
+
 @media (max-width: 45rem) {
   .visually-hidden-mobile {
     display: none !important;
