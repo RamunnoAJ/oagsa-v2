@@ -6,9 +6,22 @@ import { renderPaginationButtons } from './pagination.js'
 
 export async function renderSelect(options, parentElement) {
   parentElement.innerHTML = ''
-  const select = await createSelect()
-  parentElement.appendChild(select)
+  const $container = document.createElement('div')
+  $container.className = 'container__select'
 
+  const select = await createSelect()
+  $container.appendChild(select)
+
+  const $help = document.createElement('span')
+  $help.className = 'help ml-4'
+
+  const $icon = document.createElement('i')
+  $icon.className = 'fa-regular fa-circle-question'
+
+  $help.appendChild($icon)
+  $container.appendChild($help)
+
+  parentElement.appendChild($container)
   renderOptions(options)
 }
 
@@ -97,10 +110,10 @@ async function createTable() {
     <tr>
       <th scope="col">#</th>
       <th scope="col">Cliente</th>
-      <th scope="col">Fecha</th>
+      <th scope="col" class="visually-hidden-mobile">Fecha</th>
       <th scope="col">Articulos</th>
       <th scope="col">Precio</th>
-      <th scope="col">Estado</th>
+      <th scope="col" class="visually-hidden-mobile">Estado</th>
     </tr>
   </thead>
   <tbody id="table-body">
@@ -123,14 +136,15 @@ function renderTableRows(orders, parentElement) {
   } else {
     orders.forEach(order => {
       const row = document.createElement('tr')
+      row.className = 'orders__table__row'
       row.dataset.id = order.numeroNota
       row.innerHTML = `
         <td>${order.numeroNota}</td>
         <td>${order.codigoCliente}</td>
-        <td>${order.fechaNota.split('T')[0]}</td>
+        <td class="visually-hidden-mobile">${order.fechaNota.split('T')[0]}</td>
         <td>${order.totalItems}</td>
         <td>$${order.totalPesos}</td>
-        <td>${order.estado}</td>
+        <td class="visually-hidden-mobile">${order.estado}</td>
       `
 
       row.addEventListener('click', () => {

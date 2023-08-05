@@ -10,9 +10,18 @@ if (sellerID) {
 
 export function renderDrafts(drafts, parentElement) {
   parentElement.innerHTML = ''
-  const paragraph = document.createElement('p')
-  paragraph.textContent = 'Clickea un borrador para verlo'
-  parentElement.appendChild(paragraph)
+  const $container = document.createElement('div')
+  $container.className = 'full-width text-end'
+
+  const $help = document.createElement('span')
+  $help.className = 'help mr-20 text-center'
+
+  const $icon = document.createElement('i')
+  $icon.className = 'fa-regular fa-circle-question'
+
+  $help.appendChild($icon)
+  $container.appendChild($help)
+  parentElement.appendChild($container)
 
   const table = createTable(drafts)
   parentElement.appendChild(table)
@@ -45,6 +54,7 @@ async function renderTableRows(drafts, parentElement) {
 
   drafts.forEach(draft => {
     const row = document.createElement('tr')
+    row.className = 'cursor-pointer bg-hover-slate'
     row.innerHTML = `
       <td>${draft.numeroNota}</td>
       <td>${
@@ -60,7 +70,6 @@ async function renderTableRows(drafts, parentElement) {
         <i id="btn-delete-${draft.numeroNota}" class="fa-solid fa-trash"></i>
       </td>
     `
-    row.classList.add('cursor-pointer')
     row.addEventListener('click', () => {
       editDraft(draft.numeroNota)
     })
