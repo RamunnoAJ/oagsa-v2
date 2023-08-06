@@ -1,0 +1,15 @@
+.maintenance__selected {
+  position: relative;
+
+  &::after {
+    content: '✓';
+    position: absolute;
+    top: 0.125rem;
+    right: 0.125rem;
+    width: 0.75rem;
+    height: 0.75rem;
+    border-radius: 50%;
+    margin-left: 5px;
+    color: $black;
+  }
+}

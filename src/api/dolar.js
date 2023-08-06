@@ -1,22 +1,23 @@
-import getDataFromDB, { BASE_URL } from "../utils/getDataFromDB.js"
+import getDataFromDB, { BASE_URL } from '../utils/getDataFromDB.js'
 
-export async function getDolar(){
+export async function getDolar() {
   const response = await getDataFromDB(`admin/dolar`)
   const dolar = await response.data
 
   return dolar
 }
 
-export async function postDolar(value){
+export async function postDolar(value) {
   const response = await fetch(`${BASE_URL}admin/dolar?pValorDolar=${value}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'Accept': 'application/json'
+      Accept: 'application/json',
     },
     body: JSON.stringify(value),
   })
+  console.log(response)
   if (!response.ok) {
     throw new Error('Respuesta rechazada')
-  } 
+  }
 }

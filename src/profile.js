@@ -1,3 +1,4 @@
+import { profileAdministration } from './profileAdministration.js'
 import { profileClientAccount } from './profileClientAccount.js'
 import { profileClientList } from './profileClientList.js'
 import { profileDrafts } from './profileDrafts.js'
@@ -13,7 +14,6 @@ const $profileTitle = document.querySelector('#profileTitle')
 const $profileList = document.querySelector('#profileList')
 const $profileInfoContainer = document.querySelector('#profileInfoContainer')
 
-
 if (window.location.href.includes('dashboard')) {
   $profileList.innerHTML = ''
   $profileList.innerHTML += '<li>Lista de precios</li>'
@@ -21,11 +21,23 @@ if (window.location.href.includes('dashboard')) {
   const user = JSON.parse(getUserFromStorage())
 
   if (user.role === 1 || user.role === 2) {
-    const itemsList = ['Lista de clientes', 'Cuenta corriente', 'Borrador de pedidos', 'Historial de pedidos']
+    const itemsList = [
+      'Lista de clientes',
+      'Cuenta corriente',
+      'Borrador de pedidos',
+      'Historial de pedidos',
+    ]
 
     itemsList.forEach(item => {
       $profileList.innerHTML += `<li>${item}</li>`
     })
+  }
+
+  if (user.role === 1) {
+    $profileList.innerHTML += `
+      <li>Editar imágenes</li>
+      <li>Administrar</li>
+    `
   }
 
   $profileList.innerHTML += `<li><a href="./store.html">Tienda</a></li>`
@@ -60,6 +72,18 @@ if (window.location.href.includes('dashboard')) {
       case 'Historial de pedidos':
         if (user.role === 1 || user.role === 2) {
           profileOrdersHistory($profileInfoContainer)
+        }
+        break
+
+      case 'Editar imágenes':
+        if (user.role === 1) {
+          console.log('editar imagenes')
+        }
+        break
+
+      case 'Administrar':
+        if (user.role === 1) {
+          profileAdministration($profileInfoContainer)
         }
         break
 
