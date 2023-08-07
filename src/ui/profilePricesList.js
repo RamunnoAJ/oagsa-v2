@@ -119,8 +119,8 @@ function createTable() {
       <th scope="col">Descripción</th>
       <th scope="col">Marca</th>
       <th scope="col">Precio</th>
-      <th scope="col">Diametro</th>
-      <th scope="col">Medidas</th>
+      <th scope="col" class="visually-hidden-mobile">Diametro</th>
+      <th scope="col" class="visually-hidden-mobile">Medidas</th>
     </tr>
   </thead>
   <tbody id="table-body">
@@ -204,8 +204,8 @@ function renderTableRows(item, parentElement) {
     <td>${item.descripcion}</td>
     <td>${item.marca}</td>
     <td>$${item.precio}</td>
-    <td>${item.diametro}</td>
-    <td>${item.medidas}</td>
+    <td class="visually-hidden-mobile">${item.diametro}</td>
+    <td class="visually-hidden-mobile">${item.medidas}</td>
   `
 
   parentElement.appendChild(tableRow)
