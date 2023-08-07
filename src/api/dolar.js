@@ -16,7 +16,6 @@ export async function postDolar(value) {
     },
     body: JSON.stringify(value),
   })
-  console.log(response)
   if (!response.ok) {
     throw new Error('Respuesta rechazada')
   }
