@@ -7,6 +7,7 @@ import { profilePricesList } from './profilePricesList.js'
 import { checkLocalStorage } from './storage/profile.js'
 import { getUserFromStorage } from './storage/storageData.js'
 import { navigateToLogin } from './ui/login.js'
+import { isMaintaining } from './ui/maintenance.js'
 
 checkLocalStorage()
 
@@ -92,6 +93,10 @@ if (window.location.href.includes('dashboard')) {
         break
     }
   })
+}
+
+if (window.location.href.includes('dashboard')) {
+  isMaintaining('.dashboard-wrapper')
 }
 
 export function logOut() {

@@ -81,22 +81,49 @@ async function createDolarElement(dolar, callback) {
 
   const $dolarTitle = document.createElement('h2')
   $dolarTitle.className = 'dolar__title'
-  $dolarTitle.textContent = 'Dolar'
+  $dolarTitle.textContent = 'Cotización dolar'
   $dolar.appendChild($dolarTitle)
 
   const $dolarBody = document.createElement('div')
   $dolarBody.className = 'dolar__body'
   $dolar.appendChild($dolarBody)
 
+  const $dolarValue = document.createElement('div')
+  $dolarValue.className = 'dolar__value'
+  $dolarValue.textContent = `Valor actual: $${dolar.valorString.trim()}`
+
+  const $form = document.createElement('form')
+  $form.className = 'dolar__input-container'
+
+  const $dolarLabel = document.createElement('label')
+  $dolarLabel.className = 'dolar__label'
+  $dolarLabel.textContent = 'Cambiar valor:'
+  $dolarLabel.htmlFor = 'dolar'
+  $form.appendChild($dolarLabel)
+
   const $dolarInput = document.createElement('input')
   $dolarInput.className = 'dolar__input'
   $dolarInput.type = 'number'
-  $dolarInput.value = dolar.valorString.trim()
-  $dolarInput.addEventListener('change', e => {
-    callback(e.target.value)
+  $dolarInput.id = 'dolar'
+  $dolarInput.name = 'dolar'
+  $dolarInput.min = 1
+  $form.appendChild($dolarInput)
+
+  const $formSubmit = document.createElement('button')
+  $formSubmit.className =
+    'button-sm bg-white bg-hover-secondary-400 dolar__submit'
+  $formSubmit.textContent = 'Guardar'
+  $form.appendChild($formSubmit)
+
+  $form.addEventListener('submit', e => {
+    e.preventDefault()
+    callback($form.dolar.value)
+    $dolarValue.textContent = `Valor actual: $${$form.dolar.value}`
+    $dolarInput.value = ''
   })
 
-  $dolarBody.appendChild($dolarInput)
+  $dolarBody.appendChild($dolarValue)
+  $dolarBody.appendChild($form)
 
   return $dolar
 }
