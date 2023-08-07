@@ -17,11 +17,7 @@ export async function getDataFromStorage(sellerID) {
   if (user) {
     const userFromCookie = JSON.parse(user)
     if (userFromCookie) {
-      if (userFromCookie.role === 1) {
-        return await getClientsFromSeller('all')
-      } else {
-        return await getClientsFromSeller(`vendedor?pVendedor=${sellerID}`)
-      }
+      return await getClientsFromSeller(sellerID)
     }
   }
 }

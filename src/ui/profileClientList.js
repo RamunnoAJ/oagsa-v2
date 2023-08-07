@@ -59,6 +59,6 @@ export const renderClientsFromSeller = (clients, parentElement) => {
       }
     })
   } else {
-    parentElement.innerHTML = `<div>No se encontraro resultados.</div>`
+    parentElement.innerHTML = `<div>No se encontraron resultados.</div>`
   }
 }

@@ -6,7 +6,7 @@ export async function profileClientList($profileInfoContainer) {
   $profileInfoContainer.innerHTML = '<span class="loader"></span>'
 
   const sellerID = getStorageID()
-  const clients = await getClientsFromSeller(`vendedor?pVendedor=${sellerID}`)
+  const clients = await getClientsFromSeller(sellerID)
 
   renderClientsFromSeller(clients, $profileInfoContainer)
 }

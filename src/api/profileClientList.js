@@ -6,7 +6,7 @@ export async function getClientsFromSeller(url) {
     const clients = await response.data
     return clients
   }
-  const response = await getDataFromDB(`cliente/vendedor?pVendedor${url}`)
+  const response = await getDataFromDB(`cliente/vendedor?pVendedor=${url}`)
   const clients = await response.data
 
   return clients
