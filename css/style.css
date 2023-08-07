@@ -5092,6 +5092,33 @@ body {
   }
 }
 
+.maintaining {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+  padding: 1rem;
+}
+.maintaining .maintaining__title {
+  font-size: var(--fs-secondary-heading);
+  font-weight: 700;
+}
+.maintaining .maintaining__subtitle {
+  font-size: var(--fs-400);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.01rem;
+}
+.maintaining .maintaining__image {
+  width: 100%;
+  max-width: 30rem;
+}
+.maintaining .maintaining__text {
+  font-size: var(--fs-body);
+}
+
 header {
   width: 100%;
   max-height: 100px;
@@ -5928,8 +5955,20 @@ header .nav-bar.active {
   }
 }
 
+.admin-container {
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  max-width: 75rem;
+  margin-inline: auto;
+  width: 95%;
+}
+
 .maintenance__selected {
   position: relative;
+  background-color: #ff9c35;
 }
 .maintenance__selected::after {
   content: '✓';
@@ -5941,6 +5980,82 @@ header .nav-bar.active {
   border-radius: 50%;
   margin-left: 5px;
   color: #000;
+}
+
+.maintenance {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 1rem;
+}
+.maintenance .maintenance__title {
+  font-size: var(--fs-400);
+  font-weight: 500;
+}
+.maintenance .maintenance__body {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+.dolar {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 1rem;
+}
+.dolar .dolar__title {
+  font-size: var(--fs-400);
+  font-weight: 500;
+}
+.dolar .dolar__body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+.dolar .dolar__input-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 0.75rem;
+  background-color: #ffd37c;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+}
+.dolar .dolar__input-container .dolar__label {
+  font-weight: 500;
+}
+.dolar .dolar__input-container .dolar__input {
+  padding: 0.325rem;
+  border: none;
+  border-radius: 0.25rem;
+  max-width: 100px;
+  appearance: textfield;
+  -moz-appearance: textfield;
+}
+.dolar .dolar__input-container .dolar__input::-webkit-inner-spin-button,
+.dolar .dolar__input-container .dolar__input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+}
+
+@media (min-width: 75rem) {
+  .admin-container {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 2rem;
+  }
+  .maintenance {
+    gap: 3rem;
+  }
 }
 
 footer .footer-container {
