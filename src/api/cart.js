@@ -1,4 +1,4 @@
-import { BASE_URL } from "../utils/getDataFromDB.js" 
+import { BASE_URL } from '../utils/getDataFromDB.js'
 
 export async function postBuyOrder(url, postBody) {
   postBody.listaDetalle.forEach(item => {
@@ -10,7 +10,7 @@ export async function postBuyOrder(url, postBody) {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'Accept': 'application/json'
+      Accept: 'application/json',
     },
     body: JSON.stringify(postBody),
   })
@@ -33,7 +33,7 @@ export async function getClients(url) {
   return data.data
 }
 
-export async function getFields(url){
+export async function getFields(url) {
   const response = await fetch(`${BASE_URL}${url}`)
   if (!response.ok) {
     throw new Error('Respuesta rechazada')
