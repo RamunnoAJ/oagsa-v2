@@ -1,5 +1,5 @@
 .admin-container {
-  @include flex(column-reverse, center, center);
+  @include flex(column-reverse, center, flex-start);
   gap: 1rem;
   max-width: 75rem;
   margin-inline: auto;
@@ -79,7 +79,7 @@
   }
 }
 
-@media (min-width: 75rem) {
+@media (min-width: 45rem) {
   .admin-container {
     @include flex(row-reverse, center, flex-start);
     gap: 2rem;

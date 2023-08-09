@@ -1,0 +1,32 @@
+.images-container {
+  @include flex(column, center, center);
+  gap: 1rem;
+  max-width: 80rem;
+  margin: 0 auto;
+  width: 95%;
+
+  .images__select-container {
+    @include flex(column, center, flex-start);
+    gap: 0.25rem;
+
+    .images__select__title {
+      font-size: var(--fs-400);
+      font-weight: $fw-semi-bold;
+    }
+
+    .images__select {
+      padding: 0.25rem 0.325rem;
+      border-radius: 0.25rem;
+      border: none;
+      max-width: 230px;
+      background-color: $slate;
+    }
+  }
+}
+
+@media (min-width: 45rem) {
+  .images-container {
+    @include flex(row, center, center);
+    gap: 2rem;
+  }
+}

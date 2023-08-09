@@ -2,6 +2,7 @@ import { profileAdministration } from './profileAdministration.js'
 import { profileClientAccount } from './profileClientAccount.js'
 import { profileClientList } from './profileClientList.js'
 import { profileDrafts } from './profileDrafts.js'
+import { profileEditImages } from './profileEditImages.js'
 import { profileOrdersHistory } from './profileOrdersHistory.js'
 import { profilePricesList } from './profilePricesList.js'
 import { checkLocalStorage } from './storage/profile.js'
@@ -78,7 +79,7 @@ if (window.location.href.includes('dashboard')) {
 
       case 'Editar imágenes':
         if (user.role === 1) {
-          console.log('editar imagenes')
+          profileEditImages($profileInfoContainer)
         }
         break
 
