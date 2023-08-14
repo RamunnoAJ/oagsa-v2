@@ -5076,6 +5076,20 @@ body {
   font-size: var(--fs-secondary-heading);
   text-align: center;
 }
+.modal .modal__form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+.modal .modal__form .modal__input__container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+}
 
 .overlay {
   position: fixed;
@@ -6094,7 +6108,7 @@ header .nav-bar.active {
 @media (min-width: 45rem) {
   .images-container {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     gap: 2rem;

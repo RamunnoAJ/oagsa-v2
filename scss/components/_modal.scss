@@ -21,6 +21,16 @@
     font-size: var(--fs-secondary-heading);
     text-align: center;
   }
+
+  .modal__form {
+    @include flex(column, center, center);
+    gap: 1rem;
+
+    .modal__input__container {
+      @include flex(row, center, center);
+      gap: 0.5rem;
+    }
+  }
 }
 
 .overlay {
