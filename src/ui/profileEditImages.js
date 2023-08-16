@@ -74,10 +74,19 @@ async function renderImages(article) {
   const $table = await createTable()
   $container.appendChild($table)
 
-  article.url.forEach(async image => {
-    const $row = await createRow(image)
+  if (article.url.length === 0) {
+    const $row = document.createElement('tr')
+    const $paragraph = document.createElement('td')
+    $paragraph.colSpan = '2'
+    $paragraph.textContent = 'No hay imagenes'
+    $row.appendChild($paragraph)
     $table.appendChild($row)
-  })
+  } else {
+    article.url.forEach(async image => {
+      const $row = await createRow(image)
+      $table.appendChild($row)
+    })
+  }
 
   const $addButton = document.createElement('button')
   $addButton.className = 'button-sm bg-secondary-300 bg-hover-secondary-400'
@@ -104,13 +113,21 @@ async function renderModalContent(id) {
   document.body.appendChild($modal)
 }
 
+async function handleSubmit(id, $form) {
+  try {
+    await setImage(id, $form.file.files[0])
+    showToast('Imagen agregada exitosamente')
+  } catch (error) {
+    showToast('No se pudo agregar la imagen')
+  }
+}
+
 async function createModalForm(id) {
   const $form = document.createElement('form')
   $form.className = 'modal__form'
   $form.addEventListener('submit', e => {
     e.preventDefault()
-    console.log($form.file.value)
-    setImage(id, $form.file.value)
+    handleSubmit(id, $form)
   })
 
   const $container = document.createElement('div')
@@ -144,6 +161,16 @@ async function createRow(image) {
   $rowTitle.textContent = image.split('\\')[3]
   $row.appendChild($rowTitle)
 
+  if (image.includes('G:\\FerozoWebHosting')) {
+    image = image
+      .split('\\')
+      .slice(2)
+      .filter(item => {
+        return item !== 'public_html'
+      })
+      .join('\\')
+  }
+
   const $image = document.createElement('td')
   $image.innerHTML = `<img src="https://www.${image}" alt="${image}" class="table__image" />`
   $row.appendChild($image)
@@ -153,7 +180,7 @@ async function createRow(image) {
   $deleteBtn.className = 'button-sm bg-secondary-300 bg-hover-error'
   $deleteBtn.textContent = 'Eliminar'
   $deleteBtn.addEventListener('click', () => {
-    deleteImage(image.split('\\')[3].split('.')[0], image.split('\\')[3])
+    deleteImage(image.split('\\')[3].split('.')[0].split('-')[0])
   })
   $delete.appendChild($deleteBtn)
   $row.appendChild($delete)
