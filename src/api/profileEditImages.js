@@ -23,16 +23,12 @@ export async function setImage(id, file) {
     body: formData,
   })
     .then(response => response.json())
-    .then(data => {
-      console.log('Response:', data)
-    })
     .catch(error => {
       console.error('Error:', error)
     })
 }
 
 export async function deleteImage(id) {
-  console.log(id)
   const response = await fetch(
     `${BASE_URL}articulo/imagen-baja?pCodigoArticulo=${id}`,
     {
@@ -42,8 +38,6 @@ export async function deleteImage(id) {
       },
     }
   )
-
-  console.log(response)
 
   if (!response.ok) throw new Error('Respuesta rechazada')
 }

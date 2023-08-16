@@ -50,7 +50,7 @@ function createSelectElement(title, label, callback = () => {}) {
       showToast('Ingrese un código')
       return
     }
-    callback(e.target.parentNode.querySelector('input'))
+    callback(e.target.parentNode.querySelector('input').value)
     $input.value = ''
   })
 
@@ -62,8 +62,13 @@ function createSelectElement(title, label, callback = () => {}) {
   return $selectContainer
 }
 
-async function handleClick(input) {
-  const article = await getArticle(input.value)
+async function handleClick(id) {
+  if (document.querySelector('.overlay') && document.querySelector('.modal')) {
+    document.querySelector('.overlay').remove()
+    document.querySelector('.modal').remove()
+  }
+  const article = await getArticle(id)
+  console.log(article)
 
   renderImages(article)
 }
@@ -74,7 +79,7 @@ async function renderImages(article) {
   const $table = await createTable()
   $container.appendChild($table)
 
-  if (article.url.length === 0) {
+  if (article?.url.length === 0) {
     const $row = document.createElement('tr')
     const $paragraph = document.createElement('td')
     $paragraph.colSpan = '2'
@@ -82,7 +87,7 @@ async function renderImages(article) {
     $row.appendChild($paragraph)
     $table.appendChild($row)
   } else {
-    article.url.forEach(async image => {
+    article?.url.forEach(async image => {
       const $row = await createRow(image)
       $table.appendChild($row)
     })
@@ -115,8 +120,10 @@ async function renderModalContent(id) {
 
 async function handleSubmit(id, $form) {
   try {
-    await setImage(id, $form.file.files[0])
-    showToast('Imagen agregada exitosamente')
+    setImage(id, $form.file.files[0]).then(() => {
+      showToast('Imagen agregada exitosamente')
+      handleClick(id)
+    })
   } catch (error) {
     showToast('No se pudo agregar la imagen')
   }
@@ -158,7 +165,8 @@ async function createModalForm(id) {
 async function createRow(image) {
   const $row = document.createElement('tr')
   const $rowTitle = document.createElement('td')
-  $rowTitle.textContent = image.split('\\')[3]
+  const lastItem = image.split('\\').pop()
+  $rowTitle.textContent = lastItem
   $row.appendChild($rowTitle)
 
   if (image.includes('G:\\FerozoWebHosting')) {
@@ -180,12 +188,18 @@ async function createRow(image) {
   $deleteBtn.className = 'button-sm bg-secondary-300 bg-hover-error'
   $deleteBtn.textContent = 'Eliminar'
   $deleteBtn.addEventListener('click', () => {
-    deleteImage(image.split('\\')[3].split('.')[0].split('-')[0])
+    handleDelete(image.split('\\')[3].split('.')[0].split('-')[0])
   })
   $delete.appendChild($deleteBtn)
   $row.appendChild($delete)
 
   return $row
+}
+
+async function handleDelete(id) {
+  await deleteImage(id)
+  showToast('Imagen eliminada exitosamente')
+  handleClick(id)
 }
 
 async function createTable() {
