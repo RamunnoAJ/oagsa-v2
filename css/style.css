@@ -4164,6 +4164,102 @@ template {
   color: #fca5a5;
 }
 
+.bg-error-300 {
+  background-color: #ff335c;
+}
+
+.bg-hover-error-300 {
+  transition: all 0.3s ease-in-out;
+}
+
+.bg-hover-error-300:hover {
+  background-color: #ff335c;
+}
+
+.text-error-300 {
+  color: #ff335c;
+}
+
+.text-hover-error-300 {
+  transition: all 0.3s ease-in-out;
+}
+
+.text-hover-error-300:hover {
+  color: #ff335c;
+}
+
+.bg-error-400 {
+  background-color: #ff0035;
+}
+
+.bg-hover-error-400 {
+  transition: all 0.3s ease-in-out;
+}
+
+.bg-hover-error-400:hover {
+  background-color: #ff0035;
+}
+
+.text-error-400 {
+  color: #ff0035;
+}
+
+.text-hover-error-400 {
+  transition: all 0.3s ease-in-out;
+}
+
+.text-hover-error-400:hover {
+  color: #ff0035;
+}
+
+.bg-success {
+  background-color: #22c55e;
+}
+
+.bg-hover-success {
+  transition: all 0.3s ease-in-out;
+}
+
+.bg-hover-success:hover {
+  background-color: #22c55e;
+}
+
+.text-success {
+  color: #22c55e;
+}
+
+.text-hover-success {
+  transition: all 0.3s ease-in-out;
+}
+
+.text-hover-success:hover {
+  color: #22c55e;
+}
+
+.bg-success-400 {
+  background-color: #00ab47;
+}
+
+.bg-hover-success-400 {
+  transition: all 0.3s ease-in-out;
+}
+
+.bg-hover-success-400:hover {
+  background-color: #00ab47;
+}
+
+.text-success-400 {
+  color: #00ab47;
+}
+
+.text-hover-success-400 {
+  transition: all 0.3s ease-in-out;
+}
+
+.text-hover-success-400:hover {
+  color: #00ab47;
+}
+
 .fw-bold {
   font-weight: 700;
 }
@@ -5982,6 +6078,14 @@ header .nav-bar.active {
   max-width: 75rem;
   margin-inline: auto;
   width: 95%;
+}
+
+.interface__generator__container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 1rem;
 }
 
 .maintenance__selected {

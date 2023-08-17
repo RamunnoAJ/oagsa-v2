@@ -6,6 +6,11 @@
   width: 95%;
 }
 
+.interface__generator__container {
+  @include flex(row, center, flex-start);
+  gap: 1rem;
+}
+
 .maintenance__selected {
   position: relative;
   background-color: $secondary-color-400;

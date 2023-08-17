@@ -5,6 +5,7 @@ import { profileDrafts } from './profileDrafts.js'
 import { profileEditImages } from './profileEditImages.js'
 import { profileOrdersHistory } from './profileOrdersHistory.js'
 import { profilePricesList } from './profilePricesList.js'
+import { profileInterfaceGenerator } from './profileInterfaceGenerator.js'
 import { checkLocalStorage } from './storage/profile.js'
 import { getUserFromStorage } from './storage/storageData.js'
 import { navigateToLogin } from './ui/login.js'
@@ -38,6 +39,7 @@ if (window.location.href.includes('dashboard')) {
   if (user.role === 1) {
     $profileList.innerHTML += `
       <li>Editar imágenes</li>
+      <li>Exportador de Notas</li>
       <li>Administrar</li>
     `
   }
@@ -74,6 +76,12 @@ if (window.location.href.includes('dashboard')) {
       case 'Historial de pedidos':
         if (user.role === 1 || user.role === 2) {
           profileOrdersHistory($profileInfoContainer)
+        }
+        break
+
+      case 'Exportador de Notas':
+        if (user.role === 1) {
+          profileInterfaceGenerator($profileInfoContainer)
         }
         break
 
