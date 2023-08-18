@@ -1,4 +1,5 @@
 import { getCondicionVenta } from '../api/profileOrdersHistory.js'
+import { formatDate } from '../utils/formatDate.js'
 
 export async function createModal() {
   const $modal = document.createElement('div')
@@ -93,9 +94,7 @@ function createProductRow(article) {
   $row.innerHTML = `
     <td>${article.codigoArticulo}</td>
     <td>${article.descripcionArticulo}</td>
-    <td>$${
-      article.precioConDescuento.toFixed(2) || article.precio.toFixed(2)
-    }</td>
+    <td>$${article.precioConDescuento || article.precio}</td>
     <td>${article.cantidadPedida}</td>
     <td>$${article.importeDescuento || article.montoTotal}</td>
   `
@@ -112,7 +111,9 @@ async function createModalContent(order) {
 
   $modalContent.innerHTML = `
     <p class="mb-2">Estado: <span>${order.estado}</span></p>
-    <p class="mb-2">Fecha: <span>${order.fechaNota.split('T')[0]}</span></p>
+    <p class="mb-2">Fecha: <span>${formatDate(
+      order.fechaNota.split('T')[0]
+    )}</span></p>
     <p class="mb-2">Descripción flete: <span>${
       order.descripcionFlete || 'No definido'
     }</span></p>

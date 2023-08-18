@@ -68,7 +68,6 @@ async function handleClick(id) {
     document.querySelector('.modal').remove()
   }
   const article = await getArticle(id)
-  console.log(article)
 
   renderImages(article)
 }

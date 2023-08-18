@@ -479,7 +479,7 @@ function createProductCard(item) {
 
   const $price = document.createElement('p')
   $price.classList.add('fw-bold')
-  $price.textContent = `$${item.precio.toFixed(2)}`
+  $price.textContent = `$${item.precio}`
 
   const $discount = document.createElement('p')
   $discount.className = 'fw-semi-bold cart__discount'
@@ -552,7 +552,7 @@ function createProductCard(item) {
 
   const $totalArticle = document.createElement('p')
   $totalArticle.className = 'total__article fw-bold'
-  $totalArticle.textContent = `$${item.montoTotal.toFixed(2)}`
+  $totalArticle.textContent = `$${item.montoTotal}`
 
   const $delete = document.createElement('button')
   $delete.innerHTML = `<i class="fa fa-trash-alt"></i>`

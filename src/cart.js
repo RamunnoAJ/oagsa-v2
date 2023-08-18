@@ -139,14 +139,12 @@ export function getTotalQuantity(cart) {
 }
 
 export function getTotalPrice(cart) {
-  const totalPrice = cart.listaDetalle
-    .reduce(
-      (acc, item) =>
-        acc +
-        (item.precioConDescuento || item.precio) * Number(item.cantidadPedida),
-      0
-    )
-    .toFixed(2)
+  const totalPrice = cart.listaDetalle.reduce(
+    (acc, item) =>
+      acc +
+      (item.precioConDescuento || item.precio) * Number(item.cantidadPedida),
+    0
+  )
   cart.totalPesos = Number(totalPrice)
   saveCart(cart)
   return Number(totalPrice)
@@ -170,7 +168,7 @@ export function updateQuantity(item, quantity) {
 export function calculateDiscount(discount, total) {
   if (discount === 0) return total
   const totalPrice = total - (total * discount) / 100
-  return Number(totalPrice.toFixed(2))
+  return Number(totalPrice)
 }
 
 export function calculateDelivery(total, delivery) {
@@ -211,7 +209,7 @@ export function updateDiscount(item, discount) {
   listaDetalle.descripcionDescuento = `${listaDetalle.porcentajeDescuento}%`
   listaDetalle.codigoDescuento = `${listaDetalle.porcentajeDescuento}`
   listaDetalle.importeDescuento = Number(
-    (listaDetalle.precioConDescuento * listaDetalle.cantidadPedida).toFixed(2)
+    listaDetalle.precioConDescuento * listaDetalle.cantidadPedida
   )
   listaDetalle.montoTotal = listaDetalle.importeDescuento
   saveCart(cart)

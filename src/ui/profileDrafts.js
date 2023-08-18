@@ -1,6 +1,7 @@
 import { getClients } from '../api/cart.js'
 import { deleteDraft, editDraft } from '../profileDrafts.js'
 import { getStorageID } from '../storage/profileClientAccount.js'
+import { formatDate } from '../utils/formatDate.js'
 
 const sellerID = getStorageID()
 let clients
@@ -62,7 +63,7 @@ async function renderTableRows(drafts, parentElement) {
           client => client.codigoCliente === draft.codigoCliente
         )[0]?.razonSocial || 'Sin nombre'
       } - ${draft.codigoCliente}</td>
-      <td>${draft.fechaNota.split('T')[0]}</td>
+      <td>${formatDate(draft.fechaNota.split('T')[0])}</td>
       <td>${draft.totalItems}</td>
       <td>$${draft.totalPesos}</td>
       <td class="fl-table__icons visually-hidden-mobile">

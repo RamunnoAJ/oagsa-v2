@@ -2,6 +2,7 @@ import { getCategories, getProducts } from '../api/profilePricesList.js'
 import { capitalizeFirstLetter } from '../utils/capitalizeFirstLetter.js'
 import * as storage from '../storage/store.js'
 import { addToCart } from '../cart.js'
+import { sortProducts } from '../utils/sortProducts.js'
 
 const $form = document.querySelector('#store')
 $form.addEventListener('change', handleChangeForm)
@@ -188,6 +189,8 @@ const renderProducts = async products => {
 
   if (products.length > 0) {
     $storeProducts.innerHTML = ''
+    sortProducts(products)
+
     products.forEach(product => {
       if (product.stockUnidades) {
         renderProductCard(product, $storeProducts)
