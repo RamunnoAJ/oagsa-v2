@@ -189,10 +189,16 @@ const renderProducts = async products => {
   if (products.length > 0) {
     $storeProducts.innerHTML = ''
     products.forEach(product => {
-      renderProductCard(product, $storeProducts)
+      if (product.stockUnidades) {
+        renderProductCard(product, $storeProducts)
+      }
     })
   } else {
-    $storeProducts.innerHTML = 'No hay productos para mostrar'
+    $storeProducts.innerHTML = '<p>No hay productos con stock para mostrar</p>'
+  }
+
+  if ($storeProducts.querySelectorAll('.store__product__card').length === 0) {
+    $storeProducts.innerHTML = '<p>No hay productos con stock para mostrar</p>'
   }
 }
 

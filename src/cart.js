@@ -14,7 +14,7 @@ function validateCart(cart) {
     errors.push(error)
   }
 
-  if(!cart.idFlete) {
+  if (!cart.idFlete) {
     const error = 'Debe seleccionar un flete.'
     errors.push(error)
   }
@@ -89,11 +89,14 @@ export function addToCart(item) {
 
     if (index === -1) {
       addProductToCart(newItem)
+      showToast('Objeto añadido correctamente.', '../pages/cart.html')
     } else {
+      showToast(
+        `El producto ya existe en el carrito, se actualizó su cantidad a: ${quantity}`,
+        '../pages/cart.html'
+      )
       updateQuantity(newItem, quantity)
     }
-
-    showToast('Objeto añadido correctamente.', '../pages/cart.html')
   } else {
     alert('La cantidad debe ser mayor a 0')
   }
