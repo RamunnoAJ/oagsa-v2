@@ -5,6 +5,16 @@
   min-height: 10vh;
   max-width: 1200px;
 
+  .store__dolar {
+    @include flex(row, center, center);
+
+    #dolar {
+      background-color: $slate;
+      padding: 1rem;
+      border-radius: 0.25rem;
+    }
+  }
+
   .store__search__select {
     @include flex(column, center, center);
     gap: 1rem;

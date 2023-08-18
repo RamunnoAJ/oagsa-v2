@@ -114,8 +114,8 @@ const renderTableRows = (item, parentElement) => {
       <td>${formatDate(item.fechaEmision.slice(0, 10))}</td>
       <td>${formatDate(item.fechaVencimiento.slice(0, 10))}</td>
       <td>${item.numero}</td>
-      <td>$${trimPrice(item.importe)}</td>
-      <td class="fw-bold">$${trimPrice(item.importePendiente)}</td>
+      <td>$${trimPrice(Math.round(item.importe))}</td>
+      <td class="fw-bold">$${trimPrice(Math.round(item.importePendiente))}</td>
       `
   parentElement.appendChild(tableRow)
 }
@@ -133,5 +133,5 @@ const getTotalPrice = prices => {
     return totalPrice * -1
   }
 
-  return totalPrice
+  return Math.round(totalPrice)
 }

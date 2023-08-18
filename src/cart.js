@@ -4,6 +4,7 @@ import { getCart, saveCart, clearCart } from './storage/cart.js'
 import { checkLocalStorage } from './storage/profile.js'
 import { getUserFromStorage } from './storage/storageData.js'
 import { renderCart, showToast } from './ui/cart.js'
+import { navigateToDashboard } from './ui/login.js'
 
 checkLocalStorage()
 
@@ -68,6 +69,10 @@ export async function sendToDraft(cart) {
   await postBuyOrder('orden-compra', order)
   emptyCart()
   showToast('Carrito guardado en borrador exitosamente.')
+
+  setTimeout(() => {
+    navigateToDashboard()
+  }, 2000)
 }
 
 export function addToCart(item) {
@@ -145,9 +150,9 @@ export function getTotalPrice(cart) {
       (item.precioConDescuento || item.precio) * Number(item.cantidadPedida),
     0
   )
-  cart.totalPesos = Number(totalPrice)
+  cart.totalPesos = Math.round(Number(totalPrice))
   saveCart(cart)
-  return Number(totalPrice)
+  return Math.round(Number(totalPrice))
 }
 
 export function updateCart(item, quantity, discount, callback = () => {}) {

@@ -146,7 +146,7 @@ function renderTableRows(orders, parentElement) {
           order.fechaNota.split('T')[0]
         )}</td>
         <td>${order.totalItems}</td>
-        <td>$${order.totalPesos}</td>
+        <td>$${Math.round(order.totalPesos)}</td>
         <td class="visually-hidden-mobile">${order.estado}</td>
       `
 

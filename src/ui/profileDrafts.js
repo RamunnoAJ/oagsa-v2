@@ -65,7 +65,7 @@ async function renderTableRows(drafts, parentElement) {
       } - ${draft.codigoCliente}</td>
       <td>${formatDate(draft.fechaNota.split('T')[0])}</td>
       <td>${draft.totalItems}</td>
-      <td>$${draft.totalPesos}</td>
+      <td>$${Math.round(draft.totalPesos)}</td>
       <td class="fl-table__icons visually-hidden-mobile">
         <i id="btn-edit-${draft.numeroNota}" class="fa-solid fa-pen"></i> 
         <i id="btn-delete-${draft.numeroNota}" class="fa-solid fa-trash"></i>
@@ -80,11 +80,15 @@ async function renderTableRows(drafts, parentElement) {
     const $btnDelete = document.querySelector(`#btn-delete-${draft.numeroNota}`)
     const $btnEdit = document.querySelector(`#btn-edit-${draft.numeroNota}`)
 
-    $btnDelete.addEventListener('click', () => {
+    $btnDelete.addEventListener('click', e => {
+      e.preventDefault()
+      e.stopPropagation()
       deleteDraft(draft.numeroNota)
     })
 
-    $btnEdit.addEventListener('click', () => {
+    $btnEdit.addEventListener('click', e => {
+      e.preventDefault()
+      e.stopPropagation()
       editDraft(draft.numeroNota)
     })
   })

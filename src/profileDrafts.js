@@ -22,8 +22,9 @@ export function deleteDraft(draftID) {
       'Eliminar',
       'Eliminado!',
       'El borrador ha sido eliminado.',
-      () => {
-        removeDraft(draftID)
+      async () => {
+        await removeDraft(draftID)
+        profileDrafts(document.querySelector('#profileInfoContainer'))
       }
     )
   } catch (error) {

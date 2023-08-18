@@ -386,7 +386,6 @@ function renderButtons(cart) {
   $sendToDraft.type = 'button'
   $sendToDraft.addEventListener('click', async () => {
     await sendToDraft(getCart())
-    renderCart(getCart())
   })
 
   if (cart.borrador === 1) {
@@ -460,7 +459,18 @@ function createProductCard(item) {
 
   const $image = document.createElement('img')
   if (item.imagenesUrl[0]) {
-    $image.src = `https://www.${item.imagenesUrl[0]}`
+    if (item.imagenesUrl[0].includes('G:\\FerozoWebHosting')) {
+      const source = item.imagenesUrl[0]
+        .split('\\')
+        .slice(2)
+        .filter(item => {
+          return item !== 'public_html'
+        })
+        .join('\\')
+      $image.src = `https://www.${source}`
+    } else {
+      $image.src = `https://www.${item.imagenesUrl[0]}`
+    }
   } else {
     $image.src = defaultImage
   }
@@ -479,7 +489,7 @@ function createProductCard(item) {
 
   const $price = document.createElement('p')
   $price.classList.add('fw-bold')
-  $price.textContent = `$${item.precio}`
+  $price.textContent = `$${Math.round(item.precio)}`
 
   const $discount = document.createElement('p')
   $discount.className = 'fw-semi-bold cart__discount'
@@ -552,7 +562,7 @@ function createProductCard(item) {
 
   const $totalArticle = document.createElement('p')
   $totalArticle.className = 'total__article fw-bold'
-  $totalArticle.textContent = `$${item.montoTotal}`
+  $totalArticle.textContent = `$${Math.round(item.montoTotal)}`
 
   const $delete = document.createElement('button')
   $delete.innerHTML = `<i class="fa fa-trash-alt"></i>`

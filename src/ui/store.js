@@ -3,6 +3,7 @@ import { capitalizeFirstLetter } from '../utils/capitalizeFirstLetter.js'
 import * as storage from '../storage/store.js'
 import { addToCart } from '../cart.js'
 import { sortProducts } from '../utils/sortProducts.js'
+import { getDolar } from '../api/dolar.js'
 
 const $form = document.querySelector('#store')
 $form.addEventListener('change', handleChangeForm)
@@ -242,7 +243,7 @@ function createProductCard(item) {
 
   const $priceValue = document.createElement('span')
   $priceValue.classList = 'fw-bold'
-  $priceValue.textContent = ` $${item.precio}`
+  $priceValue.textContent = ` $${Math.round(item.precio)}`
   $price.appendChild($priceValue)
 
   const $stock = document.createElement('p')
@@ -298,6 +299,13 @@ function createProductCard(item) {
   $addToCart.appendChild($icon)
 
   return $card
+}
+
+export async function renderDolar() {
+  const $dolar = document.querySelector('#dolar')
+  const dolar = await getDolar()
+
+  $dolar.textContent = `Valor dolar : $${dolar.valorString.trim()}`
 }
 
 function switchImage(condition) {

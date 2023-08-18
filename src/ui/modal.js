@@ -83,7 +83,7 @@ function createTotalRow(total) {
   <td></td>
   <td></td>
   <td>${total.totalItems}</td>
-  <td>$${total.totalPesos}</td>
+  <td>$${Math.round(total.totalPesos)}</td>
   `
   return $totalRow
 }
@@ -94,9 +94,13 @@ function createProductRow(article) {
   $row.innerHTML = `
     <td>${article.codigoArticulo}</td>
     <td>${article.descripcionArticulo}</td>
-    <td>$${article.precioConDescuento || article.precio}</td>
+    <td>$${
+      Math.round(article.precioConDescuento) || Math.round(article.precio)
+    }</td>
     <td>${article.cantidadPedida}</td>
-    <td>$${article.importeDescuento || article.montoTotal}</td>
+    <td>$${
+      Math.round(article.importeDescuento) || Math.round(article.montoTotal)
+    }</td>
   `
   return $row
 }
