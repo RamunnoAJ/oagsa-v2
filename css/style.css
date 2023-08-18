@@ -5129,8 +5129,8 @@ body {
 .cart__icon {
   text-decoration: none;
   position: fixed;
-  width: 45px;
-  height: 45px;
+  width: 65px;
+  height: 65px;
   cursor: pointer;
   background-color: #ffd37c;
   border-radius: 50%;
@@ -5143,6 +5143,9 @@ body {
   align-items: center;
   transition: all 0.3s ease-in-out;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+.cart__icon i {
+  font-size: 1.25rem;
 }
 .cart__icon:hover {
   background-color: #ff9c35;
