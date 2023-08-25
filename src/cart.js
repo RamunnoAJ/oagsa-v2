@@ -150,9 +150,9 @@ export function getTotalPrice(cart) {
       (item.precioConDescuento || item.precio) * Number(item.cantidadPedida),
     0
   )
-  cart.totalPesos = Math.round(Number(totalPrice))
+  cart.totalPesos = Number(totalPrice).toFixed(0)
   saveCart(cart)
-  return Math.round(Number(totalPrice))
+  return Number(totalPrice).toFixed(0)
 }
 
 export function updateCart(item, quantity, discount, callback = () => {}) {

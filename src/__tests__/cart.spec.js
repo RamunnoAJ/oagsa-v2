@@ -40,7 +40,7 @@ describe('getTotalPrice function', () => {
         { codigoArticulo: '2', precio: 100, cantidadPedida: 1 },
       ],
     }
-    const expected = 200
+    const expected = '200'
     const result = getTotalPrice(cart)
 
     expect(result).toBe(expected)

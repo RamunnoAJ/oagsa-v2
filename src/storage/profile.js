@@ -8,7 +8,10 @@ export async function checkLocalStorage() {
     const userFromCookie = JSON.parse(user)
     return userFromCookie
   } else {
-    if (window.location.href.includes('dashboard') || window.location.href.includes('store')) {
+    if (
+      window.location.href.includes('dashboard') ||
+      window.location.href.includes('cart')
+    ) {
       navigateToLogin()
     }
   }
