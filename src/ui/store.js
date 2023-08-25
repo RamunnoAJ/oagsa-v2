@@ -4,6 +4,7 @@ import * as storage from '../storage/store.js'
 import { addToCart } from '../cart.js'
 import { sortProducts } from '../utils/sortProducts.js'
 import { getDolar } from '../api/dolar.js'
+import { getUserFromStorage } from '../storage/storageData.js'
 
 const $form = document.querySelector('#store')
 $form.addEventListener('change', handleChangeForm)
@@ -193,26 +194,27 @@ const renderProducts = async products => {
     sortProducts(products)
 
     products.forEach(product => {
-      if (product.stockUnidades) {
+      if (product.precio) {
         renderProductCard(product, $storeProducts)
       }
     })
   } else {
-    $storeProducts.innerHTML = '<p>No hay productos con stock para mostrar</p>'
+    $storeProducts.innerHTML = '<p>No hay productos para mostrar</p>'
   }
 
   if ($storeProducts.querySelectorAll('.store__product__card').length === 0) {
-    $storeProducts.innerHTML = '<p>No hay productos con stock para mostrar</p>'
+    $storeProducts.innerHTML = '<p>No hay productos para mostrar</p>'
   }
 }
 
-const renderProductCard = (item, parentElement) => {
-  const $card = createProductCard(item)
+function renderProductCard(item, parentElement) {
+  const user = getUserFromStorage()
+  const $card = createProductCard(item, user)
 
   parentElement.appendChild($card)
 }
 
-function createProductCard(item) {
+function createProductCard(item, user) {
   const $card = document.createElement('article')
   $card.classList = 'store__product__card'
   let image = item.url[0]
@@ -236,19 +238,19 @@ function createProductCard(item) {
   $info.appendChild($title)
 
   const $price = document.createElement('div')
-  $info.appendChild($price)
+  if (user) $info.appendChild($price)
   const $article = document.createElement('span')
   $article.textContent = item.codigoArticulo
   $price.appendChild($article)
 
   const $priceValue = document.createElement('span')
   $priceValue.classList = 'fw-bold'
-  $priceValue.textContent = ` $${Math.round(item.precio)}`
+  $priceValue.textContent = ` $${item.precio.toFixed(0)}`
   $price.appendChild($priceValue)
 
   const $stock = document.createElement('p')
   $stock.textContent = 'Unidades en stock: '
-  $info.appendChild($stock)
+  if (user) $info.appendChild($stock)
 
   const $stockQuantity = document.createElement('span')
   $stockQuantity.textContent = item.stockUnidades
@@ -256,7 +258,7 @@ function createProductCard(item) {
 
   const $quantity = document.createElement('div')
   $quantity.classList = 'quantity'
-  $info.appendChild($quantity)
+  if (user) $info.appendChild($quantity)
 
   const $quantityHandler = document.createElement('button')
   $quantityHandler.classList = 'quantity__handler'
@@ -292,7 +294,7 @@ function createProductCard(item) {
   $addToCart.addEventListener('click', () => {
     addToCart(item)
   })
-  $info.appendChild($addToCart)
+  if (user) $info.appendChild($addToCart)
 
   const $icon = document.createElement('i')
   $icon.classList = 'fa-solid fa-cart-plus'

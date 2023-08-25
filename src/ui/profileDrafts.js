@@ -65,7 +65,7 @@ async function renderTableRows(drafts, parentElement) {
       } - ${draft.codigoCliente}</td>
       <td>${formatDate(draft.fechaNota.split('T')[0])}</td>
       <td>${draft.totalItems}</td>
-      <td>$${Math.round(draft.totalPesos)}</td>
+      <td>$${draft.totalPesos.toFixed(0)}</td>
       <td class="fl-table__icons visually-hidden-mobile">
         <i id="btn-edit-${draft.numeroNota}" class="fa-solid fa-pen"></i> 
         <i id="btn-delete-${draft.numeroNota}" class="fa-solid fa-trash"></i>
