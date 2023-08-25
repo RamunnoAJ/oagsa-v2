@@ -273,7 +273,6 @@ function createProductCard(item, user) {
   $quantityInput.type = 'number'
   $quantityInput.id = `quantity-${item.codigoArticulo}`
   $quantityInput.min = 0
-  $quantityInput.max = item.stockUnidades
   $quantityInput.value = 0
   $quantity.appendChild($quantityInput)
 

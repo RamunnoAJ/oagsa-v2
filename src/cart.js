@@ -103,7 +103,7 @@ export function addToCart(item) {
       updateQuantity(newItem, quantity)
     }
   } else {
-    alert('La cantidad debe ser mayor a 0')
+    showToast('La cantidad debe ser mayor a 0')
   }
 }
 

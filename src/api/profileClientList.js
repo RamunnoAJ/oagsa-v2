@@ -1,3 +1,4 @@
+import { convertToUTF } from '../utils/convertToUTF.js'
 import getDataFromDB from '../utils/getDataFromDB.js'
 
 export async function getClientsFromSeller(url) {
@@ -5,10 +6,7 @@ export async function getClientsFromSeller(url) {
     const response = await getDataFromDB(`cliente/all`)
     const clients = await response.data
     await clients.forEach(client => {
-      client.razonSocial = client.razonSocial
-        .normalize('NFC')
-        .replace(/Ã‘/g, 'Ñ')
-        .replace(/[^\w\sÑñ]/g, '')
+      client.razonSocial = convertToUTF(client.razonSocial)
     })
 
     return clients

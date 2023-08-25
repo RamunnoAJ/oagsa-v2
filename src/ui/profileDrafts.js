@@ -53,6 +53,13 @@ function createTable() {
 async function renderTableRows(drafts, parentElement) {
   const $table = document.querySelector(parentElement)
 
+  if (drafts.length === 0) {
+    const $row = document.createElement('tr')
+    $row.innerHTML = `<td colspan="6">No hay pedidos en el borrador</td>`
+
+    $table.appendChild($row)
+  }
+
   drafts.forEach(draft => {
     const row = document.createElement('tr')
     row.className = 'cursor-pointer bg-hover-slate'

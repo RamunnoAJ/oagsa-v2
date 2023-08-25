@@ -521,20 +521,9 @@ function createProductCard(item) {
   $quantityInput.id = `cantidad-${item.codigoArticulo}`
   $quantityInput.type = 'number'
   $quantityInput.min = 1
-  $quantityInput.max = item.stockUnidades
   $quantityInput.value = item.cantidadPedida
   $quantityInput.addEventListener('change', () => {
-    if ($quantityInput.value <= item.stockUnidades) {
-      updateCart(
-        item,
-        $quantityInput.value,
-        $discountInput.value,
-        renderArticles
-      )
-    } else {
-      alert('Cantidad no válida. Stock disponible: ' + item.stockUnidades)
-      $quantityInput.value = item.stockUnidades
-    }
+    updateCart(item, $quantityInput.value, $discountInput.value, renderArticles)
   })
 
   const $removeQuantity = document.createElement('button')
