@@ -2,6 +2,12 @@ import { clientsMapper } from '../mappers/clients.js'
 import { convertToUTF } from '../utils/convertToUTF.js'
 import getDataFromDB from '../utils/getDataFromDB.js'
 
+/** @typedef {import('../entities/clients.js').Client} Client */
+
+/**
+ * @param {Client} seller
+ * @return {Client[]}
+ * */
 export async function getClientsFromSeller(seller) {
   if (seller === 1) {
     const response = await getDataFromDB(`cliente/all`)
