@@ -1,16 +1,17 @@
 export class Client {
-  /*
-   * @param {number} id
-   * @param {string} name
-   * @param {string} address
-   * @param {string} city
-   * @param {string} zip
-   * @param {string} phone
-   * @param {string} fax
-   * @param {string} email
-   * @param {number} idSeller
-   * @param {number} idZone
-   * @param {string} cuit
+  /**
+   * @typedef {Client}
+   * @param {number} id - ID of the client, it's used as unique identifier
+   * @param {string} name - Name of the client
+   * @param {string} address - Address of the client
+   * @param {string} city - City of the client
+   * @param {string} zip - Zip code of the zone where the client is located
+   * @param {string} phone - Phone number
+   * @param {string} fax - Fax number
+   * @param {string} email - Email
+   * @param {number} idSeller - ID of the seller
+   * @param {number} idZone - ID of the zone
+   * @param {string} cuit - CUIT
    * */
   constructor(
     id,

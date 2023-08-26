@@ -1,8 +1,8 @@
 import { Client } from '../entities/clients.js'
 
-/* @typeof {import('../entities/clients.js').Client} Client */
+/** @typedef {import('../entities/clients.js').Client} Client */
 
-/*
+/**
  * @param {object} apiData
  * @return {Client}
  * */
