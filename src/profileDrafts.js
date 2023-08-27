@@ -7,7 +7,7 @@ import { triggerSweetAlert } from './utils/sweetAlert.js'
 export async function profileDrafts($profileInfoContainer) {
   $profileInfoContainer.innerHTML = '<span class="loader"></span>'
 
-  const sellerID = getStorageID()
+  const sellerID = await getStorageID()
   if (sellerID) {
     const drafts = await getDrafts(sellerID)
     renderDrafts(drafts, $profileInfoContainer)

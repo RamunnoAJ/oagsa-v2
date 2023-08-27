@@ -2,7 +2,6 @@ import { postBuyOrder } from './api/cart.js'
 import { removeDraft } from './api/profileDrafts.js'
 import { getCart, saveCart, clearCart } from './storage/cart.js'
 import { checkLocalStorage } from './storage/profile.js'
-import { getUserFromStorage } from './storage/storageData.js'
 import { renderCart, showToast } from './ui/cart.js'
 import { navigateToDashboard } from './ui/login.js'
 
@@ -10,22 +9,22 @@ checkLocalStorage()
 
 function validateCart(cart) {
   const errors = []
-  if (!cart.codigoCliente) {
+  if (!cart.idClient) {
     const error = 'Debe seleccionar un cliente.'
     errors.push(error)
   }
 
-  if (!cart.idFlete) {
+  if (!cart.idFreight) {
     const error = 'Debe seleccionar un flete.'
     errors.push(error)
   }
 
-  if (cart.listaDetalle.length === 0) {
+  if (cart.detail.length === 0) {
     const error = 'No hay productos en el carrito.'
     errors.push(error)
   }
 
-  if (!cart.codigoCondicionVenta) {
+  if (!cart.idSellCondition) {
     const error = 'Debe seleccionar una condicion de venta.'
     errors.push(error)
   }
@@ -80,17 +79,15 @@ export function addToCart(item) {
   const $quantityInput = document.getElementById(quantityInputId)
   let quantity = $quantityInput.value
   quantity = Number(quantity)
-  const numeroNota = getCart().numeroNota
-  if (numeroNota) {
-    item.numeroNota = numeroNota
+  const id = getCart().id
+  if (id) {
+    item.id = id
   }
 
   const newItem = createArticle(item, quantity)
   if (quantity > 0) {
     const cart = getCart()
-    const index = cart.listaDetalle.findIndex(
-      i => i.codigoArticulo === item.codigoArticulo
-    )
+    const index = cart.detail.findIndex(i => i.id === item.id)
 
     if (index === -1) {
       addProductToCart(newItem)
@@ -110,18 +107,16 @@ export function addToCart(item) {
 function addProductToCart(item) {
   const cart = getCart()
   const newItem = { ...item }
-  const updatedCart = { ...cart, listaDetalle: [...cart.listaDetalle, newItem] }
+  const updatedCart = { ...cart, detail: [...cart.detail, newItem] }
   saveCart(updatedCart)
 }
 
 export function removeFromCart(item) {
   const cart = getCart()
-  const index = cart.listaDetalle.findIndex(
-    i => i.codigoArticulo === item.codigoArticulo
-  )
-  cart.listaDetalle.splice(index, 1)
+  const index = cart.detail.findIndex(i => i.id === item.id)
+  cart.detail.splice(index, 1)
 
-  const updatedCart = { ...cart, listaDetalle: [...cart.listaDetalle] }
+  const updatedCart = { ...cart, detail: [...cart.detail] }
   saveCart(updatedCart)
 }
 
@@ -134,23 +129,22 @@ export function getDiscount(percentage, price) {
 }
 
 export function getTotalQuantity(cart) {
-  const totalQuantity = cart.listaDetalle.reduce(
-    (acc, item) => acc + Number(item.cantidadPedida),
+  const totalQuantity = cart.detail.reduce(
+    (acc, item) => acc + Number(item.quantity),
     0
   )
-  cart.totalItems = totalQuantity
+  cart.total = totalQuantity
   saveCart(cart)
   return Number(totalQuantity)
 }
 
 export function getTotalPrice(cart) {
-  const totalPrice = cart.listaDetalle.reduce(
+  const totalPrice = cart.detail.reduce(
     (acc, item) =>
-      acc +
-      (item.precioConDescuento || item.precio) * Number(item.cantidadPedida),
+      acc + (item.priceDiscount || item.price) * Number(item.quantity),
     0
   )
-  cart.totalPesos = Number(totalPrice).toFixed(0)
+  cart.total = Number(totalPrice).toFixed(0)
   saveCart(cart)
   return Number(totalPrice).toFixed(0)
 }
@@ -163,10 +157,8 @@ export function updateCart(item, quantity, discount, callback = () => {}) {
 
 export function updateQuantity(item, quantity) {
   const cart = getCart()
-  const index = cart.listaDetalle.findIndex(
-    i => i.codigoArticulo === item.codigoArticulo
-  )
-  cart.listaDetalle[index].cantidadPedida = Number(quantity)
+  const index = cart.detail.findIndex(i => i.id === item.id)
+  cart.detail[index].quantity = Number(quantity)
   saveCart(cart)
 }
 
@@ -186,7 +178,7 @@ export function handleClientChange() {
   const client = $selectClient.value
 
   const cart = getCart()
-  cart.codigoCliente = client
+  cart.idClient = client
   saveCart(cart)
 }
 
@@ -201,62 +193,14 @@ export function updateDiscount(item, discount) {
   }
 
   const cart = getCart()
-  const index = cart.listaDetalle.findIndex(
-    i => i.codigoArticulo === item.codigoArticulo
-  )
-  const listaDetalle = cart.listaDetalle[index]
-  const porcentajeDescuento = Number(discount)
-  listaDetalle.porcentajeDescuento = porcentajeDescuento
-  listaDetalle.precioConDescuento = calculateDiscount(
-    porcentajeDescuento,
-    listaDetalle.precio
-  )
-  listaDetalle.descripcionDescuento = `${listaDetalle.porcentajeDescuento}%`
-  listaDetalle.codigoDescuento = `${listaDetalle.porcentajeDescuento}`
-  listaDetalle.importeDescuento = Number(
-    listaDetalle.precioConDescuento * listaDetalle.cantidadPedida
-  )
-  listaDetalle.montoTotal = listaDetalle.importeDescuento
+  const index = cart.detail.findIndex(i => i.id === item.id)
+  const detail = cart.detail[index]
+  const discountPercentage = Number(discount)
+  detail.discountPercentage = discountPercentage
+  detail.priceDisount = calculateDiscount(discountPercentage, detail.price)
+  detail.discount = `${detail.discountPercentage}%`
+  detail.idDiscount = `${detail.discountPercentage}`
+  detail.totalDiscount = Number(detail.priceDisount * detail.quantity)
+  detail.priceTotal = detail.totalDiscount
   saveCart(cart)
-}
-
-function createArticle(article, quantity) {
-  return {
-    numeroNota: article.numeroNota || 0,
-    codigoArticulo: article.codigoArticulo,
-    descripcionArticulo: article.descripcion,
-    precio: article.precio,
-    cantidadPedida: Number(quantity),
-    cantidadDespachada: article.cantidadDespachada || 0,
-    stockUnidades: article.stockUnidades,
-    codigoDescuento: article.codigoDescuento || '0',
-    descripcionDescuento: article.descripcionDescuento || '0%',
-    porcentajeDescuento: article.porcentajeDescuento || 0,
-    importe: article.precio * quantity,
-    importeDescuento: article.precio * quantity,
-    precioConDescuento: article.precio,
-    montoTotal: article.precio * quantity,
-    numeroOrden: article.numeroOrden || 0,
-    eliminado: article.eliminado || false,
-    imagenesUrl: [...article.url],
-  }
-}
-
-function createOrder(cart) {
-  return {
-    numeroNota: cart.numeroNota || 0,
-    codigoCliente: cart.codigoCliente,
-    codigoCondicionVenta: cart.codigoCondicionVenta || 0,
-    observaciones: cart.observaciones || '',
-    origenPedido: 0,
-    estado: cart.estado || 'Pendiente',
-    totalPesos: getTotalPrice(cart),
-    totalItems: getTotalQuantity(cart),
-    codigoVendedor: JSON.parse(getUserFromStorage()).id,
-    fechaNota: cart.fechaNota || new Date().toISOString(),
-    borrador: cart.borrador || 0,
-    idFlete: cart.idFlete || '',
-    descripcionFlete: cart.descripcionFlete || '',
-    listaDetalle: cart.listaDetalle,
-  }
 }
