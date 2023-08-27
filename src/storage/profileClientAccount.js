@@ -6,8 +6,7 @@ export function getStorageID() {
 
   if (user) {
     const userFromCookie = JSON.parse(user)
-    if (userFromCookie) return userFromCookie.id
-    return null
+    return userFromCookie.id
   }
 }
 

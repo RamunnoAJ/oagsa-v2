@@ -1,22 +1,45 @@
-import getDataFromDB, { BASE_URL } from "../utils/getDataFromDB.js"
+import { orderMapper } from '../mappers/orders.js'
+import getDataFromDB, { BASE_URL } from '../utils/getDataFromDB.js'
 
+/** @typedef {import('../entities/orders.js').Order} Order */
+
+/**
+ * @param {string} id
+ * @return {Order[]}
+ * */
 export async function getDrafts(id) {
-  const response = await getDataFromDB(`orden-compra/vendedor?pCodigoVendedor=${id}&pBorrador=1`)
-  const drafts = await response.data
+  const response = await getDataFromDB(
+    `orden-compra/vendedor?pCodigoVendedor=${id}&pBorrador=1`
+  )
+  const draftsApi = await response.data
+  const drafts = draftsApi.map(draft => orderMapper(draft))
 
   return drafts
 }
 
-export async function getDraft(id){
-  const response = await getDataFromDB(`orden-compra?pNumeroNota=${id}`) 
-  const draft = await response.data
+/**
+ * @param {string} id
+ * @return {Order}
+ * */
+export async function getDraft(id) {
+  const response = await getDataFromDB(`orden-compra?pNumeroNota=${id}`)
+  const draftApi = await response.data
+  const draft = orderMapper(draftApi)
+
   return draft
 }
 
+/**
+ * @param {string} id
+ * @return {object}
+ * */
 export async function removeDraft(id) {
-  const response = await fetch(`${BASE_URL}orden-compra/delete-borrador?pNumeroOrden=${id}`, {
-    method: 'DELETE',
-  })
+  const response = await fetch(
+    `${BASE_URL}orden-compra/delete-borrador?pNumeroOrden=${id}`,
+    {
+      method: 'DELETE',
+    }
+  )
 
   if (!response.ok) {
     throw new Error('Respuesta rechazada')

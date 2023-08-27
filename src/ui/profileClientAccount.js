@@ -43,8 +43,8 @@ const renderOptions = clients => {
 
   clients.forEach(client => {
     const option = document.createElement('option')
-    option.value = client.codigoCliente
-    option.textContent = client.razonSocial
+    option.value = client.id
+    option.textContent = client.name
 
     $selectClient.appendChild(option)
   })

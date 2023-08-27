@@ -1,4 +1,5 @@
-import { getClients, getFields } from '../api/cart.js'
+import { getFields } from '../api/cart.js'
+import { getClientsFromSeller } from '../api/profileClientList.js'
 import { removeDraft } from '../api/profileDrafts.js'
 import {
   checkout,
@@ -42,7 +43,7 @@ if (window.location.href.includes('cart')) {
 }
 
 export async function renderCart(cart) {
-  if (cart.borrador === 1) {
+  if (cart.draft === 1) {
     if (document.querySelector('.cart__title span')) {
       const cartDraft = document.querySelector('.cart__title span')
       cartDraft.remove()
@@ -68,7 +69,7 @@ export async function renderCart(cart) {
 
   const user = getUserFromStorage()
   const parsedUser = JSON.parse(user)
-  const clients = await getClients(parsedUser.id)
+  const clients = await getClientsFromSeller(parsedUser.id)
 
   const $loader = document.querySelector('.loader')
   $loader.remove()
@@ -89,7 +90,7 @@ async function renderArticles(cart) {
   const $cartContainer = document.querySelector('.cart__articles__container')
   $cartContainer.innerHTML = ''
 
-  cart.listaDetalle.forEach(item => {
+  cart.detail.forEach(item => {
     const $article = createProductCard(item)
     $cartContainer.appendChild($article)
   })
@@ -140,7 +141,7 @@ async function renderClients(cart) {
   if (cart.borrador === 1) $clientsSelect.disabled = true
 
   $clientsSelect.addEventListener('change', () => {
-    saveCart({ ...getCart(), codigoCliente: Number($clientsSelect.value) })
+    saveCart({ ...getCart(), idClient: Number($clientsSelect.value) })
   })
 
   $clients.appendChild($clientsSelect)
@@ -194,13 +195,13 @@ function renderOptions(options, select) {
     $option.value = option[value]
     if (value === 'codigoCliente') {
       $option.textContent = `${option[textContent]} - ${option[value]}`
-      if ($option.value === cart.codigoCliente?.toString()) {
+      if ($option.value === cart.idClient?.toString()) {
         $option.selected = true
       }
     } else {
-      if ($option.value === cart.codigoCondicionVenta?.toString()) {
+      if ($option.value === cart.idSellCondition?.toString()) {
         $option.selected = true
-      } else if ($option.value === cart.idFlete?.toString()) {
+      } else if ($option.value === cart.idFreight?.toString()) {
         $option.selected = true
       }
 
@@ -232,9 +233,9 @@ function renderObservations() {
   const $observations = document.createElement('textarea')
   $observations.classList.add('observations')
   $observations.id = 'observations'
-  $observations.value = cart.observaciones || ''
+  $observations.value = cart.observations || ''
   $observations.addEventListener('change', () => {
-    saveCart({ ...getCart(), observaciones: $observations.value })
+    saveCart({ ...getCart(), observations: $observations.value })
   })
   $observationsContainer.appendChild($observations)
 
@@ -275,8 +276,8 @@ async function renderFields() {
   $flete.addEventListener('change', () => {
     saveCart({
       ...getCart(),
-      idFlete: $flete.value,
-      descripcionFlete: $flete.options[$flete.selectedIndex].text,
+      idFreight: $flete.value,
+      freight: $flete.options[$flete.selectedIndex].text,
     })
   })
   $fleteContainer.appendChild($flete)
@@ -298,7 +299,7 @@ async function renderFields() {
   $condicionVenta.addEventListener('change', () => {
     saveCart({
       ...getCart(),
-      codigoCondicionVenta: Number($condicionVenta.value),
+      idSellCondition: Number($condicionVenta.value),
     })
   })
   $condicionVentaContainer.appendChild($condicionVenta)
@@ -337,7 +338,7 @@ function renderButtons(cart) {
   })
   $buttonsContainer.appendChild($addProducts)
 
-  if (cart.borrador === 1) {
+  if (cart.draft === 1) {
     const $deleteDraft = document.createElement('button')
     $deleteDraft.className =
       'button-cart bg-secondary-300 uppercase fw-semi-bold bg-hover-secondary-400'
@@ -354,7 +355,7 @@ function renderButtons(cart) {
           'Eliminado!',
           'El borrador ha sido eliminado.',
           async () => {
-            await removeDraft(cart.numeroNota)
+            await removeDraft(cart.id)
             emptyCart()
             renderCart(getCart())
           }
@@ -380,7 +381,7 @@ function renderButtons(cart) {
   $sendToDraft.className =
     'button-cart bg-secondary-300 uppercase fw-semi-bold bg-hover-secondary-400'
   $sendToDraft.textContent = 'Guardar borrador'
-  if (cart.borrador === 1) {
+  if (cart.draft === 1) {
     $sendToDraft.textContent = 'Guardar cambios'
   }
   $sendToDraft.type = 'button'
@@ -388,7 +389,7 @@ function renderButtons(cart) {
     await sendToDraft(getCart())
   })
 
-  if (cart.borrador === 1) {
+  if (cart.draft === 1) {
     $sendToDraft.classList.add('span-2')
   }
   $buttonsContainer.appendChild($sendToDraft)
