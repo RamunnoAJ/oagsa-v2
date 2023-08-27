@@ -35,9 +35,9 @@ describe('calculateDiscount function', () => {
 describe('getTotalPrice function', () => {
   test('should return 200 given 2 items of 100 each', () => {
     const cart = {
-      listaDetalle: [
-        { codigoArticulo: '1', precio: 100, cantidadPedida: 1 },
-        { codigoArticulo: '2', precio: 100, cantidadPedida: 1 },
+      detail: [
+        { id: '1', price: 100, quantity: 1 },
+        { id: '2', price: 100, quantity: 1 },
       ],
     }
     const expected = '200'
@@ -50,9 +50,9 @@ describe('getTotalPrice function', () => {
 describe('getTotalQuantity function', () => {
   test('should return 2 given 2 items', () => {
     const cart = {
-      listaDetalle: [
-        { codigoArticulo: '1', precio: 100, cantidadPedida: 1 },
-        { codigoArticulo: '2', precio: 100, cantidadPedida: 1 },
+      detail: [
+        { id: '1', price: 100, quantity: 1 },
+        { id: '2', price: 100, quantity: 1 },
       ],
     }
     const expected = 2

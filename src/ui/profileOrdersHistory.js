@@ -59,7 +59,7 @@ async function handleSelect() {
 async function getOrdersPage(page) {
   const $selectClient = document.querySelector('#selectClient')
   const selectedClient = $selectClient.value
-  const sellerID = getStorageID()
+  const sellerID = await getStorageID()
 
   return await getOrders(sellerID, selectedClient, page)
 }
@@ -77,8 +77,8 @@ function renderOptions(clients) {
 
   clients.forEach(client => {
     const option = document.createElement('option')
-    option.value = client.codigoCliente
-    option.textContent = `${client.codigoCliente} - ${client.razonSocial}`
+    option.value = client.id
+    option.textContent = `${client.id} - ${client.name}`
 
     $selectClient.appendChild(option)
   })

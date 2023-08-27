@@ -1,16 +1,20 @@
-import { getClients } from '../api/cart.js'
 import { deleteDraft, editDraft } from '../profileDrafts.js'
 import { getStorageID } from '../storage/profileClientAccount.js'
 import { formatDate } from '../utils/formatDate.js'
+import { getClientsFromSeller } from '../api/profileClientList.js'
+
+/**
+ * @typedef {import('../entities/clients.js').Client}
+ * @typedef {import('../entities/orders.js').Order}
+ * */
 
 const sellerID = getStorageID()
-let clients
-if (sellerID) {
-  clients = await getClients(sellerID)
-}
 
-export function renderDrafts(drafts, parentElement) {
+export async function renderDrafts(drafts, parentElement) {
   parentElement.innerHTML = ''
+
+  const clients = await getClientsFromSeller(sellerID)
+
   const $container = document.createElement('div')
   $container.className = 'full-width text-end'
 
@@ -27,7 +31,7 @@ export function renderDrafts(drafts, parentElement) {
   const table = createTable(drafts)
   parentElement.appendChild(table)
 
-  renderTableRows(drafts, '#table-body')
+  renderTableRows(drafts, '#table-body', clients)
 }
 
 function createTable() {
@@ -50,7 +54,12 @@ function createTable() {
   return table
 }
 
-async function renderTableRows(drafts, parentElement) {
+/**
+ * @param {Order[]} drafts
+ * @param {HTMLElement} parentElement
+ * @param {Client[]} clients
+ * */
+async function renderTableRows(drafts, parentElement, clients) {
   const $table = document.querySelector(parentElement)
 
   if (drafts.length === 0) {
@@ -64,39 +73,38 @@ async function renderTableRows(drafts, parentElement) {
     const row = document.createElement('tr')
     row.className = 'cursor-pointer bg-hover-slate'
     row.innerHTML = `
-      <td>${draft.numeroNota}</td>
+      <td>${draft.id}</td>
       <td>${
-        clients.filter(
-          client => client.codigoCliente === draft.codigoCliente
-        )[0]?.razonSocial || 'Sin nombre'
-      } - ${draft.codigoCliente}</td>
-      <td>${formatDate(draft.fechaNota.split('T')[0])}</td>
-      <td>${draft.totalItems}</td>
-      <td>$${draft.totalPesos.toFixed(0)}</td>
+        clients.filter(client => client.id === draft.idClient)[0]?.name ||
+        'Sin nombre'
+      } - ${draft.idClient}</td>
+      <td>${formatDate(draft.date.split('T')[0])}</td>
+      <td>${draft.items}</td>
+      <td>$${draft.total.toFixed(0)}</td>
       <td class="fl-table__icons visually-hidden-mobile">
-        <i id="btn-edit-${draft.numeroNota}" class="fa-solid fa-pen"></i> 
-        <i id="btn-delete-${draft.numeroNota}" class="fa-solid fa-trash"></i>
+        <i id="btn-edit-${draft.id}" class="fa-solid fa-pen"></i> 
+        <i id="btn-delete-${draft.id}" class="fa-solid fa-trash"></i>
       </td>
     `
     row.addEventListener('click', () => {
-      editDraft(draft.numeroNota)
+      editDraft(draft.id)
     })
 
     $table.appendChild(row)
 
-    const $btnDelete = document.querySelector(`#btn-delete-${draft.numeroNota}`)
-    const $btnEdit = document.querySelector(`#btn-edit-${draft.numeroNota}`)
+    const $btnDelete = document.querySelector(`#btn-delete-${draft.id}`)
+    const $btnEdit = document.querySelector(`#btn-edit-${draft.id}`)
 
     $btnDelete.addEventListener('click', e => {
       e.preventDefault()
       e.stopPropagation()
-      deleteDraft(draft.numeroNota)
+      deleteDraft(draft.id)
     })
 
     $btnEdit.addEventListener('click', e => {
       e.preventDefault()
       e.stopPropagation()
-      editDraft(draft.numeroNota)
+      editDraft(draft.id)
     })
   })
 }
