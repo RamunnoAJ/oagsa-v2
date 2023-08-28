@@ -1,8 +1,8 @@
 export function sortProducts(products) {
   products.sort((a, b) => {
-    if (a?.codigoArticulo < b?.codigoArticulo) {
+    if (a?.id < b?.id) {
       return -1
-    } else if (a?.codigoArticulo > b?.codigoArticulo) {
+    } else if (a?.id > b?.id) {
       return 1
     }
     return 0
