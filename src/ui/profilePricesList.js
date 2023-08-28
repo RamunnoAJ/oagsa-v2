@@ -100,7 +100,6 @@ function renderPrices(products) {
 
     $tableContainer.appendChild($table)
     const $tableBody = document.querySelector('#table-body')
-
     products.forEach(product => {
       renderTableRows(product, $tableBody)
     })
@@ -166,26 +165,29 @@ function renderOptions(options, selectID) {
 
     switch (selectID) {
       case '#select-rubro':
-        $option.value = option.idCategory.trim()
+        $option.value = option.id.trim()
         $option.textContent = option.name.trim()
         break
 
       case '#select-subrubro':
-        $option.value = option.idSubcategory.trim()
+        $option.value = option.id.trim()
         $option.textContent = option.name.trim()
         break
 
       case '#select-brand':
+        console.log('marcas: ', sortedOptions)
         $option.value = option.name.trim()
         $option.textContent = option.name.trim()
         break
 
       case '#select-diametro':
+        console.log('diametro: ', sortedOptions)
         $option.value = option.name.trim()
         $option.textContent = option.name.trim()
         break
 
       case '#select-medida':
+        console.log('medidas: ', sortedOptions)
         $option.value = option.name.trim()
         $option.textContent = option.name.trim()
         break
@@ -201,7 +203,7 @@ function renderTableRows(item, parentElement) {
     <td>${item.id}</td>
     <td>${item.name}</td>
     <td>${item.brand}</td>
-    <td>$${item.price.toFixed(0)}</td>
+    <td>$${item.price?.toFixed(0) || 0}</td>
     <td class="visually-hidden-mobile">${item.diameter}</td>
     <td class="visually-hidden-mobile">${item.measure}</td>
   `
@@ -212,12 +214,22 @@ function renderTableRows(item, parentElement) {
 async function handleChangeRubro(e, codigoRubro) {
   e.preventDefault()
 
+  await resetSelects()
   const subrubros = await getCategories(
     `articulo/subrubros?pCodigoRubro=${codigoRubro}`
   )
 
   storage.saveSubrubros(subrubros, codigoRubro)
   renderOptions(subrubros, '#select-subrubro')
+}
+
+async function resetSelects() {
+  const selects = document.querySelectorAll('select')
+
+  for (let i = 1; i < selects.length; i++) {
+    const $option = selects[i].querySelector('option')
+    $option.selected = true
+  }
 }
 
 async function handleChangeSubrubro(e) {
