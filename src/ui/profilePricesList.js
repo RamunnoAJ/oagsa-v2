@@ -159,37 +159,35 @@ function renderOptions(options, selectID) {
       break
   }
 
-  const sortedOptions = options.sort((a, b) =>
-    a.descripcion.localeCompare(b.descripcion)
-  )
+  const sortedOptions = options.sort((a, b) => a.name.localeCompare(b.name))
 
   sortedOptions.forEach(option => {
     const $option = document.createElement('option')
 
     switch (selectID) {
       case '#select-rubro':
-        $option.value = option.codigoRubro.trim()
-        $option.textContent = option.descripcion.trim()
+        $option.value = option.idCategory.trim()
+        $option.textContent = option.name.trim()
         break
 
       case '#select-subrubro':
-        $option.value = option.codigoSubRubro.trim()
-        $option.textContent = option.descripcion.trim()
+        $option.value = option.idSubcategory.trim()
+        $option.textContent = option.name.trim()
         break
 
       case '#select-brand':
-        $option.value = option.descripcion.trim()
-        $option.textContent = option.descripcion.trim()
+        $option.value = option.name.trim()
+        $option.textContent = option.name.trim()
         break
 
       case '#select-diametro':
-        $option.value = option.descripcion.trim()
-        $option.textContent = option.descripcion.trim()
+        $option.value = option.name.trim()
+        $option.textContent = option.name.trim()
         break
 
       case '#select-medida':
-        $option.value = option.descripcion.trim()
-        $option.textContent = option.descripcion.trim()
+        $option.value = option.name.trim()
+        $option.textContent = option.name.trim()
         break
     }
 
@@ -200,12 +198,12 @@ function renderOptions(options, selectID) {
 function renderTableRows(item, parentElement) {
   const tableRow = document.createElement('tr')
   tableRow.innerHTML = `
-    <td>${item.codigoArticulo}</td>
-    <td>${item.descripcion}</td>
-    <td>${item.marca}</td>
-    <td>$${item.precio.toFixed(0)}</td>
-    <td class="visually-hidden-mobile">${item.diametro}</td>
-    <td class="visually-hidden-mobile">${item.medidas}</td>
+    <td>${item.id}</td>
+    <td>${item.name}</td>
+    <td>${item.brand}</td>
+    <td>$${item.price.toFixed(0)}</td>
+    <td class="visually-hidden-mobile">${item.diameter}</td>
+    <td class="visually-hidden-mobile">${item.measure}</td>
   `
 
   parentElement.appendChild(tableRow)
@@ -227,37 +225,37 @@ async function handleChangeSubrubro(e) {
   const productString = storage.getProducts()
   const products = await getProducts(productString)
 
-  const marcas = removeDuplicates(products.map(product => product.marca))
+  const marcas = removeDuplicates(products.map(product => product.brand))
   const arrayMarcas = []
 
   for (let i = 0; i < marcas.length; i++) {
-    const marca = { descripcion: marcas[i] }
+    const marca = { name: marcas[i] }
 
-    if (marca.descripcion.length > 0) {
+    if (marca.name.length > 0) {
       arrayMarcas.push(marca)
     }
   }
 
-  const diametros = removeDuplicates(products.map(product => product.diametro))
+  const diametros = removeDuplicates(products.map(product => product.diameter))
   const arrayDiametros = []
 
   for (let i = 0; i < diametros.length; i++) {
-    const diametro = { descripcion: diametros[i] }
+    const diametro = { name: diametros[i] }
 
-    if (diametro.descripcion !== '0') {
+    if (diametro.name !== '0') {
       arrayDiametros.push(diametro)
     }
   }
 
   arrayDiametros.sort()
 
-  const medidas = removeDuplicates(products.map(product => product.medidas))
+  const medidas = removeDuplicates(products.map(product => product.measure))
   const arrayMedidas = []
 
   for (let i = 0; i < medidas.length; i++) {
-    const medida = { descripcion: medidas[i] }
+    const medida = { name: medidas[i] }
 
-    if (medida.descripcion !== '0' && medida.descripcion !== 'Sin medidas') {
+    if (medida.name !== '0' && medida.name !== 'Sin medidas') {
       arrayMedidas.push(medida)
     }
   }

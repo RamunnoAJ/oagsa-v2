@@ -5,6 +5,7 @@ import { addToCart } from '../cart.js'
 import { sortProducts } from '../utils/sortProducts.js'
 import { getDolar } from '../api/dolar.js'
 import { getUserFromStorage } from '../storage/storageData.js'
+import { ArticleOrder } from '../entities/articles.js'
 
 const $form = document.querySelector('#store')
 $form.addEventListener('change', handleChangeForm)
@@ -45,6 +46,7 @@ async function handleChangeForm(e) {
 
     const products = await getProducts(productsString)
     storage.saveToLocalStorage('products_store', products)
+
     renderProducts(products)
   }
 }
@@ -55,7 +57,7 @@ async function handleSubmitSearch(e) {
   const products = storage.getFromLocalStorage('products_store')
 
   const newProducts = products.filter(product => {
-    return product.codigoArticulo.includes(searchValue)
+    return product.id.includes(searchValue)
   })
 
   renderProducts(newProducts)
@@ -73,15 +75,15 @@ function renderOptions(options, selectID) {
 
   switch (selectID) {
     case '#clases':
-      sortedOptions = options.sort((a, b) => a.nombre.localeCompare(b.nombre))
+      sortedOptions = options.sort((a, b) => a.name.localeCompare(b.name))
 
       $select.innerHTML = `<option disabled selected value=''>Seleccione una clase</option>`
 
       sortedOptions.forEach(option => {
         const $option = document.createElement('option')
-        $option.value = option.idSuperRubro
-        $option.textContent = capitalizeFirstLetter(option.nombre)
-        $option.dataset.rubro = option.idSuperRubro
+        $option.value = option.id
+        $option.textContent = capitalizeFirstLetter(option.name)
+        $option.dataset.rubro = option.id
         $select.appendChild($option)
       })
       break
@@ -143,9 +145,9 @@ async function renderRubros(idClase) {
   rubros.forEach(rubro => {
     const $option = document.createElement('option')
     $option.classList = 'store__rubros__item bg-primary'
-    $option.textContent = capitalizeFirstLetter(rubro.descripcion.toLowerCase())
-    $option.value = rubro.codigoRubro
-    $option.dataset.rubro = rubro.codigoRubro
+    $option.textContent = capitalizeFirstLetter(rubro.name.toLowerCase())
+    $option.value = rubro.id
+    $option.dataset.rubro = rubro.id
 
     $selectRubros.appendChild($option)
   })
@@ -169,17 +171,17 @@ const renderInputs = async (codigoRubro = '') => {
 
   const products = await getProducts(`precio/rubro?pCodigoRubro=${codigoRubro}`)
 
-  const marcas = products.map(product => product.marca)
+  const marcas = products.map(product => product.brand)
   const uniqueMarcas = [...new Set(marcas)]
 
   renderOptions(uniqueMarcas, '#marcas')
 
-  const medidas = products.map(product => product.medidas)
+  const medidas = products.map(product => product.measure)
   const uniqueMedidas = [...new Set(medidas)]
 
   renderOptions(uniqueMedidas, '#medidas')
 
-  const diametros = products.map(product => product.diametro)
+  const diametros = products.map(product => product.diameter)
   const uniqueDiametros = [...new Set(diametros)]
 
   renderOptions(uniqueDiametros, '#diametros')
@@ -194,7 +196,7 @@ const renderProducts = async products => {
     sortProducts(products)
 
     products.forEach(product => {
-      if (product.precio) {
+      if (product.price) {
         renderProductCard(product, $storeProducts)
       }
     })
@@ -217,15 +219,15 @@ function renderProductCard(item, parentElement) {
 function createProductCard(item, user) {
   const $card = document.createElement('article')
   $card.classList = 'store__product__card'
-  let image = item.url[0]
+  let image = item.images[0]
 
   if (!image) {
-    image = switchImage(item.codigoRubro.trim())
+    image = switchImage(item.idCategory.trim())
   }
 
   const $image = document.createElement('img')
   $image.src = 'https://' + image
-  $image.alt = item.descripcion
+  $image.alt = item.name
   $image.classList = 'store__product__card__image'
   $card.appendChild($image)
 
@@ -234,18 +236,18 @@ function createProductCard(item, user) {
   $card.appendChild($info)
 
   const $title = document.createElement('h3')
-  $title.textContent = item.descripcion
+  $title.textContent = item.name
   $info.appendChild($title)
 
   const $price = document.createElement('div')
   if (user) $info.appendChild($price)
   const $article = document.createElement('span')
-  $article.textContent = item.codigoArticulo
+  $article.textContent = item.id
   $price.appendChild($article)
 
   const $priceValue = document.createElement('span')
   $priceValue.classList = 'fw-bold'
-  $priceValue.textContent = ` $${item.precio.toFixed(0)}`
+  $priceValue.textContent = ` $${item.price.toFixed(0)}`
   $price.appendChild($priceValue)
 
   const $stock = document.createElement('p')
@@ -253,7 +255,7 @@ function createProductCard(item, user) {
   if (user) $info.appendChild($stock)
 
   const $stockQuantity = document.createElement('span')
-  $stockQuantity.textContent = item.stockUnidades
+  $stockQuantity.textContent = item.stock
   $stock.appendChild($stockQuantity)
 
   const $quantity = document.createElement('div')
@@ -271,7 +273,7 @@ function createProductCard(item, user) {
 
   const $quantityInput = document.createElement('input')
   $quantityInput.type = 'number'
-  $quantityInput.id = `quantity-${item.codigoArticulo}`
+  $quantityInput.id = `quantity-${item.id}`
   $quantityInput.min = 0
   $quantityInput.value = 0
   $quantity.appendChild($quantityInput)
@@ -291,7 +293,25 @@ function createProductCard(item, user) {
     'button-sm bg-secondary-300 bg-hover-secondary-400 mt-2'
   $addToCart.textContent = 'Añadir al carro'
   $addToCart.addEventListener('click', () => {
-    addToCart(item)
+    const newItem = new ArticleOrder(
+      0,
+      item.id,
+      item.name,
+      item.price,
+      $quantityInput.value,
+      0,
+      '0',
+      '0',
+      0,
+      item.price * $quantityInput.value,
+      0,
+      item.price,
+      item.price * $quantityInput.value,
+      0,
+      false,
+      item.images
+    )
+    addToCart(newItem)
   })
   if (user) $info.appendChild($addToCart)
 

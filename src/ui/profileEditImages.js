@@ -96,7 +96,7 @@ async function renderImages(article) {
   $addButton.className = 'button-sm bg-secondary-300 bg-hover-secondary-400'
   $addButton.textContent = 'Agregar'
   $addButton.addEventListener('click', () => {
-    renderModalContent(article.codigoArticulo)
+    renderModalContent(article.id)
   })
   $container.appendChild($addButton)
 }

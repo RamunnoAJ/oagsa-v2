@@ -14,6 +14,8 @@ import { getCart, saveCart } from '../storage/cart.js'
 import { getUserFromStorage } from '../storage/storageData.js'
 import { triggerSweetAlert } from '../utils/sweetAlert.js'
 
+/** @typedef {import('../entities/articles.js').ArticleOrder} ArticleOrder */
+
 const defaultImage =
   'https://firebasestorage.googleapis.com/v0/b/oagsa-1d9e9.appspot.com/o/Web%20Oagsa%20Iconos%2FOAGSA%20-%20Iconos%20Web%2011%20-%20HERRAMIENTA.png?alt=media&token=b06bbe3a-cd7e-4a80-a4e7-3bccb9a8df33'
 
@@ -39,7 +41,7 @@ export function showToast(message, url = '') {
 
 if (window.location.href.includes('cart')) {
   const cart = getCart() || {}
-  renderCart(cart, cart.borrador)
+  renderCart(cart)
 }
 
 export async function renderCart(cart) {
@@ -137,7 +139,7 @@ async function renderClients(cart) {
   $clientsSelect.name = 'selectClient'
   $clientsSelect.id = 'selectClient'
   $clientsSelect.classList.add('cart__clients-select')
-  $clientsSelect.select = cart.codigoCliente
+  $clientsSelect.select = cart.idClient
   if (cart.borrador === 1) $clientsSelect.disabled = true
 
   $clientsSelect.addEventListener('change', () => {
@@ -160,8 +162,8 @@ function renderOptions(options, select) {
     case '#selectClient':
       $select.innerHTML =
         '<option value="" selected disabled>Seleccione un cliente</option>'
-      value = 'codigoCliente'
-      textContent = 'razonSocial'
+      value = 'id'
+      textContent = 'name'
       sortedOptions = options.sort(function (a, b) {
         return a[textContent] > b[textContent] ? 1 : -1
       })
@@ -171,7 +173,7 @@ function renderOptions(options, select) {
       $select.innerHTML =
         '<option value="" selected disabled>Seleccione...</option>'
       value = 'id'
-      textContent = 'descripcion'
+      textContent = 'description'
       sortedOptions = options.sort(function (a, b) {
         return a[value] > b[value] ? 1 : -1
       })
@@ -180,8 +182,8 @@ function renderOptions(options, select) {
     case '#condicionVenta':
       $select.innerHTML =
         '<option value="" selected disabled>Seleccione...</option>'
-      value = 'codigoCondicionVenta'
-      textContent = 'descripcion'
+      value = 'id'
+      textContent = 'description'
       sortedOptions = options.sort(function (a, b) {
         return a[value] > b[value] ? 1 : -1
       })
@@ -193,18 +195,18 @@ function renderOptions(options, select) {
   sortedOptions.forEach(option => {
     const $option = document.createElement('option')
     $option.value = option[value]
-    if (value === 'codigoCliente') {
+    if (value === 'id') {
       $option.textContent = `${option[textContent]} - ${option[value]}`
       if ($option.value === cart.idClient?.toString()) {
         $option.selected = true
+      } else if ($option.value === cart.idSellCondition.toString()) {
+        $option.textContent = `${option[textContent]}`
+        $option.selected = true
+      } else if ($option.value === cart.idFreight.toString()) {
+        $option.textContent = `${option[textContent]}`
+        $option.selected = true
       }
     } else {
-      if ($option.value === cart.idSellCondition?.toString()) {
-        $option.selected = true
-      } else if ($option.value === cart.idFreight?.toString()) {
-        $option.selected = true
-      }
-
       $option.textContent = option[textContent]
     }
 
@@ -454,14 +456,18 @@ function renderTotalRow() {
   $cart.appendChild($totalRow)
 }
 
+/**
+ * @param {ArticleOrder} item
+ * @returns {HTMLDivElement}
+ * */
 function createProductCard(item) {
   const $card = document.createElement('div')
   $card.classList.add('cart__card')
 
   const $image = document.createElement('img')
-  if (item.imagenesUrl[0]) {
-    if (item.imagenesUrl[0].includes('G:\\FerozoWebHosting')) {
-      const source = item.imagenesUrl[0]
+  if (item.images[0]) {
+    if (item.images[0].includes('G:\\FerozoWebHosting')) {
+      const source = item.images[0]
         .split('\\')
         .slice(2)
         .filter(item => {
@@ -470,40 +476,40 @@ function createProductCard(item) {
         .join('\\')
       $image.src = `https://www.${source}`
     } else {
-      $image.src = `https://www.${item.imagenesUrl[0]}`
+      $image.src = `https://www.${item.images[0]}`
     }
   } else {
     $image.src = defaultImage
   }
-  $image.alt = item.descripcionArticulo
+  $image.alt = item.name
 
   const $info = document.createElement('div')
   $info.classList.add('cart__info')
 
   const $title = document.createElement('h3')
   $title.classList.add('fw-bold')
-  $title.textContent = item.descripcionArticulo
+  $title.textContent = item.name
 
   const $code = document.createElement('p')
   $code.classList.add('fw-semi-bold')
-  $code.textContent = item.codigoArticulo
+  $code.textContent = item.id
 
   const $price = document.createElement('p')
   $price.classList.add('fw-bold')
-  $price.textContent = `$${item.precio.toFixed(0)}`
+  $price.textContent = `$${item.price.toFixed(0)}`
 
   const $discount = document.createElement('p')
   $discount.className = 'fw-semi-bold cart__discount'
 
   const $discountText = document.createElement('label')
-  $discountText.htmlFor = `porcentajeDescuento-${item.codigoArticulo}`
+  $discountText.htmlFor = `porcentajeDescuento-${item.id}`
   $discountText.textContent = 'Descuento: '
 
   const $discountInput = document.createElement('input')
   $discountInput.className = 'ml-1'
-  $discountInput.name = `porcentajeDescuento-${item.codigoArticulo}`
-  $discountInput.id = `porcentajeDescuento-${item.codigoArticulo}`
-  $discountInput.value = item.porcentajeDescuento
+  $discountInput.name = `porcentajeDescuento-${item.id}`
+  $discountInput.id = `porcentajeDescuento-${item.id}`
+  $discountInput.value = item.discountPercentage
   $discountInput.type = 'number'
   $discountInput.min = 0
   $discountInput.max = 100
@@ -519,10 +525,10 @@ function createProductCard(item) {
   $quantity.classList.add('fw-bold')
 
   const $quantityInput = document.createElement('input')
-  $quantityInput.id = `cantidad-${item.codigoArticulo}`
+  $quantityInput.id = `cantidad-${item.id}`
   $quantityInput.type = 'number'
   $quantityInput.min = 1
-  $quantityInput.value = item.cantidadPedida
+  $quantityInput.value = item.quantity
   $quantityInput.addEventListener('change', () => {
     updateCart(item, $quantityInput.value, $discountInput.value, renderArticles)
   })
@@ -552,7 +558,7 @@ function createProductCard(item) {
 
   const $totalArticle = document.createElement('p')
   $totalArticle.className = 'total__article fw-bold'
-  $totalArticle.textContent = `$${item.montoTotal.toFixed(0)}`
+  $totalArticle.textContent = `$${item.priceTotal.toFixed(0)}`
 
   const $delete = document.createElement('button')
   $delete.innerHTML = `<i class="fa fa-trash-alt"></i>`
