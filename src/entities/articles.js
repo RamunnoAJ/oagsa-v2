@@ -54,3 +54,51 @@ export class ArticleOrder {
     this.images = images
   }
 }
+
+export class Article {
+  /**
+   * @typedef {Article}
+   * @param {number} id
+   * @param {number} idCategory
+   * @param {number} idSubcategory
+   * @param {string} name
+   * @param {string} diameter
+   * @param {string} brand
+   * @param {string} measure
+   * @param {boolean} cover
+   * @param {number} price
+   * @param {number} isInWeb
+   * @param {string} stockColor
+   * @param {number} stock
+   * @param {string[]} images
+   * */
+  constructor(
+    id,
+    idCategory,
+    idSubcategory,
+    name,
+    diameter,
+    brand,
+    measure,
+    cover,
+    price,
+    isInWeb,
+    stockColor,
+    stock,
+    images
+  ) {
+    this.id = id
+    this.idCategory = idCategory
+    this.idSubcategory = idSubcategory
+    this.name = name
+    this.diameter = diameter
+    this.brand = brand
+    this.measure = measure
+    this.cover = cover
+    this.price = price
+    this.isInWeb = isInWeb
+    this.stockColor = stockColor
+    this.stock = stock
+    this.images = images
+  }
+}
