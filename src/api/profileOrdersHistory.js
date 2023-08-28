@@ -1,4 +1,5 @@
 import getDataFromDB from '../utils/getDataFromDB.js'
+import { sellConditionMapper } from '../mappers/sellConditions.js'
 
 export async function getOrders(id = 0, idCliente = 0, offset = 1) {
   if (id === 1) id = 0
@@ -13,13 +14,13 @@ export async function getOrders(id = 0, idCliente = 0, offset = 1) {
   return orders
 }
 
-export async function getCondicionVenta(codigoCondicionVenta) {
+export async function getCondicionVenta(id) {
   const response = await getDataFromDB(`orden-compra/condicionventa`)
-  const condicionVenta = await response.data
+  const condicionVentaApi = await response.data
+  const condicionVenta = sellConditionMapper(condicionVentaApi)
 
-  const description = condicionVenta.filter(
-    object => object.codigoCondicionVenta === codigoCondicionVenta
-  )[0]?.descripcion
+  const description = condicionVenta.filter(object => object.id === id)[0]
+    ?.description
 
   return description
 }

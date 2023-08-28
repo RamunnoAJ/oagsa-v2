@@ -1,18 +1,17 @@
 import { BASE_URL } from '../utils/getDataFromDB.js'
+import { sellConditionMapper } from '../mappers/sellConditions.js'
+import { freightMapper } from '../mappers/freights.js'
+import { postOrderMapper } from '../mappers/orders.js'
 
 export async function postBuyOrder(url, postBody) {
-  postBody.listaDetalle.forEach(item => {
-    if (item.stockUnidades) delete item.stockUnidades
-    if (item.imagenesUrl) item.imagenesUrl = []
-  })
-
+  const order = postOrderMapper(postBody)
   const response = await fetch(`${BASE_URL}${url}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
       Accept: 'application/json',
     },
-    body: JSON.stringify(postBody),
+    body: JSON.stringify(order),
   })
   if (!response.ok) {
     throw new Error('Respuesta rechazada')
@@ -24,6 +23,14 @@ export async function getFields(url) {
   if (!response.ok) {
     throw new Error('Respuesta rechazada')
   }
-  const data = await response.json()
-  return data.data
+  const dataApi = await response.json()
+  let data = dataApi.data
+
+  if ('codigoCondicionVenta' in data[0]) {
+    data = data.map(data => sellConditionMapper(data))
+  } else {
+    data = data.map(data => freightMapper(data))
+  }
+
+  return data
 }
