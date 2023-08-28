@@ -2,19 +2,13 @@ import { sortProducts } from '../sortProducts.js'
 
 describe('sortProducts', () => {
   test('should sort products', () => {
-    const products = [
-      { codigoArticulo: 2 },
-      { codigoArticulo: 5 },
-      { codigoArticulo: 4 },
-      { codigoArticulo: 3 },
-      { codigoArticulo: 1 },
-    ]
+    const products = [{ id: 2 }, { id: 5 }, { id: 4 }, { id: 3 }, { id: 1 }]
     const sortedProducts = [
-      { codigoArticulo: 1 },
-      { codigoArticulo: 2 },
-      { codigoArticulo: 3 },
-      { codigoArticulo: 4 },
-      { codigoArticulo: 5 },
+      { id: 1 },
+      { id: 2 },
+      { id: 3 },
+      { id: 4 },
+      { id: 5 },
     ]
 
     sortProducts(products)
@@ -22,23 +16,23 @@ describe('sortProducts', () => {
     expect(products).toEqual(sortedProducts)
   })
 
-  test('should sort products without codigoArticulo', () => {
+  test('should sort products without id', () => {
     const products = [
-      { nombre: 2 },
-      { nombre: 5 },
-      { nombre: 4 },
-      { nombre: 3 },
-      { nombre: 1 },
+      { name: 2 },
+      { name: 5 },
+      { name: 4 },
+      { name: 3 },
+      { name: 1 },
     ]
 
     sortProducts(products)
 
     expect(products).toEqual([
-      { nombre: 2 },
-      { nombre: 5 },
-      { nombre: 4 },
-      { nombre: 3 },
-      { nombre: 1 },
+      { name: 2 },
+      { name: 5 },
+      { name: 4 },
+      { name: 3 },
+      { name: 1 },
     ])
   })
 })

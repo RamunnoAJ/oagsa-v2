@@ -1,4 +1,4 @@
-import { clearCart, getCart, saveCart } from "../cart";
+import { clearCart, getCart, saveCart } from '../cart'
 
 describe('getCart function', () => {
   beforeEach(() => {
@@ -8,13 +8,18 @@ describe('getCart function', () => {
   })
 
   test('should return an empty array if there is no cart', () => {
-    expect(getCart()).toEqual({ listaDetalle: [] })
+    expect(getCart()).toEqual({ detail: [] })
   })
 
   test('should return the cart', () => {
-    localStorage.setItem('cart', '{"listaDetalle": [{ "codigoArticulo": "1", "precio": 100, "cantidadPedida": 1 }]}')
+    localStorage.setItem(
+      'cart',
+      '{"detail": [{ "id": "1", "price": 100, "quantity": 1 }]}'
+    )
 
-    expect(getCart()).toEqual({ listaDetalle: [{ codigoArticulo: '1', precio: 100, cantidadPedida: 1 }] })
+    expect(getCart()).toEqual({
+      detail: [{ id: '1', price: 100, quantity: 1 }],
+    })
   })
 })
 
@@ -26,10 +31,13 @@ describe('clearCart function', () => {
   })
 
   test('should clear the cart', () => {
-    localStorage.setItem('cart', '{"listaDetalle": [{ "codigoArticulo": "1", "precio": 100, "cantidadPedida": 1 }]}')
+    localStorage.setItem(
+      'cart',
+      '{"detail": [{ "id": "1", "price": 100, "quantity": 1 }]}'
+    )
 
     clearCart()
-    expect(localStorage.setItem).toHaveBeenCalledWith('cart', '{"listaDetalle": []}')
+    expect(localStorage.setItem).toHaveBeenCalledWith('cart', '{"detail": []}')
   })
 })
 
@@ -41,7 +49,7 @@ describe('saveCart function', () => {
   })
 
   test('should save the cart', () => {
-    saveCart({name:'john'})
-    expect(localStorage.setItem).toHaveBeenCalledWith('cart', "{\"name\":\"john\"}")
+    saveCart({ name: 'john' })
+    expect(localStorage.setItem).toHaveBeenCalledWith('cart', '{"name":"john"}')
   })
 })
