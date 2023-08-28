@@ -2,7 +2,7 @@ import { postBuyOrder } from './api/cart.js'
 import { removeDraft } from './api/profileDrafts.js'
 import { getCart, saveCart, clearCart } from './storage/cart.js'
 import { checkLocalStorage } from './storage/profile.js'
-import { renderCart, showToast } from './ui/cart.js'
+import { showToast } from './ui/cart.js'
 import { navigateToDashboard } from './ui/login.js'
 
 checkLocalStorage()
@@ -42,18 +42,20 @@ export async function checkout(cart) {
     return
   }
 
-  const order = createOrder(cart)
-  if (order.borrador === 1) {
-    removeDraft(order.numeroNota)
-    order.borrador = 0
+  const order = cart
+  if (order.draft === 1) {
+    removeDraft(order.id)
+    order.draft = 0
   }
 
-  order.numeroNota = 0
+  order.id = 0
   await postBuyOrder('orden-compra', order)
   await emptyCart()
   showToast('Compra realizada exitosamente.')
-  renderCart(cart)
-  window.location.replace('../pages/store.html')
+
+  setTimeout(() => {
+    navigateToDashboard()
+  }, 1500)
 }
 
 export async function sendToDraft(cart) {
@@ -62,8 +64,8 @@ export async function sendToDraft(cart) {
     return
   }
 
-  const order = createOrder(cart)
-  order.borrador = 1
+  const order = cart
+  order.draft = 1
   saveCart(order)
   await postBuyOrder('orden-compra', order)
   emptyCart()
@@ -71,11 +73,11 @@ export async function sendToDraft(cart) {
 
   setTimeout(() => {
     navigateToDashboard()
-  }, 2000)
+  }, 1500)
 }
 
 export function addToCart(item) {
-  const quantityInputId = `quantity-${item.codigoArticulo}`
+  const quantityInputId = `quantity-${item.id}`
   const $quantityInput = document.getElementById(quantityInputId)
   let quantity = $quantityInput.value
   quantity = Number(quantity)
@@ -83,8 +85,9 @@ export function addToCart(item) {
   if (id) {
     item.id = id
   }
+  item.quantity = quantity
 
-  const newItem = createArticle(item, quantity)
+  const newItem = item
   if (quantity > 0) {
     const cart = getCart()
     const index = cart.detail.findIndex(i => i.id === item.id)
@@ -133,7 +136,7 @@ export function getTotalQuantity(cart) {
     (acc, item) => acc + Number(item.quantity),
     0
   )
-  cart.total = totalQuantity
+  cart.items = totalQuantity
   saveCart(cart)
   return Number(totalQuantity)
 }
@@ -197,10 +200,10 @@ export function updateDiscount(item, discount) {
   const detail = cart.detail[index]
   const discountPercentage = Number(discount)
   detail.discountPercentage = discountPercentage
-  detail.priceDisount = calculateDiscount(discountPercentage, detail.price)
+  detail.priceDiscount = calculateDiscount(discountPercentage, detail.price)
   detail.discount = `${detail.discountPercentage}%`
   detail.idDiscount = `${detail.discountPercentage}`
-  detail.totalDiscount = Number(detail.priceDisount * detail.quantity)
+  detail.totalDiscount = Number(detail.priceDiscount * detail.quantity)
   detail.priceTotal = detail.totalDiscount
   saveCart(cart)
 }

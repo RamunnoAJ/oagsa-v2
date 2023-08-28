@@ -78,7 +78,7 @@ function renderOptions(clients) {
   clients.forEach(client => {
     const option = document.createElement('option')
     option.value = client.id
-    option.textContent = `${client.id} - ${client.name}`
+    option.textContent = `${client.name} - ${client.id}`
 
     $selectClient.appendChild(option)
   })
@@ -89,7 +89,7 @@ export async function renderOrders(orders, parentElement) {
     document.querySelector('.fl-table').remove()
   }
 
-  const sortedOrders = orders.data.sort((a, b) => a.numeroNota - b.numeroNota)
+  const sortedOrders = orders.data.sort((a, b) => a.id - b.id)
   const table = await createTable()
   parentElement.appendChild(table)
 
@@ -138,16 +138,16 @@ function renderTableRows(orders, parentElement) {
     orders.forEach(order => {
       const row = document.createElement('tr')
       row.className = 'orders__table__row'
-      row.dataset.id = order.numeroNota
+      row.dataset.id = order.id
       row.innerHTML = `
-        <td>${order.numeroNota}</td>
-        <td>${order.codigoCliente}</td>
+        <td>${order.id}</td>
+        <td>${order.idClient}</td>
         <td class="visually-hidden-mobile">${formatDate(
-          order.fechaNota.split('T')[0]
+          order.date.split('T')[0]
         )}</td>
-        <td>${order.totalItems}</td>
-        <td>$${order.totalPesos.toFixed(0)}</td>
-        <td class="visually-hidden-mobile">${order.estado}</td>
+        <td>${order.items}</td>
+        <td>$${order.total.toFixed(0)}</td>
+        <td class="visually-hidden-mobile">${order.status}</td>
       `
 
       row.addEventListener('click', () => {
