@@ -1,4 +1,4 @@
-/** @typedef {import('./articles.js').ArticleOrder} */
+/** @typedef {import('./articles.js').ArticleOrder} ArticleOrder */
 
 export class Order {
   /**
