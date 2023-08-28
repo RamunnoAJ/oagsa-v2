@@ -54,7 +54,7 @@ export async function renderModalContent(order) {
   const $modal = document.querySelector('#modal')
   const $modalTitle = document.createElement('h2')
   $modalTitle.className = 'modal__title mb-4'
-  $modalTitle.textContent = `# ${order.numeroNota}`
+  $modalTitle.textContent = `# ${order.id}`
   $modal.appendChild($modalTitle)
 
   const $modalContent = await createModalContent(order)
@@ -66,7 +66,7 @@ export async function renderModalContent(order) {
   const $modalTable = document.querySelector('#modal__table-body')
   $modalTable.innerHTML = ''
 
-  order.listaDetalle.forEach(article => {
+  order.detail.forEach(article => {
     const $article = createProductRow(article)
     $modalTable.appendChild($article)
   })
@@ -92,14 +92,12 @@ function createProductRow(article) {
   const $row = document.createElement('tr')
   $row.classList.add('modal__product__row')
   $row.innerHTML = `
-    <td>${article.codigoArticulo}</td>
-    <td>${article.descripcionArticulo}</td>
+    <td>${article.id}</td>
+    <td>${article.name}</td>
+    <td>$${article.totalDiscount.toFixed(0) || article.price.toFixed(0)}</td>
+    <td>${article.quantity}</td>
     <td>$${
-      article.precioConDescuento.toFixed(0) || article.precio.toFixed(0)
-    }</td>
-    <td>${article.cantidadPedida}</td>
-    <td>$${
-      article.importeDescuento.toFixed(0) || article.montoTotal.toFixed(0)
+      article.priceDiscount.toFixed(0) || article.priceTotal.toFixed(0)
     }</td>
   `
   return $row
@@ -110,22 +108,22 @@ async function createModalContent(order) {
   $modalContent.className = 'modal__content mb-4'
 
   const descriptionCondicionVenta = await getCondicionVenta(
-    order.codigoCondicionVenta
+    order.idSellCondition
   )
 
   $modalContent.innerHTML = `
     <p class="mb-2">Estado: <span>${order.estado}</span></p>
     <p class="mb-2">Fecha: <span>${formatDate(
-      order.fechaNota.split('T')[0]
+      order.date.split('T')[0]
     )}</span></p>
     <p class="mb-2">Descripción flete: <span>${
-      order.descripcionFlete || 'No definido'
+      order.freight || 'No definido'
     }</span></p>
     <p class="mb-2">Condicion de venta: <span>${
       descriptionCondicionVenta || 'No definido'
     }</span></p>
     <p class="mb-2">Observaciones: <span>${
-      order.observaciones || 'Ninguna'
+      order.observations || 'Ninguna'
     }</span></p>
   `
 
