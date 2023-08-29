@@ -1,3 +1,11 @@
+/**
+ * @param {string} title
+ * @param {string} text
+ * @param {string} confirmButtonText
+ * @param {string} fireTitle
+ * @param {string} fireText
+ * @param {function} callback
+ * */
 export async function triggerSweetAlert(
   title,
   text,

@@ -1,3 +1,7 @@
+/**
+ * @typedef {import('./clients.js').Client} Client
+ * @param {Client[]} clients
+ * */
 export function sortClients(clients) {
   clients.sort((a, b) => {
     if (a?.name < b?.name) {
