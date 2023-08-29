@@ -1,5 +1,6 @@
 import getDataFromDB from '../utils/getDataFromDB.js'
 import { sellConditionMapper } from '../mappers/sellConditions.js'
+import { orderMapper } from '../mappers/orders.js'
 
 /**
  * @param {number} id
@@ -12,7 +13,9 @@ export async function getOrders(id = 0, idCliente = 0, offset = 1) {
   const response = await getDataFromDB(
     `orden-compra/vendedor?pCodigoVendedor=${id}&pCodigoCliente=${idCliente}&pBorrador=0&pPageSize=15&pPageNumber=${offset}`
   )
-  const orders = await response
+  const ordersApi = await response.data
+  const orders = ordersApi.map(order => orderMapper(order))
+
   orders.next = offset + 1
   orders.previous = offset - 1 || null
   orders.totalPages = Math.ceil(orders.total / 15)

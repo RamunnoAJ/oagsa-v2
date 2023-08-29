@@ -89,7 +89,7 @@ export async function renderOrders(orders, parentElement) {
     document.querySelector('.fl-table').remove()
   }
 
-  const sortedOrders = orders.data.sort((a, b) => a.id - b.id)
+  const sortedOrders = orders.sort((a, b) => a.id - b.id)
   const table = await createTable()
   parentElement.appendChild(table)
 
