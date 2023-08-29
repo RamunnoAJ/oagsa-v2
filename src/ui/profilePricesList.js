@@ -203,7 +203,7 @@ function renderTableRows(item, parentElement) {
     <td>${item.codigoArticulo}</td>
     <td>${item.descripcion}</td>
     <td>${item.marca}</td>
-    <td>$${item.precio}</td>
+    <td>$${item.precio.toFixed(0)}</td>
     <td class="visually-hidden-mobile">${item.diametro}</td>
     <td class="visually-hidden-mobile">${item.medidas}</td>
   `

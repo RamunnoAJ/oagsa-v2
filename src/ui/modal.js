@@ -1,4 +1,5 @@
 import { getCondicionVenta } from '../api/profileOrdersHistory.js'
+import { formatDate } from '../utils/formatDate.js'
 
 export async function createModal() {
   const $modal = document.createElement('div')
@@ -82,7 +83,7 @@ function createTotalRow(total) {
   <td></td>
   <td></td>
   <td>${total.totalItems}</td>
-  <td>$${total.totalPesos}</td>
+  <td>$${total.totalPesos.toFixed(0)}</td>
   `
   return $totalRow
 }
@@ -94,10 +95,12 @@ function createProductRow(article) {
     <td>${article.codigoArticulo}</td>
     <td>${article.descripcionArticulo}</td>
     <td>$${
-      article.precioConDescuento.toFixed(2) || article.precio.toFixed(2)
+      article.precioConDescuento.toFixed(0) || article.precio.toFixed(0)
     }</td>
     <td>${article.cantidadPedida}</td>
-    <td>$${article.importeDescuento || article.montoTotal}</td>
+    <td>$${
+      article.importeDescuento.toFixed(0) || article.montoTotal.toFixed(0)
+    }</td>
   `
   return $row
 }
@@ -112,7 +115,9 @@ async function createModalContent(order) {
 
   $modalContent.innerHTML = `
     <p class="mb-2">Estado: <span>${order.estado}</span></p>
-    <p class="mb-2">Fecha: <span>${order.fechaNota.split('T')[0]}</span></p>
+    <p class="mb-2">Fecha: <span>${formatDate(
+      order.fechaNota.split('T')[0]
+    )}</span></p>
     <p class="mb-2">Descripción flete: <span>${
       order.descripcionFlete || 'No definido'
     }</span></p>

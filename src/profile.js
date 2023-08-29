@@ -1,38 +1,51 @@
+import { profileAdministration } from './profileAdministration.js'
 import { profileClientAccount } from './profileClientAccount.js'
 import { profileClientList } from './profileClientList.js'
 import { profileDrafts } from './profileDrafts.js'
+import { profileEditImages } from './profileEditImages.js'
 import { profileOrdersHistory } from './profileOrdersHistory.js'
 import { profilePricesList } from './profilePricesList.js'
-import { checkLocalStorage } from './storage/profile.js'
+import { profileInterfaceGenerator } from './profileInterfaceGenerator.js'
 import { getUserFromStorage } from './storage/storageData.js'
 import { navigateToLogin } from './ui/login.js'
+import { isMaintaining } from './ui/maintenance.js'
+import { renderDashboard, renderTitle } from './ui/profile.js'
 
-checkLocalStorage()
-
-const $profileTitle = document.querySelector('#profileTitle')
-const $profileList = document.querySelector('#profileList')
-const $profileInfoContainer = document.querySelector('#profileInfoContainer')
-
+const $container = document.querySelector('.dashboard-container')
 
 if (window.location.href.includes('dashboard')) {
-  $profileList.innerHTML = ''
-  $profileList.innerHTML += '<li>Lista de precios</li>'
-
+  const list = ['Lista de precios']
   const user = JSON.parse(getUserFromStorage())
 
   if (user.role === 1 || user.role === 2) {
-    const itemsList = ['Lista de clientes', 'Cuenta corriente', 'Borrador de pedidos', 'Historial de pedidos']
+    const newItems = [
+      'Lista de clientes',
+      'Cuenta corriente',
+      'Borrador de pedidos',
+      'Historial de pedidos',
+    ]
 
-    itemsList.forEach(item => {
-      $profileList.innerHTML += `<li>${item}</li>`
+    newItems.forEach(item => {
+      list.push(item)
     })
   }
 
-  $profileList.innerHTML += `<li><a href="./store.html">Tienda</a></li>`
+  if (user.role === 1) {
+    const newItems = ['Editar imágenes', 'Exportador de Notas', 'Administrar']
+    newItems.forEach(item => {
+      list.push(item)
+    })
+  }
+
+  await renderDashboard($container, list)
+
+  const $profileList = document.querySelector('#profileList')
+  const $profileTitle = document.querySelector('#profileTitle')
+  const $profileInfoContainer = document.querySelector('#profileInfoContainer')
 
   $profileList.addEventListener('click', e => {
     if (e.target.closest('li') === null) return
-    $profileTitle.textContent = e.target.textContent
+    renderTitle($profileTitle, e.target.textContent)
 
     switch ($profileTitle.textContent) {
       case 'Cuenta corriente':
@@ -63,11 +76,33 @@ if (window.location.href.includes('dashboard')) {
         }
         break
 
+      case 'Exportador de Notas':
+        if (user.role === 1) {
+          profileInterfaceGenerator($profileInfoContainer)
+        }
+        break
+
+      case 'Editar imágenes':
+        if (user.role === 1) {
+          profileEditImages($profileInfoContainer)
+        }
+        break
+
+      case 'Administrar':
+        if (user.role === 1) {
+          profileAdministration($profileInfoContainer)
+        }
+        break
+
       default:
         $profileInfoContainer.innerHTML = ''
         break
     }
   })
+}
+
+if (window.location.href.includes('dashboard')) {
+  isMaintaining('.dashboard-wrapper')
 }
 
 export function logOut() {

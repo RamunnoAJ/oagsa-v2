@@ -55,6 +55,11 @@
   border-collapse: collapse;
   color: $black;
 
+  .table__image {
+    max-width: 100px;
+    margin: 0 auto;
+  }
+
   .fl-table__icons {
     @include flex(row, center, center);
     gap: 0.5rem;

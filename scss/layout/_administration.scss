@@ -1,0 +1,96 @@
+.admin-container {
+  @include flex(column-reverse, center, flex-start);
+  gap: 1rem;
+  max-width: 75rem;
+  margin-inline: auto;
+  width: 95%;
+}
+
+.interface__generator__container {
+  @include flex(row, center, flex-start);
+  gap: 1rem;
+}
+
+.maintenance__selected {
+  position: relative;
+  background-color: $secondary-color-400;
+
+  &::after {
+    content: '✓';
+    position: absolute;
+    top: 0.125rem;
+    right: 0.125rem;
+    width: 0.75rem;
+    height: 0.75rem;
+    border-radius: 50%;
+    margin-left: 5px;
+    color: $black;
+  }
+}
+
+.maintenance {
+  @include flex(column, center, flex-start);
+  gap: 1rem;
+
+  .maintenance__title {
+    font-size: var(--fs-400);
+    font-weight: $fw-semi-bold;
+  }
+
+  .maintenance__body {
+    @include flex(row, center, center);
+    gap: 1rem;
+  }
+}
+
+.dolar {
+  @include flex(column, center, flex-start);
+  gap: 1rem;
+
+  .dolar__title {
+    font-size: var(--fs-400);
+    font-weight: $fw-semi-bold;
+  }
+
+  .dolar__body {
+    @include flex(column, center, flex-start);
+    gap: 0.5rem;
+  }
+
+  .dolar__input-container {
+    @include flex(row, center, center);
+    gap: 0.75rem;
+    background-color: $secondary-color-300;
+    padding: 0.5rem;
+    border-radius: 0.25rem;
+
+    .dolar__label {
+      font-weight: $fw-semi-bold;
+    }
+
+    .dolar__input {
+      padding: 0.325rem;
+      border: none;
+      border-radius: 0.25rem;
+      max-width: 100px;
+      appearance: textfield;
+      -moz-appearance: textfield;
+
+      &::-webkit-inner-spin-button,
+      &::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+      }
+    }
+  }
+}
+
+@media (min-width: 45rem) {
+  .admin-container {
+    @include flex(row-reverse, center, flex-start);
+    gap: 2rem;
+  }
+
+  .maintenance {
+    gap: 3rem;
+  }
+}

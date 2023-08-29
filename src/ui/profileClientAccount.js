@@ -1,4 +1,5 @@
 import { getAccountMovements } from '../api/profileClientAccount.js'
+import { formatDate } from '../utils/formatDate.js'
 import { sortClients } from '../utils/sortClients.js'
 
 export const renderProfileClientAccount = (clients, parentElement) => {
@@ -110,11 +111,11 @@ const renderTableRows = (item, parentElement) => {
 
   const tableRow = document.createElement('tr')
   tableRow.innerHTML = `
-      <td>${item.fechaEmision.slice(0, 10)}</td>
-      <td>${item.fechaVencimiento.slice(0, 10)}</td>
+      <td>${formatDate(item.fechaEmision.slice(0, 10))}</td>
+      <td>${formatDate(item.fechaVencimiento.slice(0, 10))}</td>
       <td>${item.numero}</td>
-      <td>$${trimPrice(item.importe)}</td>
-      <td class="fw-bold">$${trimPrice(item.importePendiente)}</td>
+      <td>$${trimPrice(item.importe.toFixed(0))}</td>
+      <td class="fw-bold">$${trimPrice(item.importePendiente.toFixed(0))}</td>
       `
   parentElement.appendChild(tableRow)
 }
@@ -132,5 +133,5 @@ const getTotalPrice = prices => {
     return totalPrice * -1
   }
 
-  return totalPrice.toFixed(2)
+  return totalPrice.toFixed(0)
 }

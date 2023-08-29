@@ -1,5 +1,6 @@
 import { getOrders } from '../api/profileOrdersHistory.js'
 import { getStorageID } from '../storage/profileClientAccount.js'
+import { formatDate } from '../utils/formatDate.js'
 import { sortClients } from '../utils/sortClients.js'
 import { createModal, createOverlay, renderModalContent } from './modal.js'
 import { renderPaginationButtons } from './pagination.js'
@@ -141,9 +142,11 @@ function renderTableRows(orders, parentElement) {
       row.innerHTML = `
         <td>${order.numeroNota}</td>
         <td>${order.codigoCliente}</td>
-        <td class="visually-hidden-mobile">${order.fechaNota.split('T')[0]}</td>
+        <td class="visually-hidden-mobile">${formatDate(
+          order.fechaNota.split('T')[0]
+        )}</td>
         <td>${order.totalItems}</td>
-        <td>$${order.totalPesos}</td>
+        <td>$${order.totalPesos.toFixed(0)}</td>
         <td class="visually-hidden-mobile">${order.estado}</td>
       `
 

@@ -1,6 +1,7 @@
 import { getClients } from '../api/cart.js'
 import { deleteDraft, editDraft } from '../profileDrafts.js'
 import { getStorageID } from '../storage/profileClientAccount.js'
+import { formatDate } from '../utils/formatDate.js'
 
 const sellerID = getStorageID()
 let clients
@@ -52,6 +53,13 @@ function createTable() {
 async function renderTableRows(drafts, parentElement) {
   const $table = document.querySelector(parentElement)
 
+  if (drafts.length === 0) {
+    const $row = document.createElement('tr')
+    $row.innerHTML = `<td colspan="6">No hay pedidos en el borrador</td>`
+
+    $table.appendChild($row)
+  }
+
   drafts.forEach(draft => {
     const row = document.createElement('tr')
     row.className = 'cursor-pointer bg-hover-slate'
@@ -62,9 +70,9 @@ async function renderTableRows(drafts, parentElement) {
           client => client.codigoCliente === draft.codigoCliente
         )[0]?.razonSocial || 'Sin nombre'
       } - ${draft.codigoCliente}</td>
-      <td>${draft.fechaNota.split('T')[0]}</td>
+      <td>${formatDate(draft.fechaNota.split('T')[0])}</td>
       <td>${draft.totalItems}</td>
-      <td>$${draft.totalPesos}</td>
+      <td>$${draft.totalPesos.toFixed(0)}</td>
       <td class="fl-table__icons visually-hidden-mobile">
         <i id="btn-edit-${draft.numeroNota}" class="fa-solid fa-pen"></i> 
         <i id="btn-delete-${draft.numeroNota}" class="fa-solid fa-trash"></i>
@@ -79,11 +87,15 @@ async function renderTableRows(drafts, parentElement) {
     const $btnDelete = document.querySelector(`#btn-delete-${draft.numeroNota}`)
     const $btnEdit = document.querySelector(`#btn-edit-${draft.numeroNota}`)
 
-    $btnDelete.addEventListener('click', () => {
+    $btnDelete.addEventListener('click', e => {
+      e.preventDefault()
+      e.stopPropagation()
       deleteDraft(draft.numeroNota)
     })
 
-    $btnEdit.addEventListener('click', () => {
+    $btnEdit.addEventListener('click', e => {
+      e.preventDefault()
+      e.stopPropagation()
       editDraft(draft.numeroNota)
     })
   })

@@ -1,19 +1,19 @@
-import getDataFromDB, { BASE_URL } from "../utils/getDataFromDB.js"
+import getDataFromDB, { BASE_URL } from '../utils/getDataFromDB.js'
 
-export async function getMaintenance(){
-  const response = await getDataFromDB('admin/set-mantenimiento')
+export async function getMaintenance() {
+  const response = await getDataFromDB('admin/mantenimiento')
   const maintenance = await response.data
 
   return maintenance
 }
 
-export async function setMaintenance(){
+export async function setMaintenance() {
   const response = await fetch(`${BASE_URL}admin/set-mantenimiento`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'Accept': 'application/json'
-    }
+      Accept: 'application/json',
+    },
   })
   if (!response.ok) {
     throw new Error('Respuesta rechazada')

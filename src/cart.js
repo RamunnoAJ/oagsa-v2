@@ -4,6 +4,7 @@ import { getCart, saveCart, clearCart } from './storage/cart.js'
 import { checkLocalStorage } from './storage/profile.js'
 import { getUserFromStorage } from './storage/storageData.js'
 import { renderCart, showToast } from './ui/cart.js'
+import { navigateToDashboard } from './ui/login.js'
 
 checkLocalStorage()
 
@@ -14,7 +15,7 @@ function validateCart(cart) {
     errors.push(error)
   }
 
-  if(!cart.idFlete) {
+  if (!cart.idFlete) {
     const error = 'Debe seleccionar un flete.'
     errors.push(error)
   }
@@ -68,6 +69,10 @@ export async function sendToDraft(cart) {
   await postBuyOrder('orden-compra', order)
   emptyCart()
   showToast('Carrito guardado en borrador exitosamente.')
+
+  setTimeout(() => {
+    navigateToDashboard()
+  }, 2000)
 }
 
 export function addToCart(item) {
@@ -89,13 +94,16 @@ export function addToCart(item) {
 
     if (index === -1) {
       addProductToCart(newItem)
+      showToast('Objeto añadido correctamente.', '../pages/cart.html')
     } else {
+      showToast(
+        `El producto ya existe en el carrito, se actualizó su cantidad a: ${quantity}`,
+        '../pages/cart.html'
+      )
       updateQuantity(newItem, quantity)
     }
-
-    showToast('Objeto añadido correctamente.', '../pages/cart.html')
   } else {
-    alert('La cantidad debe ser mayor a 0')
+    showToast('La cantidad debe ser mayor a 0')
   }
 }
 
@@ -136,17 +144,15 @@ export function getTotalQuantity(cart) {
 }
 
 export function getTotalPrice(cart) {
-  const totalPrice = cart.listaDetalle
-    .reduce(
-      (acc, item) =>
-        acc +
-        (item.precioConDescuento || item.precio) * Number(item.cantidadPedida),
-      0
-    )
-    .toFixed(2)
-  cart.totalPesos = Number(totalPrice)
+  const totalPrice = cart.listaDetalle.reduce(
+    (acc, item) =>
+      acc +
+      (item.precioConDescuento || item.precio) * Number(item.cantidadPedida),
+    0
+  )
+  cart.totalPesos = Number(totalPrice).toFixed(0)
   saveCart(cart)
-  return Number(totalPrice)
+  return Number(totalPrice).toFixed(0)
 }
 
 export function updateCart(item, quantity, discount, callback = () => {}) {
@@ -167,7 +173,7 @@ export function updateQuantity(item, quantity) {
 export function calculateDiscount(discount, total) {
   if (discount === 0) return total
   const totalPrice = total - (total * discount) / 100
-  return Number(totalPrice.toFixed(2))
+  return Number(totalPrice)
 }
 
 export function calculateDelivery(total, delivery) {
@@ -208,7 +214,7 @@ export function updateDiscount(item, discount) {
   listaDetalle.descripcionDescuento = `${listaDetalle.porcentajeDescuento}%`
   listaDetalle.codigoDescuento = `${listaDetalle.porcentajeDescuento}`
   listaDetalle.importeDescuento = Number(
-    (listaDetalle.precioConDescuento * listaDetalle.cantidadPedida).toFixed(2)
+    listaDetalle.precioConDescuento * listaDetalle.cantidadPedida
   )
   listaDetalle.montoTotal = listaDetalle.importeDescuento
   saveCart(cart)
