@@ -1,14 +1,24 @@
+import { articlesMapper } from '../mappers/articles.js'
 import { BASE_URL, getDataFromDB } from '../utils/getDataFromDB.js'
 
+/**
+ * @param {string} id
+ * @returns {import('../mappers/articles.js').Article}
+ * */
 export async function getArticle(id) {
   const data = await getDataFromDB(
     `articulo/articulo-codigo?pCodigoArticulo=${id}`
   )
-  const images = data.data
+  const articleApi = data.data
+  const article = articlesMapper(articleApi)
 
-  return images
+  return article
 }
 
+/**
+ * @param {string} id
+ * @param {File} file
+ * */
 export async function setImage(id, file) {
   const url = `${BASE_URL}articulo/imagen-alta?pCodigoArticulo=${id}`
 
@@ -28,6 +38,9 @@ export async function setImage(id, file) {
     })
 }
 
+/**
+ * @param {string} id
+ * */
 export async function deleteImage(id) {
   const response = await fetch(
     `${BASE_URL}articulo/imagen-baja?pCodigoArticulo=${id}`,

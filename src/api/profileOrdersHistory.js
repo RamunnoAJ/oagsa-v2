@@ -1,6 +1,12 @@
 import getDataFromDB from '../utils/getDataFromDB.js'
 import { sellConditionMapper } from '../mappers/sellConditions.js'
 
+/**
+ * @param {number} id
+ * @param {number} idCliente
+ * @param {number} offset
+ * @returns {import('../mappers/orders.js').Order[]}
+ * */
 export async function getOrders(id = 0, idCliente = 0, offset = 1) {
   if (id === 1) id = 0
   const response = await getDataFromDB(
@@ -14,6 +20,10 @@ export async function getOrders(id = 0, idCliente = 0, offset = 1) {
   return orders
 }
 
+/**
+ * @param {number} id
+ * @return {string}
+ */
 export async function getCondicionVenta(id) {
   const response = await getDataFromDB(`orden-compra/condicionventa`)
   const condicionVentaApi = await response.data
