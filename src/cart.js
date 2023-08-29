@@ -5,8 +5,16 @@ import { checkLocalStorage } from './storage/profile.js'
 import { showToast } from './ui/cart.js'
 import { navigateToDashboard } from './ui/login.js'
 
+/** @typedef {import('./entities/orders.js').Order} Order
+ * @typedef {import('./entities/orders.js').ArticleOrder} ArticleOrder
+ * */
+
 checkLocalStorage()
 
+/**
+ * @param {Order} cart
+ * @returns {string[]}
+ * */
 function validateCart(cart) {
   const errors = []
   if (!cart.idClient) {
@@ -36,6 +44,9 @@ function validateCart(cart) {
   return errors
 }
 
+/**
+ * @param {Order} cart
+ * */
 export async function checkout(cart) {
   const errors = validateCart(cart)
   if (errors.length > 0) {
@@ -58,6 +69,9 @@ export async function checkout(cart) {
   }, 1500)
 }
 
+/**
+ * @param {Order} cart
+ * */
 export async function sendToDraft(cart) {
   const errors = validateCart(cart)
   if (errors.length > 0) {
@@ -76,6 +90,9 @@ export async function sendToDraft(cart) {
   }, 1500)
 }
 
+/**
+ * @param {ArticleOrder} item
+ * */
 export function addToCart(item) {
   const quantityInputId = `quantity-${item.id}`
   const $quantityInput = document.getElementById(quantityInputId)
@@ -107,6 +124,9 @@ export function addToCart(item) {
   }
 }
 
+/**
+ * @param {ArticleOrder} item
+ * */
 function addProductToCart(item) {
   const cart = getCart()
   const newItem = { ...item }
@@ -114,6 +134,9 @@ function addProductToCart(item) {
   saveCart(updatedCart)
 }
 
+/**
+ * @param {ArticleOrder} item
+ * */
 export function removeFromCart(item) {
   const cart = getCart()
   const index = cart.detail.findIndex(i => i.id === item.id)
@@ -127,10 +150,19 @@ export async function emptyCart() {
   clearCart()
 }
 
+/**
+ * @param {number} percentage
+ * @param {number} price
+ * @returns {number}
+ * */
 export function getDiscount(percentage, price) {
   return (price * percentage) / 100
 }
 
+/**
+ * @param {Order} cart
+ * @returns {number}
+ * */
 export function getTotalQuantity(cart) {
   const totalQuantity = cart.detail.reduce(
     (acc, item) => acc + Number(item.quantity),
@@ -141,6 +173,10 @@ export function getTotalQuantity(cart) {
   return Number(totalQuantity)
 }
 
+/**
+ * @param {Order} cart
+ * @returns {number}
+ * */
 export function getTotalPrice(cart) {
   const totalPrice = cart.detail.reduce(
     (acc, item) =>
@@ -152,12 +188,22 @@ export function getTotalPrice(cart) {
   return Number(totalPrice).toFixed(0)
 }
 
+/**
+ * @param {ArticleOrder} item
+ * @param {number} quantity
+ * @param {number} discount
+ * @param {function} callback
+ * */
 export function updateCart(item, quantity, discount, callback = () => {}) {
   updateQuantity(item, quantity)
   updateDiscount(item, discount)
   callback(getCart())
 }
 
+/**
+ * @param {ArticleOrder} item
+ * @param {number} quantity
+ * */
 export function updateQuantity(item, quantity) {
   const cart = getCart()
   const index = cart.detail.findIndex(i => i.id === item.id)
@@ -165,15 +211,15 @@ export function updateQuantity(item, quantity) {
   saveCart(cart)
 }
 
+/**
+ * @param {number} discount
+ * @param {number} total
+ * @returns {number}
+ * */
 export function calculateDiscount(discount, total) {
   if (discount === 0) return total
   const totalPrice = total - (total * discount) / 100
   return Number(totalPrice)
-}
-
-export function calculateDelivery(total, delivery) {
-  if (delivery < 0) return total
-  return total + delivery
 }
 
 export function handleClientChange() {
@@ -185,6 +231,10 @@ export function handleClientChange() {
   saveCart(cart)
 }
 
+/**
+ * @param {ArticleOrder} item
+ * @param {number} discount
+ * */
 export function updateDiscount(item, discount) {
   if (discount < 0) {
     alert('El descuento debe ser mayor a 0')
