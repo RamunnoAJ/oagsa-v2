@@ -12,9 +12,7 @@ export async function renderProfileAdministration(
 
   parentElement.appendChild($container)
 
-  const $maintenance = await createMaintenanceElement(
-    maintenance?.valorString.trim()
-  )
+  const $maintenance = await createMaintenanceElement(maintenance?.value.trim())
   $container.appendChild($maintenance)
 
   const $dolar = await createDolarElement(dolar, postDolar)
@@ -90,7 +88,7 @@ async function createDolarElement(dolar, callback) {
 
   const $dolarValue = document.createElement('div')
   $dolarValue.className = 'dolar__value'
-  $dolarValue.textContent = `Valor actual: $${dolar.valorString.trim()}`
+  $dolarValue.textContent = `Valor actual: $${dolar.value.trim()}`
 
   const $form = document.createElement('form')
   $form.className = 'dolar__input-container'

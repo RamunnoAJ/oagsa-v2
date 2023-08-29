@@ -1,3 +1,7 @@
+/**
+ * @param {string[]} errors
+ * @param {HTMLElement} parentElement
+ * */
 export function renderErrors(errors, parentElement) {
   parentElement.classList.remove('visually-hidden')
 
