@@ -4,7 +4,7 @@ import { getUserFromStorage } from '../storage/storageData.js'
 export async function isMaintaining(parentElement) {
   const maintenance = await getMaintenance()
   const user = JSON.parse(getUserFromStorage())
-  if (maintenance?.valorString.trim() === 'True' && user?.role !== 1) {
+  if (maintenance?.value.trim() === 'True' && user?.role !== 1) {
     renderMaintainancePage(parentElement)
   }
   return false

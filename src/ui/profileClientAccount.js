@@ -2,7 +2,15 @@ import { getAccountMovements } from '../api/profileClientAccount.js'
 import { formatDate } from '../utils/formatDate.js'
 import { sortClients } from '../utils/sortClients.js'
 
-export const renderProfileClientAccount = (clients, parentElement) => {
+/** @typedef {import('../mappers/accountMovements.js').Movement} Movement
+ *  @typedef {import('../entities/clients.js').Client} Client
+ * */
+
+/**
+ * @param {Client[]} clients
+ * @param {HTMLElement} parentElement
+ * */
+export function renderProfileClientAccount(clients, parentElement) {
   if (clients.length > 0) {
     parentElement.innerHTML = `
     <span class="profile-info__subtitle">Razón social:</span>
@@ -27,7 +35,10 @@ export const renderProfileClientAccount = (clients, parentElement) => {
   }
 }
 
-const handleSubmit = e => {
+/**
+ * @param {Event} e
+ * */
+function handleSubmit(e) {
   e.preventDefault()
   const $form = document.querySelector('#client-form')
   const selectedClient = $form.selectedClient.value
@@ -37,20 +48,26 @@ const handleSubmit = e => {
   }
 }
 
-const renderOptions = clients => {
+/**
+ * @param {Client[]} clients
+ * */
+function renderOptions(clients) {
   const $selectClient = document.querySelector('#selectClient')
   sortClients(clients)
 
   clients.forEach(client => {
     const option = document.createElement('option')
     option.value = client.id
-    option.textContent = client.name
+    option.textContent = `${client.name} - ${client.id}`
 
     $selectClient.appendChild(option)
   })
 }
 
-const renderClientAccount = async client => {
+/**
+ * @param {Client} client
+ * */
+async function renderClientAccount(client) {
   const $tableContainer = document.querySelector('.table-container')
   $tableContainer.innerHTML = '<span class="loader"></span>'
 
@@ -83,7 +100,7 @@ const renderClientAccount = async client => {
 
     accountMovements.forEach(item => {
       renderTableRows(item, $tableBody)
-      prices.push(item.importePendiente)
+      prices.push(item.pending)
     })
 
     const totalPriceRow = document.createElement('tr')
@@ -101,7 +118,11 @@ const renderClientAccount = async client => {
   }
 }
 
-const renderTableRows = (item, parentElement) => {
+/**
+ * @param {Movement} item
+ * @param {HTMLElement} parentElement
+ * */
+function renderTableRows(item, parentElement) {
   const trimPrice = price => {
     if (price < 0) {
       return price * -1
@@ -111,16 +132,20 @@ const renderTableRows = (item, parentElement) => {
 
   const tableRow = document.createElement('tr')
   tableRow.innerHTML = `
-      <td>${formatDate(item.fechaEmision.slice(0, 10))}</td>
-      <td>${formatDate(item.fechaVencimiento.slice(0, 10))}</td>
-      <td>${item.numero}</td>
-      <td>$${trimPrice(item.importe.toFixed(0))}</td>
-      <td class="fw-bold">$${trimPrice(item.importePendiente.toFixed(0))}</td>
+      <td>${formatDate(item.date.slice(0, 10))}</td>
+      <td>${formatDate(item.expirationDate.slice(0, 10))}</td>
+      <td>${item.number}</td>
+      <td>$${trimPrice(item.amount.toFixed(0))}</td>
+      <td class="fw-bold">$${trimPrice(item.pending.toFixed(0))}</td>
       `
   parentElement.appendChild(tableRow)
 }
 
-const getTotalPrice = prices => {
+/**
+ * @param {number[]} prices
+ * @returns {number}
+ * */
+function getTotalPrice(prices) {
   let totalPrice = 0
 
   for (let index = 0; index < prices.length; index++) {

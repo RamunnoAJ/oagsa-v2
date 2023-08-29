@@ -175,19 +175,16 @@ function renderOptions(options, selectID) {
         break
 
       case '#select-brand':
-        console.log('marcas: ', sortedOptions)
         $option.value = option.name.trim()
         $option.textContent = option.name.trim()
         break
 
       case '#select-diametro':
-        console.log('diametro: ', sortedOptions)
         $option.value = option.name.trim()
         $option.textContent = option.name.trim()
         break
 
       case '#select-medida':
-        console.log('medidas: ', sortedOptions)
         $option.value = option.name.trim()
         $option.textContent = option.name.trim()
         break
