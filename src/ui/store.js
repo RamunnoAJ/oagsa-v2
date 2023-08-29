@@ -326,7 +326,7 @@ export async function renderDolar() {
   const $dolar = document.querySelector('#dolar')
   const dolar = await getDolar()
 
-  $dolar.textContent = `Valor dolar : $${dolar.valorString.trim()}`
+  $dolar.textContent = `Valor dolar : $${dolar.value.trim()}`
 }
 
 function switchImage(condition) {

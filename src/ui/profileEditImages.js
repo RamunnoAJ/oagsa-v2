@@ -3,6 +3,9 @@ import { capitalizeFirstLetter } from '../utils/capitalizeFirstLetter.js'
 import { createModal, createOverlay } from './modal.js'
 import { showToast } from './cart.js'
 
+/**
+ * @param {HTMLDivElement} parentElement
+ * */
 export function renderProfileEditImages(parentElement) {
   parentElement.innerHTML = ''
 
@@ -24,6 +27,12 @@ export function renderProfileEditImages(parentElement) {
   parentElement.appendChild($imagesContainer)
 }
 
+/**
+ * @param {string} title
+ * @param {string} label
+ * @param {function} callback
+ * @returns {HTMLDivElement}
+ * */
 function createSelectElement(title, label, callback = () => {}) {
   const $selectContainer = document.createElement('div')
   $selectContainer.className = 'images__select-container'
@@ -62,6 +71,9 @@ function createSelectElement(title, label, callback = () => {}) {
   return $selectContainer
 }
 
+/**
+ * @param {string} id
+ * */
 async function handleClick(id) {
   if (document.querySelector('.overlay') && document.querySelector('.modal')) {
     document.querySelector('.overlay').remove()
@@ -72,13 +84,16 @@ async function handleClick(id) {
   renderImages(article)
 }
 
+/**
+ * @param {import('../mappers/articles.js').Article} article
+ * */
 async function renderImages(article) {
   const $container = document.querySelector('#images-container')
   $container.innerHTML = ''
   const $table = await createTable()
   $container.appendChild($table)
 
-  if (article?.url.length === 0) {
+  if (article?.images.length === 0) {
     const $row = document.createElement('tr')
     const $paragraph = document.createElement('td')
     $paragraph.colSpan = '2'
@@ -86,7 +101,7 @@ async function renderImages(article) {
     $row.appendChild($paragraph)
     $table.appendChild($row)
   } else {
-    article?.url.forEach(async image => {
+    article?.images.forEach(async image => {
       const $row = await createRow(image)
       $table.appendChild($row)
     })
@@ -101,6 +116,9 @@ async function renderImages(article) {
   $container.appendChild($addButton)
 }
 
+/**
+ * @param {string} id
+ * */
 async function renderModalContent(id) {
   const $modal = await createModal()
   const $overlay = await createOverlay()
@@ -117,17 +135,26 @@ async function renderModalContent(id) {
   document.body.appendChild($modal)
 }
 
+/**
+ * @param {string} id
+ * @param {HTMLFormElement} $form
+ * */
 async function handleSubmit(id, $form) {
   try {
     setImage(id, $form.file.files[0]).then(() => {
       showToast('Imagen agregada exitosamente')
-      handleClick(id)
+      setTimeout(() => {
+        handleClick(id)
+      }, 500)
     })
   } catch (error) {
     showToast('No se pudo agregar la imagen')
   }
 }
 
+/**
+ * @param {string} id
+ * */
 async function createModalForm(id) {
   const $form = document.createElement('form')
   $form.className = 'modal__form'
@@ -161,6 +188,10 @@ async function createModalForm(id) {
   return $form
 }
 
+/**
+ * @param {string} image
+ * @return {HTMLTableRowElement}
+ * */
 async function createRow(image) {
   const $row = document.createElement('tr')
   const $rowTitle = document.createElement('td')
@@ -195,12 +226,18 @@ async function createRow(image) {
   return $row
 }
 
+/**
+ * @param {string} id
+ * */
 async function handleDelete(id) {
   await deleteImage(id)
   showToast('Imagen eliminada exitosamente')
   handleClick(id)
 }
 
+/**
+ * @return {HTMLTableElement}
+ * */
 async function createTable() {
   const $table = document.createElement('table')
   $table.className = 'fl-table'
