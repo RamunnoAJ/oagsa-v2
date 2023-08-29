@@ -1,6 +1,7 @@
 import { getCategories, getProducts } from '../api/profilePricesList.js'
 import * as storage from '../storage/profilePricesList.js'
 import { removeDuplicates } from '../utils/removeDuplicates.js'
+import { showToast } from './cart.js'
 
 export async function renderProductPrices(products, parentElement) {
   if (products.length > 0) {
@@ -34,15 +35,13 @@ export async function renderProductPrices(products, parentElement) {
               <option disabled selected value=''>Seleccione una medida...</option>
               <option value=''> -- TODOS -- </option>
             </select>
-            <button class="button bg-secondary-300 bg-hover-secondary-400" id="btnSearch">
-              <span class="visually-hidden-mobile">Buscar</span>
+            <button class="button bg-secondary-300 bg-hover-secondary-400" id="btnDownload">
+              <span class="visually-hidden-mobile">Descargar</span>
               <span class="visually-hidden-desktop">
-                <i class="fa-solid fa-magnifying-glass"></i>
+                <i class="fa-solid fa-download"></i>
               </span>
             </button>
           </div>
-
-          
         </form>
 
         <div class="table-container"></div>
@@ -53,9 +52,20 @@ export async function renderProductPrices(products, parentElement) {
     renderOptions(rubros, '#select-rubro')
 
     const $form = document.querySelector('#prices-form')
-    const $btnSearch = document.querySelector('#btnSearch')
     $form.addEventListener('change', handleChangeForm)
-    $btnSearch.addEventListener('click', handleChangeForm)
+
+    const $btnDownload = document.querySelector('#btnDownload')
+    $btnDownload.addEventListener('click', e => {
+      e.preventDefault()
+      try {
+        const selectedOption =
+          $form.selectedRubro.querySelector('option:checked').textContent
+
+        downloadPDF(selectedOption)
+      } catch (error) {
+        showToast('Debes seleccionar alguna tabla para descargar')
+      }
+    })
 
     const $selectRubro = document.querySelector('#select-rubro')
     const $selectSubrubro = document.querySelector('#select-subrubro')
@@ -167,6 +177,7 @@ function renderOptions(options, selectID) {
       case '#select-rubro':
         $option.value = option.id.trim()
         $option.textContent = option.name.trim()
+        $option.dataset.name = option.name.trim()
         break
 
       case '#select-subrubro':
@@ -272,4 +283,53 @@ async function handleChangeSubrubro(e) {
   renderOptions(arrayMarcas, '#select-brand')
   renderOptions(arrayDiametros, '#select-diametro')
   renderOptions(arrayMedidas, '#select-medida')
+}
+
+/**
+ * @param {string} category
+ * */
+function downloadPDF(category) {
+  const table = document.querySelector('.table-container > table').outerHTML
+
+  const pdfWindow = window.open('', '_blank')
+  pdfWindow.document.write(`
+            <html>
+            <head>
+                <title>${category}</title>
+                <style>
+                    body {
+                        font-family: Arial, sans-serif;
+                    }
+                    table {
+                        border-collapse: collapse;
+                        width: 100%;
+                    }
+                    th, td {
+                        border: 1px solid #ddd;
+                        padding: 8px;
+                        text-align: center;
+                    }
+                    th {
+                        background-color: #f2f2f2;
+                    }
+                </style>
+            </head>
+            <body>
+                ${table}
+            </body>
+            </html>
+        `)
+  pdfWindow.document.close()
+
+  pdfWindow.onload = function () {
+    pdfWindow.addEventListener('beforeprint', e => {
+      e.preventDefault()
+    })
+
+    pdfWindow.addEventListener('afterprint', () => {
+      pdfWindow.close()
+    })
+
+    pdfWindow.print()
+  }
 }
