@@ -3,6 +3,10 @@ import { sellConditionMapper } from '../mappers/sellConditions.js'
 import { freightMapper } from '../mappers/freights.js'
 import { postOrderMapper } from '../mappers/orders.js'
 
+/**
+ * @param {string} url
+ * @param {object} postBody
+ * */
 export async function postBuyOrder(url, postBody) {
   const order = postOrderMapper(postBody)
   const response = await fetch(`${BASE_URL}${url}`, {
@@ -18,6 +22,9 @@ export async function postBuyOrder(url, postBody) {
   }
 }
 
+/**
+ * @param {string} url
+ * */
 export async function getFields(url) {
   const response = await fetch(`${BASE_URL}${url}`)
   if (!response.ok) {

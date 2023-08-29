@@ -7,6 +7,10 @@ import {
 import { convertToUTF } from '../utils/convertToUTF.js'
 import getDataFromDB from '../utils/getDataFromDB.js'
 
+/**
+ * @param {string} url
+ * @returns {import('../mappers/articles.js').Article}
+ * */
 export async function getProducts(url) {
   const response = await getDataFromDB(url)
   const productsApi = await response.data
