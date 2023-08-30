@@ -1,5 +1,6 @@
 import { Order } from '../entities/orders.js'
 import { orderArticlesMapper } from './articles.js'
+import { getUserFromStorage } from '../storage/storageData.js'
 
 /** @typedef {import('../entities/orders.js').Order} Order */
 
@@ -89,18 +90,18 @@ export function postOrderMapper(order) {
   })
 
   return {
-    numeroNota: id,
+    numeroNota: id || 0,
     codigoCliente: idClient,
     codigoCondicionVenta: idSellCondition,
-    observaciones: observations,
-    origenPedido: orderOrigin,
-    estado: status,
+    observaciones: observations || '',
+    origenPedido: orderOrigin || 0,
+    estado: status || 'A Procesar',
     totalPesos: total,
     totalItems: items,
-    codigoVendedor: idSeller,
-    fechaNota: date,
+    codigoVendedor: idSeller || JSON.parse(getUserFromStorage()).id,
+    fechaNota: date || new Date().toISOString(),
     borrador: draft,
-    idFlete: idFreight,
+    idFlete: Number(idFreight),
     descripcionFlete: freight,
     listaDetalle,
   }
