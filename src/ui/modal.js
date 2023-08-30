@@ -76,14 +76,15 @@ export async function renderModalContent(order) {
 }
 
 function createTotalRow(total) {
+  console.log(total)
   const $totalRow = document.createElement('tr')
   $totalRow.className = 'modal__total-row fw-bold'
   $totalRow.innerHTML = `
   <td>Total:</td>
   <td></td>
   <td></td>
-  <td>${total.totalItems}</td>
-  <td>$${total.totalPesos.toFixed(0)}</td>
+  <td>${total.items}</td>
+  <td>$${total.total.toFixed(0)}</td>
   `
   return $totalRow
 }
@@ -112,7 +113,7 @@ async function createModalContent(order) {
   )
 
   $modalContent.innerHTML = `
-    <p class="mb-2">Estado: <span>${order.estado}</span></p>
+    <p class="mb-2">Estado: <span>${order.status}</span></p>
     <p class="mb-2">Fecha: <span>${formatDate(
       order.date.split('T')[0]
     )}</span></p>

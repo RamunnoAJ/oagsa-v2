@@ -87,7 +87,7 @@ export async function sendToDraft(cart) {
 
   setTimeout(() => {
     navigateToDashboard()
-  }, 1500)
+  }, 500)
 }
 
 /**

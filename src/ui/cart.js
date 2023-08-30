@@ -199,10 +199,10 @@ function renderOptions(options, select) {
       $option.textContent = `${option[textContent]} - ${option[value]}`
       if ($option.value === cart.idClient?.toString()) {
         $option.selected = true
-      } else if ($option.value === cart.idSellCondition.toString()) {
+      } else if ($option.value === cart.idSellCondition?.toString()) {
         $option.textContent = `${option[textContent]}`
         $option.selected = true
-      } else if ($option.value === cart.idFreight.toString()) {
+      } else if ($option.value === cart.idFreight?.toString()) {
         $option.textContent = `${option[textContent]}`
         $option.selected = true
       }

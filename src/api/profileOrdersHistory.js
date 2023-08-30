@@ -18,7 +18,7 @@ export async function getOrders(id = 0, idCliente = 0, offset = 1) {
 
   orders.next = offset + 1
   orders.previous = offset - 1 || null
-  orders.totalPages = Math.ceil(orders.total / 15)
+  orders.totalPages = Math.ceil(response.total / 15)
 
   return orders
 }
@@ -30,7 +30,9 @@ export async function getOrders(id = 0, idCliente = 0, offset = 1) {
 export async function getCondicionVenta(id) {
   const response = await getDataFromDB(`orden-compra/condicionventa`)
   const condicionVentaApi = await response.data
-  const condicionVenta = sellConditionMapper(condicionVentaApi)
+  const condicionVenta = condicionVentaApi.map(item =>
+    sellConditionMapper(item)
+  )
 
   const description = condicionVenta.filter(object => object.id === id)[0]
     ?.description
