@@ -295,7 +295,7 @@ function downloadPDF(category) {
   pdfWindow.document.write(`
             <html>
             <head>
-                <title>${category}</title>
+                <title>OAGSA - ${category}</title>
                 <style>
                     body {
                         font-family: Arial, sans-serif;
