@@ -1,147 +1,210 @@
 <!DOCTYPE html>
 <html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Sitio web OAGSA" />
+    <meta
+      name="keywords"
+      content="Neumáticos, tienda, mar del plata, Motos, Bicicletas, Cuatriciclos, accesorios" />
+    <meta
+      name="author"
+      content="Stefanía Sanchez Golfieri - Agustín Julián Ramunno" />
+    <meta name="copyright" content="Oscar A. González" />
+    <link rel="icon" type="image/x-icon" href="../assets/logo-oagsa.png" />
 
-<head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Sitio web OAGSA" />
-  <meta name="keywords" content="Neumáticos, tienda, mar del plata, Motos, Bicicletas, Cuatriciclos, accesorios" />
-  <meta name="author" content="Stefanía Sanchez Golfieri - Agustín Julián Ramunno" />
-  <meta name="copyright" content="Oscar A. González" />
+    <title>Tienda | OAGSA</title>
 
-  <title>Tienda | OAGSA</title>
+    <link rel="stylesheet" href="../css/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css"
+      preload />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"
+      preload />
+  </head>
 
-  <link rel="stylesheet" href="../css/style.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" />
-  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css" />
-</head>
-
-<body>
-  <header class="bg-primary">
-    <nav>
-      <div class="nav-icons">
-        <a href="../index.html"><img class="logo" src="../assets/logo-oagsa.png" alt="Logo OAGSA" /></a>
-        <button class="btn-menu" type="button">
-          <i class="btn-menu__bars" aria-hidden="true"></i>
-          <span class="visually-hidden">Menu</span>
-        </button>
-      </div>
-      <ul class="nav-bar bg-primary">
-        <div class="nav-flex">
-          <li><a href="#" class="text-hover-secondary-400">Nosotros</a></li>
-          <li>
-            <a href="./store.html" class="text-hover-secondary-400">Tienda</a>
-          </li>
+  <body>
+    <header class="bg-primary">
+      <nav>
+        <div class="nav-icons">
+          <a href="../index.html"
+            ><img class="logo" src="../assets/logo-oagsa.png" alt="Logo OAGSA"
+          /></a>
+          <button class="btn-menu" type="button" aria-label="Menú">
+            <i class="btn-menu__bars" aria-hidden="true"></i>
+            <span class="visually-hidden">Menu</span>
+          </button>
         </div>
-        <div class="nav-flex">
-          <li>
-            <a href="./dashboard.html" class="text-hover-secondary-400">Funciones</a>
-          </li>
-          <li id="account-icon" class="button bg-secondary-300 bg-hover-secondary-400 text-black">
-            <a href="./log-in.html"><span>Entrar</span><i class="fa-solid fa-lock"></i></a>
-          </li>
-        </div>
-      </ul>
-    </nav>
-  </header>
-
-  <main class="mt-10 store-container">
-    <a class="cart__icon" href="./cart.html">
-      <i class="fa-solid fa-cart-shopping"></i>
-    </a>
-    <h1 class="uppercase fw-bold">Tienda</h1>
-    <div class="store__dolar">
-      <span id="dolar"></span>
-    </div>
-
-    <form class="mt-10 store" id="store">
-      <div class="store__search">
-        <div class="store__search__select">
-          <div class="select-store">
-            <i class="fa-solid fa-filter"></i>
-            <select name="clases" id="clases" class="select select-lg bg-primary">
-              <option value="" disabled selected>Seleccione una clase</option>
-            </select>
+        <ul class="nav-bar bg-primary">
+          <div class="nav-flex">
+            <li><a href="#" class="text-hover-secondary-400">Nosotros</a></li>
+            <li>
+              <a href="./store.html" class="text-hover-secondary-400">Tienda</a>
+            </li>
           </div>
-          <div class="store__rubros select-store">
-            <i class="fa-solid fa-filter"></i>
-            <select class="select select-lg bg-primary" name="rubros" id="rubros">
-              <option value="" disabled selected>Seleccione un rubro</option>
-            </select>
+          <div class="nav-flex">
+            <li>
+              <a href="./dashboard.html" class="text-hover-secondary-400"
+                >Funciones</a
+              >
+            </li>
+            <li
+              id="account-icon"
+              class="button bg-secondary-300 bg-hover-secondary-400 text-black">
+              <a href="./log-in.html"
+                ><span>Entrar</span><i class="fa-solid fa-lock"></i
+              ></a>
+            </li>
           </div>
-        </div>
-        <div class="store__search__input bg-primary py-4 mt-4 visually-hidden">
-          <div class="search__input">
-            <button class="button bg-secondary-300 bg-hover-secondary-400 store__button-search">
-              <i class="fa-magnifying-glass fa-solid"></i>
-              <span class="visually-hidden-mobile">Buscar</span>
-            </button>
-            <input type="text" id="searchByCode" placeholder="Ingrese código del producto" />
-          </div>
-          <div class="store__search__input__select">
-            <select name="marca" id="marcas">
-              <option value="" disabled selected>Marca</option>
-            </select>
-            <select name="medida" id="medidas">
-              <option value="" disabled selected>Medida</option>
-            </select>
-            <select name="diametro" id="diametros">
-              <option value="" disabled selected>Diametro</option>
-            </select>
-          </div>
-        </div>
-      </div>
-    </form>
+        </ul>
+      </nav>
+    </header>
 
-    <section class="store__products" id="products"></section>
-  </main>
-
-  <footer class="px-4 pt-5 mt-24 bg-primary">
-    <div class="footer-container">
-      <div>
-        <a href="#"><img class="logo-footer pr-4" src="../assets/logo-oagsa.png" alt="Logo OAGSA" /></a>
+    <main class="mt-10 store-container">
+      <a class="cart__icon" href="./cart.html" aria-label="Carrito de compras">
+        <i class="fa-solid fa-cart-shopping"></i>
+      </a>
+      <h1 class="uppercase fw-bold">Tienda</h1>
+      <div class="store__dolar">
+        <span id="dolar"></span>
       </div>
 
-      <ul class="icons">
-        <li>
-          <a class="text-hover-secondary-400" target="_blank" href="https://www.instagram.com/oag.s.a/"><i
-              class="fa-brands fa-instagram footer-icons"></i></a>
-        </li>
-        <li>
-          <a class="text-hover-secondary-400" target="_blank" href=""><i
-              class="fa-brands fa-whatsapp footer-icons"></i></a>
-        </li>
-        <li>
-          <a class="text-hover-secondary-400" target="_blank"
-            href="https://www.facebook.com/people/Oscar-A-Gonzalez/100063653886728/"><i
-              class="fa-brands fa-facebook footer-icons"></i></a>
-        </li>
-      </ul>
+      <form class="mt-10 store" id="store">
+        <div class="store__search">
+          <div class="store__search__select">
+            <div class="select-store">
+              <i class="fa-solid fa-filter"></i>
+              <label class="visually-hidden" for="clases"
+                >Filtrar por clase:</label
+              >
+              <select
+                aria-label="Clases"
+                name="clases"
+                id="clases"
+                class="select select-lg bg-primary">
+                <option value="" disabled selected>Seleccione una clase</option>
+              </select>
+            </div>
+            <div class="store__rubros select-store">
+              <i class="fa-solid fa-filter"></i>
+              <label class="visually-hidden" for="rubros"
+                >Filtrar por rubro:</label
+              >
+              <select
+                aria-label="Rubros"
+                class="select select-lg bg-primary"
+                name="rubros"
+                id="rubros">
+                <option value="" disabled selected>Seleccione un rubro</option>
+              </select>
+            </div>
+          </div>
+          <div
+            class="store__search__input bg-primary py-4 mt-4 visually-hidden">
+            <div class="search__input">
+              <button
+                class="button bg-secondary-300 bg-hover-secondary-400 store__button-search">
+                <i class="fa-magnifying-glass fa-solid"></i>
+                <span class="visually-hidden-mobile">Buscar</span>
+              </button>
+              <input
+                type="text"
+                id="searchByCode"
+                placeholder="Ingrese código del producto" />
+            </div>
+            <div class="store__search__input__select">
+              <select name="marca" id="marcas">
+                <option value="" disabled selected>Marca</option>
+              </select>
+              <select name="medida" id="medidas">
+                <option value="" disabled selected>Medida</option>
+              </select>
+              <select name="diametro" id="diametros">
+                <option value="" disabled selected>Diametro</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </form>
 
-      <div>
-        <ul class="mb-4 uppercase">
-          <li><a class="text-hover-secondary-400" href="#">Nosotros</a></li>
+      <section class="store__products" id="products"></section>
+    </main>
+
+    <footer class="px-4 pt-5 mt-24 bg-primary">
+      <div class="footer-container">
+        <div>
+          <a href="#"
+            ><img
+              class="logo-footer pr-4"
+              src="../assets/logo-oagsa.png"
+              alt="Logo OAGSA"
+          /></a>
+        </div>
+
+        <ul class="icons">
           <li>
-            <a class="text-hover-secondary-400" href="./store.html">Tienda</a>
+            <a
+              class="text-hover-secondary-400"
+              target="_blank"
+              href="https://www.instagram.com/oag.s.a/"
+              aria-label="Instagram"
+              ><i class="fa-brands fa-instagram footer-icons"></i
+            ></a>
           </li>
           <li>
-            <a class="text-hover-secondary-400" href="./contact.html">Contacto</a>
+            <a
+              class="text-hover-secondary-400"
+              target="_blank"
+              href=""
+              aria-label="Whatsapp"
+              ><i class="fa-brands fa-whatsapp footer-icons"></i
+            ></a>
           </li>
           <li>
-            <a class="text-hover-secondary-400" href="./log-in.html">Log In</a>
+            <a
+              class="text-hover-secondary-400"
+              target="_blank"
+              href="https://www.facebook.com/people/Oscar-A-Gonzalez/100063653886728/"
+              aria-label="Facebook"
+              ><i class="fa-brands fa-facebook footer-icons"></i
+            ></a>
           </li>
         </ul>
 
-        <p>OSCAR A. GONZALEZ S. A. Todos los derechos reservados - 2022</p>
+        <div>
+          <ul class="mb-4 uppercase">
+            <li><a class="text-hover-secondary-400" href="#">Nosotros</a></li>
+            <li>
+              <a class="text-hover-secondary-400" href="./store.html">Tienda</a>
+            </li>
+            <li>
+              <a class="text-hover-secondary-400" href="./contact.html"
+                >Contacto</a
+              >
+            </li>
+            <li>
+              <a class="text-hover-secondary-400" href="./log-in.html"
+                >Log In</a
+              >
+            </li>
+          </ul>
+
+          <p>OSCAR A. GONZALEZ S. A. Todos los derechos reservados - 2022</p>
+        </div>
       </div>
-    </div>
-  </footer>
+    </footer>
 
-  <script type="module" src="../src/user.js"></script>
-  <script type="module" src="../src/store.js"></script>
-  <script src="../src/ui/menu.js"></script>
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
-</body>
-
+    <script type="module" src="../src/user.js"></script>
+    <script type="module" src="../src/store.js"></script>
+    <script src="../src/ui/menu.js"></script>
+    <script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/npm/toastify-js"
+      defer></script>
+  </body>
 </html>

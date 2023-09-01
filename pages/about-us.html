@@ -12,13 +12,15 @@
       name="author"
       content="Stefanía Sanchez Golfieri - Agustín Julián Ramunno" />
     <meta name="copyright" content="Oscar A. González" />
+    <link rel="icon" type="image/x-icon" href="../assets/logo-oagsa.png" />
 
     <title>Sobre Nosotros | OAGSA</title>
 
-    <link rel="stylesheet" href="../css/style.css" />
     <link
+      preload
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" />
+    <link rel="stylesheet" href="../css/style.css" />
   </head>
 
   <body>
@@ -28,7 +30,7 @@
           <a href="../index.html"
             ><img class="logo" src="../assets/logo-oagsa.png" alt="Logo OAGSA"
           /></a>
-          <button class="btn-menu" type="button">
+          <button class="btn-menu" type="button" aria-label="Menú">
             <i class="btn-menu__bars" aria-hidden="true"></i>
             <span class="visually-hidden">Menu</span>
           </button>
@@ -103,11 +105,16 @@
               class="text-hover-secondary-400"
               target="_blank"
               href="https://www.instagram.com/oag.s.a/"
+              aria-label="Instagram"
               ><i class="fa-brands fa-instagram footer-icons"></i
             ></a>
           </li>
           <li>
-            <a class="text-hover-secondary-400" target="_blank" href=""
+            <a
+              class="text-hover-secondary-400"
+              target="_blank"
+              href=""
+              aria-label="Whatsapp"
               ><i class="fa-brands fa-whatsapp footer-icons"></i
             ></a>
           </li>
@@ -116,6 +123,7 @@
               class="text-hover-secondary-400"
               target="_blank"
               href="https://www.facebook.com/people/Oscar-A-Gonzalez/100063653886728/"
+              aria-label="Facebook"
               ><i class="fa-brands fa-facebook footer-icons"></i
             ></a>
           </li>
