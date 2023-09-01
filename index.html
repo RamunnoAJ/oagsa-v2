@@ -1,159 +1,245 @@
 <!DOCTYPE html>
 <html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Sitio web OAGSA" />
+    <meta
+      name="keywords"
+      content="Neumáticos, tienda, mar del plata, Motos, Bicicletas, Cuatriciclos, accesorios" />
+    <meta
+      name="author"
+      content="Stefanía Sanchez Golfieri - Agustín Julián Ramunno" />
+    <meta name="copyright" content="Oscar A. González" />
+    <link rel="icon" type="image/x-icon" href="./assets/logo-oagsa.png" />
 
-<head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Sitio web OAGSA" />
-  <meta name="keywords" content="Neumáticos, tienda, mar del plata, Motos, Bicicletas, Cuatriciclos, accesorios" />
-  <meta name="author" content="Stefanía Sanchez Golfieri - Agustín Julián Ramunno" />
-  <meta name="copyright" content="Oscar A. González" />
+    <title>Inicio | OAGSA</title>
 
-  <title>Inicio | OAGSA</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css"
+      preload />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css"
+      preload />
+    <link rel="stylesheet" href="./css/style.css" />
+  </head>
 
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
-  <link rel="stylesheet" href="./css/style.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" />
-</head>
-
-<body>
-  <header class="bg-primary">
-    <nav>
-      <div class="nav-icons">
-        <a href="#"><img class="logo" src="./assets/logo-oagsa.png" alt="Logo OAGSA" /></a>
-        <button class="btn-menu" type="button">
-          <i class="btn-menu__bars" aria-hidden="true"></i>
-          <span class="visually-hidden">Menu</span>
-        </button>
-      </div>
-      <ul class="nav-bar bg-primary">
-        <div class="nav-flex">
-          <li>
-            <a href="./pages/about-us.html" class="text-hover-secondary-400">Nosotros</a>
-          </li>
-          <li>
-            <a href="./pages/store.html" class="text-hover-secondary-400">Tienda</a>
-          </li>
+  <body>
+    <header class="bg-primary">
+      <nav>
+        <div class="nav-icons">
+          <a href="#"
+            ><img class="logo" src="./assets/logo-oagsa.png" alt="Logo OAGSA"
+          /></a>
+          <button class="btn-menu" type="button" aria-label="Abrir menú">
+            <i class="btn-menu__bars" aria-hidden="true"></i>
+            <span class="visually-hidden">Menu</span>
+          </button>
         </div>
-        <div class="nav-flex">
-          <li>
-            <a href="./pages/dashboard.html" class="text-hover-secondary-400">Funciones</a>
-          </li>
-          <li id="account-icon" class="button bg-secondary-300 bg-hover-secondary-400 text-black">
-            <a href="./pages/log-in.html"><span>Entrar</span> <i class="fa-solid fa-lock"></i></a>
-          </li>
-        </div>
-      </ul>
-    </nav>
-  </header>
+        <ul class="nav-bar bg-primary">
+          <div class="nav-flex">
+            <li>
+              <a href="./pages/about-us.html" class="text-hover-secondary-400"
+                >Nosotros</a
+              >
+            </li>
+            <li>
+              <a href="./pages/store.html" class="text-hover-secondary-400"
+                >Tienda</a
+              >
+            </li>
+          </div>
+          <div class="nav-flex">
+            <li>
+              <a href="./pages/dashboard.html" class="text-hover-secondary-400"
+                >Funciones</a
+              >
+            </li>
+            <li
+              id="account-icon"
+              class="button bg-secondary-300 bg-hover-secondary-400 text-black">
+              <a href="./pages/log-in.html"
+                ><span>Entrar</span> <i class="fa-solid fa-lock"></i
+              ></a>
+            </li>
+          </div>
+        </ul>
+      </nav>
+    </header>
 
-  <main class="main-title mt-28 mb-30">
-    <div class="main-container">
-      <div class="main-image">
-        <div class="title py-4 px-12">
-          <h1 class="uppercase">Somos OAGSA</h1>
-          <p class="mb-8">
-            OSCAR A. GONZALEZ S.A. es una empresa especializada en la
-            importación y distribución mayorista de repuestos para
-            Ciclomotores, Scooters, Motos, Cuatriciclos y Bicicletas.
-          </p>
-          <a class="button bg-secondary-300 text-black bg-hover-secondary-400" href="./pages/about-us.html">Lee Más</a>
+    <main class="main-title mt-28 mb-30">
+      <div class="main-container">
+        <div class="main-image">
+          <div class="title py-4 px-12">
+            <h1 class="uppercase">Somos OAGSA</h1>
+            <p class="mb-8">
+              OSCAR A. GONZALEZ S.A. es una empresa especializada en la
+              importación y distribución mayorista de repuestos para
+              Ciclomotores, Scooters, Motos, Cuatriciclos y Bicicletas.
+            </p>
+            <a
+              class="button bg-secondary-300 text-black bg-hover-secondary-400"
+              href="./pages/about-us.html"
+              >Lee Más</a
+            >
+          </div>
         </div>
       </div>
-    </div>
-  </main>
+    </main>
 
-  <section class="carousel mt-30 mb-10">
-    <button class="carousel__button carousel__button--left visually-hidden">
-      <img src="./assets/chevron-left-solid.svg" alt="" />
-    </button>
+    <section class="carousel mt-30 mb-10">
+      <button
+        class="carousel__button carousel__button--left visually-hidden"
+        aria-label="Anterior">
+        <img src="./assets/chevron-left-solid.svg" alt="" />
+      </button>
 
-    <div class="carousel__track-container">
-      <ul class="carousel__track">
-        <li class="carousel__slide current-slide">
-          <img class="carousel__image" src="./assets/oagsa-banner-1.png" alt="" />
-        </li>
-        <li class="carousel__slide">
-          <img class="carousel__image" src="./assets/oagsa-banner-2.png" alt="" />
-        </li>
-        <li class="carousel__slide">
-          <img class="carousel__image" src="./assets/oagsa-banner-3.png" alt="" />
-        </li>
-        <li class="carousel__slide">
-          <img class="carousel__image" src="./assets/oagsa-banner-4.png" alt="" />
-        </li>
-        <li class="carousel__slide">
-          <img class="carousel__image" src="./assets/oagsa-banner-5.png" alt="" />
-        </li>
-        <li class="carousel__slide">
-          <img class="carousel__image" src="./assets/oagsa-banner-6.png" alt="" />
-        </li>
-      </ul>
-    </div>
-
-    <button class="carousel__button carousel__button--right">
-      <img src="./assets/chevron-right-solid.svg" alt="" />
-    </button>
-
-    <div class="carousel__nav mt-8">
-      <button class="carousel__indicator current-slide"></button>
-      <button class="carousel__indicator"></button>
-      <button class="carousel__indicator"></button>
-      <button class="carousel__indicator"></button>
-      <button class="carousel__indicator"></button>
-      <button class="carousel__indicator"></button>
-    </div>
-  </section>
-
-  <section class="contact-banner mb-10 mt-20">
-    <h2 class="mb-8">¿Tienes alguna consulta?</h2>
-    <a class="button bg-secondary-300 bg-hover-secondary-400 text-black" href="./pages/contact.html">Contáctanos</a>
-  </section>
-
-  <footer class="px-4 pt-5 mt-20 bg-primary">
-    <div class="footer-container">
-      <div>
-        <a href="#"><img class="logo-footer pr-4" src="./assets/logo-oagsa.png" alt="Logo OAGSA" /></a>
+      <div class="carousel__track-container">
+        <ul class="carousel__track">
+          <li class="carousel__slide current-slide">
+            <img
+              class="carousel__image"
+              src="./assets/oagsa-banner-1.png"
+              alt="Imagen de carrusel 1"
+              loading="lazy" />
+          </li>
+          <li class="carousel__slide">
+            <img
+              class="carousel__image"
+              src="./assets/oagsa-banner-2.png"
+              alt="Imagen de carrusel 2"
+              loading="lazy" />
+          </li>
+          <li class="carousel__slide">
+            <img
+              class="carousel__image"
+              src="./assets/oagsa-banner-3.png"
+              alt="Imagen de carrusel 3"
+              loading="lazy" />
+          </li>
+          <li class="carousel__slide">
+            <img
+              class="carousel__image"
+              src="./assets/oagsa-banner-4.png"
+              alt="Imagen de carrusel 4"
+              loading="lazy" />
+          </li>
+          <li class="carousel__slide">
+            <img
+              class="carousel__image"
+              src="./assets/oagsa-banner-5.png"
+              alt="Imagen de carrusel 5"
+              loading="lazy" />
+          </li>
+          <li class="carousel__slide">
+            <img
+              class="carousel__image"
+              src="./assets/oagsa-banner-6.png"
+              alt="Imagen de carrusel 6"
+              loading="lazy" />
+          </li>
+        </ul>
       </div>
 
-      <ul class="icons">
-        <li>
-          <a class="text-hover-secondary-400" target="_blank" href="https://www.instagram.com/oag.s.a/"><i
-              class="fa-brands fa-instagram footer-icons"></i></a>
-        </li>
-        <li>
-          <a class="text-hover-secondary-400" target="_blank" href=""><i
-              class="fa-brands fa-whatsapp footer-icons"></i></a>
-        </li>
-        <li>
-          <a class="text-hover-secondary-400" target="_blank"
-            href="https://www.facebook.com/people/Oscar-A-Gonzalez/100063653886728/"><i
-              class="fa-brands fa-facebook footer-icons"></i></a>
-        </li>
-      </ul>
+      <button
+        class="carousel__button carousel__button--right"
+        aria-label="Siguiente">
+        <img src="./assets/chevron-right-solid.svg" alt="" />
+      </button>
 
-      <div>
-        <ul class="mb-4 uppercase">
+      <div class="carousel__nav mt-8">
+        <button class="carousel__indicator current-slide"></button>
+        <button class="carousel__indicator"></button>
+        <button class="carousel__indicator"></button>
+        <button class="carousel__indicator"></button>
+        <button class="carousel__indicator"></button>
+        <button class="carousel__indicator"></button>
+      </div>
+    </section>
+
+    <section class="contact-banner mb-10 mt-20">
+      <h2 class="mb-8">¿Tienes alguna consulta?</h2>
+      <a
+        class="button bg-secondary-300 bg-hover-secondary-400 text-black"
+        href="./pages/contact.html"
+        >Contáctanos</a
+      >
+    </section>
+
+    <footer class="px-4 pt-5 mt-20 bg-primary">
+      <div class="footer-container">
+        <div>
+          <a href="#"
+            ><img
+              class="logo-footer pr-4"
+              src="./assets/logo-oagsa.png"
+              alt="Logo OAGSA"
+          /></a>
+        </div>
+
+        <ul class="icons">
           <li>
-            <a class="text-hover-secondary-400" href="./pages/about-us.html">Nosotros</a>
+            <a
+              class="text-hover-secondary-400"
+              target="_blank"
+              href="https://www.instagram.com/oag.s.a/"
+              aria-label="Instagram"
+              ><i class="fa-brands fa-instagram footer-icons"></i
+            ></a>
           </li>
           <li>
-            <a class="text-hover-secondary-400" href="./pages/store.html">Tienda</a>
+            <a
+              class="text-hover-secondary-400"
+              target="_blank"
+              href=""
+              aria-label="Whatsapp"
+              ><i class="fa-brands fa-whatsapp footer-icons"></i
+            ></a>
           </li>
           <li>
-            <a class="text-hover-secondary-400" href="./pages/contact.html">Contacto</a>
-          </li>
-          <li>
-            <a class="text-hover-secondary-400" href="./pages/log-in.html">Log In</a>
+            <a
+              class="text-hover-secondary-400"
+              target="_blank"
+              href="https://www.facebook.com/people/Oscar-A-Gonzalez/100063653886728/"
+              aria-label="Facebook"
+              ><i class="fa-brands fa-facebook footer-icons"></i
+            ></a>
           </li>
         </ul>
 
-        <p>OSCAR A. GONZALEZ S. A. Todos los derechos reservados - 2022</p>
-      </div>
-    </div>
-  </footer>
+        <div>
+          <ul class="mb-4 uppercase">
+            <li>
+              <a class="text-hover-secondary-400" href="./pages/about-us.html"
+                >Nosotros</a
+              >
+            </li>
+            <li>
+              <a class="text-hover-secondary-400" href="./pages/store.html"
+                >Tienda</a
+              >
+            </li>
+            <li>
+              <a class="text-hover-secondary-400" href="./pages/contact.html"
+                >Contacto</a
+              >
+            </li>
+            <li>
+              <a class="text-hover-secondary-400" href="./pages/log-in.html"
+                >Log In</a
+              >
+            </li>
+          </ul>
 
+          <p>OSCAR A. GONZALEZ S. A. Todos los derechos reservados - 2022</p>
+        </div>
+      </div>
+    </footer>
+
+<<<<<<< HEAD
   <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
   <script src="./src/ui/menu.js"></script>
   <script src="./src/ui/carousels.js"></script>
@@ -167,3 +253,13 @@
 </body>
 
 </html>
+=======
+    <script
+      src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"
+      defer></script>
+    <script src="./src/ui/menu.js"></script>
+    <script src="./src/ui/carousels.js"></script>
+    <script type="module" src="./src/user.js"></script>
+  </body>
+</html>
+>>>>>>> b5fb908 (fix: lighthouse report of the page)
