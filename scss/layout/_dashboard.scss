@@ -105,3 +105,8 @@
     }
   }
 }
+
+.date-container {
+  @include flex(column, center, center);
+  gap: 0.5rem;
+}

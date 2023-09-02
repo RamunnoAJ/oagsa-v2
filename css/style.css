@@ -5709,6 +5709,14 @@ header .nav-bar.active {
   gap: 1rem;
 }
 
+.date-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+}
+
 .store-container {
   position: relative;
   margin-inline: auto;
