@@ -1,4 +1,4 @@
-import { getOrders } from '../api/profileOrdersHistory.js'
+import { getOrders, getOrdersDates } from '../api/profileOrdersHistory.js'
 import { getStorageID } from '../storage/profileClientAccount.js'
 import { formatDate } from '../utils/formatDate.js'
 import { sortClients } from '../utils/sortClients.js'
@@ -53,6 +53,7 @@ async function handleSelect() {
   const response = await getOrdersPage(FIRST_PAGE)
   $loader.remove()
 
+  renderDates($profileInfoContainer)
   renderOrders(response, $profileInfoContainer)
 }
 
@@ -64,11 +65,29 @@ async function getOrdersPage(page) {
   return await getOrders(sellerID, selectedClient, page)
 }
 
+async function getOrdersDatesPage(page, fromDate, toDate) {
+  const $selectClient = document.querySelector('#selectClient')
+  const selectedClient = $selectClient.value
+  const sellerID = await getStorageID()
+
+  return await getOrdersDates(sellerID, selectedClient, page, fromDate, toDate)
+}
+
 async function renderOrdersPage(page) {
   const $profileInfoContainer = document.querySelector('#profileInfoContainer')
   const response = await getOrdersPage(page)
 
   renderOrders(response, $profileInfoContainer)
+}
+
+async function renderOrdersDatesPage(page) {
+  const fromDate = document.querySelector('#fromDate').value
+  const toDate = document.querySelector('#toDate').value
+
+  const $profileInfoContainer = document.querySelector('#profileInfoContainer')
+  const response = await getOrdersDatesPage(page, fromDate, toDate)
+
+  renderOrders(response, $profileInfoContainer, true)
 }
 
 function renderOptions(clients) {
@@ -84,7 +103,7 @@ function renderOptions(clients) {
   })
 }
 
-export async function renderOrders(orders, parentElement) {
+export async function renderOrders(orders, parentElement, dates = false) {
   if (document.querySelector('.fl-table')) {
     document.querySelector('.fl-table').remove()
   }
@@ -94,13 +113,24 @@ export async function renderOrders(orders, parentElement) {
   parentElement.appendChild(table)
 
   renderTableRows(sortedOrders, '#table-body')
-  renderPaginationButtons(
-    orders.previous,
-    orders.next,
-    renderOrdersPage,
-    parentElement,
-    orders.totalPages
-  )
+
+  if (dates) {
+    renderPaginationButtons(
+      orders.previous,
+      orders.next,
+      renderOrdersDatesPage,
+      parentElement,
+      orders.totalPages
+    )
+  } else {
+    renderPaginationButtons(
+      orders.previous,
+      orders.next,
+      renderOrdersPage,
+      parentElement,
+      orders.totalPages
+    )
+  }
 }
 
 async function createTable() {
@@ -171,4 +201,62 @@ async function renderModal(order) {
   $profileInfo.appendChild($overlay)
 
   renderModalContent(order)
+}
+
+async function createInputsDate() {
+  const $dateContainer = document.createElement('div')
+  $dateContainer.className = 'date-container'
+
+  const $inputContainer = document.createElement('div')
+  $inputContainer.className = 'input-container'
+
+  const $labelFromDate = document.createElement('label')
+  $labelFromDate.textContent = 'Desde: '
+  $labelFromDate.htmlFor = 'fromDate'
+
+  const $fromDate = document.createElement('input')
+  $fromDate.type = 'date'
+  $fromDate.id = 'fromDate'
+  $fromDate.name = 'fromDate'
+
+  $inputContainer.appendChild($labelFromDate)
+  $inputContainer.appendChild($fromDate)
+
+  const $inputContainer2 = document.createElement('div')
+  $inputContainer2.className = 'input-container'
+
+  const $labelToDate = document.createElement('label')
+  $labelToDate.textContent = 'Hasta: '
+  $labelToDate.htmlFor = 'toDate'
+
+  const $toDate = document.createElement('input')
+  $toDate.type = 'date'
+  $toDate.id = 'toDate'
+  $toDate.name = 'toDate'
+
+  $inputContainer2.appendChild($labelToDate)
+  $inputContainer2.appendChild($toDate)
+
+  const $searchButton = document.createElement('button')
+  $searchButton.textContent = 'Buscar'
+  $searchButton.addEventListener('click', async () => {
+    const orders = await getOrdersDatesPage(1, $fromDate.value, $toDate.value)
+    renderOrders(orders, document.querySelector('#profileInfoContainer'), true)
+  })
+  $searchButton.className = 'button bg-secondary-300 bg-hover-secondary-400'
+
+  $dateContainer.appendChild($inputContainer)
+  $dateContainer.appendChild($inputContainer2)
+  $dateContainer.appendChild($searchButton)
+
+  return $dateContainer
+}
+
+async function renderDates(parentElement) {
+  if (document.querySelector('.date-container')) {
+    document.querySelector('.date-container').remove()
+  }
+
+  const $dateContainer = await createInputsDate()
+  parentElement.appendChild($dateContainer)
 }

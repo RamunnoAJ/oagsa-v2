@@ -76,7 +76,6 @@ export async function renderModalContent(order) {
 }
 
 function createTotalRow(total) {
-  console.log(total)
   const $totalRow = document.createElement('tr')
   $totalRow.className = 'modal__total-row fw-bold'
   $totalRow.innerHTML = `
