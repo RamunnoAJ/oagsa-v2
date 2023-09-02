@@ -40,6 +40,7 @@ export async function getOrdersDates(
   fromDate,
   toDate = new Date().toISOString().split('T')[0]
 ) {
+  if (!toDate) toDate = new Date().toISOString().split('T')[0]
   if (isValidDate(toDate)) toDate = formatDate(toDate)
   if (id === 1) id = 0
   const response = await getDataFromDB(
