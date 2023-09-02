@@ -44,6 +44,9 @@ async function handleChangeForm(e) {
       productsString += `&pMedida=${selectedMedida}`
     }
 
+    const user = JSON.parse(getUserFromStorage())
+    productsString += `&pNivleUsuario=${user.role}`
+
     const products = await getProducts(productsString)
     storage.saveToLocalStorage('products_store', products)
 
