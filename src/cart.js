@@ -98,10 +98,6 @@ export function addToCart(item) {
   const $quantityInput = document.getElementById(quantityInputId)
   let quantity = $quantityInput.value
   quantity = Number(quantity)
-  const id = getCart().id
-  if (id) {
-    item.id = id
-  }
   item.quantity = quantity
 
   const newItem = item
