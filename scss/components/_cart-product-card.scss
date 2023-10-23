@@ -29,7 +29,6 @@
 
     input {
       background-color: $slate;
-      max-width: 3rem;
       border: none;
       border-radius: 0.25rem;
       padding: 0.25rem;
@@ -51,8 +50,9 @@
     input {
       background-color: $secondary-color-400;
       border: none;
-      border-radius: 100%;
-      max-width: 1.5rem;
+      max-width: 3.5rem;
+      border-radius: .25rem;
+      padding: 0 0.25rem;
       text-align: center;
       height: 1.5rem;
 
@@ -61,7 +61,7 @@
         -webkit-appearance: none;
         margin: 0;
       }
-    } 
+    }
 
     input[type="number"] {
       -moz-appearance: textfield;
@@ -116,7 +116,7 @@
 
     .quantity {
       input {
-        max-width: 2rem;
+        max-width: 4rem;
         height: 2rem;
       }
     }

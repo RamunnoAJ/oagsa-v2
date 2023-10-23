@@ -5034,7 +5034,6 @@ body {
 }
 .cart__card .cart__discount input {
   background-color: #e2e8f0;
-  max-width: 3rem;
   border: none;
   border-radius: 0.25rem;
   padding: 0.25rem;
@@ -5051,8 +5050,9 @@ body {
 .cart__card .quantity input {
   background-color: #ff9c35;
   border: none;
-  border-radius: 100%;
-  max-width: 1.5rem;
+  max-width: 3.5rem;
+  border-radius: 0.25rem;
+  padding: 0 0.25rem;
   text-align: center;
   height: 1.5rem;
 }
@@ -5108,7 +5108,7 @@ body {
     font-size: var(--fs-body);
   }
   .cart__card .quantity input {
-    max-width: 2rem;
+    max-width: 4rem;
     height: 2rem;
   }
   .cart__card .total__article {
