@@ -136,9 +136,10 @@ async function renderClientAccount(client) {
         const selectedOption = document
           .querySelector('#selectClient')
           .querySelector('option:checked').textContent
-        console.log(selectedOption)
 
-        downloadPDF(selectedOption)
+        const clientName = selectedOption.split(' - ')[0]
+
+        downloadPDF(`CUENTA CORRIENTE - ${clientName}`)
       } catch (error) {
         showToast('Debes seleccionar alguna tabla para descargar')
       }
