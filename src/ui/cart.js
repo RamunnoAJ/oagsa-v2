@@ -12,6 +12,7 @@ import {
 } from '../cart.js'
 import { getCart, saveCart } from '../storage/cart.js'
 import { getUserFromStorage } from '../storage/storageData.js'
+import { formatter } from '../utils/formatPrice.js'
 import { triggerSweetAlert } from '../utils/sweetAlert.js'
 
 /** @typedef {import('../entities/articles.js').ArticleOrder} ArticleOrder */
@@ -396,6 +397,17 @@ function renderButtons(cart) {
   }
   $buttonsContainer.appendChild($sendToDraft)
 
+  const $resetButton = document.createElement('button')
+  $resetButton.className =
+    'button-cart bg-secondary-300 uppercase fw-semi-bold bg-hover-secondary-400 mb-2'
+  $resetButton.textContent = 'Vaciar carrito'
+  $resetButton.type = 'button'
+  $resetButton.addEventListener('click', e => {
+    e.preventDefault()
+    emptyCart()
+    renderCart(getCart())
+  })
+
   const $checkoutButton = document.createElement('button')
   $checkoutButton.className =
     'button-cart button-checkout bg-secondary-400 uppercase fw-semi-bold bg-hover-secondary-400 text-white'
@@ -407,6 +419,7 @@ function renderButtons(cart) {
   })
 
   $container.appendChild($buttonsContainer)
+  $container.appendChild($resetButton)
   $container.appendChild($checkoutButton)
 }
 
@@ -420,7 +433,7 @@ function createTotalRow() {
   const $priceTotal = document.createElement('span')
   $priceTotal.className = 'fw-semi-bold'
   $priceText.textContent = 'Precio Final:'
-  $priceTotal.textContent = `$${getTotalPrice(getCart())}`
+  $priceTotal.textContent = formatter.format(getTotalPrice(getCart()))
   $price.appendChild($priceText)
   $price.appendChild($priceTotal)
 
@@ -496,7 +509,7 @@ function createProductCard(item) {
 
   const $price = document.createElement('p')
   $price.classList.add('fw-bold')
-  $price.textContent = `$${item.price.toFixed(0)}`
+  $price.textContent = formatter.format(item.price.toFixed(0))
 
   const $discount = document.createElement('p')
   $discount.className = 'fw-semi-bold cart__discount'
@@ -558,7 +571,7 @@ function createProductCard(item) {
 
   const $totalArticle = document.createElement('p')
   $totalArticle.className = 'total__article fw-bold'
-  $totalArticle.textContent = `$${item.priceTotal.toFixed(0)}`
+  $totalArticle.textContent = formatter.format(item.priceTotal.toFixed(0))
 
   const $delete = document.createElement('button')
   $delete.innerHTML = `<i class="fa fa-trash-alt"></i>`

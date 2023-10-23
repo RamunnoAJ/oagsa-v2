@@ -1,5 +1,6 @@
 import { postDolar } from '../api/dolar.js'
 import { setMaintenance } from '../api/maintenance.js'
+import { formatter } from '../utils/formatPrice.js'
 
 export async function renderProfileAdministration(
   dolar,
@@ -88,7 +89,9 @@ async function createDolarElement(dolar, callback) {
 
   const $dolarValue = document.createElement('div')
   $dolarValue.className = 'dolar__value'
-  $dolarValue.textContent = `Valor actual: $${dolar.value.trim()}`
+  $dolarValue.textContent = `Valor actual: ${formatter.format(
+    dolar.value.trim()
+  )}`
 
   const $form = document.createElement('form')
   $form.className = 'dolar__input-container'
