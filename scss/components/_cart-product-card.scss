@@ -46,7 +46,13 @@
     }
   }
 
+  .total__price {
+    @include flex(row-reverse, space-between, center);
+    gap: 1rem;
+  }
+
   .quantity {
+    @include flex(row, flex-start, center);
     input {
       background-color: $secondary-color-400;
       border: none;
@@ -92,9 +98,8 @@
   }
 
   .cart__article__container {
-    @include flex(column, space-around, flex-end);
+    display: grid;
     gap: 3rem;
-    flex-shrink: 0;
   }
 
 }
@@ -102,6 +107,9 @@
 @media (min-width: 48rem) {
 
   .cart__card {
+    display: grid;
+    grid-template-columns: 0.75fr 6fr 1fr;
+
     img {
       width: 100%;
       height: 7.25rem;
@@ -109,7 +117,9 @@
     }
 
     .cart__info {
-      @include flex(row, space-around, center);
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 0.5fr 1fr;
+      place-content: center;
       gap: 1rem;
       font-size: var(--fs-body);
     }
@@ -123,10 +133,11 @@
 
     .total__article {
       font-size: var(--fs-body);
+      text-align: left;
     }
 
     .cart__article__container{
-      @include flex(row-reverse, space-between, center);
+      display: grid;
       font-size: var(--fs-body);
     }
   }

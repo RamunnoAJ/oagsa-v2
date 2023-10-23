@@ -567,7 +567,7 @@ function createProductCard(item) {
   $quantity.appendChild($addQuantity)
 
   const $container = document.createElement('div')
-  $container.classList.add('cart__article__container')
+  $container.classList.add('total__price')
 
   const $totalArticle = document.createElement('p')
   $totalArticle.className = 'total__article fw-bold'
