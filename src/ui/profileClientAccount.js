@@ -1,6 +1,9 @@
 import { getAccountMovements } from '../api/profileClientAccount.js'
 import { formatDate } from '../utils/formatDate.js'
 import { sortClients } from '../utils/sortClients.js'
+import { formatter } from '../utils/formatPrice.js'
+import { showToast } from './cart.js'
+import { downloadPDF } from '../utils/downloadPDF.js'
 
 /** @typedef {import('../mappers/accountMovements.js').Movement} Movement
  *  @typedef {import('../entities/clients.js').Client} Client
@@ -83,7 +86,9 @@ async function renderClientAccount(client) {
     <tr>
         <th>Emisión</th>
         <th>Vencimiento</th>
-        <th>Comprobante</th>
+        <th>N° Comprobante</th>
+        <th>Letra</th>
+        <th>Tipo</th>
         <th>Importe</th>
         <th>Importe Pendiente</th>
     </tr>
@@ -109,10 +114,36 @@ async function renderClientAccount(client) {
       <td></td>
       <td></td>
       <td></td>
-      <td class="fw-bold">$${getTotalPrice(prices)}</td>
+      <td></td>
+      <td></td>
+      <td class="fw-bold">${formatter.format(getTotalPrice(prices))}</td>
       `
 
     $tableBody.appendChild(totalPriceRow)
+
+    const $btnDownload = document.createElement('button')
+    $btnDownload.className =
+      'button bg-secondary-300 bg-hover-secondary-400 mt-4'
+    $btnDownload.innerHTML = `
+              <span class="visually-hidden-mobile">Descargar</span>
+              <span class="visually-hidden-desktop">
+                <i class="fa-solid fa-download"></i>
+              </span>
+    `
+    $btnDownload.addEventListener('click', e => {
+      e.preventDefault()
+      try {
+        const selectedOption = document
+          .querySelector('#selectClient')
+          .querySelector('option:checked').textContent
+        console.log(selectedOption)
+
+        downloadPDF(selectedOption)
+      } catch (error) {
+        showToast('Debes seleccionar alguna tabla para descargar')
+      }
+    })
+    $tableBody.parentNode.parentNode.appendChild($btnDownload)
   } else {
     $tableContainer.innerHTML = `<span>No se encontraron resultados</span>`
   }
@@ -135,8 +166,12 @@ function renderTableRows(item, parentElement) {
       <td>${formatDate(item.date.slice(0, 10))}</td>
       <td>${formatDate(item.expirationDate.slice(0, 10))}</td>
       <td>${item.number}</td>
-      <td>$${trimPrice(item.amount.toFixed(0))}</td>
-      <td class="fw-bold">$${trimPrice(item.pending.toFixed(0))}</td>
+      <td>${item.letter}</td>
+      <td>${item.voucher}</td>
+      <td class="text-end">${formatter.format(item.amount.toFixed(0))}</td>
+      <td class="fw-bold">${formatter.format(
+        trimPrice(item.pending.toFixed(0))
+      )}</td>
       `
   parentElement.appendChild(tableRow)
 }

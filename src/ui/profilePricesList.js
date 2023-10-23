@@ -2,6 +2,8 @@ import { getCategories, getProducts } from '../api/profilePricesList.js'
 import * as storage from '../storage/profilePricesList.js'
 import { removeDuplicates } from '../utils/removeDuplicates.js'
 import { showToast } from './cart.js'
+import { formatter } from '../utils/formatPrice.js'
+import { downloadPDF } from '../utils/downloadPDF.js'
 
 export async function renderProductPrices(products, parentElement) {
   if (products.length > 0) {
@@ -209,9 +211,9 @@ function renderTableRows(item, parentElement) {
   const tableRow = document.createElement('tr')
   tableRow.innerHTML = `
     <td>${item.id}</td>
-    <td>${item.name}</td>
+    <td class="text-start">${item.name}</td>
     <td>${item.brand}</td>
-    <td>$${item.price?.toFixed(0) || 0}</td>
+    <td class="text-end">${formatter.format(item.price?.toFixed(0) || 0)}</td>
     <td class="visually-hidden-mobile">${item.diameter}</td>
     <td class="visually-hidden-mobile">${item.measure}</td>
   `
@@ -283,53 +285,4 @@ async function handleChangeSubrubro(e) {
   renderOptions(arrayMarcas, '#select-brand')
   renderOptions(arrayDiametros, '#select-diametro')
   renderOptions(arrayMedidas, '#select-medida')
-}
-
-/**
- * @param {string} category
- * */
-function downloadPDF(category) {
-  const table = document.querySelector('.table-container > table').outerHTML
-
-  const pdfWindow = window.open('', '_blank')
-  pdfWindow.document.write(`
-            <html>
-            <head>
-                <title>OAGSA - ${category}</title>
-                <style>
-                    body {
-                        font-family: Arial, sans-serif;
-                    }
-                    table {
-                        border-collapse: collapse;
-                        width: 100%;
-                    }
-                    th, td {
-                        border: 1px solid #ddd;
-                        padding: 8px;
-                        text-align: center;
-                    }
-                    th {
-                        background-color: #f2f2f2;
-                    }
-                </style>
-            </head>
-            <body>
-                ${table}
-            </body>
-            </html>
-        `)
-  pdfWindow.document.close()
-
-  pdfWindow.onload = function () {
-    pdfWindow.addEventListener('beforeprint', e => {
-      e.preventDefault()
-    })
-
-    pdfWindow.addEventListener('afterprint', () => {
-      pdfWindow.close()
-    })
-
-    pdfWindow.print()
-  }
 }

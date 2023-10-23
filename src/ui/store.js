@@ -17,12 +17,12 @@ $searchInput.addEventListener('submit', handleSubmitSearch)
 async function handleChangeForm(e) {
   e.preventDefault()
 
-  let selectedSubrubro = ''
+  let selectedRubro = ''
 
   if ($form.rubros) {
-    selectedSubrubro = $form.rubros.value
+    selectedRubro = $form.rubros.value
   } else {
-    selectedSubrubro = document.querySelector(
+    selectedRubro = document.querySelector(
       '.store__rubros__desktop__items.active'
     ).dataset.rubro
   }
@@ -31,9 +31,9 @@ async function handleChangeForm(e) {
   const selectedDiametro = await $form.diametro.value
   const selectedMedida = await $form.medida.value
 
-  let productsString = `articulo/articulo-rubro?pCodigoRubro=${selectedSubrubro}`
+  let productsString = `articulo/articulo-rubro?pCodigoRubro=${selectedRubro}`
 
-  if (selectedSubrubro) {
+  if (selectedRubro) {
     if (selectedMarca) {
       productsString += `&pMarca=${selectedMarca}`
     }
