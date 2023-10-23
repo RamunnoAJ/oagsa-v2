@@ -4902,7 +4902,7 @@ body {
 }
 .fl-table td {
   font-size: var(--fs-200);
-  padding: 0.25rem 0;
+  padding: 0.25rem 0.5rem;
 }
 .fl-table tr:nth-child(even) {
   background-color: #f8f8f8;
