@@ -1,4 +1,4 @@
-import { getFields } from '../api/cart.js'
+import { getFields, postBuyOrder } from '../api/cart.js'
 import { getClientsFromSeller } from '../api/profileClientList.js'
 import { removeDraft } from '../api/profileDrafts.js'
 import {
@@ -9,6 +9,7 @@ import {
   getTotalQuantity,
   sendToDraft,
   emptyCart,
+  getCartFromDraft,
 } from '../cart.js'
 import { getCart, saveCart } from '../storage/cart.js'
 import { getUserFromStorage } from '../storage/storageData.js'
@@ -84,9 +85,16 @@ export async function renderCart(cart) {
 
   const $cartContainer = document.createElement('div')
   $cartContainer.classList.add('cart__articles__container')
+  $cartContainer.addEventListener('click', async () => {
+    const newCart = await getCart()
+    await postBuyOrder('orden-compra', newCart)
+    cart = await getCartFromDraft(cart.id)
+    saveCart(cart)
+  })
   $cart.appendChild($cartContainer)
 
   await renderArticles(cart)
+  await selectFields(cart)
 }
 
 async function renderArticles(cart) {
@@ -94,6 +102,7 @@ async function renderArticles(cart) {
   $cartContainer.innerHTML = ''
 
   cart.detail.forEach(item => {
+    if (item.deleted) return
     const $article = createProductCard(item)
     $cartContainer.appendChild($article)
   })
@@ -140,8 +149,7 @@ async function renderClients(cart) {
   $clientsSelect.name = 'selectClient'
   $clientsSelect.id = 'selectClient'
   $clientsSelect.classList.add('cart__clients-select')
-  $clientsSelect.select = cart.idClient
-  if (cart.borrador === 1) $clientsSelect.disabled = true
+  if (cart.draft === 1) $clientsSelect.disabled = true
 
   $clientsSelect.addEventListener('change', () => {
     saveCart({ ...getCart(), idClient: Number($clientsSelect.value) })
@@ -598,4 +606,18 @@ function createProductCard(item) {
   $card.appendChild($container)
 
   return $card
+}
+
+async function selectFields({ idClient, idFreight, idSellCondition }) {
+  if (!idClient || !idFreight || !idSellCondition) return
+
+  const $selectClient = document.querySelector('#selectClient')
+  const $selectFreight = document.querySelector('#flete')
+  const $selectSellCondition = document.querySelector('#condicionVenta')
+
+  $selectClient.querySelector(`option[value="${idClient}"]`).selected = true
+  $selectFreight.querySelector(`option[value="${idFreight}"]`).selected = true
+  $selectSellCondition.querySelector(
+    `option[value="${idSellCondition}"]`
+  ).selected = true
 }
