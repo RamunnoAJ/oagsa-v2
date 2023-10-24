@@ -2,15 +2,15 @@ import { deleteDraft, editDraft } from '../profileDrafts.js'
 import { getStorageID } from '../storage/profileClientAccount.js'
 import { formatDate } from '../utils/formatDate.js'
 import { getClientsFromSeller } from '../api/profileClientList.js'
+import { formatter } from '../utils/formatPrice.js'
 
 /**
  * @typedef {import('../entities/clients.js').Client}
  * @typedef {import('../entities/orders.js').Order}
  * */
 
-const sellerID = getStorageID()
-
 export async function renderDrafts(drafts, parentElement) {
+  const sellerID = getStorageID()
   parentElement.innerHTML = ''
 
   const clients = await getClientsFromSeller(sellerID)
@@ -80,7 +80,7 @@ async function renderTableRows(drafts, parentElement, clients) {
       } - ${draft.idClient}</td>
       <td>${formatDate(draft.date.split('T')[0])}</td>
       <td>${draft.items}</td>
-      <td>$${draft.total.toFixed(0)}</td>
+      <td>${formatter.format(draft.total.toFixed(0))}</td>
       <td class="fl-table__icons visually-hidden-mobile">
         <i id="btn-edit-${draft.id}" class="fa-solid fa-pen"></i> 
         <i id="btn-delete-${draft.id}" class="fa-solid fa-trash"></i>
