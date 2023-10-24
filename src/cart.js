@@ -1,5 +1,5 @@
 import { postBuyOrder } from './api/cart.js'
-import { removeDraft } from './api/profileDrafts.js'
+import { getDraft, removeDraft } from './api/profileDrafts.js'
 import { getCart, saveCart, clearCart } from './storage/cart.js'
 import { checkLocalStorage } from './storage/profile.js'
 import { showToast } from './ui/cart.js'
@@ -93,16 +93,17 @@ export async function sendToDraft(cart) {
 /**
  * @param {ArticleOrder} item
  * */
-export function addToCart(item) {
+export async function addToCart(item) {
   const quantityInputId = `quantity-${item.id}`
   const $quantityInput = document.getElementById(quantityInputId)
   let quantity = $quantityInput.value
   quantity = Number(quantity)
   item.quantity = quantity
+  item.deleted = false
 
   const newItem = item
+  const cart = getCart()
   if (quantity > 0) {
-    const cart = getCart()
     const index = cart.detail.findIndex(i => i.id === item.id)
 
     if (index === -1) {
@@ -123,23 +124,27 @@ export function addToCart(item) {
 /**
  * @param {ArticleOrder} item
  * */
-function addProductToCart(item) {
+async function addProductToCart(item) {
   const cart = getCart()
   const newItem = { ...item }
   const updatedCart = { ...cart, detail: [...cart.detail, newItem] }
   saveCart(updatedCart)
+  if (cart.draft === 1) {
+    await updateOrder(updatedCart)
+  }
 }
 
 /**
  * @param {ArticleOrder} item
  * */
-export function removeFromCart(item) {
+export async function removeFromCart(item) {
   const cart = getCart()
   const index = cart.detail.findIndex(i => i.id === item.id)
-  cart.detail.splice(index, 1)
+  cart.detail[index].deleted = true
 
   const updatedCart = { ...cart, detail: [...cart.detail] }
   saveCart(updatedCart)
+  await updateOrder(updatedCart)
 }
 
 export async function emptyCart() {
@@ -160,10 +165,10 @@ export function getDiscount(percentage, price) {
  * @returns {number}
  * */
 export function getTotalQuantity(cart) {
-  const totalQuantity = cart.detail.reduce(
-    (acc, item) => acc + Number(item.quantity),
-    0
-  )
+  const totalQuantity = cart.detail.reduce((acc, item) => {
+    if (item.deleted) return acc
+    return acc + Number(item.quantity)
+  }, 0)
   cart.items = totalQuantity
   saveCart(cart)
   return Number(totalQuantity)
@@ -174,11 +179,10 @@ export function getTotalQuantity(cart) {
  * @returns {number}
  * */
 export function getTotalPrice(cart) {
-  const totalPrice = cart.detail.reduce(
-    (acc, item) =>
-      acc + (item.priceDiscount || item.price) * Number(item.quantity),
-    0
-  )
+  const totalPrice = cart.detail.reduce((acc, item) => {
+    if (item.deleted) return acc
+    return acc + (item.priceDiscount || item.price) * Number(item.quantity)
+  }, 0)
   cart.total = Number(totalPrice).toFixed(0)
   saveCart(cart)
   return Number(totalPrice).toFixed(0)
@@ -200,11 +204,12 @@ export function updateCart(item, quantity, discount, callback = () => {}) {
  * @param {ArticleOrder} item
  * @param {number} quantity
  * */
-export function updateQuantity(item, quantity) {
+export async function updateQuantity(item, quantity) {
   const cart = getCart()
   const index = cart.detail.findIndex(i => i.id === item.id)
   cart.detail[index].quantity = Number(quantity)
   saveCart(cart)
+  await updateOrder(cart)
 }
 
 /**
@@ -252,4 +257,27 @@ export function updateDiscount(item, discount) {
   detail.totalDiscount = Number(detail.priceDiscount * detail.quantity)
   detail.priceTotal = detail.totalDiscount
   saveCart(cart)
+}
+
+/**
+ * @param {number} id
+ * @returns {Order}
+ * */
+export async function getCartFromDraft(id) {
+  try {
+    const cart = await getDraft(id)
+    return cart
+  } catch (error) {
+    const cart = await getCart()
+    return cart
+  }
+}
+
+/**
+ * @param {Order} order
+ * */
+async function updateOrder(order) {
+  getTotalQuantity(order)
+  getTotalPrice(order)
+  await postBuyOrder('orden-compra', order)
 }
