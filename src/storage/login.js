@@ -6,7 +6,6 @@ export async function checkLocalStorage() {
 
   if (user) {
     const userFromCookie = JSON.parse(user)
-
     if (userFromCookie) {
       navigateToDashboard()
     }

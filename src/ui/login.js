@@ -19,14 +19,3 @@ export function navigateToDashboard() {
 export function navigateToLogin() {
   window.location.replace('../pages/log-in.html')
 }
-
-/**
- * @param {string} username
- * */
-export function displayUsername(username = '') {
-  const $navbar = document.querySelector('.nav-bar > .nav-flex')
-  const $name = document.createElement('li')
-  $name.textContent = username
-
-  $navbar.appendChild($name)
-}
