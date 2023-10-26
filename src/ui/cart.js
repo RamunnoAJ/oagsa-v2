@@ -1,4 +1,4 @@
-import { getFields } from '../api/cart.js'
+import { getFields, postBuyOrder } from '../api/cart.js'
 import { getClientsFromSeller } from '../api/profileClientList.js'
 import { removeDraft } from '../api/profileDrafts.js'
 import {
@@ -9,9 +9,11 @@ import {
   getTotalQuantity,
   sendToDraft,
   emptyCart,
+  getCartFromDraft,
 } from '../cart.js'
 import { getCart, saveCart } from '../storage/cart.js'
 import { getUserFromStorage } from '../storage/storageData.js'
+import { formatter } from '../utils/formatPrice.js'
 import { triggerSweetAlert } from '../utils/sweetAlert.js'
 
 /** @typedef {import('../entities/articles.js').ArticleOrder} ArticleOrder */
@@ -83,9 +85,16 @@ export async function renderCart(cart) {
 
   const $cartContainer = document.createElement('div')
   $cartContainer.classList.add('cart__articles__container')
+  $cartContainer.addEventListener('click', async () => {
+    const newCart = await getCart()
+    await postBuyOrder('orden-compra', newCart)
+    cart = await getCartFromDraft(cart.id)
+    saveCart(cart)
+  })
   $cart.appendChild($cartContainer)
 
   await renderArticles(cart)
+  await selectFields(cart)
 }
 
 async function renderArticles(cart) {
@@ -93,6 +102,7 @@ async function renderArticles(cart) {
   $cartContainer.innerHTML = ''
 
   cart.detail.forEach(item => {
+    if (item.deleted) return
     const $article = createProductCard(item)
     $cartContainer.appendChild($article)
   })
@@ -139,8 +149,7 @@ async function renderClients(cart) {
   $clientsSelect.name = 'selectClient'
   $clientsSelect.id = 'selectClient'
   $clientsSelect.classList.add('cart__clients-select')
-  $clientsSelect.select = cart.idClient
-  if (cart.borrador === 1) $clientsSelect.disabled = true
+  if (cart.draft === 1) $clientsSelect.disabled = true
 
   $clientsSelect.addEventListener('change', () => {
     saveCart({ ...getCart(), idClient: Number($clientsSelect.value) })
@@ -396,6 +405,17 @@ function renderButtons(cart) {
   }
   $buttonsContainer.appendChild($sendToDraft)
 
+  const $resetButton = document.createElement('button')
+  $resetButton.className =
+    'button-cart bg-secondary-300 uppercase fw-semi-bold bg-hover-secondary-400 mb-2'
+  $resetButton.textContent = 'Vaciar carrito'
+  $resetButton.type = 'button'
+  $resetButton.addEventListener('click', e => {
+    e.preventDefault()
+    emptyCart()
+    renderCart(getCart())
+  })
+
   const $checkoutButton = document.createElement('button')
   $checkoutButton.className =
     'button-cart button-checkout bg-secondary-400 uppercase fw-semi-bold bg-hover-secondary-400 text-white'
@@ -407,6 +427,7 @@ function renderButtons(cart) {
   })
 
   $container.appendChild($buttonsContainer)
+  $container.appendChild($resetButton)
   $container.appendChild($checkoutButton)
 }
 
@@ -420,7 +441,7 @@ function createTotalRow() {
   const $priceTotal = document.createElement('span')
   $priceTotal.className = 'fw-semi-bold'
   $priceText.textContent = 'Precio Final:'
-  $priceTotal.textContent = `$${getTotalPrice(getCart())}`
+  $priceTotal.textContent = formatter.format(getTotalPrice(getCart()))
   $price.appendChild($priceText)
   $price.appendChild($priceTotal)
 
@@ -496,7 +517,7 @@ function createProductCard(item) {
 
   const $price = document.createElement('p')
   $price.classList.add('fw-bold')
-  $price.textContent = `$${item.price.toFixed(0)}`
+  $price.textContent = formatter.format(item.price.toFixed(0))
 
   const $discount = document.createElement('p')
   $discount.className = 'fw-semi-bold cart__discount'
@@ -554,11 +575,11 @@ function createProductCard(item) {
   $quantity.appendChild($addQuantity)
 
   const $container = document.createElement('div')
-  $container.classList.add('cart__article__container')
+  $container.classList.add('total__price')
 
   const $totalArticle = document.createElement('p')
   $totalArticle.className = 'total__article fw-bold'
-  $totalArticle.textContent = `$${item.priceTotal.toFixed(0)}`
+  $totalArticle.textContent = formatter.format(item.priceTotal.toFixed(0))
 
   const $delete = document.createElement('button')
   $delete.innerHTML = `<i class="fa fa-trash-alt"></i>`
@@ -585,4 +606,18 @@ function createProductCard(item) {
   $card.appendChild($container)
 
   return $card
+}
+
+async function selectFields({ idClient, idFreight, idSellCondition }) {
+  if (!idClient || !idFreight || !idSellCondition) return
+
+  const $selectClient = document.querySelector('#selectClient')
+  const $selectFreight = document.querySelector('#flete')
+  const $selectSellCondition = document.querySelector('#condicionVenta')
+
+  $selectClient.querySelector(`option[value="${idClient}"]`).selected = true
+  $selectFreight.querySelector(`option[value="${idFreight}"]`).selected = true
+  $selectSellCondition.querySelector(
+    `option[value="${idSellCondition}"]`
+  ).selected = true
 }

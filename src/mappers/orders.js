@@ -2,7 +2,6 @@ import { Order } from '../entities/orders.js'
 import { orderArticlesMapper } from './articles.js'
 import { getUserFromStorage } from '../storage/storageData.js'
 
-
 /** @typedef {import('../entities/orders.js').Order} Order */
 
 /**
@@ -71,7 +70,7 @@ export function postOrderMapper(order) {
 
   const listaDetalle = detail.map(item => {
     return {
-      numeroNota: item.idOrder,
+      numeroNota: id,
       codigoArticulo: item.id,
       descripcionArticulo: item.name,
       precio: item.price,
@@ -84,7 +83,7 @@ export function postOrderMapper(order) {
       importeDescuento: item.totalDiscount,
       precioConDescuento: item.priceDiscount,
       montoTotal: item.priceTotal,
-      numeroOrder: item.orderNumber,
+      numeroOrden: 0,
       eliminado: item.deleted,
       imagenesUrl: [],
     }

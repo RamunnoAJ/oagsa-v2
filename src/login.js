@@ -29,6 +29,7 @@ async function handleSubmit(e) {
     const user = {
       id: loggedUser.id,
       role: loggedUser.role,
+      name: loggedUser.name,
       checkbox,
     }
     if (checkbox) {

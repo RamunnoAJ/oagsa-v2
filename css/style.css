@@ -4902,7 +4902,7 @@ body {
 }
 .fl-table td {
   font-size: var(--fs-200);
-  padding: 0.25rem 0;
+  padding: 0.25rem 0.5rem;
 }
 .fl-table tr:nth-child(even) {
   background-color: #f8f8f8;
@@ -5034,7 +5034,6 @@ body {
 }
 .cart__card .cart__discount input {
   background-color: #e2e8f0;
-  max-width: 3rem;
   border: none;
   border-radius: 0.25rem;
   padding: 0.25rem;
@@ -5048,11 +5047,25 @@ body {
   right: 0.25rem;
   transform: translateY(-50%);
 }
+.cart__card .total__price {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+.cart__card .quantity {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
 .cart__card .quantity input {
   background-color: #ff9c35;
   border: none;
-  border-radius: 100%;
-  max-width: 1.5rem;
+  max-width: 3.5rem;
+  border-radius: 0.25rem;
+  padding: 0 0.25rem;
   text-align: center;
   height: 1.5rem;
 }
@@ -5085,40 +5098,37 @@ body {
   text-align: center;
 }
 .cart__card .cart__article__container {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  align-items: flex-end;
+  display: grid;
   gap: 3rem;
-  flex-shrink: 0;
 }
 
 @media (min-width: 48rem) {
+  .cart__card {
+    display: grid;
+    grid-template-columns: 0.75fr 6fr 1fr;
+  }
   .cart__card img {
     width: 100%;
     height: 7.25rem;
     max-width: 7.25rem;
   }
   .cart__card .cart__info {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 0.5fr 1fr;
+    place-content: center;
     gap: 1rem;
     font-size: var(--fs-body);
   }
   .cart__card .quantity input {
-    max-width: 2rem;
+    max-width: 4rem;
     height: 2rem;
   }
   .cart__card .total__article {
     font-size: var(--fs-body);
+    text-align: left;
   }
   .cart__card .cart__article__container {
-    display: flex;
-    flex-direction: row-reverse;
-    justify-content: space-between;
-    align-items: center;
+    display: grid;
     font-size: var(--fs-body);
   }
 }
@@ -5707,6 +5717,14 @@ header .nav-bar.active {
   justify-content: center;
   align-items: center;
   gap: 1rem;
+}
+
+.date-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .store-container {

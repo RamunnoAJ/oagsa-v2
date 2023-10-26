@@ -10,7 +10,7 @@ export function userMapper(apiData) {
     id,
     nombreUsuario,
     codigoVendedor,
-    codigoBejerman,
+    codigoId,
     codigoUsuario,
     nivelAcceso,
   } = apiData
@@ -19,7 +19,7 @@ export function userMapper(apiData) {
     id,
     nombreUsuario,
     codigoVendedor,
-    codigoBejerman,
+    codigoId,
     codigoUsuario,
     nivelAcceso
   )

@@ -29,7 +29,6 @@
 
     input {
       background-color: $slate;
-      max-width: 3rem;
       border: none;
       border-radius: 0.25rem;
       padding: 0.25rem;
@@ -47,12 +46,19 @@
     }
   }
 
+  .total__price {
+    @include flex(row-reverse, space-between, center);
+    gap: 1rem;
+  }
+
   .quantity {
+    @include flex(row, flex-start, center);
     input {
       background-color: $secondary-color-400;
       border: none;
-      border-radius: 100%;
-      max-width: 1.5rem;
+      max-width: 3.5rem;
+      border-radius: .25rem;
+      padding: 0 0.25rem;
       text-align: center;
       height: 1.5rem;
 
@@ -61,7 +67,7 @@
         -webkit-appearance: none;
         margin: 0;
       }
-    } 
+    }
 
     input[type="number"] {
       -moz-appearance: textfield;
@@ -92,9 +98,8 @@
   }
 
   .cart__article__container {
-    @include flex(column, space-around, flex-end);
+    display: grid;
     gap: 3rem;
-    flex-shrink: 0;
   }
 
 }
@@ -102,6 +107,9 @@
 @media (min-width: 48rem) {
 
   .cart__card {
+    display: grid;
+    grid-template-columns: 0.75fr 6fr 1fr;
+
     img {
       width: 100%;
       height: 7.25rem;
@@ -109,24 +117,27 @@
     }
 
     .cart__info {
-      @include flex(row, space-around, center);
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 0.5fr 1fr;
+      place-content: center;
       gap: 1rem;
       font-size: var(--fs-body);
     }
 
     .quantity {
       input {
-        max-width: 2rem;
+        max-width: 4rem;
         height: 2rem;
       }
     }
 
     .total__article {
       font-size: var(--fs-body);
+      text-align: left;
     }
 
     .cart__article__container{
-      @include flex(row-reverse, space-between, center);
+      display: grid;
       font-size: var(--fs-body);
     }
   }

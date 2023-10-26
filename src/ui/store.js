@@ -6,6 +6,7 @@ import { sortProducts } from '../utils/sortProducts.js'
 import { getDolar } from '../api/dolar.js'
 import { getUserFromStorage } from '../storage/storageData.js'
 import { ArticleOrder } from '../entities/articles.js'
+import { showToast } from './cart.js'
 
 const $form = document.querySelector('#store')
 $form.addEventListener('change', handleChangeForm)
@@ -17,12 +18,12 @@ $searchInput.addEventListener('submit', handleSubmitSearch)
 async function handleChangeForm(e) {
   e.preventDefault()
 
-  let selectedSubrubro = ''
+  let selectedRubro = ''
 
   if ($form.rubros) {
-    selectedSubrubro = $form.rubros.value
+    selectedRubro = $form.rubros.value
   } else {
-    selectedSubrubro = document.querySelector(
+    selectedRubro = document.querySelector(
       '.store__rubros__desktop__items.active'
     ).dataset.rubro
   }
@@ -31,9 +32,9 @@ async function handleChangeForm(e) {
   const selectedDiametro = await $form.diametro.value
   const selectedMedida = await $form.medida.value
 
-  let productsString = `articulo/articulo-rubro?pCodigoRubro=${selectedSubrubro}`
+  let productsString = `articulo/articulo-rubro?pCodigoRubro=${selectedRubro}`
 
-  if (selectedSubrubro) {
+  if (selectedRubro) {
     if (selectedMarca) {
       productsString += `&pMarca=${selectedMarca}`
     }
@@ -43,6 +44,9 @@ async function handleChangeForm(e) {
     if (selectedMedida) {
       productsString += `&pMedida=${selectedMedida}`
     }
+
+    const user = JSON.parse(getUserFromStorage())
+    productsString += `&pNivleUsuario=${user?.role || 3}`
 
     const products = await getProducts(productsString)
     storage.saveToLocalStorage('products_store', products)
@@ -263,6 +267,9 @@ function createProductCard(item, user) {
   if (user) $info.appendChild($quantity)
 
   const $quantityHandler = document.createElement('button')
+  if (item.stock <= 0) {
+    $quantityHandler.disabled = true
+  }
   $quantityHandler.classList = 'quantity__handler'
   $quantityHandler.type = 'button'
   $quantityHandler.textContent = '-'
@@ -279,6 +286,9 @@ function createProductCard(item, user) {
   $quantity.appendChild($quantityInput)
 
   const $quantityHandler2 = document.createElement('button')
+  if (item.stock <= 0) {
+    $quantityHandler2.disabled = true
+  }
   $quantityHandler2.classList = 'quantity__handler'
   $quantityHandler2.type = 'button'
   $quantityHandler2.textContent = '+'
@@ -293,6 +303,11 @@ function createProductCard(item, user) {
     'button-sm bg-secondary-300 bg-hover-secondary-400 mt-2'
   $addToCart.textContent = 'Añadir al carro'
   $addToCart.addEventListener('click', () => {
+    if (item.stock <= 0) {
+      showToast('No puedes agregar al carro un objeto sin stock')
+      return
+    }
+
     const newItem = new ArticleOrder(
       0,
       item.id,
