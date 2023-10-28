@@ -4,6 +4,7 @@ import { formatDate } from '../utils/formatDate.js'
 import { sortClients } from '../utils/sortClients.js'
 import { createModal, createOverlay, renderModalContent } from './modal.js'
 import { renderPaginationButtons } from './pagination.js'
+import { formatter } from '../utils/formatPrice.js'
 
 export async function renderSelect(options, parentElement) {
   parentElement.innerHTML = ''
@@ -175,8 +176,8 @@ function renderTableRows(orders, parentElement) {
         <td class="visually-hidden-mobile">${formatDate(
           order.date.split('T')[0]
         )}</td>
-        <td>${order.items}</td>
-        <td>$${order.total.toFixed(0)}</td>
+        <td class="text-end">${order.items}</td>
+        <td class="text-end">${formatter.format(order.total.toFixed(0))}</td>
         <td class="visually-hidden-mobile">${order.status}</td>
       `
 

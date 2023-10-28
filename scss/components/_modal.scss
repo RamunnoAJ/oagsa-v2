@@ -15,6 +15,12 @@
   border-radius: 1rem;
   width: 90%;
 
+  .modal__header {
+    @include flex(row, space-between, center);
+    width: 100%;
+    gap: 2rem;
+  }
+
   .modal__title {
     text-transform: uppercase;
     font-weight: $fw-semi-bold;
