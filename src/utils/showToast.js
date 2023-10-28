@@ -1,4 +1,9 @@
-export function showToast(message, url = '') {
+export function showToast(
+  message,
+  url = '',
+  backgroundColor = 'linear-gradient(to right, #ffd37c, #ff9c35)',
+  textColor = '#000000'
+) {
   Toastify({
     text: message,
     duration: 3000,
@@ -7,8 +12,8 @@ export function showToast(message, url = '') {
     position: 'right',
     stopOnFocus: true,
     style: {
-      background: 'linear-gradient(to right, #ffd37c, #ff9c35)',
-      color: '#000000',
+      background: backgroundColor,
+      color: textColor,
     },
     onClick: () => {
       if (url) {
