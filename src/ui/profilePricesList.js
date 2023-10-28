@@ -210,12 +210,12 @@ function renderOptions(options, selectID) {
 function renderTableRows(item, parentElement) {
   const tableRow = document.createElement('tr')
   tableRow.innerHTML = `
-    <td>${item.id}</td>
+    <td class="text-start">${item.id}</td>
     <td class="text-start">${item.name}</td>
-    <td>${item.brand}</td>
+    <td class="text-start">${item.brand}</td>
     <td class="text-end">${formatter.format(item.price?.toFixed(0) || 0)}</td>
-    <td class="visually-hidden-mobile">${item.diameter}</td>
-    <td class="visually-hidden-mobile">${item.measure}</td>
+    <td class="visually-hidden-mobile text-end">${item.diameter}</td>
+    <td class="visually-hidden-mobile text-end">${item.measure}</td>
   `
 
   parentElement.appendChild(tableRow)
