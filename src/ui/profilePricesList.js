@@ -1,7 +1,7 @@
 import { getCategories, getProducts } from '../api/profilePricesList.js'
 import * as storage from '../storage/profilePricesList.js'
 import { removeDuplicates } from '../utils/removeDuplicates.js'
-import { showToast } from './cart.js'
+import { showToast } from '../utils/showToast.js'
 import { formatter } from '../utils/formatPrice.js'
 import { downloadPDF } from '../utils/downloadPDF.js'
 

@@ -1,6 +1,7 @@
 import { getFields, postBuyOrder } from '../api/cart.js'
 import { getClientsFromSeller } from '../api/profileClientList.js'
 import { removeDraft } from '../api/profileDrafts.js'
+import { showToast } from '../utils/showToast.js'
 import {
   checkout,
   removeFromCart,
@@ -20,26 +21,6 @@ import { triggerSweetAlert } from '../utils/sweetAlert.js'
 
 const defaultImage =
   'https://firebasestorage.googleapis.com/v0/b/oagsa-1d9e9.appspot.com/o/Web%20Oagsa%20Iconos%2FOAGSA%20-%20Iconos%20Web%2011%20-%20HERRAMIENTA.png?alt=media&token=b06bbe3a-cd7e-4a80-a4e7-3bccb9a8df33'
-
-export function showToast(message, url = '') {
-  Toastify({
-    text: message,
-    duration: 3000,
-    close: false,
-    gravity: 'top',
-    position: 'right',
-    stopOnFocus: true,
-    style: {
-      background: 'linear-gradient(to right, #ffd37c, #ff9c35)',
-      color: '#000000',
-    },
-    onClick: () => {
-      if (url) {
-        window.location.replace(url)
-      }
-    },
-  }).showToast()
-}
 
 if (window.location.href.includes('cart')) {
   const cart = getCart() || {}
@@ -400,14 +381,11 @@ function renderButtons(cart) {
     await sendToDraft(getCart())
   })
 
-  if (cart.draft === 1) {
-    $sendToDraft.classList.add('span-2')
-  }
   $buttonsContainer.appendChild($sendToDraft)
 
   const $resetButton = document.createElement('button')
   $resetButton.className =
-    'button-cart bg-secondary-300 uppercase fw-semi-bold bg-hover-secondary-400 mb-2'
+    'button-cart bg-secondary-300 uppercase fw-semi-bold bg-hover-secondary-400'
   $resetButton.textContent = 'Vaciar carrito'
   $resetButton.type = 'button'
   $resetButton.addEventListener('click', e => {
@@ -415,6 +393,7 @@ function renderButtons(cart) {
     emptyCart()
     renderCart(getCart())
   })
+  $buttonsContainer.appendChild($resetButton)
 
   const $checkoutButton = document.createElement('button')
   $checkoutButton.className =
@@ -427,7 +406,6 @@ function renderButtons(cart) {
   })
 
   $container.appendChild($buttonsContainer)
-  $container.appendChild($resetButton)
   $container.appendChild($checkoutButton)
 }
 
