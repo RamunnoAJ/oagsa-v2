@@ -16,6 +16,7 @@ import { getCart, saveCart } from '../storage/cart.js'
 import { getUserFromStorage } from '../storage/storageData.js'
 import { formatter } from '../utils/formatPrice.js'
 import { triggerSweetAlert } from '../utils/sweetAlert.js'
+import { downloadPDF } from '../utils/downloadPDF.js'
 
 /** @typedef {import('../entities/articles.js').ArticleOrder} ArticleOrder */
 
@@ -28,8 +29,9 @@ if (window.location.href.includes('cart')) {
 }
 
 export async function renderCart(cart) {
+  const $header = document.querySelector('.cart__header')
   if (cart.draft === 1) {
-    if (document.querySelector('.cart__title span')) {
+    if ($header.querySelector('.cart__title span')) {
       const cartDraft = document.querySelector('.cart__title span')
       cartDraft.remove()
     }
@@ -76,6 +78,29 @@ export async function renderCart(cart) {
 
   await renderArticles(cart)
   await selectFields(cart)
+
+  if (document.querySelector('.table-container')) {
+    document.querySelector('.table-container').remove()
+  }
+
+  const $tableContainer = document.createElement('div')
+  $tableContainer.className = 'table-container visually-hidden'
+  document.querySelector('.cart__container').appendChild($tableContainer)
+
+  const $table = createTable()
+  $tableContainer.appendChild($table)
+
+  const $tbody = $table.querySelector('tbody')
+
+  cart.detail.forEach(item => {
+    const $row = createTableRow(item)
+    $tbody.appendChild($row)
+  })
+
+  const $totalRow = createTableTotalRow(cart)
+  $tbody.appendChild($totalRow)
+
+  renderButtonDownload()
 }
 
 async function renderArticles(cart) {
@@ -134,6 +159,7 @@ async function renderClients(cart) {
 
   $clientsSelect.addEventListener('change', () => {
     saveCart({ ...getCart(), idClient: Number($clientsSelect.value) })
+    renderButtonDownload()
   })
 
   $clients.appendChild($clientsSelect)
@@ -353,18 +379,11 @@ function renderButtons(cart) {
           }
         )
       } catch (error) {
-        Toastify({
-          text: error.message,
-          duration: 3000,
-          close: false,
-          gravity: 'top',
-          position: 'right',
-          stopOnFocus: true,
-          style: {
-            background: 'linear-gradient(to right, #a25553, #79403e)',
-            color: '#000000',
-          },
-        }).showToast()
+        showToast(
+          error.message,
+          '',
+          'linear-gradient(to right, #a25553, #79403e)'
+        )
       }
     })
   }
@@ -375,6 +394,7 @@ function renderButtons(cart) {
   $sendToDraft.textContent = 'Guardar borrador'
   if (cart.draft === 1) {
     $sendToDraft.textContent = 'Guardar cambios'
+    $sendToDraft.classList.add('span-2')
   }
   $sendToDraft.type = 'button'
   $sendToDraft.addEventListener('click', async () => {
@@ -385,7 +405,7 @@ function renderButtons(cart) {
 
   const $resetButton = document.createElement('button')
   $resetButton.className =
-    'button-cart bg-secondary-300 uppercase fw-semi-bold bg-hover-secondary-400'
+    'button-cart bg-secondary-300 uppercase fw-semi-bold bg-hover-secondary-400 span-2'
   $resetButton.textContent = 'Vaciar carrito'
   $resetButton.type = 'button'
   $resetButton.addEventListener('click', e => {
@@ -598,4 +618,82 @@ async function selectFields({ idClient, idFreight, idSellCondition }) {
   $selectSellCondition.querySelector(
     `option[value="${idSellCondition}"]`
   ).selected = true
+}
+
+function createTable() {
+  const $table = document.createElement('table')
+  $table.className = 'fl-table'
+  $table.innerHTML = `
+    <thead>
+      <tr>
+        <th scope="col">Artículo</th>
+        <th scope="col">Código</th>
+        <th scope="col">Precio</th>
+        <th scope="col">Descuento</th>
+        <th scope="col">Cantidad</th>
+        <th scope="col">Total</th>
+      </tr>
+    </thead>
+    <tbody>
+    </tbody>
+  `
+
+  return $table
+}
+
+/**
+ * @param {ArticleOrder} item
+ * */
+function createTableRow(item) {
+  const $row = document.createElement('tr')
+  const totalPrice = item.totalDiscount || item.priceTotal
+  $row.innerHTML = `
+    <td>${item.name}</td>
+    <td>${item.id}</td>
+    <td>${formatter.format(item.price.toFixed(0))}</td>
+    <td>${item.discountPercentage}%</td>
+    <td>${item.quantity}</td>
+    <td>${formatter.format(totalPrice.toFixed(0))}</td>
+  `
+  return $row
+}
+
+function createTableTotalRow(cart) {
+  const $totalRow = document.createElement('tr')
+  $totalRow.className = 'table__total-row fw-bold'
+  $totalRow.innerHTML = `
+  <td>Total:</td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td>${cart.items}</td>
+  <td>${formatter.format(Number(cart.total).toFixed(0))}</td>
+  `
+  return $totalRow
+}
+
+function renderButtonDownload() {
+  if (document.querySelector('.button-download')) {
+    document.querySelector('.button-download').remove()
+  }
+
+  const client = document
+    .querySelector('#selectClient')
+    .querySelector('option:checked')
+
+  const clientName = client.text.split(' - ')[0]
+  const clientCode = client.text.split(' - ')[1]
+
+  if (clientName && clientCode) {
+    const $downloadButton = document.createElement('button')
+    $downloadButton.type = 'button'
+    $downloadButton.className =
+      'button-sm bg-slate bg-hover-secondary-300 ml-2 button-download'
+    $downloadButton.innerHTML = '<i class="fa-solid fa-download"></i>'
+    $downloadButton.onclick = () => {
+      downloadPDF(`Cliente: ${clientName} - ID Cliente: ${clientCode}`)
+    }
+
+    document.querySelector('.cart__header__icon').appendChild($downloadButton)
+  }
 }
