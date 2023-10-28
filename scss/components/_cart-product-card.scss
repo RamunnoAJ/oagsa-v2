@@ -120,6 +120,8 @@
       display: grid;
       grid-template-columns: 2fr 1fr 1fr 0.5fr 1fr;
       place-content: center;
+      align-items: center;
+      justify-items: center;
       gap: 1rem;
       font-size: var(--fs-body);
     }

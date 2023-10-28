@@ -52,10 +52,12 @@
 
   .button-cart {
     max-width: 10.3125rem;
-
-    &.span-2 {
-      width: 100%;
-      grid-column: span 2;
-    }
   }
 }
+
+@media (min-width: 48rem) {
+  .buttons__container .button-cart.span-2 {
+      width: 100%;
+      grid-column: span 2;
+
+} }
