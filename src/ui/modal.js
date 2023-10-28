@@ -1,5 +1,7 @@
 import { getCondicionVenta } from '../api/profileOrdersHistory.js'
+import { downloadPDF } from '../utils/downloadPDF.js'
 import { formatDate } from '../utils/formatDate.js'
+import { formatter } from '../utils/formatPrice.js'
 
 export async function createModal() {
   const $modal = document.createElement('div')
@@ -52,16 +54,33 @@ async function createTable() {
 
 export async function renderModalContent(order) {
   const $modal = document.querySelector('#modal')
+  const $modalHeader = document.createElement('div')
+  $modalHeader.className = 'modal__header my-4'
+  $modal.appendChild($modalHeader)
+
   const $modalTitle = document.createElement('h2')
-  $modalTitle.className = 'modal__title mb-4'
+  $modalTitle.className = 'modal__title'
   $modalTitle.textContent = `# ${order.id}`
-  $modal.appendChild($modalTitle)
+  $modalHeader.appendChild($modalTitle)
+
+  const $downloadButton = document.createElement('button')
+  $downloadButton.type = 'button'
+  $downloadButton.className = 'button-sm bg-slate bg-hover-secondary-300'
+  $downloadButton.innerHTML = '<i class="fa-solid fa-download"></i>'
+  $downloadButton.onclick = () => {
+    downloadPDF(`Número de orden: ${order.id}`)
+  }
+  $modalHeader.appendChild($downloadButton)
 
   const $modalContent = await createModalContent(order)
   $modal.appendChild($modalContent)
 
+  const $tableContainer = document.createElement('div')
+  $tableContainer.className = 'table-container'
+  $modal.appendChild($tableContainer)
+
   const $table = await createTable()
-  $modal.appendChild($table)
+  $tableContainer.appendChild($table)
 
   const $modalTable = document.querySelector('#modal__table-body')
   $modalTable.innerHTML = ''
@@ -79,26 +98,27 @@ function createTotalRow(total) {
   const $totalRow = document.createElement('tr')
   $totalRow.className = 'modal__total-row fw-bold'
   $totalRow.innerHTML = `
-  <td>Total:</td>
+  <td class="text-start">Total:</td>
   <td></td>
   <td></td>
-  <td>${total.items}</td>
-  <td>$${total.total.toFixed(0)}</td>
+  <td class="text-end">${total.items}</td>
+  <td class="text-end">$${total.total.toFixed(0)}</td>
   `
   return $totalRow
 }
 
 function createProductRow(article) {
+  const unitPrice = article.priceDiscount || article.price
+  const totalPrice = article.totalDiscount || article.total
+
   const $row = document.createElement('tr')
   $row.classList.add('modal__product__row')
   $row.innerHTML = `
-    <td>${article.id}</td>
-    <td>${article.name}</td>
-    <td>$${article.totalDiscount.toFixed(0) || article.price.toFixed(0)}</td>
-    <td>${article.quantity}</td>
-    <td>$${
-      article.priceDiscount.toFixed(0) || article.priceTotal.toFixed(0)
-    }</td>
+    <td class="text-start">${article.id}</td>
+    <td class="text-start">${article.name}</td>
+    <td class="text-end">${formatter.format(unitPrice.toFixed(0))}</td>
+    <td class="text-end">${article.quantity}</td>
+    <td class="text-end">${formatter.format(totalPrice.toFixed(0))}</td>
   `
   return $row
 }
