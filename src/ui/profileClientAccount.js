@@ -2,7 +2,7 @@ import { getAccountMovements } from '../api/profileClientAccount.js'
 import { formatDate } from '../utils/formatDate.js'
 import { sortClients } from '../utils/sortClients.js'
 import { formatter } from '../utils/formatPrice.js'
-import { showToast } from './cart.js'
+import { showToast } from '../utils/showToast.js'
 import { downloadPDF } from '../utils/downloadPDF.js'
 
 /** @typedef {import('../mappers/accountMovements.js').Movement} Movement

@@ -2,7 +2,7 @@ import {
   downloadFile,
   getPrepararNotas,
 } from '../api/profileInterfaceGenerator.js'
-import { showToast } from './cart.js'
+import { showToast } from '../utils/showToast.js'
 
 export function renderInterfaceGenerator(parentElement) {
   parentElement.innerHTML = ''

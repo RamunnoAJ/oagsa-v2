@@ -2,7 +2,7 @@ import { postBuyOrder } from './api/cart.js'
 import { getDraft, removeDraft } from './api/profileDrafts.js'
 import { getCart, saveCart, clearCart } from './storage/cart.js'
 import { checkLocalStorage } from './storage/profile.js'
-import { showToast } from './ui/cart.js'
+import { showToast } from './utils/showToast.js'
 import { navigateToDashboard } from './ui/login.js'
 
 /** @typedef {import('./entities/orders.js').Order} Order

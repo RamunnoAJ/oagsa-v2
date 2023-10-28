@@ -1,7 +1,7 @@
 import { deleteImage, getArticle, setImage } from '../api/profileEditImages.js'
 import { capitalizeFirstLetter } from '../utils/capitalizeFirstLetter.js'
 import { createModal, createOverlay } from './modal.js'
-import { showToast } from './cart.js'
+import { showToast } from '../utils/showToast.js'
 
 /**
  * @param {HTMLDivElement} parentElement
