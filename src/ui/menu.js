@@ -16,7 +16,7 @@ displayUsername(user?.name)
  * @param {string} username
  * */
 export async function displayUsername(username = '') {
-  const $navbar = document.querySelector('.nav-bar > .nav-flex:last-child')
+  const $navbar = document.querySelector('.nav-bar > .nav-flex')
   const $name = document.createElement('li')
   $name.className = 'text-dark-grey username'
   $name.innerHTML = `<i class="fa-solid fa-user ml-4"></i> ${username}`
@@ -24,5 +24,5 @@ export async function displayUsername(username = '') {
     $name.classList.add('visually-hidden')
   }
 
-  $navbar.prepend($name)
+  $navbar.appendChild($name)
 }
