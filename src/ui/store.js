@@ -6,7 +6,7 @@ import { sortProducts } from '../utils/sortProducts.js'
 import { getDolar } from '../api/dolar.js'
 import { getUserFromStorage } from '../storage/storageData.js'
 import { ArticleOrder } from '../entities/articles.js'
-import { showToast } from './cart.js'
+import { showToast } from '../utils/showToast.js'
 
 const $form = document.querySelector('#store')
 $form.addEventListener('change', handleChangeForm)
