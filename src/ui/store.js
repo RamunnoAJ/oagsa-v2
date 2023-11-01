@@ -11,14 +11,35 @@ import { showToast } from '../utils/showToast.js'
 const $form = document.querySelector('#store')
 $form.addEventListener('change', handleChangeForm)
 $form.addEventListener('submit', handleSubmitSearch)
+const $selects = $form.querySelectorAll('.select-store')
+$selects.forEach(select => {
+  select.addEventListener('change', handleChangeSelect)
+})
 
 const $searchInput = document.querySelector('#searchByCode')
 $searchInput.addEventListener('submit', handleSubmitSearch)
 
+function handleChangeSelect(e) {
+  const $parentForm = e.target.parentNode.parentNode.parentNode.parentNode
+  const selectedClase = $parentForm.clases.value
+  const selectedRubro = $parentForm.rubros.value
+
+  renderInputs(selectedClase, selectedRubro)
+}
+
 async function handleChangeForm(e) {
   e.preventDefault()
 
+  let selectedClase = ''
   let selectedRubro = ''
+
+  if ($form.clases) {
+    selectedClase = $form.clases.value
+  } else {
+    selectedClase = document.querySelector(
+      '.store__clases__desktop__items.active'
+    ).dataset.clase
+  }
 
   if ($form.rubros) {
     selectedRubro = $form.rubros.value
@@ -32,9 +53,13 @@ async function handleChangeForm(e) {
   const selectedDiametro = await $form.diametro.value
   const selectedMedida = await $form.medida.value
 
-  let productsString = `articulo/articulo-rubro?pCodigoRubro=${selectedRubro}`
+  let productsString = `articulo/articulo-clase?pCodigoClase=${selectedClase}`
 
-  if (selectedRubro) {
+  if (selectedClase) {
+    if (selectedRubro) {
+      productsString += `&pCodigoRubro=${selectedRubro}`
+    }
+
     if (selectedMarca) {
       productsString += `&pMarca=${selectedMarca}`
     }
@@ -155,10 +180,6 @@ async function renderRubros(idClase) {
 
     $selectRubros.appendChild($option)
   })
-
-  $selectRubros.addEventListener('change', e => {
-    renderInputs(e.target.value)
-  })
 }
 
 const $select = document.querySelector('#clases')
@@ -166,14 +187,17 @@ $select.addEventListener('change', e => {
   renderRubros(e.target.value)
 })
 
-const renderInputs = async (codigoRubro = '') => {
+const renderInputs = async (codigoClase, codigoRubro = '') => {
   const $storeRubros = document.querySelector('.store__rubros')
   const $storeSearchInput = document.querySelector('.store__search__input')
 
   $storeRubros.classList.remove('visually-hidden')
   $storeSearchInput.classList.remove('visually-hidden')
 
-  const products = await getProducts(`precio/rubro?pCodigoRubro=${codigoRubro}`)
+  let productsString = `articulo/articulo-clase?pCodigoClase=${codigoClase}`
+  if (codigoRubro) productsString += `&pCodigoRubro=${codigoRubro}`
+
+  const products = await getProducts(productsString)
 
   const marcas = products.map(product => product.brand)
   const uniqueMarcas = [...new Set(marcas)]
