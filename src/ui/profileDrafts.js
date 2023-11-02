@@ -44,7 +44,7 @@ function createTable() {
       <th scope="col">Cliente</th>
       <th scope="col">Fecha</th>
       <th scope="col">Artículos</th>
-      <th scope="col">Precio</th>
+      <th scope="col">Total</th>
       <th scope="col" class="visually-hidden-mobile"></th>
     </tr>
   </thead>

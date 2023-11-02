@@ -144,7 +144,7 @@ async function createTable() {
       <th scope="col">Cliente</th>
       <th scope="col" class="visually-hidden-mobile">Fecha</th>
       <th scope="col">Articulos</th>
-      <th scope="col">Precio</th>
+      <th scope="col">Total</th>
       <th scope="col" class="visually-hidden-mobile">Estado</th>
     </tr>
   </thead>
