@@ -10,33 +10,38 @@ export async function renderProductPrices(products, parentElement) {
     parentElement.innerHTML = `
         <form class="profile-info__search search__prices" id="prices-form">
           <div>
+            <select id='select-clase' name='selectedClase' class='select bg-primary'>
+              <option disabled selected value=''>Seleccione una clase...</option>
+              <option value=''> -- TODOS -- </option>
+            </select>
             <select id='select-rubro' name='selectedRubro' class="select bg-primary">
               <option disabled selected value=''>Seleccione un rubro...</option>
             </select>
+          </div>
 
+          <div>
             <select id='select-subrubro' name='selectedSubrubro' class="select bg-primary">
               <option disabled selected value=''>Seleccione un subrubro...</option>
               <option value=''> -- TODOS -- </option>
             </select>
-          </div>
-
-          <div>
             <select id='select-brand' name='selectedBrand' class="select bg-primary">
               <option disabled selected value=''>Seleccione una marca...</option>
               <option value=''> -- TODOS -- </option>
             </select>
+          </div>
 
+          <div>
             <select id='select-diametro' name='selectedDiametro' class="select bg-primary">
               <option disabled selected value=''>Seleccione un diametro...</option>
+              <option value=''> -- TODOS -- </option>
+            </select>
+            <select id='select-medida' name='selectedMedida' class="select bg-primary">
+              <option disabled selected value=''>Seleccione una medida...</option>
               <option value=''> -- TODOS -- </option>
             </select>
           </div>
 
           <div>
-            <select id='select-medida' name='selectedMedida' class="select bg-primary">
-              <option disabled selected value=''>Seleccione una medida...</option>
-              <option value=''> -- TODOS -- </option>
-            </select>
             <button class="button bg-secondary-300 bg-hover-secondary-400" id="btnDownload">
               <span class="visually-hidden-mobile">Descargar</span>
               <span class="visually-hidden-desktop">
@@ -49,9 +54,12 @@ export async function renderProductPrices(products, parentElement) {
         <div class="table-container"></div>
     `
 
-    const rubros = await getCategories('articulo/rubros')
-    storage.saveRubros(rubros)
-    renderOptions(rubros, '#select-rubro')
+    const $selectClases = document.querySelector('#select-clase')
+    $selectClases.addEventListener('change', handleSelectClases)
+
+    const clases = await getCategories('clase/all')
+    storage.saveClases(clases)
+    await renderOptions(clases, '#select-clase')
 
     const $form = document.querySelector('#prices-form')
     $form.addEventListener('change', handleChangeForm)
@@ -81,25 +89,30 @@ export async function renderProductPrices(products, parentElement) {
   }
 }
 
-async function handleChangeForm(e) {
-  e.preventDefault()
+async function getProductsForm() {
   const $form = document.querySelector('#prices-form')
+  const selectedClase = $form.selectedClase.value
   const selectedRubro = $form.selectedRubro.value
   const selectedSubrubro = $form.selectedSubrubro.value
   const selectedBrand = $form.selectedBrand.value
   const selectedDiametro = $form.selectedDiametro.value
   const selectedMedida = $form.selectedMedida.value
 
-  let productString = `articulo/articulo-rubro?pCodigoRubro=${selectedRubro}`
+  let productString = `articulo/articulo-clase?pCodigoClase=${selectedClase}`
   storage.saveProducts(productString)
 
+  if (selectedRubro) productString += `&pCodigoRubro=${selectedRubro}`
   if (selectedSubrubro) productString += `&pCodigoSubRubro=${selectedSubrubro}`
   if (selectedBrand) productString += `&pMarca=${selectedBrand}`
   if (selectedDiametro) productString += `&pDiametro=${selectedDiametro}`
   if (selectedMedida) productString += `&pMedida=${selectedMedida}`
 
-  const products = await getProducts(productString)
+  return await getProducts(productString)
+}
 
+async function handleChangeForm(e) {
+  e.preventDefault()
+  const products = await getProductsForm()
   renderPrices(products)
 }
 
@@ -141,10 +154,14 @@ function createTable() {
   return table
 }
 
-function renderOptions(options, selectID) {
+async function renderOptions(options, selectID) {
   const $select = document.querySelector(selectID)
 
   switch (selectID) {
+    case '#select-clase':
+      $select.innerHTML = `<option disabled selected value=''>Seleccione una clase...</option>`
+      break
+
     case '#select-rubro':
       $select.innerHTML = `<option disabled selected value=''>Seleccione un rubro...</option>`
       break
@@ -176,6 +193,12 @@ function renderOptions(options, selectID) {
     const $option = document.createElement('option')
 
     switch (selectID) {
+      case '#select-clase':
+        $option.value = option.id.trim()
+        $option.textContent = option.name.trim()
+        $option.dataset.name = option.name.trim()
+        break
+
       case '#select-rubro':
         $option.value = option.id.trim()
         $option.textContent = option.name.trim()
@@ -224,29 +247,25 @@ function renderTableRows(item, parentElement) {
 async function handleChangeRubro(e, codigoRubro) {
   e.preventDefault()
 
-  await resetSelects()
   const subrubros = await getCategories(
     `articulo/subrubros?pCodigoRubro=${codigoRubro}`
   )
 
+  const products = await getProductsForm()
+
   storage.saveSubrubros(subrubros, codigoRubro)
   renderOptions(subrubros, '#select-subrubro')
+
+  const { arrayMarcas, arrayDiametros, arrayMedidas } = await renderSelects(
+    products
+  )
+
+  renderOptions(arrayMarcas, '#select-brand')
+  renderOptions(arrayDiametros, '#select-diametro')
+  renderOptions(arrayMedidas, '#select-medida')
 }
 
-async function resetSelects() {
-  const selects = document.querySelectorAll('select')
-
-  for (let i = 1; i < selects.length; i++) {
-    const $option = selects[i].querySelector('option')
-    $option.selected = true
-  }
-}
-
-async function handleChangeSubrubro(e) {
-  e.preventDefault()
-  const productString = storage.getProducts()
-  const products = await getProducts(productString)
-
+async function renderSelects(products) {
   const marcas = removeDuplicates(products.map(product => product.brand))
   const arrayMarcas = []
 
@@ -282,7 +301,24 @@ async function handleChangeSubrubro(e) {
     }
   }
 
+  return { arrayMarcas, arrayDiametros, arrayMedidas }
+}
+
+async function handleChangeSubrubro(e) {
+  e.preventDefault()
+  const products = await getProductsForm()
+
+  const { arrayMarcas, arrayDiametros, arrayMedidas } = renderSelects(products)
+
   renderOptions(arrayMarcas, '#select-brand')
   renderOptions(arrayDiametros, '#select-diametro')
   renderOptions(arrayMedidas, '#select-medida')
+}
+
+async function handleSelectClases(e) {
+  e.preventDefault()
+  const clase = e.target.querySelector('option:checked').value
+
+  const rubros = await getCategories(`clase/rubro?pIdClase=${clase}`)
+  renderOptions(rubros, '#select-rubro')
 }

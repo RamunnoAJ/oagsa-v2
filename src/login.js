@@ -27,7 +27,7 @@ async function handleSubmit(e) {
 
   if (loggedUser) {
     const user = {
-      id: loggedUser.id,
+      id: loggedUser.role === 2 ? loggedUser.idSeller : loggedUser.id,
       role: loggedUser.role,
       name: loggedUser.name,
       checkbox,

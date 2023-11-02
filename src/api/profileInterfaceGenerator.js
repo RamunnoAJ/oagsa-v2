@@ -1,10 +1,19 @@
 import { BASE_URL, getDataFromDB } from '../utils/getDataFromDB.js'
+import { noteMapper } from '../mappers/notes.js'
 
 export async function getPrepararNotas() {
   const response = await getDataFromDB('orden-compra/prepara-notas')
   const file = await response.data
 
   return file
+}
+
+export async function getNotas() {
+  const response = await getDataFromDB('orden-compra/lista-notas')
+  const notasApi = await response.data
+  const notas = notasApi.map(note => noteMapper(note))
+
+  return notas
 }
 
 export async function downloadFile() {
