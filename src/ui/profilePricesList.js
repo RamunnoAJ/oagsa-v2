@@ -41,6 +41,11 @@ export async function renderProductPrices(products, parentElement) {
             </select>
           </div>
 
+          <div class="discount-container">
+            <input type="number" id="discount" name="discount" min="0" max="100" class="select bg-primary" placeholder="Ingrese un descuento">
+            <span class="percentage">%</span>
+          </div>
+
           <div>
             <button class="button bg-secondary-300 bg-hover-secondary-400" id="btnDownload">
               <span class="visually-hidden-mobile">Descargar</span>
@@ -91,28 +96,32 @@ export async function renderProductPrices(products, parentElement) {
 
 async function getProductsForm() {
   const $form = document.querySelector('#prices-form')
-  const selectedClase = $form.selectedClase.value
   const selectedRubro = $form.selectedRubro.value
   const selectedSubrubro = $form.selectedSubrubro.value
   const selectedBrand = $form.selectedBrand.value
   const selectedDiametro = $form.selectedDiametro.value
   const selectedMedida = $form.selectedMedida.value
+  const selectedDiscount = $form.discount.value
 
-  let productString = `articulo/articulo-clase?pCodigoClase=${selectedClase}`
-  storage.saveProducts(productString)
+  let productString = ''
 
-  if (selectedRubro) productString += `&pCodigoRubro=${selectedRubro}`
+  if (selectedRubro)
+    productString += `precio/rubro?pCodigoRubro=${selectedRubro}`
   if (selectedSubrubro) productString += `&pCodigoSubRubro=${selectedSubrubro}`
   if (selectedBrand) productString += `&pMarca=${selectedBrand}`
   if (selectedDiametro) productString += `&pDiametro=${selectedDiametro}`
   if (selectedMedida) productString += `&pMedida=${selectedMedida}`
+  if (selectedDiscount) productString += `&pDescuento=${selectedDiscount}`
+  storage.saveProducts(productString)
 
+  if (productString === '') return
   return await getProducts(productString)
 }
 
 async function handleChangeForm(e) {
   e.preventDefault()
   const products = await getProductsForm()
+  if (!products) return
   renderPrices(products)
 }
 
