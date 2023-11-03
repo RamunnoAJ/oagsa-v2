@@ -73,10 +73,12 @@ export async function renderProductPrices(products, parentElement) {
     $btnDownload.addEventListener('click', e => {
       e.preventDefault()
       try {
-        const selectedOption =
+        let downloadMessage =
           $form.selectedRubro.querySelector('option:checked').textContent
+        if ($form.discount.value)
+          downloadMessage += ` - Descuento: ${$form.discount.value}%`
 
-        downloadPDF(selectedOption)
+        downloadPDF(downloadMessage)
       } catch (error) {
         showToast('Debes seleccionar alguna tabla para descargar')
       }
