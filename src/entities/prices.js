@@ -8,9 +8,9 @@ export class ArticlePrice {
    * @param {number} price
    * @param {number} discount
    */
-  constructor(id, description, brand, diameter, measure, price, discount) {
+  constructor(id, name, brand, diameter, measure, price, discount) {
     this.id = id
-    this.description = description
+    this.name = name
     this.brand = brand
     this.diameter = diameter
     this.measure = measure
