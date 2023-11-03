@@ -4695,6 +4695,16 @@ body {
   max-width: 100%;
 }
 
+.discount-container {
+  position: relative;
+}
+.discount-container .percentage {
+  position: absolute;
+  top: 50%;
+  right: 5%;
+  transform: translate(50%, -50%);
+}
+
 @media (min-width: 48rem) {
   .select {
     width: 25rem;
@@ -4819,7 +4829,7 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 90%;
+  width: 95%;
   margin-inline: auto;
 }
 

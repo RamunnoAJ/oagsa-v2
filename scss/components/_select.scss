@@ -11,6 +11,17 @@
   max-width: 100%;
 }
 
+.discount-container {
+  position: relative;
+  .percentage {
+    position: absolute;
+    top: 50%;
+    right: 5%;
+    transform: translate(50%, -50%);
+  }
+}
+
+
 @media (min-width: 48rem) {
   .select {
     width: 25rem;
