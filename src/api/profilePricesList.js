@@ -1,9 +1,9 @@
-import { articlesMapper } from '../mappers/articles.js'
 import {
   categoriesMapper,
   classMaper,
   subcategoriesMapper,
 } from '../mappers/categories.js'
+import { articlePricesMapper } from '../mappers/prices.js'
 import { convertToUTF } from '../utils/convertToUTF.js'
 import getDataFromDB from '../utils/getDataFromDB.js'
 
@@ -19,7 +19,7 @@ export async function getProducts(url) {
     product.marca = convertToUTF(product.marca)
   })
 
-  const products = productsApi.map(product => articlesMapper(product))
+  const products = productsApi.map(product => articlePricesMapper(product))
 
   return products
 }
