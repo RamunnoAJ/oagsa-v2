@@ -98,6 +98,7 @@ export async function renderProductPrices(products, parentElement) {
 
 async function getProductsForm() {
   const $form = document.querySelector('#prices-form')
+  const selectedClase = $form.selectedClase.value
   const selectedRubro = $form.selectedRubro.value
   const selectedSubrubro = $form.selectedSubrubro.value
   const selectedBrand = $form.selectedBrand.value
@@ -155,7 +156,7 @@ function createTable() {
       <th scope="col">Descripción</th>
       <th scope="col">Marca</th>
       <th scope="col">Precio</th>
-      <th scope="col">% Desc.</th>
+      <th scope="col" class="visually-hidden-mobile">% Desc.</th>
       <th scope="col">Precio Desc.</th>
       <th scope="col" class="visually-hidden-mobile">Diametro</th>
       <th scope="col" class="visually-hidden-mobile">Medidas</th>
@@ -252,7 +253,7 @@ function renderTableRows(item, parentElement) {
     <td class="text-start">${item.name}</td>
     <td class="text-start">${item.brand}</td>
     <td class="text-end">${formatter.format(item.price?.toFixed(0) || 0)}</td>
-    <td class="text-end">${item.discount}</td>
+    <td class="text-end visually-hidden-mobile">${item.discount}</td>
     <td class="text-end">${formatter.format(
       item.priceDiscount?.toFixed(0) || 0
     )}</td>
