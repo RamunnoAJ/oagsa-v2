@@ -1,7 +1,5 @@
 import { deleteDraft, editDraft } from '../profileDrafts.js'
-import { getStorageID } from '../storage/profileClientAccount.js'
 import { formatDate } from '../utils/formatDate.js'
-import { getClientsFromSeller } from '../api/profileClientList.js'
 import { formatter } from '../utils/formatPrice.js'
 
 /**
@@ -10,10 +8,7 @@ import { formatter } from '../utils/formatPrice.js'
  * */
 
 export async function renderDrafts(drafts, parentElement) {
-  const sellerID = getStorageID()
   parentElement.innerHTML = ''
-
-  const clients = await getClientsFromSeller(sellerID)
 
   const $container = document.createElement('div')
   $container.className = 'full-width text-end'
@@ -31,7 +26,7 @@ export async function renderDrafts(drafts, parentElement) {
   const table = createTable(drafts)
   parentElement.appendChild(table)
 
-  renderTableRows(drafts, '#table-body', clients)
+  renderTableRows(drafts, '#table-body')
 }
 
 function createTable() {
@@ -57,9 +52,8 @@ function createTable() {
 /**
  * @param {Order[]} drafts
  * @param {HTMLElement} parentElement
- * @param {Client[]} clients
  * */
-async function renderTableRows(drafts, parentElement, clients) {
+async function renderTableRows(drafts, parentElement) {
   const $table = document.querySelector(parentElement)
 
   if (drafts.length === 0) {
@@ -74,10 +68,7 @@ async function renderTableRows(drafts, parentElement, clients) {
     row.className = 'cursor-pointer bg-hover-slate'
     row.innerHTML = `
       <td>${draft.id}</td>
-      <td class="text-start">${
-        clients.filter(client => client.id === draft.idClient)[0]?.name ||
-        'Sin nombre'
-      } - ${draft.idClient}</td>
+      <td class="text-start">${draft.nameClient} - ${draft.idClient}</td>
       <td>${formatDate(draft.date.split('T')[0])}</td>
       <td class="text-end">${draft.items}</td>
       <td class="text-end">${formatter.format(draft.total.toFixed(0))}</td>

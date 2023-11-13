@@ -12,6 +12,7 @@ export function orderMapper(apiData) {
   const {
     numeroNota,
     codigoCliente,
+    nombreCliente,
     codigoCondicionVenta,
     observaciones,
     origenPedido,
@@ -19,6 +20,7 @@ export function orderMapper(apiData) {
     totalPesos,
     totalItems,
     codigoVendedor,
+    nombreVendedor,
     fechaNota,
     borrador,
     idFlete,
@@ -31,6 +33,7 @@ export function orderMapper(apiData) {
   return new Order(
     numeroNota,
     codigoCliente,
+    nombreCliente,
     codigoCondicionVenta,
     observaciones,
     origenPedido,
@@ -38,6 +41,7 @@ export function orderMapper(apiData) {
     totalPesos,
     totalItems,
     codigoVendedor,
+    nombreVendedor,
     fechaNota,
     borrador,
     idFlete,
