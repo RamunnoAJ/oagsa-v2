@@ -1,4 +1,5 @@
-import { getCategories, getProducts } from '../api/profilePricesList.js'
+import { getCategories } from '../api/profilePricesList.js'
+import { getProducts } from '../api/store.js'
 import { capitalizeFirstLetter } from '../utils/capitalizeFirstLetter.js'
 import * as storage from '../storage/store.js'
 import { addToCart } from '../cart.js'

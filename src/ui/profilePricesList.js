@@ -107,8 +107,9 @@ async function getProductsForm() {
 
   let productString = ''
 
-  if (selectedRubro)
-    productString += `precio/rubro?pCodigoRubro=${selectedRubro}`
+  if (selectedClase)
+    productString += `precio/clase-rubro-subrubro?pCodigoClase=${selectedClase}`
+  if (selectedRubro) productString += `&pCodigoRubro=${selectedRubro}`
   if (selectedSubrubro) productString += `&pCodigoSubRubro=${selectedSubrubro}`
   if (selectedBrand) productString += `&pMarca=${selectedBrand}`
   if (selectedDiametro) productString += `&pDiametro=${selectedDiametro}`
@@ -154,6 +155,8 @@ function createTable() {
       <th scope="col">Descripción</th>
       <th scope="col">Marca</th>
       <th scope="col">Precio</th>
+      <th scope="col">% Desc.</th>
+      <th scope="col">Precio Desc.</th>
       <th scope="col" class="visually-hidden-mobile">Diametro</th>
       <th scope="col" class="visually-hidden-mobile">Medidas</th>
     </tr>
@@ -243,11 +246,16 @@ async function renderOptions(options, selectID) {
 
 function renderTableRows(item, parentElement) {
   const tableRow = document.createElement('tr')
+
   tableRow.innerHTML = `
     <td class="text-start">${item.id}</td>
     <td class="text-start">${item.name}</td>
     <td class="text-start">${item.brand}</td>
     <td class="text-end">${formatter.format(item.price?.toFixed(0) || 0)}</td>
+    <td class="text-end">${item.discount}</td>
+    <td class="text-end">${formatter.format(
+      item.priceDiscount?.toFixed(0) || 0
+    )}</td>
     <td class="visually-hidden-mobile text-end">${item.diameter}</td>
     <td class="visually-hidden-mobile text-end">${item.measure}</td>
   `

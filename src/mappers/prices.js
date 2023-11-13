@@ -17,15 +17,14 @@ export function articlePricesMapper(apiData) {
     precioConDescuento,
   } = apiData
 
-  const price = precioConDescuento || importe
-
   return new ArticlePrice(
     codigoArticulo,
     descripcion,
     marca,
     diametro,
     medidas,
-    price,
+    importe,
+    precioConDescuento,
     porcentajeDescuento
   )
 }
