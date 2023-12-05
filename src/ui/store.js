@@ -72,7 +72,7 @@ async function handleChangeForm(e) {
     }
 
     const user = JSON.parse(getUserFromStorage())
-    productsString += `&pNivleUsuario=${user?.role || 3}`
+    productsString += `&pNivleUsuario=${user?.role || 2}`
 
     const products = await getProducts(productsString)
     storage.saveToLocalStorage('products_store', products)
@@ -225,9 +225,7 @@ const renderProducts = async products => {
     sortProducts(products)
 
     products.forEach(product => {
-      if (product.price) {
-        renderProductCard(product, $storeProducts)
-      }
+      renderProductCard(product, $storeProducts)
     })
   } else {
     $storeProducts.innerHTML = '<p>No hay productos para mostrar</p>'
@@ -268,11 +266,13 @@ function createProductCard(item, user) {
   $title.textContent = item.name
   $info.appendChild($title)
 
+  const $article = document.createElement('span')
+  $article.style = 'font-style: italic;'
+  $article.textContent = item.id
+  $info.appendChild($article)
+
   const $price = document.createElement('div')
   if (user) $info.appendChild($price)
-  const $article = document.createElement('span')
-  $article.textContent = item.id
-  $price.appendChild($article)
 
   const $priceValue = document.createElement('span')
   $priceValue.classList = 'fw-bold'

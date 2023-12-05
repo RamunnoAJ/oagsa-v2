@@ -15,7 +15,6 @@ export async function getProducts(url) {
   })
 
   const products = productsApi.map(product => articlesMapper(product))
-  console.log(products)
 
   return products
 }

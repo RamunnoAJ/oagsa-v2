@@ -158,7 +158,13 @@ async function renderClients(cart) {
   if (cart.draft === 1) $clientsSelect.disabled = true
 
   $clientsSelect.addEventListener('change', () => {
-    saveCart({ ...getCart(), idClient: Number($clientsSelect.value) })
+    const clientName =
+      $clientsSelect.options[$clientsSelect.selectedIndex].text.split(' - ')[0]
+    saveCart({
+      ...getCart(),
+      idClient: Number($clientsSelect.value),
+      clientName,
+    })
     renderButtonDownload()
   })
 

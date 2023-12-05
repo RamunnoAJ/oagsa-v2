@@ -58,6 +58,7 @@ export function postOrderMapper(order) {
   const {
     id,
     idClient,
+    clientName,
     idSellCondition,
     observations,
     orderOrigin,
@@ -65,6 +66,7 @@ export function postOrderMapper(order) {
     total,
     items,
     idSeller,
+    nameSeller,
     date,
     draft,
     idFreight,
@@ -96,6 +98,7 @@ export function postOrderMapper(order) {
   return {
     numeroNota: id || 0,
     codigoCliente: idClient,
+    nombreCliente: clientName,
     codigoCondicionVenta: idSellCondition,
     observaciones: observations || '',
     origenPedido: orderOrigin || 0,
@@ -103,6 +106,7 @@ export function postOrderMapper(order) {
     totalPesos: total,
     totalItems: items,
     codigoVendedor: idSeller || JSON.parse(getUserFromStorage()).id,
+    nombreVendedor: nameSeller || JSON.parse(getUserFromStorage()).name,
     fechaNota: date || new Date().toISOString(),
     borrador: draft,
     idFlete: Number(idFreight),
