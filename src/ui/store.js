@@ -8,6 +8,7 @@ import { getDolar } from '../api/dolar.js'
 import { getUserFromStorage } from '../storage/storageData.js'
 import { ArticleOrder } from '../entities/articles.js'
 import { showToast } from '../utils/showToast.js'
+import { formatter } from '../utils/formatPrice.js'
 
 const $form = document.querySelector('#store')
 $form.addEventListener('change', handleChangeForm)
@@ -276,7 +277,7 @@ function createProductCard(item, user) {
 
   const $priceValue = document.createElement('span')
   $priceValue.classList = 'fw-bold'
-  $priceValue.textContent = ` $${item.price.toFixed(0)}`
+  $priceValue.textContent = ` ${formatter.format(item.price?.toFixed(0))}`
   $price.appendChild($priceValue)
 
   const $stock = document.createElement('p')
