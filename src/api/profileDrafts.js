@@ -22,11 +22,14 @@ export async function getDrafts(id) {
  * @return {Order}
  * */
 export async function getDraft(id) {
-  const response = await getDataFromDB(`orden-compra?pNumeroNota=${id}`)
-  const draftApi = await response.data
-  const draft = orderMapper(draftApi)
-
-  return draft
+  try {
+    const response = await getDataFromDB(`orden-compra?pNumeroNota=${id}`)
+    const draftApi = await response.data
+    const draft = orderMapper(draftApi)
+    return draft
+  } catch (error) {
+    throw new Error(error)
+  }
 }
 
 /**
