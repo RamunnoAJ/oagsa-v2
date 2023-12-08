@@ -10,7 +10,6 @@ import {
   getTotalQuantity,
   sendToDraft,
   emptyCart,
-  getCartFromDraft,
 } from '../cart.js'
 import { getCart, saveCart } from '../storage/cart.js'
 import { getUserFromStorage } from '../storage/storageData.js'
@@ -69,10 +68,9 @@ export async function renderCart(cart) {
   const $cartContainer = document.createElement('div')
   $cartContainer.classList.add('cart__articles__container')
   $cartContainer.addEventListener('click', async () => {
-    const newCart = await getCart()
+    const newCart = getCart()
     await postBuyOrder('orden-compra', newCart)
-    cart = await getCartFromDraft(cart.id)
-    saveCart(cart)
+    saveCart(newCart)
   })
   $cart.appendChild($cartContainer)
 
@@ -540,6 +538,7 @@ function createProductCard(item) {
   $discountInput.max = 100
   $discountInput.addEventListener('change', () => {
     updateCart(item, $quantityInput.value, $discountInput.value, renderArticles)
+    checkDiscount($discountInput.value)
   })
 
   $discount.appendChild($discountText)
@@ -702,4 +701,10 @@ function renderButtonDownload() {
 
     document.querySelector('.cart__header__icon').appendChild($downloadButton)
   }
+}
+
+function checkDiscount(value) {
+  if (value <= 50) return
+
+  showToast('Descuento mayor a 50%')
 }
