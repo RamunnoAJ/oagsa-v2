@@ -102,7 +102,7 @@ function createTotalRow(total) {
   <td></td>
   <td></td>
   <td class="text-end">${total.items}</td>
-  <td class="text-end">$${total.total.toFixed(0)}</td>
+  <td class="text-end">${formatter.format(total.total.toFixed(0))}</td>
   `
   return $totalRow
 }
