@@ -1,0 +1,108 @@
+.customer-preload__container {
+    width: 100%;
+
+    .customer-preload__table__container {
+        width: 100%;
+        overflow-x: auto;
+
+        select {
+            font-size: var(--fs-200);
+            padding: 0.25rem;
+            background-color: $slate;
+            border: none;
+            border-radius: 0.25rem;
+        }
+
+        table {
+            font-size: var(--fs-200);
+
+            button {
+                font-size: var(--fs-200);
+                padding: 0.25rem;
+                border-radius: 0.25rem;
+                border: none;
+                cursor: pointer;
+            }
+        }
+    }
+
+
+    .customer-preload__header {
+        display: flex;
+        flex-direction: row;
+        gap: 1rem;
+        justify-content: center;
+        align-items: center;
+        list-style: none;
+        padding-bottom: 1rem;
+
+        .customer-preload__header__item {
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+            padding: 0.25rem;
+            border-bottom: 2px solid white;
+
+            &:hover {
+                border-bottom: 2px solid $secondary-color-300;
+                color: $secondary-color-300;
+            }
+
+            &.active {
+                color: $secondary-color-400;
+                border-bottom: 2px solid $secondary-color-400;
+            }
+
+        }
+    }
+
+    .customer-preload__form {
+        display: flex;
+        flex-direction: column;
+        justify-content: stretch;
+        align-items: stretch;
+        gap: 0.5rem;
+        max-width: 30rem;
+        margin: 0 auto;
+        font-size: var(--fs-200);
+
+        .customer-preload__form__field,
+        .customer-preload__form__field--textarea {
+            display: flex;
+            flex-direction: column;
+            justify-content: stretch;
+            align-items: stretch;
+            gap: 0.125rem;
+
+            input {
+                padding: 0.25rem;
+                background-color: $slate;
+                border: none;
+                border-radius: 0.25rem;
+            }
+
+            textarea {
+                padding: 0.25rem;
+                background-color: $slate;
+                border: none;
+                border-radius: 0.25rem;
+                resize: none;
+            }
+        }
+
+        .customer-preload__form__submit {
+            justify-self: end;
+            align-self: end;
+            padding: 0.5rem 1rem;
+            background-color: $secondary-color-300;
+            font-weight: 500;
+            border: none;
+            border-radius: 0.25rem;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+
+            &:hover {
+                background-color: $secondary-color-400;
+            }
+        }
+    }
+}

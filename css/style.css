@@ -6271,6 +6271,127 @@ header .nav-bar.active {
   }
 }
 
+.customer-preload__container {
+  width: 100%;
+}
+.customer-preload__container .customer-preload__table__container {
+  width: 100%;
+  overflow-x: auto;
+}
+.customer-preload__container .customer-preload__table__container select {
+  font-size: var(--fs-200);
+  padding: 0.25rem;
+  background-color: #e2e8f0;
+  border: none;
+  border-radius: 0.25rem;
+}
+.customer-preload__container .customer-preload__table__container table {
+  font-size: var(--fs-200);
+}
+.customer-preload__container .customer-preload__table__container table button {
+  font-size: var(--fs-200);
+  padding: 0.25rem;
+  border-radius: 0.25rem;
+  border: none;
+  cursor: pointer;
+}
+.customer-preload__container .customer-preload__header {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
+  list-style: none;
+  padding-bottom: 1rem;
+}
+.customer-preload__container
+  .customer-preload__header
+  .customer-preload__header__item {
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  padding: 0.25rem;
+  border-bottom: 2px solid white;
+}
+.customer-preload__container
+  .customer-preload__header
+  .customer-preload__header__item:hover {
+  border-bottom: 2px solid #ffd37c;
+  color: #ffd37c;
+}
+.customer-preload__container
+  .customer-preload__header
+  .customer-preload__header__item.active {
+  color: #ff9c35;
+  border-bottom: 2px solid #ff9c35;
+}
+.customer-preload__container .customer-preload__form {
+  display: flex;
+  flex-direction: column;
+  justify-content: stretch;
+  align-items: stretch;
+  gap: 0.5rem;
+  max-width: 30rem;
+  margin: 0 auto;
+  font-size: var(--fs-200);
+}
+.customer-preload__container
+  .customer-preload__form
+  .customer-preload__form__field,
+.customer-preload__container
+  .customer-preload__form
+  .customer-preload__form__field--textarea {
+  display: flex;
+  flex-direction: column;
+  justify-content: stretch;
+  align-items: stretch;
+  gap: 0.125rem;
+}
+.customer-preload__container
+  .customer-preload__form
+  .customer-preload__form__field
+  input,
+.customer-preload__container
+  .customer-preload__form
+  .customer-preload__form__field--textarea
+  input {
+  padding: 0.25rem;
+  background-color: #e2e8f0;
+  border: none;
+  border-radius: 0.25rem;
+}
+.customer-preload__container
+  .customer-preload__form
+  .customer-preload__form__field
+  textarea,
+.customer-preload__container
+  .customer-preload__form
+  .customer-preload__form__field--textarea
+  textarea {
+  padding: 0.25rem;
+  background-color: #e2e8f0;
+  border: none;
+  border-radius: 0.25rem;
+  resize: none;
+}
+.customer-preload__container
+  .customer-preload__form
+  .customer-preload__form__submit {
+  justify-self: end;
+  align-self: end;
+  padding: 0.5rem 1rem;
+  background-color: #ffd37c;
+  font-weight: 500;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+.customer-preload__container
+  .customer-preload__form
+  .customer-preload__form__submit:hover {
+  background-color: #ff9c35;
+}
+
 footer .footer-container {
   display: flex;
   flex-direction: column;
@@ -6511,9 +6632,6 @@ footer ul li a .footer-icons {
     flex-direction: row;
     min-height: 70vh;
     gap: 1rem;
-  }
-  .dashboard-container .dashboard-wrapper .profile-info__container {
-    margin-top: 1rem;
   }
   .dashboard-container
     .dashboard-wrapper

@@ -6,6 +6,7 @@ import { profileEditImages } from './profileEditImages.js'
 import { profileOrdersHistory } from './profileOrdersHistory.js'
 import { profilePricesList } from './profilePricesList.js'
 import { profileInterfaceGenerator } from './profileInterfaceGenerator.js'
+import { profileCustomerPreload } from './profileCustomerPreload.js'
 import { getUserFromStorage } from './storage/storageData.js'
 import { navigateToLogin } from './ui/login.js'
 import { isMaintaining } from './ui/maintenance.js'
@@ -23,6 +24,7 @@ if (window.location.href.includes('dashboard')) {
       'Cuenta corriente',
       'Borrador de pedidos',
       'Historial de pedidos',
+      'Precarga de clientes',
     ]
 
     newItems.forEach(item => {
@@ -91,6 +93,12 @@ if (window.location.href.includes('dashboard')) {
       case 'Administrar':
         if (user.role === 1) {
           profileAdministration($profileInfoContainer)
+        }
+        break
+
+      case 'Precarga de clientes':
+        if (user.role === 1 || user.role === 2) {
+          profileCustomerPreload($profileInfoContainer)
         }
         break
 
