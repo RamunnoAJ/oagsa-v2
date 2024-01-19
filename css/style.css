@@ -6274,6 +6274,27 @@ header .nav-bar.active {
 .customer-preload__container {
   width: 100%;
 }
+.customer-preload__container .customer-preload__table__container {
+  width: 100%;
+  overflow-x: auto;
+}
+.customer-preload__container .customer-preload__table__container select {
+  font-size: var(--fs-200);
+  padding: 0.25rem;
+  background-color: #e2e8f0;
+  border: none;
+  border-radius: 0.25rem;
+}
+.customer-preload__container .customer-preload__table__container table {
+  font-size: var(--fs-200);
+}
+.customer-preload__container .customer-preload__table__container table button {
+  font-size: var(--fs-200);
+  padding: 0.25rem;
+  border-radius: 0.25rem;
+  border: none;
+  cursor: pointer;
+}
 .customer-preload__container .customer-preload__header {
   display: flex;
   flex-direction: row;
@@ -6362,6 +6383,13 @@ header .nav-bar.active {
   font-weight: 500;
   border: none;
   border-radius: 0.25rem;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+.customer-preload__container
+  .customer-preload__form
+  .customer-preload__form__submit:hover {
+  background-color: #ff9c35;
 }
 
 footer .footer-container {

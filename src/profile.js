@@ -97,7 +97,7 @@ if (window.location.href.includes('dashboard')) {
         break
 
       case 'Precarga de clientes':
-        if (user.role === 1) {
+        if (user.role === 1 || user.role === 2) {
           profileCustomerPreload($profileInfoContainer)
         }
         break

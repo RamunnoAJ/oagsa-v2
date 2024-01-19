@@ -1,9 +1,13 @@
-import { postCustomerPreload } from '../api/profileCustomerPreload.js'
+import {
+  getCustomerPreload,
+  postCustomerPreload,
+  toggleCustomPreloadState,
+} from '../api/profileCustomerPreload.js'
 import { getUserFromStorage } from '../storage/storageData.js'
 import { showToast } from '../utils/showToast.js'
 
 /** @param {HTMLElement} parentElement  */
-export function renderCustomerPreload(parentElement) {
+export async function renderCustomerPreload(parentElement) {
   parentElement.innerHTML = ''
 
   const $container = document.createElement('div')
@@ -21,10 +25,7 @@ export function renderCustomerPreload(parentElement) {
   $navItem2.innerText = 'Listado'
 
   const $customerPreload = createForm()
-
-  const $customerTable = document.createElement('table')
-  $customerTable.className = 'customer-preload__list visually-hidden'
-  $customerTable.innerText = 'lista'
+  const $customerTable = createTable()
 
   $navItem.addEventListener('click', () => {
     $customerPreload.classList.remove('visually-hidden')
@@ -124,6 +125,8 @@ async function handleSubmitForm(e) {
   })
 
   showToast(`Se ha guardado correctamente el cliente ${$name.value}`)
+
+  $form.reset()
 }
 
 /** @param {string} type
@@ -166,4 +169,153 @@ function createField(type, name, label, textarea = false, required = false) {
   }
 
   return $field
+}
+
+function createOption(text, value) {
+  const $option = document.createElement('option')
+  $option.textContent = text
+  $option.value = value
+
+  return $option
+}
+
+/**  @returns {HTMLDivElement} */
+function createTable() {
+  const user = JSON.parse(getUserFromStorage())
+  const $container = document.createElement('div')
+  $container.className = 'customer-preload__table__container visually-hidden'
+
+  const $select = document.createElement('select')
+  $select.name = 'selectState'
+  $select.id = 'selectState'
+
+  const options = [
+    { text: 'Todos', value: '2' },
+    { text: 'Pendientes', value: '0' },
+    { text: 'Procesados', value: '1' },
+  ]
+
+  const $defaultOption = document.createElement('option')
+  $defaultOption.textContent = '-- Seleccione --'
+  $defaultOption.value = ''
+  $defaultOption.selected = true
+  $defaultOption.disabled = true
+  $select.appendChild($defaultOption)
+
+  options.forEach(option => {
+    const $option = createOption(option.text, option.value)
+    $select.appendChild($option)
+  })
+
+  const $table = document.createElement('table')
+  $table.className = 'fl-table mt-8'
+
+  const $thead = document.createElement('thead')
+
+  if (user.id === 1) {
+    $thead.innerHTML = `
+    <tr id="table-row">
+      <th scope="col">Cuit</th>
+      <th scope="col">Razon Social</th>
+      <th scope="col">Telefóno</th>
+      <th scope="col">Vendedor</th>
+      <th scope="col">Observaciones</th>
+      <th scope="col">Estado</th>
+      <th scope="col">Acciones</th>
+    </tr>
+  `
+  } else {
+    $thead.innerHTML = `
+    <tr id="table-row">
+      <th scope="col">Cuit</th>
+      <th scope="col">Razon Social</th>
+      <th scope="col">Telefóno</th>
+      <th scope="col">Vendedor</th>
+      <th scope="col">Observaciones</th>
+      <th scope="col">Estado</th>
+    </tr>
+  `
+  }
+  const $tbody = document.createElement('tbody')
+  $tbody.id = 'table-body'
+  $table.appendChild($thead)
+  $table.appendChild($tbody)
+
+  $select.addEventListener('change', async e => {
+    const state = e.target.value
+    const clients = await getCustomerPreload(user.id === 1 ? 0 : user.id, state)
+    renderRows($tbody, clients)
+  })
+
+  $container.appendChild($select)
+  $container.appendChild($table)
+
+  return $container
+}
+
+function renderRows(table, clients) {
+  table.innerHTML = ''
+
+  if (clients.length > 0) {
+    clients.forEach(client => {
+      const $row = createRow(client)
+      table.appendChild($row)
+    })
+  } else {
+    table.innerHTML = 'No se encontraron resultados.'
+  }
+}
+
+/** @returns {HTMLTableRowElement} */
+function createRow(item) {
+  const user = JSON.parse(getUserFromStorage())
+  const $row = document.createElement('tr')
+
+  const $cuit = document.createElement('td')
+  $cuit.textContent = item.cuit
+
+  const $name = document.createElement('td')
+  $name.textContent = item.razonSocial
+
+  const $phone = document.createElement('td')
+  $phone.textContent = item.telefono
+
+  const $seller = document.createElement('td')
+  $seller.textContent = item.nombreVendedor
+
+  const $observations = document.createElement('td')
+  $observations.textContent = item.observaciones
+
+  const $state = document.createElement('td')
+  $state.textContent = item.estado
+
+  const $action = document.createElement('td')
+  const $button = document.createElement('button')
+  $button.className = 'bg-secondary-300 bg-hover-secondary-400'
+  $button.textContent = 'Procesar'
+  $button.addEventListener('click', async () => {
+    await toggleCustomPreloadState(item)
+    showToast('Se ha procesado el pedido')
+    renderRows(
+      document.querySelector('#table-body'),
+      await getCustomerPreload(
+        user.id === 1 ? 0 : user.id,
+        document.querySelector('#selectState').value
+      )
+    )
+  })
+
+  $action.appendChild($button)
+
+  $row.appendChild($cuit)
+  $row.appendChild($name)
+  $row.appendChild($phone)
+  $row.appendChild($seller)
+  $row.appendChild($observations)
+  $row.appendChild($state)
+  if (user.id === 1) {
+    $row.appendChild($action)
+  }
+
+  return $row
 }

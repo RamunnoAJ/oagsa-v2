@@ -1,6 +1,32 @@
 .customer-preload__container {
     width: 100%;
 
+    .customer-preload__table__container {
+        width: 100%;
+        overflow-x: auto;
+
+        select {
+            font-size: var(--fs-200);
+            padding: 0.25rem;
+            background-color: $slate;
+            border: none;
+            border-radius: 0.25rem;
+        }
+
+        table {
+            font-size: var(--fs-200);
+
+            button {
+                font-size: var(--fs-200);
+                padding: 0.25rem;
+                border-radius: 0.25rem;
+                border: none;
+                cursor: pointer;
+            }
+        }
+    }
+
+
     .customer-preload__header {
         display: flex;
         flex-direction: row;
@@ -71,6 +97,12 @@
             font-weight: 500;
             border: none;
             border-radius: 0.25rem;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+
+            &:hover {
+                background-color: $secondary-color-400;
+            }
         }
     }
 }
