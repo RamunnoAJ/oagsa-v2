@@ -1,3 +1,7 @@
+import { postCustomerPreload } from '../api/profileCustomerPreload.js'
+import { getUserFromStorage } from '../storage/storageData.js'
+import { showToast } from '../utils/showToast.js'
+
 /** @param {HTMLElement} parentElement  */
 export function renderCustomerPreload(parentElement) {
   parentElement.innerHTML = ''
@@ -16,11 +20,7 @@ export function renderCustomerPreload(parentElement) {
   $navItem2.className = 'customer-preload__header__item'
   $navItem2.innerText = 'Listado'
 
-  const $customerPreload = document.createElement('div')
-  $customerPreload.className = 'customer-preload__form'
-
-  const $form = createForm()
-  $customerPreload.appendChild($form)
+  const $customerPreload = createForm()
 
   const $customerTable = document.createElement('table')
   $customerTable.className = 'customer-preload__list visually-hidden'
@@ -53,7 +53,7 @@ function createForm() {
   const $form = document.createElement('form')
   $form.className = 'customer-preload__form'
 
-  const $name = createField('text', 'name', 'Razón social')
+  const $name = createField('text', 'name', 'Razón social', false, true)
   $form.appendChild($name)
 
   const $address = createField('text', 'address', 'Dirección')
@@ -71,7 +71,7 @@ function createForm() {
   const $email = createField('text', 'email', 'Email')
   $form.appendChild($email)
 
-  const $cuit = createField('text', 'cuit', 'Cuit')
+  const $cuit = createField('text', 'cuit', 'Cuit', false, true)
   $form.appendChild($cuit)
 
   const $observations = createField(
@@ -88,20 +88,52 @@ function createForm() {
   $submit.textContent = 'Grabar'
 
   $form.appendChild($submit)
-  $form.addEventListener('submit', e => {
-    e.preventDefault()
-    handleSubmit($form)
-  })
+  $form.addEventListener('submit', handleSubmitForm)
 
   return $form
+}
+
+async function handleSubmitForm(e) {
+  e.preventDefault()
+
+  const $form = e.target
+  const $name = $form.name
+  const $address = $form.address
+  const $city = $form.city
+  const $zip = $form.zip
+  const $phone = $form.phone
+  const $email = $form.email
+  const $cuit = $form.cuit
+  const $observations = $form.observations
+
+  const user = JSON.parse(getUserFromStorage())
+
+  await postCustomerPreload('clienteprecarga', {
+    razonSocial: $name.value,
+    direccion: $address.value,
+    localidad: $city.value,
+    codigoPostal: $zip.value,
+    telefono: $phone.value,
+    email: $email.value,
+    codigoVendedor: user.id,
+    cuit: $cuit.value,
+    observaciones: $observations.value,
+    nombreVendedor: '',
+    leido: 0,
+    estado: '',
+  })
+
+  showToast(`Se ha guardado correctamente el cliente ${$name.value}`)
 }
 
 /** @param {string} type
  * @param {string} name
  * @param {string} label
+ * @param {boolean} textarea
+ * @param {boolean} required
  * @returns {HTMLDivElement}
  */
-function createField(type, name, label, textarea = false) {
+function createField(type, name, label, textarea = false, required = false) {
   const $field = document.createElement('div')
   $field.className = 'customer-preload__form__field'
 
@@ -128,6 +160,7 @@ function createField(type, name, label, textarea = false) {
     $input.type = type
     $input.name = name
     $input.id = `form-preload-${name}`
+    $input.required = required
 
     $field.appendChild($input)
   }
