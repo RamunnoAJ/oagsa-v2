@@ -10,6 +10,7 @@ export async function getPrepararNotas() {
 
 export async function getNotas() {
   const response = await getDataFromDB('orden-compra/lista-notas')
+  console.log(response)
   const notasApi = await response.data
   const notas = notasApi.map(note => noteMapper(note))
 

@@ -20,6 +20,9 @@ export function noteMapper(apiData) {
     totalPesos,
     totalItems,
     observaciones,
+    nombreCliente,
+    nombreVendedor,
+    descripcionFlete,
   } = apiData
 
   return new Note(
@@ -34,6 +37,9 @@ export function noteMapper(apiData) {
     estado,
     totalPesos,
     totalItems,
-    observaciones
+    observaciones,
+    nombreCliente,
+    nombreVendedor,
+    descripcionFlete,
   )
 }

@@ -171,7 +171,7 @@ function renderTableRows(item, parentElement) {
       <td>${item.voucher}</td>
       <td class="text-end">${formatter.format(item.amount.toFixed(0))}</td>
       <td class="fw-bold">${formatter.format(
-        trimPrice(item.pending.toFixed(0))
+        trimPrice(item.pending.toFixed(0)),
       )}</td>
       `
   parentElement.appendChild(tableRow)
