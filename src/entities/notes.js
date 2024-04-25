@@ -12,6 +12,9 @@ export class Note {
    * @param {number} total
    * @param {number} items
    * @param {string} observations
+   * @param {string} clientName
+   * @param {string} sellerName
+   * @param {string} descriptionFreight
    */
   constructor(
     id,
@@ -25,7 +28,10 @@ export class Note {
     status,
     total,
     items,
-    observations
+    observations,
+    clientName,
+    sellerName,
+    descriptionFreight,
   ) {
     this.id = id
     this.orderOrigin = orderOrigin
@@ -39,5 +45,8 @@ export class Note {
     this.total = total
     this.items = items
     this.observations = observations
+    this.clientName = clientName
+    this.sellerName = sellerName
+    this.descriptionFreight = descriptionFreight
   }
 }

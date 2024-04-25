@@ -380,13 +380,13 @@ function renderButtons(cart) {
             await removeDraft(cart.id)
             emptyCart()
             renderCart(getCart())
-          }
+          },
         )
       } catch (error) {
         showToast(
           error.message,
           '',
-          'linear-gradient(to right, #a25553, #79403e)'
+          'linear-gradient(to right, #a25553, #79403e)',
         )
       }
     })
@@ -621,7 +621,7 @@ async function selectFields({ idClient, idFreight, idSellCondition }) {
   $selectClient.querySelector(`option[value="${idClient}"]`).selected = true
   $selectFreight.querySelector(`option[value="${idFreight}"]`).selected = true
   $selectSellCondition.querySelector(
-    `option[value="${idSellCondition}"]`
+    `option[value="${idSellCondition}"]`,
   ).selected = true
 }
 
@@ -690,6 +690,7 @@ function renderButtonDownload() {
   const clientCode = client.text.split(' - ')[1]
 
   if (clientName && clientCode) {
+    renderTotalRow()
     const $downloadButton = document.createElement('button')
     $downloadButton.type = 'button'
     $downloadButton.className =
