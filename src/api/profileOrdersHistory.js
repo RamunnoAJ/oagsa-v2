@@ -13,7 +13,7 @@ import { isValidDate } from '../utils/isValidDate.js'
 export async function getOrders(id = 0, idClient = 0, offset = 1) {
   if (id === 1) id = 0
   const response = await getDataFromDB(
-    `orden-compra/vendedor?pCodigoVendedor=${id}&pCodigoCliente=${idClient}&pBorrador=0&pPageSize=15&pPageNumber=${offset}`
+    `orden-compra/vendedor?pCodigoVendedor=${id}&pCodigoCliente=${idClient}&pBorrador=0&pPageSize=15&pPageNumber=${offset}`,
   )
   const ordersApi = await response.data
   const orders = ordersApi.map(order => orderMapper(order))
@@ -38,13 +38,13 @@ export async function getOrdersDates(
   idClient = 0,
   offset = 1,
   fromDate,
-  toDate = new Date().toISOString().split('T')[0]
+  toDate = new Date().toISOString().split('T')[0],
 ) {
   if (!toDate) toDate = new Date().toISOString().split('T')[0]
   if (isValidDate(toDate)) toDate = formatDate(toDate)
   if (id === 1) id = 0
   const response = await getDataFromDB(
-    `orden-compra/vendedor-fecha?pCodigoVendedor=${id}&pCodigoCliente=${idClient}&pBorrador=0&pPageSize=15&pPageNumber=${offset}&pFechaDesde=${fromDate}&pFechaHasta=${toDate}`
+    `orden-compra/vendedor-fecha?pCodigoVendedor=${id}&pCodigoCliente=${idClient}&pBorrador=0&pPageSize=15&pPageNumber=${offset}&pFechaDesde=${fromDate}&pFechaHasta=${toDate}`,
   )
   const ordersApi = await response.data
   const orders = ordersApi.map(order => orderMapper(order))
@@ -64,7 +64,7 @@ export async function getCondicionVenta(id) {
   const response = await getDataFromDB(`orden-compra/condicionventa`)
   const condicionVentaApi = await response.data
   const condicionVenta = condicionVentaApi.map(item =>
-    sellConditionMapper(item)
+    sellConditionMapper(item),
   )
 
   const description = condicionVenta.filter(object => object.id === id)[0]

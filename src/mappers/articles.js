@@ -38,7 +38,7 @@ export function articlesMapper(apiData) {
     seMuestraEnWeb,
     stock,
     stockUnidades,
-    url
+    url,
   )
 }
 
@@ -82,6 +82,6 @@ export function orderArticlesMapper(apiData) {
     montoTotal,
     numeroOrder,
     eliminado,
-    imagenesUrl
+    imagenesUrl,
   )
 }

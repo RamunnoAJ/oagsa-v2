@@ -9,9 +9,10 @@ import getDataFromDB, { BASE_URL } from '../utils/getDataFromDB.js'
  * */
 export async function getDrafts(id) {
   const response = await getDataFromDB(
-    `orden-compra/vendedor?pCodigoVendedor=${id}&pBorrador=1`
+    `orden-compra/vendedor?pCodigoVendedor=${id}&pBorrador=1`,
   )
   const draftsApi = await response.data
+  console.log(draftsApi)
   const drafts = draftsApi.map(draft => orderMapper(draft))
 
   return drafts
@@ -41,7 +42,7 @@ export async function removeDraft(id) {
     `${BASE_URL}orden-compra/delete-borrador?pNumeroOrden=${id}`,
     {
       method: 'DELETE',
-    }
+    },
   )
 
   if (!response.ok) {

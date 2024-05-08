@@ -1,4 +1,4 @@
-import { getFields, postBuyOrder } from '../api/cart.js'
+import { getFields } from '../api/cart.js'
 import { getClientsFromSeller } from '../api/profileClientList.js'
 import { removeDraft } from '../api/profileDrafts.js'
 import { showToast } from '../utils/showToast.js'
@@ -552,7 +552,10 @@ function createProductCard(item) {
   $quantityInput.id = `cantidad-${item.id}`
   $quantityInput.type = 'number'
   $quantityInput.min = 1
-  $quantityInput.max = item.stock
+  // TODO: Cambiar al stock que se trae de la api
+  if (getCart().draft !== 1) {
+    $quantityInput.max = item.stock
+  }
   $quantityInput.value = item.quantity
   $quantityInput.addEventListener('change', () => {
     updateCart(item, $quantityInput.value, $discountInput.value, renderArticles)
