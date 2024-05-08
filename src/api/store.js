@@ -10,7 +10,7 @@ export async function getProducts(url) {
   const response = await getDataFromDB(url)
   const productsApi = await response.data
   await productsApi.forEach(product => {
-    product.descripcion = convertToUTF(product.descripcion)
+    product.descripcion = product.descripcion
     product.marca = convertToUTF(product.marca)
   })
 

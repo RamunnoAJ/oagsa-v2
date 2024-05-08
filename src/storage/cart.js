@@ -1,7 +1,7 @@
 /** @typedef {import('./entities/orders.js').Order} Order */
 
 /**
- * @returns {Order}
+ * @returns {import('../entities/orders.js').Order}
  * */
 export function getCart() {
   return JSON.parse(localStorage.getItem('cart')) || { detail: [] }

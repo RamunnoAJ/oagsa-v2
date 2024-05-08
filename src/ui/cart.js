@@ -10,6 +10,7 @@ import {
   getTotalQuantity,
   sendToDraft,
   emptyCart,
+  updateOrder,
 } from '../cart.js'
 import { getCart, saveCart } from '../storage/cart.js'
 import { getUserFromStorage } from '../storage/storageData.js'
@@ -69,7 +70,6 @@ export async function renderCart(cart) {
   $cartContainer.classList.add('cart__articles__container')
   $cartContainer.addEventListener('click', async () => {
     const newCart = getCart()
-    await postBuyOrder('orden-compra', newCart)
     saveCart(newCart)
   })
   $cart.appendChild($cartContainer)
@@ -552,6 +552,7 @@ function createProductCard(item) {
   $quantityInput.id = `cantidad-${item.id}`
   $quantityInput.type = 'number'
   $quantityInput.min = 1
+  $quantityInput.max = item.stock
   $quantityInput.value = item.quantity
   $quantityInput.addEventListener('change', () => {
     updateCart(item, $quantityInput.value, $discountInput.value, renderArticles)
@@ -696,12 +697,63 @@ function renderButtonDownload() {
     $downloadButton.className =
       'button-sm bg-slate bg-hover-secondary-300 ml-2 button-download'
     $downloadButton.innerHTML = '<i class="fa-solid fa-download"></i>'
-    $downloadButton.onclick = () => {
-      downloadPDF(`Cliente: ${clientName} - ID Cliente: ${clientCode}`)
+    $downloadButton.onclick = async () => {
+      const newCart = getCart()
+      await updateOrder(newCart)
+
+      downloadPDF(`${clientName} - ${clientCode}`, createTableToDownload())
     }
 
     document.querySelector('.cart__header__icon').appendChild($downloadButton)
   }
+}
+
+function createTableToDownload() {
+  const cart = getCart()
+
+  const $table = document.createElement('table')
+
+  $table.innerHTML = `
+    <thead>
+      <tr>
+        <th scope="col">Artículo</th>
+        <th scope="col">Código</th>
+        <th scope="col">Precio</th>
+        <th scope="col">Descuento</th>
+        <th scope="col">Cantidad</th>
+        <th scope="col">Total</th>
+      </tr>
+    </thead>
+
+    <tbody>
+        ${cart.detail.map(item => createTableRowToDownload(item).outerHTML)}
+        <tr>
+            <td style="text-align: left;">Total:</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>${cart.items}</td>
+            <td>${formatter.format(cart.total)}</td>
+        </tr>
+    </tbody>
+    `
+
+  return $table
+}
+
+function createTableRowToDownload(item) {
+  const $row = document.createElement('tr')
+  const totalPrice = item.totalDiscount || item.priceTotal
+
+  $row.innerHTML = `
+    <td>${item.name}</td>
+    <td>${item.id}</td>
+    <td>${formatter.format(item.price.toFixed(0))}</td>
+    <td>${item.discountPercentage}%</td>
+    <td>${item.quantity}</td>
+    <td>${formatter.format(totalPrice.toFixed(0))}</td>
+  `
+  return $row
 }
 
 function checkDiscount(value) {
