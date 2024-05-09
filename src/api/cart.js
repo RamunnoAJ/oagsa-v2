@@ -9,6 +9,7 @@ import { postOrderMapper } from '../mappers/orders.js'
  * */
 export async function postBuyOrder(url, postBody) {
   const order = postOrderMapper(postBody)
+  console.log('order', order)
   const response = await fetch(`${BASE_URL}${url}`, {
     method: 'POST',
     headers: {

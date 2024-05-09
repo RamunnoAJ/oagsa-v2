@@ -15,7 +15,7 @@ checkLocalStorage()
  * @param {Order} cart
  * @returns {string[]}
  * */
-function validateCart(cart) {
+export function validateCart(cart) {
   const errors = []
   if (!cart.idClient) {
     const error = 'Debe seleccionar un cliente.'
@@ -112,7 +112,7 @@ export async function addToCart(item) {
     } else {
       showToast(
         `El producto ya existe en el carrito, se actualizó su cantidad a: ${quantity}`,
-        '../pages/cart.html'
+        '../pages/cart.html',
       )
       updateQuantity(newItem, quantity)
     }
@@ -276,7 +276,7 @@ export async function getCartFromDraft(id) {
 /**
  * @param {Order} order
  * */
-async function updateOrder(order) {
+export async function updateOrder(order) {
   getTotalQuantity(order)
   getTotalPrice(order)
   await postBuyOrder('orden-compra', order)

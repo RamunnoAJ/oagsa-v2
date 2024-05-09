@@ -36,7 +36,7 @@ export class Order {
     draft,
     idFreight,
     freight,
-    detail
+    detail,
   ) {
     this.id = id
     this.idClient = idClient
