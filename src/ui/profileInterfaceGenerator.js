@@ -27,14 +27,14 @@ export function renderInterfaceGenerator(parentElement) {
     'button-sm bg-error-400 bg-hover-error-300 text-white'
   $buttonPrepare.textContent = 'Generar Interfaces'
   $buttonPrepare.addEventListener('click', async () => {
-    /** @type {import('../entities/notes.js').Note[]} */
-    const notes = await getNotas()
-
-    const notesTotal = notes.reduce((total, note) => total + note.total, 0)
-    downloadNotas(notes, notes.length, notesTotal)
-
     getPrepararNotas().then(async () => {
+      /** @type {import('../entities/notes.js').Note[]} */
+      const notes = await getNotas()
+
+      const notesTotal = notes.reduce((total, note) => total + note.total, 0)
+
       showToast('Interfaces generadas')
+      downloadNotas(notes, notes.length, notesTotal)
     })
   })
 
