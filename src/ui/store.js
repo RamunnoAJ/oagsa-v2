@@ -39,7 +39,7 @@ async function handleChangeForm(e) {
     selectedClase = $form.clases.value
   } else {
     selectedClase = document.querySelector(
-      '.store__clases__desktop__items.active'
+      '.store__clases__desktop__items.active',
     ).dataset.clase
   }
 
@@ -47,7 +47,7 @@ async function handleChangeForm(e) {
     selectedRubro = $form.rubros.value
   } else {
     selectedRubro = document.querySelector(
-      '.store__rubros__desktop__items.active'
+      '.store__rubros__desktop__items.active',
     ).dataset.rubro
   }
 
@@ -308,6 +308,7 @@ function createProductCard(item, user) {
   $quantityInput.type = 'number'
   $quantityInput.id = `quantity-${item.id}`
   $quantityInput.min = 0
+  $quantityInput.max = item.stock
   $quantityInput.value = 0
   $quantity.appendChild($quantityInput)
 
@@ -334,6 +335,11 @@ function createProductCard(item, user) {
       return
     }
 
+    if (item.stock < $quantityInput.value) {
+      showToast('No puedes agregar un objeto de stock mayor al disponible')
+      return
+    }
+
     const newItem = new ArticleOrder(
       0,
       item.id,
@@ -350,7 +356,7 @@ function createProductCard(item, user) {
       item.price * $quantityInput.value,
       0,
       false,
-      item.images
+      item.images,
     )
     addToCart(newItem)
   })
