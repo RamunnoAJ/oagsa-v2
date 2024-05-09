@@ -15,7 +15,7 @@ export async function getProducts(url) {
   const response = await getDataFromDB(url)
   const productsApi = await response.data
   await productsApi.forEach(product => {
-    product.descripcion = convertToUTF(product.descripcion)
+    product.descripcion = product.descripcion
     product.marca = convertToUTF(product.marca)
   })
 
@@ -37,7 +37,7 @@ export async function getCategories(url) {
     categories = categoriesApi.map(category => classMaper(category))
   } else if (url.includes('subrubros')) {
     categories = categoriesApi.map(subcategory =>
-      subcategoriesMapper(subcategory)
+      subcategoriesMapper(subcategory),
     )
   } else {
     categories = categoriesApi.map(category => categoriesMapper(category))
