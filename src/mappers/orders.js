@@ -55,7 +55,6 @@ export function orderMapper(apiData) {
  * @return {object}
  * */
 export function postOrderMapper(order) {
-  console.log('mapper', order)
   const {
     id,
     idClient,

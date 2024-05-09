@@ -72,9 +72,7 @@ export async function renderCart(cart) {
   $cartContainer.addEventListener('click', async () => {
     const newCart = getCart()
     if (validateCart(newCart)) {
-      console.log('me ejecute')
       await postBuyOrder('orden-compra', newCart)
-      console.log(newCart)
     }
     saveCart(newCart)
   })

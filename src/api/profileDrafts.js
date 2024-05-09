@@ -12,7 +12,6 @@ export async function getDrafts(id) {
     `orden-compra/vendedor?pCodigoVendedor=${id}&pBorrador=1`,
   )
   const draftsApi = await response.data
-  console.log(draftsApi)
   const drafts = draftsApi.map(draft => orderMapper(draft))
 
   return drafts
