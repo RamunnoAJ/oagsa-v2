@@ -4,7 +4,6 @@ import { getCart, saveCart, clearCart } from './storage/cart.js'
 import { checkLocalStorage } from './storage/profile.js'
 import { showToast } from './utils/showToast.js'
 import { navigateToDashboard } from './ui/login.js'
-import { saveToLocalStorage } from './storage/store.js'
 
 /** @typedef {import('./entities/orders.js').Order} Order
  * @typedef {import('./entities/orders.js').ArticleOrder} ArticleOrder
@@ -113,7 +112,7 @@ export async function addToCart(item) {
     } else {
       showToast(
         `El producto ya existe en el carrito, se actualizó su cantidad a: ${quantity}`,
-        '../pages/cart.html',
+        '../pages/cart.html'
       )
       updateQuantity(newItem, quantity)
     }
@@ -130,6 +129,9 @@ async function addProductToCart(item) {
   const newItem = { ...item }
   const updatedCart = { ...cart, detail: [...cart.detail, newItem] }
   saveCart(updatedCart)
+  if (cart.draft === 1) {
+    await updateOrder(updatedCart)
+  }
 }
 
 /**
@@ -142,6 +144,7 @@ export async function removeFromCart(item) {
 
   const updatedCart = { ...cart, detail: [...cart.detail] }
   saveCart(updatedCart)
+  await updateOrder(updatedCart)
 }
 
 export async function emptyCart() {
@@ -206,6 +209,7 @@ export async function updateQuantity(item, quantity) {
   const index = cart.detail.findIndex(i => i.id === item.id)
   cart.detail[index].quantity = Number(quantity)
   saveCart(cart)
+  await updateOrder(cart)
 }
 
 /**
@@ -272,7 +276,7 @@ export async function getCartFromDraft(id) {
 /**
  * @param {Order} order
  * */
-export async function updateOrder(order) {
+async function updateOrder(order) {
   getTotalQuantity(order)
   getTotalPrice(order)
   await postBuyOrder('orden-compra', order)

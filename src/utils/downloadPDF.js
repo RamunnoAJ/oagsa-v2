@@ -2,35 +2,16 @@ import { Note } from '../entities/notes.js'
 
 /**
  * @param {string} category
- * @param {HTMLTableElement} htmlTable
  * */
-export function downloadPDF(category, htmlTable) {
-  const table =
-    htmlTable.outerHTML ||
-    document.querySelector('.table-container > table').outerHTML
-
-  const date = new Date()
-    .toISOString()
-    .split('T')[0]
-    .split('-')
-    .reverse()
-    .join('/')
+export function downloadPDF(category) {
+  const table = document.querySelector('.table-container > table').outerHTML
 
   const pdfWindow = window.open('', '_blank')
-
   pdfWindow.document.write(`
-            <html lang="es">
+            <html>
             <head>
-                <meta charset="utf-8" />
-                <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-                <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-                <meta name="author" content="OAGSA" />
-                <meta name="description" content="OAGSA - ${category}" />
-                <style type="text/css" media="print, screen">
-                    @page {
-                        size: auto;
-                        margin: 10px 20px 10px 20px;
-                    }
+                <title>OAGSA - ${category}</title>
+                <style>
                     body {
                         font-family: Arial, sans-serif;
                     }
@@ -49,12 +30,6 @@ export function downloadPDF(category, htmlTable) {
                 </style>
             </head>
             <body>
-                <div style="display: flex; flex-direction: row; justify-content: space-between; width: 100%; align-items: center; gap: 40px">
-                    <img src="../../assets/logo-oagsa.png" alt="OAGSA" width="200" />
-                    <h1 style="text-align: center; font-size: 18px">${category}</h1>
-                    <p style="text-color: #a0a0a0; font-weight: bold">${date}</p>
-                </div>
-
                 ${table}
             </body>
             </html>
@@ -80,13 +55,6 @@ export function downloadPDF(category, htmlTable) {
  * @param {number} total
  * */
 export function downloadNotas(notas, cantidadNotas, total) {
-  const date = new Date()
-    .toISOString()
-    .split('T')[0]
-    .split('-')
-    .reverse()
-    .join('/')
-
   const pdfWindow = window.open('', '_blank')
   pdfWindow.document.write(`
             <html>
@@ -94,7 +62,7 @@ export function downloadNotas(notas, cantidadNotas, total) {
                 <style type="text/css" media="print, screen">
                     @page {
                         size: auto;
-                        margin: 10px 20px 10px 20px;
+                        margin: 0.3in 0.7in 0.3in 0.7in;
                     }
                     body {
                         font-family: Arial, sans-serif;
@@ -114,10 +82,10 @@ export function downloadNotas(notas, cantidadNotas, total) {
                 </style>
             </head>
             <body>
-                <div style="display: flex; flex-direction: row; justify-content: space-between; width: 100%; align-items: center; gap: 40px">
+                <div style="display: flex; flex-direction: row; justify-content: center; align-items: center; gap: 20px">
                     <img src="../../assets/logo-oagsa.png" alt="OAGSA" width="200" />
                     <h1 style="text-align: center; font-size: 18px">Notas de Pedidos</h1>
-                    <p style="text-color: #a0a0a0; font-weight: bold">${date}</p>
+                    <p>Fecha: ${new Date().toISOString().split('T')[0]}</p>
                 </div>
                 <p>Número de Notas: <strong>${cantidadNotas}</strong></p>
                 <p>Total: <strong>$${total}</strong></p>

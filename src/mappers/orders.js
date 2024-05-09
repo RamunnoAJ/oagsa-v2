@@ -46,7 +46,7 @@ export function orderMapper(apiData) {
     borrador,
     idFlete,
     descripcionFlete,
-    detail,
+    detail
   )
 }
 
@@ -58,7 +58,7 @@ export function postOrderMapper(order) {
   const {
     id,
     idClient,
-    nameClient,
+    clientName,
     idSellCondition,
     observations,
     orderOrigin,
@@ -98,7 +98,7 @@ export function postOrderMapper(order) {
   return {
     numeroNota: id || 0,
     codigoCliente: idClient,
-    nombreCliente: nameClient,
+    nombreCliente: clientName,
     codigoCondicionVenta: idSellCondition,
     observaciones: observations || '',
     origenPedido: orderOrigin || 0,
