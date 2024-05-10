@@ -5,7 +5,7 @@ export class Order {
    * @typedef {Order}
    * @param {number} id
    * @param {number} idClient
-   * @param {string} nameClient
+   * @param {string} clientName
    * @param {number} idSellCondition
    * @param {string} observations
    * @param {number} orderOrigin
@@ -23,7 +23,7 @@ export class Order {
   constructor(
     id,
     idClient,
-    nameClient,
+    clientName,
     idSellCondition,
     observations,
     orderOrigin,
@@ -40,7 +40,7 @@ export class Order {
   ) {
     this.id = id
     this.idClient = idClient
-    this.nameClient = nameClient
+    this.clientName = clientName
     this.idSellCondition = idSellCondition
     this.observations = observations
     this.orderOrigin = orderOrigin

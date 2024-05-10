@@ -68,12 +68,12 @@ async function renderTableRows(drafts, parentElement) {
     row.className = 'cursor-pointer bg-hover-slate'
     row.innerHTML = `
       <td>${draft.id}</td>
-      <td class="text-start">${draft.nameClient} - ${draft.idClient}</td>
+      <td class="text-start">${draft.clientName} - ${draft.idClient}</td>
       <td>${formatDate(draft.date.split('T')[0])}</td>
       <td class="text-end">${draft.items}</td>
       <td class="text-end">${formatter.format(draft.total.toFixed(0))}</td>
       <td class="fl-table__icons visually-hidden-mobile">
-        <i id="btn-edit-${draft.id}" class="fa-solid fa-pen"></i> 
+        <i id="btn-edit-${draft.id}" class="fa-solid fa-pen"></i>
         <i id="btn-delete-${draft.id}" class="fa-solid fa-trash"></i>
       </td>
     `

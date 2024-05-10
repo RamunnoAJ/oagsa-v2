@@ -73,6 +73,7 @@ export async function checkout(cart) {
  * @param {Order} cart
  * */
 export async function sendToDraft(cart) {
+  console.log(cart)
   const errors = validateCart(cart)
   if (errors.length > 0) {
     return
