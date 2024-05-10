@@ -570,7 +570,9 @@ function createProductCard(item) {
 
   const $price = document.createElement('p')
   $price.classList.add('fw-bold')
-  $price.textContent = formatter.format(item.price.toFixed(0))
+  $price.textContent = item.price
+    ? formatter.format(item.price.toFixed(0))
+    : '$ 0'
 
   const $discount = document.createElement('p')
   $discount.className = 'fw-semi-bold cart__discount'
@@ -706,7 +708,7 @@ function createTableRow(item) {
   $row.innerHTML = `
     <td>${item.name}</td>
     <td>${item.id}</td>
-    <td>${formatter.format(item.price.toFixed(0))}</td>
+    <td>${item.price ? formatter.format(item.price.toFixed(0)) : '$ 0'}</td>
     <td>${item.discountPercentage}%</td>
     <td>${item.quantity}</td>
     <td>${formatter.format(totalPrice.toFixed(0))}</td>

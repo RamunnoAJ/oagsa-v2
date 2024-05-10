@@ -81,6 +81,7 @@ export async function sendToDraft(cart) {
   const order = cart
   order.draft = 1
   saveCart(order)
+  console.log(order)
 
   await postBuyOrder('orden-compra', order)
   emptyCart()

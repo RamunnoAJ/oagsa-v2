@@ -8,17 +8,22 @@ import { postOrderMapper } from '../mappers/orders.js'
  * @param {object} postBody
  * */
 export async function postBuyOrder(url, postBody) {
-  const order = postOrderMapper(postBody)
-  const response = await fetch(`${BASE_URL}${url}`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Accept: 'application/json',
-    },
-    body: JSON.stringify(order),
-  })
-  if (!response.ok) {
-    throw new Error('Respuesta rechazada')
+  try {
+    const order = postOrderMapper(postBody)
+    const response = await fetch(`${BASE_URL}${url}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+      body: JSON.stringify(order),
+    })
+    if (!response.ok) {
+      throw new Error('Respuesta rechazada')
+    }
+  } catch (error) {
+    console.log(error)
+    throw new Error(error)
   }
 }
 
