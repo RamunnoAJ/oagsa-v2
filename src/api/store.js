@@ -14,9 +14,7 @@ export async function getProducts(url) {
     product.marca = convertToUTF(product.marca)
   })
 
-  console.log(productsApi)
   const products = productsApi.map(product => articlesMapper(product))
-  console.log(products)
 
   return products
 }

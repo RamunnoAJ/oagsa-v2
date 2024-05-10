@@ -73,7 +73,6 @@ export async function checkout(cart) {
  * @param {Order} cart
  * */
 export async function sendToDraft(cart) {
-  console.log(cart)
   const errors = validateCart(cart)
   if (errors.length > 0) {
     return
@@ -82,6 +81,7 @@ export async function sendToDraft(cart) {
   const order = cart
   order.draft = 1
   saveCart(order)
+
   await postBuyOrder('orden-compra', order)
   emptyCart()
   showToast('Carrito guardado en borrador exitosamente.')
