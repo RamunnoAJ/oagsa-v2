@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
@@ -243,10 +243,11 @@
     <script src="./src/ui/carousels.js"></script>
     <script type="module" src="./src/user.js"></script>
     <script>
-      if (localStorage.getItem('reset') < 1) {
+      if (localStorage.getItem('reset') < 2) {
         localStorage.clear()
-        localStorage.setItem('reset', 1)
+        localStorage.setItem('reset', 2)
       }
     </script>
   </body>
 </html>
+
