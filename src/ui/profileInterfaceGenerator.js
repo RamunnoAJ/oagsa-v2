@@ -27,14 +27,14 @@ export function renderInterfaceGenerator(parentElement) {
     'button-sm bg-error-400 bg-hover-error-300 text-white'
   $buttonPrepare.textContent = 'Generar Interfaces'
   $buttonPrepare.addEventListener('click', async () => {
+    /** @type {import('../entities/notes.js').Note[]} */
+    const notes = await getNotas()
+
+    const notesTotal = notes.reduce((total, note) => total + note.total, 0)
+
     getPrepararNotas().then(async () => {
-      /** @type {import('../entities/notes.js').Note[]} */
-      const notes = await getNotas()
-
-      const notesTotal = notes.reduce((total, note) => total + note.total, 0)
-
-      showToast('Interfaces generadas')
       downloadNotas(notes, notes.length, notesTotal)
+      showToast('Interfaces generadas')
     })
   })
 
@@ -99,7 +99,7 @@ function renderTableRows(notes, parentElement) {
     paragraph.setAttribute('colspan', '5')
     paragraph.textContent = 'No se encontraron resultados.'
     row.appendChild(paragraph)
-    $table.appendChild(row)
+    $tableBody.appendChild(row)
   } else {
     notes.forEach(async note => {
       const row = await createRow(note)
