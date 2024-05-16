@@ -75,6 +75,7 @@ async function createTable() {
   <thead>
     <tr>
       <th scope="col">#</th>
+      <th scope="col">Razón Social</th>
       <th scope="col">Cliente</th>
       <th scope="col" class="visually-hidden-mobile">Fecha</th>
       <th scope="col">Articulos</th>
@@ -102,20 +103,32 @@ function renderTableRows(notes, parentElement) {
     $tableBody.appendChild(row)
   } else {
     notes.forEach(async note => {
+      console.log(note)
       const row = await createRow(note)
       $tableBody.appendChild(row)
     })
   }
 }
 
-async function createRow({ id, idClient, date, items, total, status }) {
+async function createRow({
+  id,
+  clientName,
+  idClient,
+  date,
+  items,
+  total,
+  status,
+}) {
   const $row = document.createElement('tr')
   $row.innerHTML = `
     <td>${id}</td>
+    <td>${clientName}</td>
     <td>${idClient}</td>
     <td class="visually-hidden-mobile">${formatDate(date.split('T')[0])}</td>
     <td class="text-end">${items}</td>
-    <td class="text-end">${formatter.format(total < 0 ? total.toFixed(0) * -1 : total.toFixed(0))}</td>
+    <td class="text-end">${formatter.format(
+      total < 0 ? total.toFixed(0) * -1 : total.toFixed(0)
+    )}</td>
     <td class="visually-hidden-mobile">${status}</td>
   `
 

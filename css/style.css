@@ -4834,6 +4834,7 @@ body {
   justify-content: center;
   margin-inline: auto;
   overflow-x: auto;
+  width: 100%;
 }
 
 .container__select {
