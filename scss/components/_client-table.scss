@@ -1,7 +1,9 @@
 .table-container {
-  @include flex(column, center, center);
-  width: 95%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   margin-inline: auto;
+  overflow-x: auto;
 }
 
 .container__select {

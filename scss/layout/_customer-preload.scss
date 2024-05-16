@@ -4,6 +4,9 @@
     .customer-preload__table__container {
         width: 100%;
         overflow-x: auto;
+        max-width: 800px;
+        margin: 0 auto;
+        font-size: var(--fs-200);
 
         select {
             font-size: var(--fs-200);

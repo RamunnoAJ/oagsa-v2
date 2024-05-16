@@ -1,13 +1,11 @@
-import { Note } from '../entities/notes.js'
+/** @typedef {import('../entities/notes.js').Note} Note */
 
 /**
  * @param {string} category
  * @param {HTMLTableElement} htmlTable
  * */
 export function downloadPDF(category, htmlTable = null) {
-  const table =
-    htmlTable?.outerHTML ||
-    document.querySelector('.table-container > table').outerHTML
+  const table = htmlTable || document.querySelector('.table-container > table')
 
   const date = new Date()
     .toISOString()
@@ -55,7 +53,7 @@ export function downloadPDF(category, htmlTable = null) {
                     <p style="text-color: #a0a0a0; font-weight: bold">${date}</p>
                 </div>
 
-                ${table}
+                ${table.outerHTML}
             </body>
             </html>
         `)
@@ -138,13 +136,17 @@ export function downloadNotas(notas, cantidadNotas, total) {
                           nota => `
                             <tr style="font-size: 12px">
                                 <td style="font-weight: bold">${nota.id}</td>
-                                <td style="text-align: center">${nota.date.split('T')[0]}</td>
+                                <td style="text-align: center">${
+                                  nota.date.split('T')[0]
+                                }</td>
                                 <td>${nota.clientName}</td>
                                 <td>${nota.sellerName}</td>
                                 <td>${nota.observations}</td>
-                                <td style="text-align: right">$${nota.total}</td>
+                                <td style="text-align: right">$${
+                                  nota.total
+                                }</td>
                                 <td>${nota.status}</td>
-                            </tr>`,
+                            </tr>`
                         )}
                     </tbody>
                 </table>

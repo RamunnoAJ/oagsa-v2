@@ -4828,9 +4828,8 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
-  width: 95%;
   margin-inline: auto;
+  overflow-x: auto;
 }
 
 .container__select {
@@ -6277,6 +6276,9 @@ header .nav-bar.active {
 .customer-preload__container .customer-preload__table__container {
   width: 100%;
   overflow-x: auto;
+  max-width: 800px;
+  margin: 0 auto;
+  font-size: var(--fs-200);
 }
 .customer-preload__container .customer-preload__table__container select {
   font-size: var(--fs-200);

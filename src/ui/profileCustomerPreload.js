@@ -5,13 +5,14 @@ import {
 } from '../api/profileCustomerPreload.js'
 import { getUserFromStorage } from '../storage/storageData.js'
 import { showToast } from '../utils/showToast.js'
+import { downloadPDF } from '../utils/downloadPDF.js'
 
 /** @param {HTMLElement} parentElement  */
 export async function renderCustomerPreload(parentElement) {
   parentElement.innerHTML = ''
 
   const $container = document.createElement('div')
-  $container.className = 'customer-preload__container'
+  $container.className = 'customer-preload__container '
 
   const $nav = document.createElement('ul')
   $nav.className = 'customer-preload__header'
@@ -185,6 +186,22 @@ function createTable() {
   const $container = document.createElement('div')
   $container.className = 'customer-preload__table__container visually-hidden'
 
+  const $selectContainer = document.createElement('div')
+  $selectContainer.style =
+    'display: flex; flex-direction: row; align-items: center; justify-content: space-between; gap: 1rem;'
+
+  const $downloadButton = document.createElement('button')
+  $downloadButton.className =
+    'button-sm bg-secondary-300 bg-hover-secondary-400'
+  $downloadButton.innerHTML = '<i class="fa-solid fa-download"></i>'
+  $downloadButton.onclick = () => {
+    try {
+      downloadPDF('Listado de clientes')
+    } catch (error) {
+      showToast('No se pudo descargar el listado de clientes')
+    }
+  }
+
   const $select = document.createElement('select')
   $select.name = 'selectState'
   $select.id = 'selectState'
@@ -207,6 +224,9 @@ function createTable() {
     $select.appendChild($option)
   })
 
+  const $tableContainer = document.createElement('div')
+  $tableContainer.className = 'table-container'
+
   const $table = document.createElement('table')
   $table.className = 'fl-table mt-8'
 
@@ -218,6 +238,8 @@ function createTable() {
       <th scope="col">Cuit</th>
       <th scope="col">Razon Social</th>
       <th scope="col">Telefóno</th>
+      <th scope="col">Email</th>
+      <th scope="col">Dirección</th>
       <th scope="col">Vendedor</th>
       <th scope="col">Observaciones</th>
       <th scope="col">Estado</th>
@@ -230,6 +252,8 @@ function createTable() {
       <th scope="col">Cuit</th>
       <th scope="col">Razon Social</th>
       <th scope="col">Telefóno</th>
+      <th scope="col">Email</th>
+      <th scope="col">Dirección</th>
       <th scope="col">Vendedor</th>
       <th scope="col">Observaciones</th>
       <th scope="col">Estado</th>
@@ -247,8 +271,11 @@ function createTable() {
     renderRows($tbody, clients)
   })
 
-  $container.appendChild($select)
-  $container.appendChild($table)
+  $container.appendChild($selectContainer)
+  $selectContainer.appendChild($select)
+  $selectContainer.appendChild($downloadButton)
+  $tableContainer.appendChild($table)
+  $container.appendChild($tableContainer)
 
   return $container
 }
@@ -280,6 +307,12 @@ function createRow(item) {
   const $phone = document.createElement('td')
   $phone.textContent = item.telefono
 
+  const $mail = document.createElement('td')
+  $mail.textContent = item.email
+
+  const $address = document.createElement('td')
+  $address.textContent = item.direccion
+
   const $seller = document.createElement('td')
   $seller.textContent = item.nombreVendedor
 
@@ -310,6 +343,8 @@ function createRow(item) {
   $row.appendChild($cuit)
   $row.appendChild($name)
   $row.appendChild($phone)
+  $row.appendChild($mail)
+  $row.appendChild($address)
   $row.appendChild($seller)
   $row.appendChild($observations)
   $row.appendChild($state)
