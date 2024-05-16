@@ -115,7 +115,7 @@ async function createRow({ id, idClient, date, items, total, status }) {
     <td>${idClient}</td>
     <td class="visually-hidden-mobile">${formatDate(date.split('T')[0])}</td>
     <td class="text-end">${items}</td>
-    <td class="text-end">${formatter.format(total.toFixed(0))}</td>
+    <td class="text-end">${formatter.format(total < 0 ? total.toFixed(0) * -1 : total.toFixed(0))}</td>
     <td class="visually-hidden-mobile">${status}</td>
   `
 

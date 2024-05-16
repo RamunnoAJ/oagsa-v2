@@ -4,9 +4,9 @@ import { Note } from '../entities/notes.js'
  * @param {string} category
  * @param {HTMLTableElement} htmlTable
  * */
-export function downloadPDF(category, htmlTable) {
+export function downloadPDF(category, htmlTable = null) {
   const table =
-    htmlTable.outerHTML ||
+    htmlTable?.outerHTML ||
     document.querySelector('.table-container > table').outerHTML
 
   const date = new Date()

@@ -116,7 +116,7 @@ async function renderClientAccount(client) {
       <td></td>
       <td></td>
       <td></td>
-      <td class="fw-bold">${formatter.format(getTotalPrice(prices))}</td>
+      <td class="fw-bold">${formatter.format(getTotalPrice(prices) < 0 ? getTotalPrice(prices) * -1 : getTotalPrice(prices))}</td>
       `
 
     $tableBody.appendChild(totalPriceRow)
@@ -142,6 +142,7 @@ async function renderClientAccount(client) {
         downloadPDF(`CUENTA CORRIENTE - ${clientName}`)
       } catch (error) {
         showToast('Debes seleccionar alguna tabla para descargar')
+        console.log(error)
       }
     })
     $tableBody.parentNode.parentNode.appendChild($btnDownload)
@@ -169,9 +170,13 @@ function renderTableRows(item, parentElement) {
       <td>${item.number}</td>
       <td>${item.letter}</td>
       <td>${item.voucher}</td>
-      <td class="text-end">${formatter.format(item.amount.toFixed(0))}</td>
+      <td class="text-end">${formatter.format(item.amount < 0 ? item.amount * -1 : item.amount.toFixed(0))}</td>
       <td class="fw-bold">${formatter.format(
-        trimPrice(item.pending.toFixed(0)),
+        trimPrice(
+          item.pending < 0
+            ? item.pending.toFixed(0) * -1
+            : item.pending.toFixed(0),
+        ),
       )}</td>
       `
   parentElement.appendChild(tableRow)

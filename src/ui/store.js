@@ -277,7 +277,7 @@ function createProductCard(item, user) {
 
   const $priceValue = document.createElement('span')
   $priceValue.classList = 'fw-bold'
-  $priceValue.textContent = ` ${item.price ? formatter.format(item.price?.toFixed(0)) : '$ 0'}`
+  $priceValue.textContent = ` ${item.price ? formatter.format(item.price < 0 ? item.price.toFixed(0) * -1 : item.price.toFixed(0)) : '$ 0'}`
   $price.appendChild($priceValue)
 
   const $stock = document.createElement('p')

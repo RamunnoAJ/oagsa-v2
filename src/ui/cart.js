@@ -129,7 +129,7 @@ function createTableToDownload() {
             <td></td>
             <td></td>
             <td>${cart.items}</td>
-            <td>${formatter.format(cart.total)}</td>
+            <td>${formatter.format(cart.total < 0 ? cart.total * -1 : cart.total)}</td>
         </tr>
     </tbody>
     `
@@ -144,10 +144,10 @@ function createTableRowToDownload(item) {
   $row.innerHTML = `
     <td>${item.name}</td>
     <td>${item.id}</td>
-    <td>${formatter.format(item.price.toFixed(0))}</td>
+    <td>${formatter.format(item.price < 0 ? item.price.toFixed(0) * -1 : item.price.toFixed(0))}</td>
     <td>${item.discountPercentage}%</td>
     <td>${item.quantity}</td>
-    <td>${formatter.format(totalPrice.toFixed(0))}</td>
+    <td>${formatter.format(totalPrice < 0 ? totalPrice * -1 : totalPrice.toFixed(0))}</td>
   `
   return $row
 }
@@ -494,7 +494,11 @@ function createTotalRow() {
   const $priceTotal = document.createElement('span')
   $priceTotal.className = 'fw-semi-bold'
   $priceText.textContent = 'Precio Final:'
-  $priceTotal.textContent = formatter.format(getTotalPrice(getCart()))
+  $priceTotal.textContent = formatter.format(
+    getTotalPrice(getCart()) < 0
+      ? getTotalPrice(getCart()) * -1
+      : getTotalPrice(getCart()),
+  )
   $price.appendChild($priceText)
   $price.appendChild($priceTotal)
 
@@ -571,7 +575,7 @@ function createProductCard(item) {
   const $price = document.createElement('p')
   $price.classList.add('fw-bold')
   $price.textContent = item.price
-    ? formatter.format(item.price.toFixed(0))
+    ? formatter.format(item.price < 0 ? item.price * -1 : item.price.toFixed(0))
     : '$ 0'
 
   const $discount = document.createElement('p')
@@ -635,7 +639,11 @@ function createProductCard(item) {
 
   const $totalArticle = document.createElement('p')
   $totalArticle.className = 'total__article fw-bold'
-  $totalArticle.textContent = formatter.format(item.priceTotal.toFixed(0))
+  $totalArticle.textContent = formatter.format(
+    item.priceTotal < 0
+      ? item.priceTotal.toFixed(0) * -1
+      : item.priceTotal.toFixed(0),
+  )
 
   const $delete = document.createElement('button')
   $delete.innerHTML = `<i class="fa fa-trash-alt"></i>`
@@ -708,10 +716,10 @@ function createTableRow(item) {
   $row.innerHTML = `
     <td>${item.name}</td>
     <td>${item.id}</td>
-    <td>${item.price ? formatter.format(item.price.toFixed(0)) : '$ 0'}</td>
+    <td>${item.price ? formatter.format(item.price < 0 ? item.price.toFixed(0) * -1 : item.price.toFixed(0)) : '$ 0'}</td>
     <td>${item.discountPercentage}%</td>
     <td>${item.quantity}</td>
-    <td>${formatter.format(totalPrice.toFixed(0))}</td>
+    <td>${formatter.format(totalPrice < 0 ? totalPrice * -1 : totalPrice.toFixed(0))}</td>
   `
   return $row
 }
@@ -725,7 +733,7 @@ function createTableTotalRow(cart) {
   <td></td>
   <td></td>
   <td>${cart.items}</td>
-  <td>${formatter.format(Number(cart.total).toFixed(0))}</td>
+  <td>${formatter.format(Number(cart.total) < 0 ? Number(cart.total) * -1 : Number(cart.total).toFixed(0))}</td>
   `
   return $totalRow
 }

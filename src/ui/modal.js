@@ -102,7 +102,7 @@ function createTotalRow(total) {
   <td></td>
   <td></td>
   <td class="text-end">${total.items}</td>
-  <td class="text-end">${formatter.format(total.total.toFixed(0))}</td>
+  <td class="text-end">${formatter.format(total.total < 0 ? total.total.toFixed(0) * -1 : total.total.toFixed(0))}</td>
   `
   return $totalRow
 }
@@ -116,9 +116,9 @@ function createProductRow(article) {
   $row.innerHTML = `
     <td class="text-start">${article.id}</td>
     <td class="text-start">${article.name}</td>
-    <td class="text-end">${formatter.format(unitPrice.toFixed(0))}</td>
+    <td class="text-end">${formatter.format(unitPrice < 0 ? unitPrice.toFixed(0) * -1 : unitPrice.toFixed(0))}</td>
     <td class="text-end">${article.quantity}</td>
-    <td class="text-end">${formatter.format(totalPrice.toFixed(0))}</td>
+    <td class="text-end">${formatter.format(totalPrice < 0 ? totalPrice.toFixed(0) * -1 : totalPrice.toFixed(0))}</td>
   `
   return $row
 }
@@ -128,13 +128,13 @@ async function createModalContent(order) {
   $modalContent.className = 'modal__content mb-4'
 
   const descriptionCondicionVenta = await getCondicionVenta(
-    order.idSellCondition
+    order.idSellCondition,
   )
 
   $modalContent.innerHTML = `
     <p class="mb-2">Estado: <span>${order.status}</span></p>
     <p class="mb-2">Fecha: <span>${formatDate(
-      order.date.split('T')[0]
+      order.date.split('T')[0],
     )}</span></p>
     <p class="mb-2">Descripción flete: <span>${
       order.freight || 'No definido'

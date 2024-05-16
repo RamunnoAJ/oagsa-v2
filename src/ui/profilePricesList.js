@@ -252,10 +252,12 @@ function renderTableRows(item, parentElement) {
     <td class="text-start">${item.id}</td>
     <td class="text-start">${item.name}</td>
     <td class="text-start">${item.brand}</td>
-    <td class="text-end">${formatter.format(item.price?.toFixed(0) || 0)}</td>
+    <td class="text-end">${formatter.format(item.price < 0 ? item.price.toFixed(0) * -1 : item.price.toFixed(0) || 0)}</td>
     <td class="text-end visually-hidden-mobile">${item.discount}</td>
     <td class="text-end">${formatter.format(
-      item.priceDiscount?.toFixed(0) || 0
+      item.priceDiscount < 0
+        ? item.priceDiscount.toFixed(0) * -1
+        : item.priceDiscount.toFixed(0) || 0,
     )}</td>
     <td class="visually-hidden-mobile text-end">${item.diameter}</td>
     <td class="visually-hidden-mobile text-end">${item.measure}</td>
@@ -268,7 +270,7 @@ async function handleChangeRubro(e, codigoRubro) {
   e.preventDefault()
 
   const subrubros = await getCategories(
-    `articulo/subrubros?pCodigoRubro=${codigoRubro}`
+    `articulo/subrubros?pCodigoRubro=${codigoRubro}`,
   )
 
   const products = await getProductsForm()
@@ -276,9 +278,8 @@ async function handleChangeRubro(e, codigoRubro) {
   storage.saveSubrubros(subrubros, codigoRubro)
   renderOptions(subrubros, '#select-subrubro')
 
-  const { arrayMarcas, arrayDiametros, arrayMedidas } = await renderSelects(
-    products
-  )
+  const { arrayMarcas, arrayDiametros, arrayMedidas } =
+    await renderSelects(products)
 
   renderOptions(arrayMarcas, '#select-brand')
   renderOptions(arrayDiametros, '#select-diametro')
