@@ -116,14 +116,18 @@ async function renderClientAccount(client) {
       <td></td>
       <td></td>
       <td></td>
-      <td class="fw-bold">${formatter.format(getTotalPrice(prices) < 0 ? getTotalPrice(prices) * -1 : getTotalPrice(prices))}</td>
+      <td class="fw-bold">${formatter.format(
+        getTotalPrice(prices) < 0
+          ? getTotalPrice(prices) * -1
+          : getTotalPrice(prices)
+      )}</td>
       `
 
     $tableBody.appendChild(totalPriceRow)
 
     const $btnDownload = document.createElement('button')
     $btnDownload.className =
-      'button bg-secondary-300 bg-hover-secondary-400 mt-4'
+      'button bg-secondary-300 bg-hover-secondary-400 mt-4 align-self-end'
     $btnDownload.innerHTML = `
               <span class="visually-hidden-mobile">Descargar</span>
               <span class="visually-hidden-desktop">
@@ -169,13 +173,15 @@ function renderTableRows(item, parentElement) {
       <td>${item.number}</td>
       <td>${item.letter}</td>
       <td>${item.voucher}</td>
-      <td class="text-end">${formatter.format(item.amount < 0 ? item.amount * -1 : item.amount.toFixed(0))}</td>
+      <td class="text-end">${formatter.format(
+        item.amount < 0 ? item.amount * -1 : item.amount.toFixed(0)
+      )}</td>
       <td class="fw-bold">${formatter.format(
         trimPrice(
           item.pending < 0
             ? item.pending.toFixed(0) * -1
-            : item.pending.toFixed(0),
-        ),
+            : item.pending.toFixed(0)
+        )
       )}</td>
       `
   parentElement.appendChild(tableRow)

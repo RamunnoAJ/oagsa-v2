@@ -4292,6 +4292,10 @@ template {
   text-align: center;
 }
 
+.align-self-end {
+  align-self: end;
+}
+
 @media (max-width: 45rem) {
   .visually-hidden-mobile {
     display: none !important;
