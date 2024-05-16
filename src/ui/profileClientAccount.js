@@ -142,7 +142,6 @@ async function renderClientAccount(client) {
         downloadPDF(`CUENTA CORRIENTE - ${clientName}`)
       } catch (error) {
         showToast('Debes seleccionar alguna tabla para descargar')
-        console.log(error)
       }
     })
     $tableBody.parentNode.parentNode.appendChild($btnDownload)
