@@ -89,7 +89,7 @@ async function createTable() {
   return table
 }
 
-function renderTableRows(notes, parentElement) {
+async function renderTableRows(notes, parentElement) {
   const $tableBody = document.querySelector(parentElement)
   $tableBody.innerHTML = ''
 
@@ -101,23 +101,18 @@ function renderTableRows(notes, parentElement) {
     row.appendChild(paragraph)
     $tableBody.appendChild(row)
   } else {
-    notes.forEach(async note => {
-      console.log(note)
-      const row = await createRow(note)
-      $tableBody.appendChild(row)
-    })
+    for await (const obj of notes) {
+      const $row = await createRow(obj)
+      $tableBody.appendChild($row)
+    }
+
+    const $totalRow = createTotalRow(notes)
+    $tableBody.appendChild($totalRow)
   }
 }
 
-async function createRow({
-  id,
-  idClient,
-  clientName,
-  date,
-  items,
-  total,
-  status,
-}) {
+async function createRow(note) {
+  const { id, idClient, clientName, date, items, total, status } = note
   const $row = document.createElement('tr')
   $row.innerHTML = `
     <td>${id}</td>
@@ -129,6 +124,24 @@ async function createRow({
     )}</td>
     <td class="visually-hidden-mobile">${status}</td>
   `
+
+  return $row
+}
+
+function createTotalRow(notes) {
+  const $row = document.createElement('tr')
+  $row.className = 'total-row'
+
+  $row.innerHTML = `
+  <td>Total</td>
+  <td class="text-start">Notas: ${notes.length}</td>
+  <td></td>
+  <td></td>
+  <td class="text-end">${formatter.format(
+    notes.reduce((total, note) => total + note.total, 0)
+  )}</td>
+  <td></td>
+    `
 
   return $row
 }
