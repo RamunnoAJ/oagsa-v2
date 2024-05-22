@@ -75,7 +75,6 @@ async function createTable() {
   <thead>
     <tr>
       <th scope="col">#</th>
-      <th scope="col">Razón Social</th>
       <th scope="col">Cliente</th>
       <th scope="col" class="visually-hidden-mobile">Fecha</th>
       <th scope="col">Articulos</th>
@@ -112,8 +111,8 @@ function renderTableRows(notes, parentElement) {
 
 async function createRow({
   id,
-  clientName,
   idClient,
+  clientName,
   date,
   items,
   total,
@@ -122,8 +121,7 @@ async function createRow({
   const $row = document.createElement('tr')
   $row.innerHTML = `
     <td>${id}</td>
-    <td>${clientName}</td>
-    <td>${idClient}</td>
+    <td>${idClient} - ${clientName}</td>
     <td class="visually-hidden-mobile">${formatDate(date.split('T')[0])}</td>
     <td class="text-end">${items}</td>
     <td class="text-end">${formatter.format(
