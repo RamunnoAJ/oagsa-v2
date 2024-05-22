@@ -1,4 +1,8 @@
-import { getCategories, getProducts } from '../api/profilePricesList.js'
+import {
+  getBrands,
+  getCategories,
+  getProducts,
+} from '../api/profilePricesList.js'
 import * as storage from '../storage/profilePricesList.js'
 import { removeDuplicates } from '../utils/removeDuplicates.js'
 import { showToast } from '../utils/showToast.js'
@@ -209,7 +213,9 @@ async function renderOptions(options, selectID) {
       break
   }
 
-  const sortedOptions = options.sort((a, b) => a.name.localeCompare(b.name))
+  const sortedOptions = options.sort(
+    (a, b) => a.name?.localeCompare(b.name) || a
+  )
 
   sortedOptions.forEach(option => {
     const $option = document.createElement('option')
@@ -233,8 +239,8 @@ async function renderOptions(options, selectID) {
         break
 
       case '#select-brand':
-        $option.value = option.name.trim()
-        $option.textContent = option.name.trim()
+        $option.value = option.name?.trim() || option.nombreMarca?.trim()
+        $option.textContent = option.name?.trim() || option.nombreMarca?.trim()
         break
 
       case '#select-diametro':
@@ -352,4 +358,7 @@ async function handleSelectClases(e) {
 
   const rubros = await getCategories(`clase/rubro?pIdClase=${clase}`)
   renderOptions(rubros, '#select-rubro')
+
+  const marcas = await getBrands(`articulo/marcas?pClase=${clase}`)
+  renderOptions(marcas, '#select-brand')
 }
