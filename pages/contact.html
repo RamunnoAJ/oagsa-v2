@@ -112,40 +112,36 @@
           </div>
         </aside>
 
-        <form
-          class="contact-form mt-20"
-          method="post"
-          target="_blank"
-          action="https://formsubmit.co/info@oagsa.com">
+        <form id="contact-form" class="contact-form mt-20">
           <h2>Envíanos un mensaje</h2>
 
           <div>
             <label for="name">Nombre:</label>
-            <input type="text" id="name" name="nombre" />
+            <input type="text" id="name" name="nombre" required />
           </div>
           <div>
             <label for="surname">Apellido:</label>
-            <input type="text" id="surname" name="apellido" />
+            <input type="text" id="surname" name="apellido" required />
           </div>
           <div>
             <label for="company">Empresa:</label>
-            <input type="text" id="company" name="empresa" />
+            <input type="text" id="company" name="empresa" required />
           </div>
           <div>
             <label for="phone">Teléfono:</label>
-            <input type="tel" id="phone" name="telefono" />
+            <input type="tel" id="phone" name="telefono" required />
           </div>
           <div class="contact-form__large">
             <label for="email">Email:</label>
-            <input type="email" id="email" name="email" />
+            <input type="email" id="email" name="email" required />
           </div>
           <div class="contact-form__large">
             <label for="location">Localidad:</label>
-            <input type="text" id="location" name="localidad" />
+            <input type="text" id="location" name="localidad" required />
           </div>
           <div class="contact-form__large">
             <label for="message">Mensaje:</label>
-            <textarea id="message" rows="5" name="mensaje"></textarea>
+            <textarea id="message" rows="5" name="mensaje" required></textarea>
           </div>
           <input
             class="button submit-button bg-secondary-300 bg-hover-secondary-400 contact-form__large"
@@ -221,5 +217,6 @@
 
     <script type="module" src="../src/ui/menu.js"></script>
     <script type="module" src="../src/user.js"></script>
+    <script type="module" src="../src/contact.js"></script>
   </body>
 </html>
