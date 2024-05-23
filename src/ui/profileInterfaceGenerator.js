@@ -138,7 +138,7 @@ function createTotalRow(notes) {
   <td></td>
   <td></td>
   <td class="text-end">${formatter.format(
-    notes.reduce((total, note) => total + note.total, 0)
+    notes.reduce((total, note) => total + note.total, 0).toFixed(0)
   )}</td>
   <td></td>
     `
