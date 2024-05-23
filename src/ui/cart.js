@@ -129,7 +129,9 @@ function createTableToDownload() {
             <td></td>
             <td></td>
             <td>${cart.items}</td>
-            <td>${formatter.format(cart.total < 0 ? cart.total * -1 : cart.total)}</td>
+            <td>${formatter.format(
+              cart.total < 0 ? cart.total * -1 : cart.total
+            )}</td>
         </tr>
     </tbody>
     `
@@ -144,10 +146,14 @@ function createTableRowToDownload(item) {
   $row.innerHTML = `
     <td>${item.name}</td>
     <td>${item.id}</td>
-    <td>${formatter.format(item.price < 0 ? item.price.toFixed(0) * -1 : item.price.toFixed(0))}</td>
+    <td>${formatter.format(
+      item.price < 0 ? item.price.toFixed(0) * -1 : item.price.toFixed(0)
+    )}</td>
     <td>${item.discountPercentage}%</td>
     <td>${item.quantity}</td>
-    <td>${formatter.format(totalPrice < 0 ? totalPrice * -1 : totalPrice.toFixed(0))}</td>
+    <td>${formatter.format(
+      totalPrice < 0 ? totalPrice * -1 : totalPrice.toFixed(0)
+    )}</td>
   `
   return $row
 }
@@ -431,13 +437,13 @@ function renderButtons(cart) {
             await removeDraft(cart.id)
             emptyCart()
             renderCart(getCart())
-          },
+          }
         )
       } catch (error) {
         showToast(
           error.message,
           '',
-          'linear-gradient(to right, #a25553, #79403e)',
+          'linear-gradient(to right, #a25553, #79403e)'
         )
       }
     })
@@ -477,6 +483,9 @@ function renderButtons(cart) {
   $checkoutButton.type = 'submit'
   $checkoutButton.addEventListener('click', e => {
     e.preventDefault()
+    $checkoutButton.style =
+      'pointer-events: none; opacity: 0.5; background-color: #a25553; cursor: not-allowed;'
+    $checkoutButton.textContent = 'Finalizando..'
     checkout(getCart())
   })
 
@@ -497,7 +506,7 @@ function createTotalRow() {
   $priceTotal.textContent = formatter.format(
     getTotalPrice(getCart()) < 0
       ? getTotalPrice(getCart()) * -1
-      : getTotalPrice(getCart()),
+      : getTotalPrice(getCart())
   )
   $price.appendChild($priceText)
   $price.appendChild($priceTotal)
@@ -642,7 +651,7 @@ function createProductCard(item) {
   $totalArticle.textContent = formatter.format(
     item.priceTotal < 0
       ? item.priceTotal.toFixed(0) * -1
-      : item.priceTotal.toFixed(0),
+      : item.priceTotal.toFixed(0)
   )
 
   const $delete = document.createElement('button')
@@ -682,7 +691,7 @@ async function selectFields({ idClient, idFreight, idSellCondition }) {
   $selectClient.querySelector(`option[value="${idClient}"]`).selected = true
   $selectFreight.querySelector(`option[value="${idFreight}"]`).selected = true
   $selectSellCondition.querySelector(
-    `option[value="${idSellCondition}"]`,
+    `option[value="${idSellCondition}"]`
   ).selected = true
 }
 
@@ -716,10 +725,18 @@ function createTableRow(item) {
   $row.innerHTML = `
     <td>${item.name}</td>
     <td>${item.id}</td>
-    <td>${item.price ? formatter.format(item.price < 0 ? item.price.toFixed(0) * -1 : item.price.toFixed(0)) : '$ 0'}</td>
+    <td>${
+      item.price
+        ? formatter.format(
+            item.price < 0 ? item.price.toFixed(0) * -1 : item.price.toFixed(0)
+          )
+        : '$ 0'
+    }</td>
     <td>${item.discountPercentage}%</td>
     <td>${item.quantity}</td>
-    <td>${formatter.format(totalPrice < 0 ? totalPrice * -1 : totalPrice.toFixed(0))}</td>
+    <td>${formatter.format(
+      totalPrice < 0 ? totalPrice * -1 : totalPrice.toFixed(0)
+    )}</td>
   `
   return $row
 }
@@ -733,7 +750,11 @@ function createTableTotalRow(cart) {
   <td></td>
   <td></td>
   <td>${cart.items}</td>
-  <td>${formatter.format(Number(cart.total) < 0 ? Number(cart.total) * -1 : Number(cart.total).toFixed(0))}</td>
+  <td>${formatter.format(
+    Number(cart.total) < 0
+      ? Number(cart.total) * -1
+      : Number(cart.total).toFixed(0)
+  )}</td>
   `
   return $totalRow
 }
