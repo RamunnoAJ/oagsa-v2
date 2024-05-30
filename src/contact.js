@@ -1,4 +1,5 @@
 import { BASE_URL } from './utils/getDataFromDB.js'
+import { showToast } from './utils/showToast.js'
 
 const $form = document.querySelector('#contact-form')
 $form.addEventListener('submit', event => {
@@ -18,9 +19,9 @@ $form.addEventListener('submit', event => {
     postEmail(formData)
     $form.reset()
     validateForm(formData)
-    showMessage('Mensaje enviado correctamente', false)
+    showToast('Mensaje enviado correctamente')
   } catch (e) {
-    showMessage('Hubo un error enviando el mensaje', true)
+    showToast('Hubo un error enviando el mensaje')
   }
 })
 
@@ -33,26 +34,6 @@ function postEmail(data) {
     },
     body: JSON.stringify(data),
   }).then(response => console.log(response))
-}
-
-/**
- * @param {string} message
- * @param {boolean} isError
- */
-function showMessage(message, isError) {
-  const $message = document.createElement('p')
-  $message.textContent = message
-  if (isError) {
-    $message.style.color = 'red'
-  } else {
-    $message.style.color = 'green'
-  }
-
-  $form.append($message)
-
-  setTimeout(() => {
-    $message.remove()
-  }, 3000)
 }
 
 function validateForm(data) {
