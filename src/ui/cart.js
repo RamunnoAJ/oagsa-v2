@@ -1,4 +1,4 @@
-import { getFields, postBuyOrder } from '../api/cart.js'
+import { getFields } from '../api/cart.js'
 import { getClientsFromSeller } from '../api/profileClientList.js'
 import { removeDraft } from '../api/profileDrafts.js'
 import { showToast } from '../utils/showToast.js'
@@ -11,13 +11,13 @@ import {
   sendToDraft,
   emptyCart,
   updateOrder,
-  validateCart,
 } from '../cart.js'
 import { getCart, saveCart } from '../storage/cart.js'
 import { getUserFromStorage } from '../storage/storageData.js'
 import { formatter } from '../utils/formatPrice.js'
 import { triggerSweetAlert } from '../utils/sweetAlert.js'
 import { downloadPDF } from '../utils/downloadPDF.js'
+import { navigateToDashboard } from './login.js'
 
 /** @typedef {import('../entities/articles.js').ArticleOrder} ArticleOrder */
 
@@ -71,9 +71,6 @@ export async function renderCart(cart) {
   $cartContainer.classList.add('cart__articles__container')
   $cartContainer.addEventListener('click', async () => {
     const newCart = getCart()
-    if (validateCart(newCart)) {
-      await postBuyOrder('orden-compra', newCart)
-    }
     saveCart(newCart)
   })
   $cart.appendChild($cartContainer)
@@ -437,6 +434,7 @@ function renderButtons(cart) {
             await removeDraft(cart.id)
             emptyCart()
             renderCart(getCart())
+            navigateToDashboard()
           }
         )
       } catch (error) {

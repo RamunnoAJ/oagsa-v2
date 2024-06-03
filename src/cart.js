@@ -81,7 +81,6 @@ export async function sendToDraft(cart) {
   const order = cart
   order.draft = 1
   saveCart(order)
-  console.log(order)
 
   await postBuyOrder('orden-compra', order)
   emptyCart()
@@ -114,7 +113,7 @@ export async function addToCart(item) {
     } else {
       showToast(
         `El producto ya existe en el carrito, se actualizó su cantidad a: ${quantity}`,
-        '../pages/cart.html',
+        '../pages/cart.html'
       )
       updateQuantity(newItem, quantity)
     }
