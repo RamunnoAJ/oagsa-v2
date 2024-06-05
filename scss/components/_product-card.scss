@@ -1,82 +1,84 @@
 .store__products {
-  display: grid;
-  justify-content: center;
-  gap: 1rem;
-  grid-template-columns: repeat(2, 160px);
-  row-gap: 3rem;
-  margin-top: 1.5rem;
+    display: grid;
+    justify-content: center;
+    gap: 1rem;
+    grid-template-columns: repeat(2, 160px);
+    row-gap: 3rem;
+    margin-top: 1.5rem;
 
-  .store__product__card {
-    @include flex(column, space-between, center);
-    gap: 0.5rem;
+    .store__product__card {
+        @include flex(column, space-between, center);
+        gap: 0.5rem;
 
-    .quantity {
-      @include flex(row, center, center);
-      gap: 0.25rem;
+        .quantity {
+            @include flex(row, center, center);
+            gap: 0.25rem;
 
-      input[type='number'] {
-        -webkit-appearance: textfield;
-        -moz-appearance: textfield;
-        appearance: textfield;
-        width: 3rem;
-        text-align: center;
-        background: none;
-        border: none;
-        padding: 0.25rem;
-      }
-      input[type='number']::-webkit-inner-spin-button,
-      input[type='number']::-webkit-outer-spin-button {
-        -webkit-appearance: none;
-      }
+            input[type='number'] {
+                -webkit-appearance: textfield;
+                -moz-appearance: textfield;
+                appearance: textfield;
+                width: 3rem;
+                text-align: center;
+                background: none;
+                border: none;
+                padding: 0.25rem;
+            }
 
-      .quantity__handler {
-        padding: 0.25rem 0.5rem;
-        cursor: pointer;
-        border-radius: 4rem;
-        border: none;
-        background-color: $slate;
-        transition: all 200ms ease-in-out;
+            input[type='number']::-webkit-inner-spin-button,
+            input[type='number']::-webkit-outer-spin-button {
+                -webkit-appearance: none;
+            }
 
-        &:hover {
-          background-color: $primary-color;
+            .quantity__handler {
+                padding: 0.25rem 0.5rem;
+                cursor: pointer;
+                border-radius: 4rem;
+                border: none;
+                background-color: $slate;
+                transition: all 200ms ease-in-out;
+
+                &:hover {
+                    background-color: $primary-color;
+                }
+            }
         }
-      }
-    }
 
-    .store__product__card__image {
-      width: 160px;
-      height: 160px;
-    }
+        .store__product__card__image {
+            width: 160px;
+            height: 160px;
+            object-fit: contain;
+        }
 
-    .store__product__card__info {
-      @include flex(column, center, center);
-      gap: 0.25rem;
-      width: 100%;
-      text-align: center;
+        .store__product__card__info {
+            @include flex(column, center, center);
+            gap: 0.25rem;
+            width: 100%;
+            text-align: center;
 
-      .button-sm {
-        padding: 0.5rem 1rem;
-      }
+            .button-sm {
+                padding: 0.5rem 1rem;
+            }
+        }
     }
-  }
 }
 
 @media (min-width: 680px) {
-  .store__products {
-    grid-template-columns: repeat(3, 200px);
-    gap: 2rem;
-    margin-top: 5rem;
-  }
+    .store__products {
+        grid-template-columns: repeat(3, 200px);
+        gap: 2rem;
+        margin-top: 5rem;
+    }
 }
 
 @media (min-width: 1080px) {
-  .store__products {
-    grid-template-columns: repeat(4, 200px);
-    gap: 3rem;
+    .store__products {
+        grid-template-columns: repeat(4, 200px);
+        gap: 3rem;
 
-    .store__product__card .store__product__card__image {
-      width: 200px;
-      height: 200px;
+        .store__product__card .store__product__card__image {
+            width: 200px;
+            height: 200px;
+        }
     }
-  }
 }

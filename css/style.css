@@ -4981,6 +4981,7 @@ body {
 .store__products .store__product__card .store__product__card__image {
   width: 160px;
   height: 160px;
+  object-fit: contain;
 }
 .store__products .store__product__card .store__product__card__info {
   display: flex;
@@ -5029,8 +5030,8 @@ body {
 }
 .cart__card img {
   width: 100%;
-  height: 5.3125rem;
-  max-width: 5.3125rem;
+  max-width: 5rem;
+  object-fit: contain;
 }
 .cart__card .cart__info {
   display: flex;
@@ -5126,8 +5127,7 @@ body {
   }
   .cart__card img {
     width: 100%;
-    height: 7.25rem;
-    max-width: 7.25rem;
+    max-width: 8rem;
   }
   .cart__card .cart__info {
     display: grid;
