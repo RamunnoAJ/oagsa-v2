@@ -38,7 +38,7 @@ export function articlesMapper(apiData) {
     seMuestraEnWeb,
     stock,
     stockUnidades,
-    url,
+    url
   )
 }
 
@@ -64,6 +64,7 @@ export function orderArticlesMapper(apiData) {
     numeroOrder,
     eliminado,
     imagenesUrl,
+    stock,
   } = apiData
 
   return new ArticleOrder(
@@ -83,5 +84,6 @@ export function orderArticlesMapper(apiData) {
     numeroOrder,
     eliminado,
     imagenesUrl,
+    stock
   )
 }

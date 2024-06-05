@@ -39,7 +39,7 @@ async function handleChangeForm(e) {
     selectedClase = $form.clases.value
   } else {
     selectedClase = document.querySelector(
-      '.store__clases__desktop__items.active',
+      '.store__clases__desktop__items.active'
     ).dataset.clase
   }
 
@@ -47,7 +47,7 @@ async function handleChangeForm(e) {
     selectedRubro = $form.rubros.value
   } else {
     selectedRubro = document.querySelector(
-      '.store__rubros__desktop__items.active',
+      '.store__rubros__desktop__items.active'
     ).dataset.rubro
   }
 
@@ -277,7 +277,13 @@ function createProductCard(item, user) {
 
   const $priceValue = document.createElement('span')
   $priceValue.classList = 'fw-bold'
-  $priceValue.textContent = ` ${item.price ? formatter.format(item.price < 0 ? item.price.toFixed(0) * -1 : item.price.toFixed(0)) : '$ 0'}`
+  $priceValue.textContent = ` ${
+    item.price
+      ? formatter.format(
+          item.price < 0 ? item.price.toFixed(0) * -1 : item.price.toFixed(0)
+        )
+      : '$ 0'
+  }`
   $price.appendChild($priceValue)
 
   const $stock = document.createElement('p')
@@ -357,6 +363,7 @@ function createProductCard(item, user) {
       0,
       false,
       item.images,
+      item.stock
     )
     addToCart(newItem)
   })

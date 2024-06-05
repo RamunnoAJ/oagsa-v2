@@ -17,6 +17,7 @@ export class ArticleOrder {
    * @param {number} orderNumber
    * @param {boolean} deleted
    * @param {string[]} images
+   * @param {number} stock
    * */
   constructor(
     idOrder,
@@ -34,7 +35,8 @@ export class ArticleOrder {
     priceTotal,
     orderNumber,
     deleted,
-    images
+    images,
+    stock
   ) {
     this.idOrder = idOrder
     this.id = id
@@ -52,6 +54,7 @@ export class ArticleOrder {
     this.orderNumber = orderNumber
     this.deleted = deleted
     this.images = images
+    this.stock = stock
   }
 }
 

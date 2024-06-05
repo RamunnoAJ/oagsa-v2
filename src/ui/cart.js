@@ -160,6 +160,7 @@ async function renderArticles(cart) {
   $cartContainer.innerHTML = ''
 
   cart.detail.forEach(item => {
+    console.log(item)
     if (item.deleted) return
     const $article = createProductCard(item)
     $cartContainer.appendChild($article)
@@ -616,8 +617,13 @@ function createProductCard(item) {
   $quantityInput.id = `cantidad-${item.id}`
   $quantityInput.type = 'number'
   $quantityInput.min = 1
+  $quantityInput.max = item.stock
   $quantityInput.value = item.quantity
   $quantityInput.addEventListener('change', () => {
+    if ($quantityInput.value > item.stock) {
+      $quantityInput.value = item.stock
+      showToast('La cantidad no puede ser mayor al stock, stock: ' + item.stock)
+    }
     updateCart(item, $quantityInput.value, $discountInput.value, renderArticles)
   })
 

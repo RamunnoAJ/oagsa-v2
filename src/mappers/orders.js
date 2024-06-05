@@ -46,7 +46,7 @@ export function orderMapper(apiData) {
     borrador,
     idFlete,
     descripcionFlete,
-    detail,
+    detail
   )
 }
 
