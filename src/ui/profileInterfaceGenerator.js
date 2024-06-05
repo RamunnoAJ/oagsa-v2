@@ -6,7 +6,6 @@ import {
 import { showToast } from '../utils/showToast.js'
 import { formatDate } from '../utils/formatDate.js'
 import { formatter } from '../utils/formatPrice.js'
-import { downloadNotas } from '../utils/downloadPDF.js'
 
 export function renderInterfaceGenerator(parentElement) {
   parentElement.innerHTML = ''
@@ -27,15 +26,10 @@ export function renderInterfaceGenerator(parentElement) {
     'button-sm bg-error-400 bg-hover-error-300 text-white'
   $buttonPrepare.textContent = 'Generar Interfaces'
   $buttonPrepare.addEventListener('click', async () => {
-    /** @type {import('../entities/notes.js').Note[]} */
+    await getPrepararNotas()
     const notes = await getNotas()
-
-    const notesTotal = notes.reduce((total, note) => total + note.total, 0)
-
-    getPrepararNotas().then(async () => {
-      downloadNotas(notes, notes.length, notesTotal)
-      showToast('Interfaces generadas')
-    })
+    renderNotesList(notes)
+    showToast('Interfaces generadas')
   })
 
   const $buttonDownload = document.createElement('button')
