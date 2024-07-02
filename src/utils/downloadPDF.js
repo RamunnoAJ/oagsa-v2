@@ -77,7 +77,7 @@ export function downloadPDF(category, htmlTable = null) {
  * @param {number} cantidadNotas
  * @param {number} total
  * */
-export function downloadNotas(notas, cantidadNotas, total) {
+export async function downloadNotas(notas, cantidadNotas, total) {
   const date = new Date()
     .toISOString()
     .split('T')[0]
