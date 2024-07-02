@@ -16,6 +16,10 @@ export function navigateToDashboard() {
   window.location.replace('../pages/dashboard.html')
 }
 
+export function navigateToStore() {
+  window.location.replace('../pages/store.html')
+}
+
 export function navigateToLogin() {
   window.location.replace('../pages/log-in.html')
 }

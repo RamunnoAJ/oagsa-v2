@@ -3,7 +3,7 @@ import { getDraft, removeDraft } from './api/profileDrafts.js'
 import { getCart, saveCart, clearCart } from './storage/cart.js'
 import { checkLocalStorage } from './storage/profile.js'
 import { showToast } from './utils/showToast.js'
-import { navigateToDashboard } from './ui/login.js'
+import { navigateToStore } from './ui/login.js'
 
 /** @typedef {import('./entities/orders.js').Order} Order
  * @typedef {import('./entities/orders.js').ArticleOrder} ArticleOrder
@@ -65,7 +65,7 @@ export async function checkout(cart) {
   showToast('Compra realizada exitosamente.')
 
   setTimeout(() => {
-    navigateToDashboard()
+    navigateToStore()
   }, 1500)
 }
 
@@ -87,7 +87,7 @@ export async function sendToDraft(cart) {
   showToast('Carrito guardado en borrador exitosamente.')
 
   setTimeout(() => {
-    navigateToDashboard()
+    navigateToStore()
   }, 500)
 }
 

@@ -17,7 +17,7 @@ import { getUserFromStorage } from '../storage/storageData.js'
 import { formatter } from '../utils/formatPrice.js'
 import { triggerSweetAlert } from '../utils/sweetAlert.js'
 import { downloadPDF } from '../utils/downloadPDF.js'
-import { navigateToDashboard } from './login.js'
+import { navigateToStore } from './login.js'
 
 /** @typedef {import('../entities/articles.js').ArticleOrder} ArticleOrder */
 
@@ -435,7 +435,7 @@ function renderButtons(cart) {
             await removeDraft(cart.id)
             emptyCart()
             renderCart(getCart())
-            navigateToDashboard()
+            navigateToStore()
           }
         )
       } catch (error) {
