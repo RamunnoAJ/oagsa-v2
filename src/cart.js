@@ -130,9 +130,7 @@ async function addProductToCart(item) {
   const newItem = { ...item }
   const updatedCart = { ...cart, detail: [...cart.detail, newItem] }
   saveCart(updatedCart)
-  if (cart.draft === 1) {
-    await updateOrder(updatedCart)
-  }
+  await updateOrder(updatedCart)
 }
 
 /**
@@ -280,5 +278,7 @@ export async function getCartFromDraft(id) {
 export async function updateOrder(order) {
   getTotalQuantity(order)
   getTotalPrice(order)
-  await postBuyOrder('orden-compra', order)
+  if (order.draft === 1) {
+    await postBuyOrder('orden-compra', order)
+  }
 }
