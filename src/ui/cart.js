@@ -472,6 +472,7 @@ function renderButtons(cart) {
     e.preventDefault()
     emptyCart()
     renderCart(getCart())
+    navigateToStore()
   })
   $buttonsContainer.appendChild($resetButton)
 
