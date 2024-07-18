@@ -121,7 +121,7 @@ export async function renderOrders(orders, parentElement, dates = false) {
       orders.next,
       renderOrdersDatesPage,
       parentElement,
-      orders.totalPages,
+      orders.totalPages
     )
   } else {
     renderPaginationButtons(
@@ -129,7 +129,7 @@ export async function renderOrders(orders, parentElement, dates = false) {
       orders.next,
       renderOrdersPage,
       parentElement,
-      orders.totalPages,
+      orders.totalPages
     )
   }
 }
@@ -172,12 +172,14 @@ function renderTableRows(orders, parentElement) {
       row.dataset.id = order.id
       row.innerHTML = `
         <td>${order.id}</td>
-        <td>${order.idClient}</td>
+        <td>${order.idClient} - ${order.clientName}</td>
         <td class="visually-hidden-mobile">${formatDate(
-          order.date.split('T')[0],
+          order.date.split('T')[0]
         )}</td>
         <td class="text-end">${order.items}</td>
-        <td class="text-end">${formatter.format(order.total < 0 ? order.total.toFixed(0) * -1 : order.total.toFixed(0))}</td>
+        <td class="text-end">${formatter.format(
+          order.total < 0 ? order.total.toFixed(0) * -1 : order.total.toFixed(0)
+        )}</td>
         <td class="visually-hidden-mobile">${order.status}</td>
       `
 
