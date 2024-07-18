@@ -120,7 +120,7 @@ export async function downloadNotas(notas, cantidadNotas, total) {
                     <p style="text-color: #a0a0a0; font-weight: bold">${date}</p>
                 </div>
                 <p>Número de Notas: <strong>${cantidadNotas}</strong></p>
-                <p>Total: <strong>$${formatterTwoDigits.format(
+                <p>Total: <strong>${formatterTwoDigits.format(
                   total
                 )}</strong></p>
                 <table>
@@ -141,9 +141,9 @@ export async function downloadNotas(notas, cantidadNotas, total) {
                             <tr style="font-size: 12px">
                                 <td style="font-weight: bold">${nota.id}</td>
                                 <td style="text-align: center">${
-                                  nota.date.split('T')[0] -
-                                  nota.date.split('T')[1].split('.')[0]
-                                }</td>
+                                  nota.date.split('T')[0]
+                                } -
+                                  ${nota.date.split('T')[1].split('.')[0]}</td>
                                 <td>${nota.clientName}</td>
                                 <td>${nota.sellerName}</td>
                                 <td>${nota.observations}</td>
