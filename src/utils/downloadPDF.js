@@ -5,8 +5,9 @@ import { formatterTwoDigits } from './formatPrice.js'
 /**
  * @param {string} category
  * @param {HTMLTableElement} htmlTable
+ * @param {string} name
  * */
-export function downloadPDF(category, htmlTable = null) {
+export function downloadPDF(category, htmlTable = null, name = '') {
   const table = htmlTable || document.querySelector('.table-container > table')
 
   const date = new Date()
@@ -51,7 +52,9 @@ export function downloadPDF(category, htmlTable = null) {
             <body>
                 <div style="display: flex; flex-direction: row; justify-content: space-between; width: 100%; align-items: center; gap: 40px">
                     <img src="../../assets/logo-oagsa.png" alt="OAGSA" width="200" />
-                    <h1 style="text-align: center; font-size: 18px">${category}</h1>
+                    <h1 style="text-align: center; font-size: 18px; display: flex; flex-direction: column; gap: 8px;"><span>${category}</span>${
+    name ? `<span style="font-size: 14px;">${name}</span>` : ''
+  }</h1>
                     <p style="text-color: #a0a0a0; font-weight: bold">${date}</p>
                 </div>
 
