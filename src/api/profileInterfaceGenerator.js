@@ -1,5 +1,6 @@
 import { BASE_URL, getDataFromDB } from '../utils/getDataFromDB.js'
 import { noteMapper } from '../mappers/notes.js'
+import { orderMapper } from '../mappers/orders.js'
 
 export async function getPrepararNotas() {
   const response = await getDataFromDB('orden-compra/prepara-notas')
@@ -26,4 +27,16 @@ export async function downloadFile() {
       a.download = `pedidos-${new Date().toISOString().split('T')[0]}.zip`
       a.click()
     })
+}
+
+/**
+ * @param {number} id
+ * @returns {import('../mappers/orders.js')}
+ * */
+export async function getOrder(id) {
+  if (id === 1) id = 0
+  const response = await getDataFromDB(`orden-compra?pNumeroNota=${id}`)
+  const order = orderMapper(await response.data)
+
+  return order
 }

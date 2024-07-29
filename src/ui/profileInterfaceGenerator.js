@@ -1,12 +1,14 @@
 import {
   downloadFile,
   getNotas,
+  getOrder,
   getPrepararNotas,
 } from '../api/profileInterfaceGenerator.js'
 import { showToast } from '../utils/showToast.js'
 import { formatDate } from '../utils/formatDate.js'
 import { formatter } from '../utils/formatPrice.js'
 import { downloadNotas } from '../utils/downloadPDF.js'
+import { createModal, createOverlay, renderModalContent } from './modal.js'
 
 export function renderInterfaceGenerator(parentElement) {
   parentElement.innerHTML = ''
@@ -41,7 +43,7 @@ export function renderInterfaceGenerator(parentElement) {
   $buttonDownload.className =
     'button-sm bg-success-400 text-white bg-hover-success'
   $buttonDownload.textContent = 'Descargar Última Interfaz'
-  $buttonDownload.addEventListener('click', e => {
+  $buttonDownload.addEventListener('click', () => {
     downloadFile()
   })
 
@@ -113,6 +115,7 @@ async function renderTableRows(notes, parentElement) {
 async function createRow(note) {
   const { id, idClient, clientName, date, items, total, status } = note
   const $row = document.createElement('tr')
+  $row.className = 'orders__table__row'
   $row.innerHTML = `
     <td>${id}</td>
     <td>${idClient} - ${clientName}</td>
@@ -123,8 +126,27 @@ async function createRow(note) {
     )}</td>
     <td class="visually-hidden-mobile">${status}</td>
   `
+  $row.addEventListener('click', async () => {
+    const order = await getOrder(id)
+    renderModal(order)
+  })
 
   return $row
+}
+
+async function renderModal(order) {
+  if (document.querySelector('.modal')) {
+    document.querySelector('.modal').remove()
+    document.querySelector('.overlay').remove()
+  }
+
+  const $modal = await createModal()
+  const $overlay = await createOverlay()
+  const $profileInfo = document.querySelector('.profile-info')
+  $profileInfo.appendChild($modal)
+  $profileInfo.appendChild($overlay)
+
+  renderModalContent(order)
 }
 
 function createTotalRow(notes) {
