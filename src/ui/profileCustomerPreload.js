@@ -6,6 +6,7 @@ import {
 import { getUserFromStorage } from '../storage/storageData.js'
 import { showToast } from '../utils/showToast.js'
 import { downloadPDF } from '../utils/downloadPDF.js'
+import { csvExport } from '../entities/csv.js'
 
 /** @param {HTMLElement} parentElement  */
 export async function renderCustomerPreload(parentElement) {
@@ -190,17 +191,44 @@ function createTable() {
   $selectContainer.style =
     'display: flex; flex-direction: row; align-items: center; justify-content: space-between; gap: 1rem;'
 
+  const $buttonsContainer = document.createElement('div')
+  $buttonsContainer.style =
+    'display: flex; flex-direction: row; align-items: center; gap: 1rem;'
+
   const $downloadButton = document.createElement('button')
   $downloadButton.className =
     'button-sm bg-secondary-300 bg-hover-secondary-400'
   $downloadButton.innerHTML = '<i class="fa-solid fa-download"></i>'
-  $downloadButton.onclick = () => {
+  $downloadButton.addEventListener('click', () => {
     try {
       downloadPDF('Listado de clientes')
     } catch (error) {
       showToast('No se pudo descargar el listado de clientes')
     }
-  }
+  })
+
+  const $csvButton = document.createElement('button')
+  $csvButton.className = 'button-sm bg-secondary-300 bg-hover-secondary-400'
+  $csvButton.id = 'download-csv'
+  $csvButton.innerHTML = '.csv'
+  $csvButton.addEventListener('click', () => {
+    const tableElement = document.querySelector('.fl-table')
+    const obj = new csvExport(tableElement)
+    const csvData = obj.exportCsv()
+    const blob = new Blob([csvData], { type: 'text/csv' })
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    a.href = url
+    a.download = 'file.csv'
+    a.click()
+
+    setTimeout(() => {
+      URL.revokeObjectURL(url)
+    }, 500)
+  })
+
+  $buttonsContainer.appendChild($csvButton)
+  $buttonsContainer.appendChild($downloadButton)
 
   const $select = document.createElement('select')
   $select.name = 'selectState'
@@ -237,9 +265,9 @@ function createTable() {
     <tr id="table-row">
       <th scope="col">Cuit</th>
       <th scope="col">Razon Social</th>
-      <th scope="col">Telefóno</th>
-      <th scope="col">Email</th>
-      <th scope="col">Dirección</th>
+      <th scope="col" class="visually-hidden">Telefóno</th>
+      <th scope="col" class="visually-hidden">Email</th>
+      <th scope="col" class="visually-hidden">Dirección</th>
       <th scope="col">Vendedor</th>
       <th scope="col">Observaciones</th>
       <th scope="col">Estado</th>
@@ -273,7 +301,7 @@ function createTable() {
 
   $container.appendChild($selectContainer)
   $selectContainer.appendChild($select)
-  $selectContainer.appendChild($downloadButton)
+  $selectContainer.appendChild($buttonsContainer)
   $tableContainer.appendChild($table)
   $container.appendChild($tableContainer)
 
@@ -306,12 +334,15 @@ function createRow(item) {
 
   const $phone = document.createElement('td')
   $phone.textContent = item.telefono
+  $phone.classList.add('visually-hidden')
 
   const $mail = document.createElement('td')
   $mail.textContent = item.email
+  $mail.classList.add('visually-hidden')
 
   const $address = document.createElement('td')
   $address.textContent = item.direccion
+  $address.classList.add('visually-hidden')
 
   const $seller = document.createElement('td')
   $seller.textContent = item.nombreVendedor
