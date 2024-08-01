@@ -39,6 +39,13 @@ if (window.location.href.includes('dashboard')) {
     })
   }
 
+  if (user.role === 2) {
+    const newItems = ['Información Vendedor']
+    newItems.forEach(item => {
+      list.push(item)
+    })
+  }
+
   await renderDashboard($container, list)
 
   const $profileList = document.querySelector('#profileList')
@@ -99,6 +106,13 @@ if (window.location.href.includes('dashboard')) {
       case 'Precarga de clientes':
         if (user.role === 1 || user.role === 2) {
           profileCustomerPreload($profileInfoContainer)
+        }
+        break
+
+      case 'Información Vendedor':
+        if (user.role === 1 || user.role === 2) {
+          const user = JSON.parse(getUserFromStorage())
+          $profileInfoContainer.innerHTML = `<a href="${user.powerBILink}" target="_blank">Link a Power BI</a>`
         }
         break
 

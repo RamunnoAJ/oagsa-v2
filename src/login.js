@@ -31,6 +31,7 @@ async function handleSubmit(e) {
       role: loggedUser.role,
       name: loggedUser.name,
       checkbox,
+      powerBILink: loggedUser.powerBILink,
     }
     if (checkbox) {
       localStorage.setItem('user', JSON.stringify(user))

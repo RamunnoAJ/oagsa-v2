@@ -160,7 +160,6 @@ async function renderArticles(cart) {
   $cartContainer.innerHTML = ''
 
   cart.detail.forEach(item => {
-    console.log(item)
     if (item.deleted) return
     const $article = createProductCard(item)
     $cartContainer.appendChild($article)

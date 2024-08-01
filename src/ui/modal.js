@@ -41,6 +41,7 @@ async function createTable() {
       <th scope="col">Articulo</th>
       <th scope="col">Descripción</th>
       <th scope="col">Precio unitario</th>
+      <th scope="col">Descuento</th>
       <th scope="col">Cantidad</th>
       <th scope="col">Precio total</th>
     </tr>
@@ -105,6 +106,7 @@ function createTotalRow(total) {
   <td class="text-start">Total:</td>
   <td></td>
   <td></td>
+  <td></td>
   <td class="text-end">${total.items}</td>
   <td class="text-end">${formatter.format(
     total.total < 0 ? total.total.toFixed(0) * -1 : total.total.toFixed(0)
@@ -125,6 +127,7 @@ function createProductRow(article) {
     <td class="text-end">${formatter.format(
       unitPrice < 0 ? unitPrice.toFixed(0) * -1 : unitPrice.toFixed(0)
     )}</td>
+    <td class="text-end">${article.discount}</td>
     <td class="text-end">${article.quantity}</td>
     <td class="text-end">${formatter.format(
       totalPrice < 0 ? totalPrice.toFixed(0) * -1 : totalPrice.toFixed(0)

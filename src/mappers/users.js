@@ -13,6 +13,7 @@ export function userMapper(apiData) {
     codigoId,
     codigoUsuario,
     nivelAcceso,
+    linkPowerBi,
   } = apiData
 
   return new User(
@@ -21,6 +22,7 @@ export function userMapper(apiData) {
     codigoVendedor,
     codigoId,
     codigoUsuario,
-    nivelAcceso
+    nivelAcceso,
+    linkPowerBi
   )
 }
