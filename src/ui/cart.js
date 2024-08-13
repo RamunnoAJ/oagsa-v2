@@ -57,7 +57,14 @@ export async function renderCart(cart) {
 
   const user = getUserFromStorage()
   const parsedUser = JSON.parse(user)
-  const clients = await getClientsFromSeller(parsedUser.id)
+  let clients, isUnique
+  if (parsedUser.role !== 3) {
+    clients = await getClientsFromSeller(parsedUser.id)
+    isUnique = false
+  } else {
+    clients = [parsedUser]
+    isUnique = true
+  }
 
   const $loader = document.querySelector('.loader')
   $loader.remove()
@@ -65,7 +72,7 @@ export async function renderCart(cart) {
   const $cartClients = document.querySelector('.cart__clients')
   $cartClients.classList.remove('visually-hidden')
 
-  renderOptions(clients, '#selectClient')
+  renderOptions(clients, '#selectClient', isUnique)
 
   const $cartContainer = document.createElement('div')
   $cartContainer.classList.add('cart__articles__container')
@@ -224,7 +231,7 @@ async function renderClients(cart) {
   $cart.appendChild($clients)
 }
 
-function renderOptions(options, select) {
+function renderOptions(options, select, isUnique = false) {
   const cart = getCart()
   const $select = document.querySelector(select)
 
@@ -234,8 +241,12 @@ function renderOptions(options, select) {
 
   switch (select) {
     case '#selectClient':
-      $select.innerHTML =
-        '<option value="" selected disabled>Seleccione un cliente</option>'
+      $select.innerHTML = !isUnique
+        ? '<option value="" selected disabled>Seleccione un cliente</option>'
+        : `<option value=${options[0].id} selected disabled>${options[0].name} - ${options[0].id}</option>`
+      if (isUnique) {
+        options = []
+      }
       value = 'id'
       textContent = 'name'
       sortedOptions = options.sort(function (a, b) {
