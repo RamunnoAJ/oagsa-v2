@@ -51,7 +51,8 @@ export function validateCart(cart) {
 export async function checkout(cart) {
   const user = JSON.parse(getUserFromStorage())
   if (user.role === 3) {
-    cart.idClient = user.id
+    cart.idClient = user.idUser
+    cart.idSeller = user.idSeller
     cart.clientName = user.name
   }
   const errors = validateCart(cart)
@@ -81,7 +82,8 @@ export async function checkout(cart) {
 export async function sendToDraft(cart) {
   const user = JSON.parse(getUserFromStorage())
   if (user.role === 3) {
-    cart.idClient = user.id
+    cart.idClient = user.idUser
+    cart.idSeller = user.idSeller
     cart.clientName = user.name
   }
   const errors = validateCart(cart)
