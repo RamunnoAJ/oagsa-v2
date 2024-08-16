@@ -46,6 +46,17 @@ if (window.location.href.includes('dashboard')) {
     })
   }
 
+  if (user.role === 3) {
+    const newItems = [
+      'Cuenta corriente',
+      'Borrador de pedidos',
+      'Historial de pedidos',
+    ]
+    newItems.forEach(item => {
+      list.push(item)
+    })
+  }
+
   await renderDashboard($container, list)
 
   const $profileList = document.querySelector('#profileList')
@@ -58,9 +69,7 @@ if (window.location.href.includes('dashboard')) {
 
     switch ($profileTitle.textContent) {
       case 'Cuenta corriente':
-        if (user.role === 1 || user.role === 2) {
-          profileClientAccount($profileInfoContainer)
-        }
+        profileClientAccount($profileInfoContainer)
         break
 
       case 'Lista de clientes':
@@ -74,15 +83,11 @@ if (window.location.href.includes('dashboard')) {
         break
 
       case 'Borrador de pedidos':
-        if (user.role === 1 || user.role === 2) {
-          profileDrafts($profileInfoContainer)
-        }
+        profileDrafts($profileInfoContainer)
         break
 
       case 'Historial de pedidos':
-        if (user.role === 1 || user.role === 2) {
-          profileOrdersHistory($profileInfoContainer)
-        }
+        profileOrdersHistory($profileInfoContainer)
         break
 
       case 'Exportador de Notas':
