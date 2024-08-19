@@ -8,6 +8,7 @@ import { removeDuplicates } from '../utils/removeDuplicates.js'
 import { showToast } from '../utils/showToast.js'
 import { formatter } from '../utils/formatPrice.js'
 import { downloadPDF } from '../utils/downloadPDF.js'
+import { csvExport } from '../entities/csv.js'
 
 export async function renderProductPrices(products, parentElement) {
   if (products.length > 0) {
@@ -57,6 +58,9 @@ export async function renderProductPrices(products, parentElement) {
                 <i class="fa-solid fa-download"></i>
               </span>
             </button>
+            <button class="button bg-secondary-300 bg-hover-secondary-400" id="csvDownload">
+                    .csv
+            </button>
           </div>
         </form>
 
@@ -101,6 +105,25 @@ export async function renderProductPrices(products, parentElement) {
     $selectSubrubro.addEventListener('change', handleChangeSubrubro)
     $selectRubro.addEventListener('change', e => {
       handleChangeRubro(e, e.target.value)
+    })
+
+    const $csvDownload = document.querySelector('#csvDownload')
+    $csvDownload.addEventListener('click', () => {
+      const tableElement = document.querySelector('.fl-table')
+      const obj = new csvExport(tableElement)
+      const csvData = obj.exportCsv()
+      const blob = new Blob([csvData], { type: 'text/csv' })
+      const url = URL.createObjectURL(blob)
+      const a = document.createElement('a')
+      a.href = url
+      a.download = `Precio de listas - ${
+        new Date().toISOString().split('T')[0]
+      }`
+      a.click()
+
+      setTimeout(() => {
+        URL.revokeObjectURL(url)
+      }, 500)
     })
   } else {
     parentElement.innerHTML = '<div>No se encontraron resultados.</div>'

@@ -18,6 +18,7 @@ import { formatter } from '../utils/formatPrice.js'
 import { triggerSweetAlert } from '../utils/sweetAlert.js'
 import { downloadPDF } from '../utils/downloadPDF.js'
 import { navigateToStore } from './login.js'
+import { SURPASS_STOCK } from '../consts.js'
 
 /** @typedef {import('../entities/articles.js').ArticleOrder} ArticleOrder */
 
@@ -628,7 +629,9 @@ function createProductCard(item) {
   $quantityInput.id = `cantidad-${item.id}`
   $quantityInput.type = 'number'
   $quantityInput.min = 1
-  $quantityInput.max = item.stock
+  if (!SURPASS_STOCK) {
+    $quantityInput.max = item.stock
+  }
   $quantityInput.value = item.quantity
   $quantityInput.addEventListener('change', () => {
     if ($quantityInput.value > item.stock) {

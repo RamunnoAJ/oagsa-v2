@@ -9,6 +9,7 @@ import { getUserFromStorage } from '../storage/storageData.js'
 import { ArticleOrder } from '../entities/articles.js'
 import { showToast } from '../utils/showToast.js'
 import { formatter } from '../utils/formatPrice.js'
+import { SURPASS_STOCK } from '../consts.js'
 
 const $form = document.querySelector('#store')
 $form.addEventListener('change', handleChangeForm)
@@ -314,7 +315,9 @@ function createProductCard(item, user) {
   $quantityInput.type = 'number'
   $quantityInput.id = `quantity-${item.id}`
   $quantityInput.min = 0
-  $quantityInput.max = item.stock
+  if (!SURPASS_STOCK) {
+    $quantityInput.max = item.stock
+  }
   $quantityInput.value = 0
   $quantity.appendChild($quantityInput)
 
@@ -341,9 +344,11 @@ function createProductCard(item, user) {
       return
     }
 
-    if (item.stock < $quantityInput.value) {
-      showToast('No puedes agregar un objeto de stock mayor al disponible')
-      return
+    if (!SURPASS_STOCK) {
+      if (item.stock < $quantityInput.value) {
+        showToast('No puedes agregar un objeto de stock mayor al disponible')
+        return
+      }
     }
 
     const newItem = new ArticleOrder(
