@@ -10,6 +10,7 @@ import { csvExport } from '../entities/csv.js'
 
 /** @param {HTMLElement} parentElement  */
 export async function renderCustomerPreload(parentElement) {
+  const user = JSON.parse(getUserFromStorage())
   parentElement.innerHTML = ''
 
   const $container = document.createElement('div')
@@ -28,6 +29,13 @@ export async function renderCustomerPreload(parentElement) {
 
   const $customerPreload = createForm()
   const $customerTable = createTable()
+
+  if (user.role === 1) {
+    $customerPreload.classList.add('visually-hidden')
+    $navItem2.classList.add('active')
+    $customerTable.classList.remove('visually-hidden')
+    $navItem.classList.remove('active')
+  }
 
   $navItem.addEventListener('click', () => {
     $customerPreload.classList.remove('visually-hidden')
