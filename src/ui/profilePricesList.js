@@ -53,13 +53,13 @@ export async function renderProductPrices(products, parentElement) {
 
           <div>
             <button class="button bg-secondary-300 bg-hover-secondary-400" id="btnDownload">
-              <span class="visually-hidden-mobile">Descargar</span>
+              <span class="visually-hidden-mobile">Descargar .pdf</span>
               <span class="visually-hidden-desktop">
                 <i class="fa-solid fa-download"></i>
               </span>
             </button>
             <button class="button bg-secondary-300 bg-hover-secondary-400" id="csvDownload">
-                    .csv
+                    Descargar .csv
             </button>
           </div>
         </form>

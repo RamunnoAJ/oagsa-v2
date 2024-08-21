@@ -129,7 +129,7 @@ async function renderClientAccount(client) {
     $btnDownload.className =
       'button bg-secondary-300 bg-hover-secondary-400 mt-4 align-self-end'
     $btnDownload.innerHTML = `
-              <span class="visually-hidden-mobile">Descargar</span>
+              <span class="visually-hidden-mobile">Descargar .pdf</span>
               <span class="visually-hidden-desktop">
                 <i class="fa-solid fa-download"></i>
               </span>
