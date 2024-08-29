@@ -322,9 +322,6 @@ function createProductCard(item, user) {
   $quantity.appendChild($quantityInput)
 
   const $quantityHandler2 = document.createElement('button')
-  if (item.stock <= 0) {
-    $quantityHandler2.disabled = true
-  }
   $quantityHandler2.classList = 'quantity__handler'
   $quantityHandler2.type = 'button'
   $quantityHandler2.textContent = '+'
@@ -339,11 +336,6 @@ function createProductCard(item, user) {
     'button-sm bg-secondary-300 bg-hover-secondary-400 mt-2'
   $addToCart.textContent = 'Añadir al carro'
   $addToCart.addEventListener('click', () => {
-    if (item.stock <= 0) {
-      showToast('No puedes agregar al carro un objeto sin stock')
-      return
-    }
-
     if (!SURPASS_STOCK) {
       if (item.stock < $quantityInput.value) {
         showToast('No puedes agregar un objeto de stock mayor al disponible')
