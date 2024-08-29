@@ -117,7 +117,7 @@ function createTotalRow(total) {
 
 function createProductRow(article) {
   const unitPrice = article.priceDiscount || article.price
-  const totalPrice = article.totalDiscount || article.total
+  const totalPrice = article.priceTotal || article.total
 
   const $row = document.createElement('tr')
   $row.classList.add('modal__product__row')

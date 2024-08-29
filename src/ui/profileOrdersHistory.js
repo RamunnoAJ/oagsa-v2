@@ -53,7 +53,6 @@ async function handleSelect() {
   $profileInfoContainer.appendChild($loader)
 
   const response = await getOrdersPage(FIRST_PAGE)
-  console.log(response)
   $loader.remove()
 
   renderDates($profileInfoContainer)

@@ -17,7 +17,6 @@ const $container = document.querySelector('.dashboard-container')
 if (window.location.href.includes('dashboard')) {
   const list = ['Lista de precios']
   const user = JSON.parse(getUserFromStorage())
-  console.log(user)
 
   if (user.role === 1 || user.role === 2) {
     const newItems = [
