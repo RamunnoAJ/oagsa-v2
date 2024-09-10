@@ -193,7 +193,7 @@ export function getTotalQuantity(cart) {
 export function getTotalPrice(cart) {
   const totalPrice = cart.detail.reduce((acc, item) => {
     if (item.deleted) return acc
-    return acc + (item.priceDiscount || item.price) * Number(item.quantity)
+    return acc + item.priceDiscount * Number(item.quantity)
   }, 0)
   cart.total = Number(totalPrice).toFixed(0)
   saveCart(cart)
