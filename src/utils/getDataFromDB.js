@@ -1,4 +1,4 @@
-export const BASE_URL = 'http://api.oagsa.com/api/'
+export const BASE_URL = 'https://api.oagsa.com/api/'
 
 /**
  * @param {string} url
