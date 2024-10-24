@@ -55,6 +55,7 @@ async function handleChangeForm(e) {
   const selectedMarca = await $form.marca.value
   const selectedDiametro = await $form.diametro.value
   const selectedMedida = await $form.medida.value
+  const selectedStock = await $form.stock.value
 
   let productsString = `articulo/articulo-clase?pCodigoClase=${selectedClase}`
 
@@ -75,6 +76,11 @@ async function handleChangeForm(e) {
 
     const user = JSON.parse(getUserFromStorage())
     productsString += `&pNivleUsuario=${user?.role || 2}`
+    if (user?.role === 3) {
+      productsString += `&pConStock=false`
+    } else {
+      productsString += `&pConStock=${selectedStock || 'false'}`
+    }
 
     const products = await getProducts(productsString)
     storage.saveToLocalStorage('products_store', products)
@@ -145,6 +151,11 @@ function renderOptions(options, selectID) {
         }
       })
       break
+    case '#stock':
+      $select.innerHTML = `<option disabled selected value=''>Con stock</option>
+      <option value="true">Si</option>
+      <option value="false">No</option>`
+      break
     case '#diametros':
       sortedOptions = options.sort((a, b) => a.localeCompare(b))
       $select.innerHTML = `<option disabled selected value=''>Diametro</option>
@@ -193,6 +204,13 @@ $select.addEventListener('change', e => {
 const renderInputs = async (codigoClase, codigoRubro = '') => {
   const $storeRubros = document.querySelector('.store__rubros')
   const $storeSearchInput = document.querySelector('.store__search__input')
+  const $conStockInput = document.querySelector('#stock')
+  const user = JSON.parse(getUserFromStorage())
+
+  if (user?.role !== 3) {
+    $conStockInput.classList.remove('visually-hidden')
+    renderOptions(undefined, '#stock')
+  }
 
   $storeRubros.classList.remove('visually-hidden')
   $storeSearchInput.classList.remove('visually-hidden')
