@@ -207,7 +207,7 @@ const renderInputs = async (codigoClase, codigoRubro = '') => {
   const $conStockInput = document.querySelector('#stock')
   const user = JSON.parse(getUserFromStorage())
 
-  if (user?.role !== 3) {
+  if (user?.role && user.role !== 3) {
     $conStockInput.classList.remove('visually-hidden')
     renderOptions(undefined, '#stock')
   }
