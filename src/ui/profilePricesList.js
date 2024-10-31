@@ -1,4 +1,5 @@
 import {
+  downloadExcel,
   getBrands,
   getCategories,
   getProducts,
@@ -52,14 +53,17 @@ export async function renderProductPrices(products, parentElement) {
           </div>
 
           <div>
-            <button class="button bg-secondary-300 bg-hover-secondary-400" id="btnDownload">
+            <button class="button bg-secondary-300 bg-hover-secondary-400" id="btnDownload" type="button">
               <span class="visually-hidden-mobile">Descargar .pdf</span>
               <span class="visually-hidden-desktop">
                 <i class="fa-solid fa-download"></i>
               </span>
             </button>
-            <button class="button bg-secondary-300 bg-hover-secondary-400" id="csvDownload">
+            <button class="button bg-secondary-300 bg-hover-secondary-400" id="csvDownload" type="button" >
                     Descargar .csv
+            </button>
+            <button class="button bg-secondary-300 bg-hover-secondary-400" id="excelDownload" type="button">
+                    Descargar excel
             </button>
           </div>
         </form>
@@ -124,6 +128,47 @@ export async function renderProductPrices(products, parentElement) {
       setTimeout(() => {
         URL.revokeObjectURL(url)
       }, 500)
+    })
+
+    const $excelDownload = document.querySelector('#excelDownload')
+    $excelDownload.addEventListener('click', () => {
+      const $codigoClase = document.querySelector('#select-clase').value || '0'
+      const $codigoRubro = document.querySelector('#select-rubro').value || ''
+      const $codigoSubrubro =
+        document.querySelector('#select-subrubro').value || ''
+      const $codigoMarca = document.querySelector('#select-brand').value || ''
+      const $codigoDiametro =
+        document.querySelector('#select-diametro').value || ''
+      const $codigoMedida = document.querySelector('#select-medida').value || ''
+      const $codigoDescuento = document.querySelector('#discount').value || '0'
+
+      let titulo = $codigoClase
+      let fetchString = `precio/descarga-excel?pCodigoClase=${$codigoClase}`
+      if ($codigoRubro) {
+        fetchString += `&pCodigoRubro=${$codigoRubro}`
+        titulo += `-${$codigoRubro}`
+      }
+      if ($codigoSubrubro) {
+        fetchString += `&pCodigoSubRubro=${$codigoSubrubro}`
+        titulo += `-${$codigoSubrubro}`
+      }
+      if ($codigoMarca) {
+        fetchString += `&pMarca=${$codigoMarca}`
+        titulo += `-${$codigoMarca}`
+      }
+      if ($codigoDiametro) {
+        fetchString += `&pDiametro=${$codigoDiametro}`
+        titulo += `-${$codigoDiametro}`
+      }
+      if ($codigoMedida) {
+        fetchString += `&pMedida=${$codigoMedida}`
+        titulo += `-${$codigoMedida}`
+      }
+
+      titulo += `-descuento ${$codigoDescuento}`
+      fetchString += `&pDescuento=${$codigoDescuento}`
+
+      downloadExcel(fetchString, titulo)
     })
   } else {
     parentElement.innerHTML = '<div>No se encontraron resultados.</div>'
