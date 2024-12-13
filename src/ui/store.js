@@ -1,5 +1,5 @@
 import { getCategories } from '../api/profilePricesList.js'
-import { getProducts } from '../api/store.js'
+import { getProduct, getProducts } from '../api/store.js'
 import { capitalizeFirstLetter } from '../utils/capitalizeFirstLetter.js'
 import * as storage from '../storage/store.js'
 import { addToCart } from '../cart.js'
@@ -201,9 +201,13 @@ $select.addEventListener('change', e => {
   renderRubros(e.target.value)
 })
 
+const $storeSearchInput = document.querySelector('#searchByCode')
+$storeSearchInput.addEventListener('change', async e => {
+  const products = await getProduct(e.target.value)
+  renderProducts([products])
+})
+
 const renderInputs = async (codigoClase, codigoRubro = '') => {
-  const $storeRubros = document.querySelector('.store__rubros')
-  const $storeSearchInput = document.querySelector('.store__search__input')
   const $conStockInput = document.querySelector('#stock')
   const user = JSON.parse(getUserFromStorage())
 
@@ -211,9 +215,6 @@ const renderInputs = async (codigoClase, codigoRubro = '') => {
     $conStockInput.classList.remove('visually-hidden')
     renderOptions(undefined, '#stock')
   }
-
-  $storeRubros.classList.remove('visually-hidden')
-  $storeSearchInput.classList.remove('visually-hidden')
 
   let productsString = `articulo/articulo-clase?pCodigoClase=${codigoClase}`
   if (codigoRubro) productsString += `&pCodigoRubro=${codigoRubro}`
