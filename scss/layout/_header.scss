@@ -14,6 +14,7 @@ header {
     margin: 0 auto;
   }
 
+
   .nav-icons {
     @include flex(row, space-between, center);
     max-width: 90%;
@@ -31,6 +32,17 @@ header {
     height: 100vh;
     z-index: 10;
     transition: all 0.3s ease-in-out;
+
+    .logo-neumaticos {
+      position: relative;
+      width: 100%;
+        max-width: 100px;
+
+      img {
+        max-width: 100px;
+        width: 100%;
+      }
+    }
 
     li {
       list-style: none;
