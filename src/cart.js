@@ -4,6 +4,7 @@ import { getCart, saveCart, clearCart } from './storage/cart.js'
 import { checkLocalStorage } from './storage/profile.js'
 import { showToast } from './utils/showToast.js'
 import { navigateToStore } from './ui/login.js'
+import { getUserFromStorage } from './storage/storageData.js'
 
 /** @typedef {import('./entities/orders.js').Order} Order
  * @typedef {import('./entities/orders.js').ArticleOrder} ArticleOrder
@@ -48,6 +49,12 @@ export function validateCart(cart) {
  * @param {Order} cart
  * */
 export async function checkout(cart) {
+  const user = JSON.parse(getUserFromStorage())
+  if (user.role === 3) {
+    cart.idClient = user.idUser
+    cart.idSeller = user.idSeller
+    cart.clientName = user.name
+  }
   const errors = validateCart(cart)
   if (errors.length > 0) {
     return
@@ -73,6 +80,12 @@ export async function checkout(cart) {
  * @param {Order} cart
  * */
 export async function sendToDraft(cart) {
+  const user = JSON.parse(getUserFromStorage())
+  if (user.role === 3) {
+    cart.idClient = user.idUser
+    cart.idSeller = user.idSeller
+    cart.clientName = user.name
+  }
   const errors = validateCart(cart)
   if (errors.length > 0) {
     return
@@ -180,7 +193,7 @@ export function getTotalQuantity(cart) {
 export function getTotalPrice(cart) {
   const totalPrice = cart.detail.reduce((acc, item) => {
     if (item.deleted) return acc
-    return acc + (item.priceDiscount || item.price) * Number(item.quantity)
+    return acc + item.priceDiscount * Number(item.quantity)
   }, 0)
   cart.total = Number(totalPrice).toFixed(0)
   saveCart(cart)

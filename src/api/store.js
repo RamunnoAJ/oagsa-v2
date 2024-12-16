@@ -18,3 +18,19 @@ export async function getProducts(url) {
 
   return products
 }
+
+/**
+ * @param {string} id
+ * @returns {import('../mappers/articles.js').Article}
+ */
+export async function getProduct(id) {
+  const response = await getDataFromDB(
+    `articulo/articulo-codigo?pCodigoArticulo=${id}`
+  )
+  const product = await response.data
+  product.marca = convertToUTF(product.marca)
+
+  const finalProduct = articlesMapper(product)
+
+  return finalProduct
+}

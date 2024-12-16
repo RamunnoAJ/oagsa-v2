@@ -5,12 +5,15 @@ import getDataFromDB, { BASE_URL } from '../utils/getDataFromDB.js'
 
 /**
  * @param {string} id
+ * @param {string} client
  * @return {Order[]}
  * */
-export async function getDrafts(id) {
-  const response = await getDataFromDB(
-    `orden-compra/vendedor?pCodigoVendedor=${id}&pBorrador=1`,
-  )
+export async function getDrafts(id, client = null) {
+  let fetchString = `orden-compra/vendedor?pCodigoVendedor=${id}&pBorrador=1`
+  if (client) {
+    fetchString += `&pCodigoCliente=${client}`
+  }
+  const response = await getDataFromDB(fetchString)
   const draftsApi = await response.data
   const drafts = draftsApi.map(draft => orderMapper(draft))
 
@@ -41,7 +44,7 @@ export async function removeDraft(id) {
     `${BASE_URL}orden-compra/delete-borrador?pNumeroOrden=${id}`,
     {
       method: 'DELETE',
-    },
+    }
   )
 
   if (!response.ok) {

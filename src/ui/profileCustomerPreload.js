@@ -10,6 +10,7 @@ import { csvExport } from '../entities/csv.js'
 
 /** @param {HTMLElement} parentElement  */
 export async function renderCustomerPreload(parentElement) {
+  const user = JSON.parse(getUserFromStorage())
   parentElement.innerHTML = ''
 
   const $container = document.createElement('div')
@@ -27,7 +28,14 @@ export async function renderCustomerPreload(parentElement) {
   $navItem2.innerText = 'Listado'
 
   const $customerPreload = createForm()
-  const $customerTable = createTable()
+  const $customerTable = await createTable()
+
+  if (user.role === 1) {
+    $customerPreload.classList.add('visually-hidden')
+    $navItem2.classList.add('active')
+    $customerTable.classList.remove('visually-hidden')
+    $navItem.classList.remove('active')
+  }
 
   $navItem.addEventListener('click', () => {
     $customerPreload.classList.remove('visually-hidden')
@@ -182,7 +190,7 @@ function createOption(text, value) {
 }
 
 /**  @returns {HTMLDivElement} */
-function createTable() {
+async function createTable() {
   const user = JSON.parse(getUserFromStorage())
   const $container = document.createElement('div')
   $container.className = 'customer-preload__table__container visually-hidden'
@@ -249,6 +257,7 @@ function createTable() {
 
   options.forEach(option => {
     const $option = createOption(option.text, option.value)
+    if ($option.text === 'Pendientes') $option.selected = true
     $select.appendChild($option)
   })
 
@@ -298,6 +307,9 @@ function createTable() {
     const clients = await getCustomerPreload(user.id === 1 ? 0 : user.id, state)
     renderRows($tbody, clients)
   })
+
+  const a = await getCustomerPreload(user.id === 1 ? 0 : user.id, 0)
+  renderRows($tbody, a)
 
   $container.appendChild($selectContainer)
   $selectContainer.appendChild($select)

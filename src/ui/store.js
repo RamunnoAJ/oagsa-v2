@@ -1,5 +1,5 @@
 import { getCategories } from '../api/profilePricesList.js'
-import { getProducts } from '../api/store.js'
+import { getProduct, getProducts } from '../api/store.js'
 import { capitalizeFirstLetter } from '../utils/capitalizeFirstLetter.js'
 import * as storage from '../storage/store.js'
 import { addToCart } from '../cart.js'
@@ -9,6 +9,7 @@ import { getUserFromStorage } from '../storage/storageData.js'
 import { ArticleOrder } from '../entities/articles.js'
 import { showToast } from '../utils/showToast.js'
 import { formatter } from '../utils/formatPrice.js'
+import { SURPASS_STOCK } from '../consts.js'
 
 const $form = document.querySelector('#store')
 $form.addEventListener('change', handleChangeForm)
@@ -54,6 +55,7 @@ async function handleChangeForm(e) {
   const selectedMarca = await $form.marca.value
   const selectedDiametro = await $form.diametro.value
   const selectedMedida = await $form.medida.value
+  const selectedStock = await $form.stock.value
 
   let productsString = `articulo/articulo-clase?pCodigoClase=${selectedClase}`
 
@@ -74,6 +76,11 @@ async function handleChangeForm(e) {
 
     const user = JSON.parse(getUserFromStorage())
     productsString += `&pNivleUsuario=${user?.role || 2}`
+    if (user?.role === 3) {
+      productsString += `&pConStock=false`
+    } else {
+      productsString += `&pConStock=${selectedStock || 'false'}`
+    }
 
     const products = await getProducts(productsString)
     storage.saveToLocalStorage('products_store', products)
@@ -144,6 +151,11 @@ function renderOptions(options, selectID) {
         }
       })
       break
+    case '#stock':
+      $select.innerHTML = `<option disabled selected value=''>Con stock</option>
+      <option value="true">Si</option>
+      <option value="false">No</option>`
+      break
     case '#diametros':
       sortedOptions = options.sort((a, b) => a.localeCompare(b))
       $select.innerHTML = `<option disabled selected value=''>Diametro</option>
@@ -189,12 +201,20 @@ $select.addEventListener('change', e => {
   renderRubros(e.target.value)
 })
 
-const renderInputs = async (codigoClase, codigoRubro = '') => {
-  const $storeRubros = document.querySelector('.store__rubros')
-  const $storeSearchInput = document.querySelector('.store__search__input')
+const $storeSearchInput = document.querySelector('#searchByCode')
+$storeSearchInput.addEventListener('change', async e => {
+  const products = await getProduct(e.target.value)
+  renderProducts([products])
+})
 
-  $storeRubros.classList.remove('visually-hidden')
-  $storeSearchInput.classList.remove('visually-hidden')
+const renderInputs = async (codigoClase, codigoRubro = '') => {
+  const $conStockInput = document.querySelector('#stock')
+  const user = JSON.parse(getUserFromStorage())
+
+  if (user?.role && user.role !== 3) {
+    $conStockInput.classList.remove('visually-hidden')
+    renderOptions(undefined, '#stock')
+  }
 
   let productsString = `articulo/articulo-clase?pCodigoClase=${codigoClase}`
   if (codigoRubro) productsString += `&pCodigoRubro=${codigoRubro}`
@@ -314,6 +334,9 @@ function createProductCard(item, user) {
   $quantityInput.type = 'number'
   $quantityInput.id = `quantity-${item.id}`
   $quantityInput.min = 0
+  if (!SURPASS_STOCK) {
+    $quantityInput.max = item.stock
+  }
   $quantityInput.value = 0
   $quantity.appendChild($quantityInput)
 
@@ -332,6 +355,13 @@ function createProductCard(item, user) {
     'button-sm bg-secondary-300 bg-hover-secondary-400 mt-2'
   $addToCart.textContent = 'Añadir al carro'
   $addToCart.addEventListener('click', () => {
+    if (!SURPASS_STOCK) {
+      if (item.stock < $quantityInput.value) {
+        showToast('No puedes agregar un objeto de stock mayor al disponible')
+        return
+      }
+    }
+
     const newItem = new ArticleOrder(
       0,
       item.id,

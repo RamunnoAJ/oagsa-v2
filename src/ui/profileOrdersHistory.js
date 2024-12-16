@@ -5,6 +5,7 @@ import { sortClients } from '../utils/sortClients.js'
 import { createModal, createOverlay, renderModalContent } from './modal.js'
 import { renderPaginationButtons } from './pagination.js'
 import { formatter } from '../utils/formatPrice.js'
+import { getUserFromStorage } from '../storage/storageData.js'
 
 export async function renderSelect(options, parentElement) {
   parentElement.innerHTML = ''
@@ -62,8 +63,13 @@ async function getOrdersPage(page) {
   const $selectClient = document.querySelector('#selectClient')
   const selectedClient = $selectClient.value
   const sellerID = await getStorageID()
+  const user = JSON.parse(getUserFromStorage())
 
-  return await getOrders(sellerID, selectedClient, page)
+  if (user.role !== 3) {
+    return await getOrders(sellerID, selectedClient, page)
+  } else {
+    return await getOrders(user.idSeller, user.idUser, page)
+  }
 }
 
 async function getOrdersDatesPage(page, fromDate, toDate) {

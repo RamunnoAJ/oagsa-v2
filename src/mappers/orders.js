@@ -97,7 +97,7 @@ export function postOrderMapper(order) {
 
   return {
     numeroNota: id || 0,
-    codigoCliente: idClient,
+    codigoCliente: Number(idClient),
     nombreCliente: clientName,
     codigoCondicionVenta: idSellCondition,
     observaciones: observations || '',

@@ -5,7 +5,7 @@ import {
 } from '../mappers/categories.js'
 import { articlePricesMapper } from '../mappers/prices.js'
 import { convertToUTF } from '../utils/convertToUTF.js'
-import getDataFromDB from '../utils/getDataFromDB.js'
+import getDataFromDB, { BASE_URL } from '../utils/getDataFromDB.js'
 
 /**
  * @param {string} url
@@ -50,4 +50,23 @@ export async function getBrands(url) {
   const categoriesApi = await response.data
 
   return categoriesApi
+}
+
+/**
+ * @param {string} url
+ * @param {string} url
+ * */
+export function downloadExcel(url, titulo) {
+  console.log(url)
+  fetch(`${BASE_URL}${url}`)
+    .then(res => res.blob())
+    .then(data => {
+      const url = window.URL.createObjectURL(data)
+      const a = document.createElement('a')
+      a.href = url
+      a.download = `precios-${titulo}-${
+        new Date().toISOString().split('T')[0]
+      }.xlsx`
+      a.click()
+    })
 }

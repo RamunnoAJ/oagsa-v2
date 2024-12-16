@@ -18,6 +18,9 @@ export async function renderProfileAdministration(
 
   const $dolar = await createDolarElement(dolar, postDolar)
   $container.appendChild($dolar)
+
+  //const $surpassLimit = createSurpassStock()
+  //$container.appendChild($surpassLimit)
 }
 
 async function createMaintenanceElement(maintenance) {
@@ -127,4 +130,51 @@ async function createDolarElement(dolar, callback) {
   $dolarBody.appendChild($form)
 
   return $dolar
+}
+
+function createSurpassStock() {
+  const $container = document.createElement('div')
+  $container.className = 'maintenance'
+
+  const $title = document.createElement('h2')
+  $title.className = 'maintenance__title'
+  $title.textContent = 'Sobrepasar stock en la tienda'
+  $container.appendChild($title)
+
+  const $surpassBody = document.createElement('div')
+  $surpassBody.className = 'maintenance__body'
+  $container.appendChild($surpassBody)
+
+  const $surpassYesBtn = document.createElement('button')
+  $surpassYesBtn.className = 'button bg-secondary-300 bg-hover-secondary-400'
+  $surpassYesBtn.textContent = 'Si'
+
+  const $surpassNoBtn = document.createElement('button')
+  $surpassNoBtn.className = 'button bg-secondary-300 bg-hover-secondary-400'
+  $surpassNoBtn.textContent = 'No'
+
+  if (true === 'True') {
+    $surpassYesBtn.classList.add('maintenance__selected')
+  } else {
+    $surpassNoBtn.classList.add('maintenance__selected')
+  }
+
+  $surpassNoBtn.addEventListener('click', () => {
+    callback()
+    toggleClass($surpassYesBtn, 'maintenance__selected')
+    toggleClass($surpassNoBtn, 'maintenance__selected')
+  })
+
+  $surpassYesBtn.addEventListener('click', () => {
+    callback()
+    toggleClass($surpassYesBtn, 'maintenance__selected')
+    toggleClass($surpassNoBtn, 'maintenance__selected')
+  })
+
+  $surpassBody.appendChild($surpassYesBtn)
+  $surpassBody.appendChild($surpassNoBtn)
+
+  $container.appendChild($surpassBody)
+
+  return $container
 }
