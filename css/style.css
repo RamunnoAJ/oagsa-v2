@@ -4106,6 +4106,13 @@ header {
     height: 100vh;
     z-index: 10;
     transition: all 0.3s ease-in-out; }
+    header .nav-bar .logo-neumaticos {
+      position: relative;
+      width: 100%;
+      max-width: 100px; }
+      header .nav-bar .logo-neumaticos img {
+        max-width: 100px;
+        width: 100%; }
     header .nav-bar li {
       list-style: none;
       text-transform: uppercase;
@@ -4480,6 +4487,17 @@ header {
       padding: 1rem;
       border-radius: 0.25rem; }
   .store-container .store__search__select {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    width: 100%; }
+    .store-container .store__search__select > div {
+      width: 100%; }
+  .store-container .store {
+    width: 100%; }
+  .store-container .store__rubros__items {
     display: flex;
     flex-direction: column;
     justify-content: center;
