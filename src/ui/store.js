@@ -91,14 +91,10 @@ async function handleChangeForm(e) {
 
 async function handleSubmitSearch(e) {
   e.preventDefault()
-  const searchValue = e.target.querySelector('#searchByCode').value
-  const products = storage.getFromLocalStorage('products_store')
 
-  const newProducts = products.filter(product => {
-    return product.id.includes(searchValue)
-  })
-
-  renderProducts(newProducts)
+  const value = document.querySelector('#searchByCode').value
+  const products = await getProduct(value)
+  renderProducts([products])
 }
 
 export async function renderClases() {
@@ -199,12 +195,6 @@ async function renderRubros(idClase) {
 const $select = document.querySelector('#clases')
 $select.addEventListener('change', e => {
   renderRubros(e.target.value)
-})
-
-const $storeSearchInput = document.querySelector('#searchByCode')
-$storeSearchInput.addEventListener('change', async e => {
-  const products = await getProduct(e.target.value)
-  renderProducts([products])
 })
 
 const renderInputs = async (codigoClase, codigoRubro = '') => {
