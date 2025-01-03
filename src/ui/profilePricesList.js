@@ -233,15 +233,13 @@ function createTable() {
   table.innerHTML = `
   <thead>
     <tr>
-      <th scope="col" class="visually-hidden">Imagen</th>
+      <th scope="col">Imagen</th>
       <th scope="col">Artículo</th>
       <th scope="col">Descripción</th>
       <th scope="col">Marca</th>
       <th scope="col">Precio</th>
       <th scope="col" class="visually-hidden-mobile">% Desc.</th>
       <th scope="col">Precio Desc.</th>
-      <th scope="col" class="visually-hidden-mobile">Diametro</th>
-      <th scope="col" class="visually-hidden-mobile">Medidas</th>
     </tr>
   </thead>
   <tbody id="table-body">
@@ -343,7 +341,7 @@ function renderTableRows(item, parentElement) {
   const imageUrl = 'https://' + image
 
   tableRow.innerHTML = `
-    <td class="text-start visually-hidden"><img class="w-12" src=${
+    <td class="text-start"><img class="w-32" src=${
       image ? imageUrl : defaultImage
     } /></td>
     <td class="text-start">${item.id}</td>
@@ -358,8 +356,6 @@ function renderTableRows(item, parentElement) {
         ? item.priceDiscount.toFixed(0) * -1
         : item.priceDiscount.toFixed(0) || 0
     )}</td>
-    <td class="visually-hidden-mobile text-end">${item.diameter}</td>
-    <td class="visually-hidden-mobile text-end">${item.measure}</td>
   `
 
   parentElement.appendChild(tableRow)
