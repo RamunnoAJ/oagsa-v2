@@ -233,11 +233,7 @@ function createTable() {
   table.innerHTML = `
   <thead>
     <tr>
-<<<<<<< HEAD
       <th scope="col">Imagen</th>
-=======
-      <th scope="col" class="visually-hidden">Imagen</th>
->>>>>>> 3a90b06 (feat: image on download pdf)
       <th scope="col">Artículo</th>
       <th scope="col">Descripción</th>
       <th scope="col">Marca</th>
