@@ -22,7 +22,7 @@ import { SURPASS_STOCK } from '../consts.js'
 
 /** @typedef {import('../entities/articles.js').ArticleOrder} ArticleOrder */
 
-const defaultImage =
+export const defaultImage =
   'https://firebasestorage.googleapis.com/v0/b/oagsa-1d9e9.appspot.com/o/Web%20Oagsa%20Iconos%2FOAGSA%20-%20Iconos%20Web%2011%20-%20HERRAMIENTA.png?alt=media&token=b06bbe3a-cd7e-4a80-a4e7-3bccb9a8df33'
 
 if (window.location.href.includes('cart')) {

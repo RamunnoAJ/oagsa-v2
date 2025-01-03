@@ -10,6 +10,8 @@ import { showToast } from '../utils/showToast.js'
 import { formatter } from '../utils/formatPrice.js'
 import { downloadPDF } from '../utils/downloadPDF.js'
 import { csvExport } from '../entities/csv.js'
+import { ArticlePrice } from '../entities/prices.js'
+import { defaultImage } from './cart.js'
 
 export async function renderProductPrices(products, parentElement) {
   if (products.length > 0) {
@@ -231,6 +233,7 @@ function createTable() {
   table.innerHTML = `
   <thead>
     <tr>
+      <th scope="col" class="visually-hidden">Imagen</th>
       <th scope="col">Artículo</th>
       <th scope="col">Descripción</th>
       <th scope="col">Marca</th>
@@ -326,10 +329,23 @@ async function renderOptions(options, selectID) {
   })
 }
 
+/**
+ * @param {ArticlePrice} item
+ */
 function renderTableRows(item, parentElement) {
   const tableRow = document.createElement('tr')
+  const image =
+    item.images[0]
+      ?.split('FerozoWebHosting\\')[1]
+      .split('\\')
+      .filter(e => e !== 'public_html')
+      .join('\\') || ''
+  const imageUrl = 'https://' + image
 
   tableRow.innerHTML = `
+    <td class="text-start visually-hidden"><img class="w-12" src=${
+      image ? imageUrl : defaultImage
+    } /></td>
     <td class="text-start">${item.id}</td>
     <td class="text-start">${item.name}</td>
     <td class="text-start">${item.brand}</td>

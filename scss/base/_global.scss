@@ -1,4 +1,11 @@
 @for $i from 1 through 64 {
+  .w-#{$i} {
+    width: (0.25rem * $i)
+  }
+  .max-w-#{$i} {
+    max-width: (0.25rem * $i)
+  }
+
   .m-#{$i} {
     margin: (0.25rem * $i);
   }

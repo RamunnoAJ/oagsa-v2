@@ -15,6 +15,7 @@ export function articlePricesMapper(apiData) {
     importe,
     porcentajeDescuento,
     precioConDescuento,
+    imagenesUrl,
   } = apiData
 
   return new ArticlePrice(
@@ -25,6 +26,7 @@ export function articlePricesMapper(apiData) {
     medidas,
     importe,
     precioConDescuento,
-    porcentajeDescuento
+    porcentajeDescuento,
+    imagenesUrl
   )
 }

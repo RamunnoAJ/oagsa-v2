@@ -263,6 +263,8 @@ function createProductCard(item, user) {
     image = switchImage(item.idCategory.trim())
   }
 
+  console.log(image)
+
   const $image = document.createElement('img')
   $image.src = 'https://' + image
   $image.alt = item.name
