@@ -47,6 +47,9 @@ export function downloadPDF(category, htmlTable = null, name = '') {
                     th {
                         background-color: #f2f2f2;
                     }
+                    table img {
+                        max-width: 3rem;
+                    }
                 </style>
             </head>
             <body>

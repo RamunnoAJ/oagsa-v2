@@ -8,6 +8,7 @@ export class ArticlePrice {
    * @param {number} price
    * @param {number} priceDiscount
    * @param {number} discount
+   * @param {string[]} images
    */
   constructor(
     id,
@@ -17,7 +18,8 @@ export class ArticlePrice {
     measure,
     price,
     priceDiscount,
-    discount
+    discount,
+    images
   ) {
     this.id = id
     this.name = name
@@ -27,5 +29,6 @@ export class ArticlePrice {
     this.price = price
     this.priceDiscount = priceDiscount
     this.discount = discount
+    this.images = images
   }
 }
