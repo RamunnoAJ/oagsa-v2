@@ -25,6 +25,7 @@ if (window.location.href.includes('dashboard')) {
       'Borrador de pedidos',
       'Historial de pedidos',
       'Precarga de clientes',
+      'Catálogos',
     ]
 
     newItems.forEach(item => {
@@ -112,6 +113,10 @@ if (window.location.href.includes('dashboard')) {
         if (user.role === 1 || user.role === 2) {
           profileCustomerPreload($profileInfoContainer)
         }
+        break
+
+      case 'Catálogos':
+        $profileInfoContainer.innerHTML = `<a href="https://drive.google.com/drive/folders/19CtJQqy_d0CazE5E0JEVuU5wHtN1mhaD?usp=sharing" target="_blank">Link a los Catálogos</a>`
         break
 
       case 'Información Vendedor':

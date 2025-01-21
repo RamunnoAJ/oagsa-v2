@@ -177,40 +177,19 @@
         }
     }
 
-    .main-about-us {
-        position: relative;
-        width: 100%;
-        top: -2rem;
-        min-height: 60vh;
-        padding-top: 8rem;
-        margin-bottom: 10rem;
 
-        .main-about-us__center {
-            position: relative;
+    .main-about-us__center {
+        .about-us__card {
+            min-height: 37.5rem;
+            gap: 2rem;
 
-            .about-us__card {
-                position: absolute;
-                min-height: 37.5rem;
-                gap: 2rem;
-                margin-top: 4rem;
-
-                .about-us__card-image {
-                    display: block;
-                    background-color: #d9d5d5;
-                    width: 100%;
-                    height: 100%;
-                }
-
-                &>* {
-                    flex-basis: 50%;
-                }
+            .about-us__card-image {
+                display: block;
+                background-color: #d9d5d5;
+                width: 100%;
+                height: 100%;
             }
         }
-    }
-
-    .about-us__footer {
-        position: relative;
-        top: 30vh;
     }
 
     .main-login {
