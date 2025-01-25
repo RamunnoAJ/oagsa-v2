@@ -56,8 +56,10 @@ export function downloadPDF(category, htmlTable = null, name = '') {
                 <div style="display: flex; flex-direction: row; justify-content: space-between; width: 100%; align-items: center; gap: 40px">
                     <img src="../../assets/logo-oagsa.png" alt="OAGSA" width="200" />
                     <h1 style="text-align: center; font-size: 18px; display: flex; flex-direction: column; gap: 8px;"><span>${category}</span>${
-    name ? `<span style="font-size: 14px;">${name}</span>` : ''
-  }</h1>
+                      name
+                        ? `<span style="font-size: 14px;">${name}</span>`
+                        : ''
+                    }</h1>
                     <p style="text-color: #a0a0a0; font-weight: bold">${date}</p>
                 </div>
 
@@ -127,7 +129,7 @@ export async function downloadNotas(notas, cantidadNotas, total) {
                 </div>
                 <p>Número de Notas: <strong>${cantidadNotas}</strong></p>
                 <p>Total: <strong>${formatterTwoDigits.format(
-                  total
+                  total,
                 )}</strong></p>
                 <table>
                     <thead>
@@ -154,10 +156,10 @@ export async function downloadNotas(notas, cantidadNotas, total) {
                                 <td>${nota.sellerName}</td>
                                 <td>${nota.observations}</td>
                                 <td style="text-align: right">${formatterTwoDigits.format(
-                                  nota.total
+                                  nota.total,
                                 )}</td>
                                 <td>${nota.status}</td>
-                            </tr>`
+                            </tr>`,
                         )}
                     </tbody>
                 </table>

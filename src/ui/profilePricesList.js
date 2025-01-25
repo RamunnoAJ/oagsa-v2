@@ -98,7 +98,7 @@ export async function renderProductPrices(products, parentElement) {
             downloadMessage.includes('Seleccione')
               ? ''
               : ' - ' + downloadMessage
-          }`
+          }`,
         )
       } catch (error) {
         showToast('Debes seleccionar alguna tabla para descargar')
@@ -233,7 +233,11 @@ function createTable() {
   table.innerHTML = `
   <thead>
     <tr>
+<<<<<<< HEAD
       <th scope="col">Imagen</th>
+=======
+      <th scope="col" class="visually-hidden">Imagen</th>
+>>>>>>> 3a90b06 (feat: image on download pdf)
       <th scope="col">Artículo</th>
       <th scope="col">Descripción</th>
       <th scope="col">Marca</th>
@@ -283,7 +287,7 @@ async function renderOptions(options, selectID) {
   }
 
   const sortedOptions = options.sort(
-    (a, b) => a.name?.localeCompare(b.name) || a
+    (a, b) => a.name?.localeCompare(b.name) || a,
   )
 
   sortedOptions.forEach(option => {
@@ -348,13 +352,13 @@ function renderTableRows(item, parentElement) {
     <td class="text-start">${item.name}</td>
     <td class="text-start">${item.brand}</td>
     <td class="text-end">${formatter.format(
-      item.price < 0 ? item.price.toFixed(0) * -1 : item.price.toFixed(0) || 0
+      item.price < 0 ? item.price.toFixed(0) * -1 : item.price.toFixed(0) || 0,
     )}</td>
     <td class="text-end visually-hidden-mobile">${item.discount}</td>
     <td class="text-end">${formatter.format(
       item.priceDiscount < 0
         ? item.priceDiscount.toFixed(0) * -1
-        : item.priceDiscount.toFixed(0) || 0
+        : item.priceDiscount.toFixed(0) || 0,
     )}</td>
   `
 
@@ -365,7 +369,7 @@ async function handleChangeRubro(e, codigoRubro) {
   e.preventDefault()
 
   const subrubros = await getCategories(
-    `articulo/subrubros?pCodigoRubro=${codigoRubro}`
+    `articulo/subrubros?pCodigoRubro=${codigoRubro}`,
   )
 
   const products = await getProductsForm()
@@ -373,9 +377,8 @@ async function handleChangeRubro(e, codigoRubro) {
   storage.saveSubrubros(subrubros, codigoRubro)
   renderOptions(subrubros, '#select-subrubro')
 
-  const { arrayMarcas, arrayDiametros, arrayMedidas } = await renderSelects(
-    products
-  )
+  const { arrayMarcas, arrayDiametros, arrayMedidas } =
+    await renderSelects(products)
 
   renderOptions(arrayMarcas, '#select-brand')
   renderOptions(arrayDiametros, '#select-diametro')
