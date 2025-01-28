@@ -7,6 +7,7 @@ const renderClients = (clients, parentElement) => {
   clients.forEach(client => {
     const cardContent = `<article class="client-card">
     <h3 class="client-card__title">${client.name}</h3>
+    <p class="client-card__address">${client.cuit}</p>
     <p class="client-card__address">${client.address}</p>
     <p class="client-card__zone">${client.city}</p>
     <p class="client-card__telephone">${client.phone}</p>
@@ -28,8 +29,8 @@ export const renderClientsFromSeller = (clients, parentElement) => {
   if (clients.length > 0) {
     const searchInput = document.createElement('div')
     searchInput.classList.add('search-input')
-    searchInput.innerHTML = ` 
-      <input type="text" id="clients-filter" placeholder="Ingrese razón social" /> 
+    searchInput.innerHTML = `
+      <input type="text" id="clients-filter" placeholder="Ingrese razón social" />
       <button class="button bg-secondary-300 bg-hover-secondary-400">Buscar</button>`
     parentElement.appendChild(searchInput)
 
@@ -40,7 +41,7 @@ export const renderClientsFromSeller = (clients, parentElement) => {
     const $filterClients = document.querySelector('#clients-filter')
 
     const newClients = clients.filter(
-      client => !client.name.toUpperCase().includes('ANULADA')
+      client => !client.name.toUpperCase().includes('ANULADA'),
     )
 
     renderClients(newClients, clientsContainer)
@@ -50,7 +51,7 @@ export const renderClientsFromSeller = (clients, parentElement) => {
       if (inputValue.length) {
         const filteredClients = filterClients(
           newClients,
-          inputValue.toLowerCase()
+          inputValue.toLowerCase(),
         )
 
         renderClients(filteredClients, clientsContainer)
