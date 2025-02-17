@@ -189,18 +189,19 @@ async function createModalForm(id) {
 }
 
 /**
- * @param {string} image
+ * @param {object} image
  * @return {HTMLTableRowElement}
  * */
 async function createRow(image) {
   const $row = document.createElement('tr')
   const $rowTitle = document.createElement('td')
-  const lastItem = image.split('\\').pop()
+  const lastItem = image.url.split('\\').pop()
   $rowTitle.textContent = lastItem
+  $row.id = image.idImagen
   $row.appendChild($rowTitle)
 
-  if (image.includes('G:\\FerozoWebHosting')) {
-    image = image
+  if (image.url.includes('G:\\FerozoWebHosting')) {
+    image.url = image.url
       .split('\\')
       .slice(2)
       .filter(item => {
@@ -210,7 +211,7 @@ async function createRow(image) {
   }
 
   const $image = document.createElement('td')
-  $image.innerHTML = `<img src="https://www.${image}" alt="${image}" class="table__image" />`
+  $image.innerHTML = `<img src="https://www.${image.url}" alt="${image.url}" class="table__image" />`
   $row.appendChild($image)
 
   const $delete = document.createElement('td')
@@ -218,7 +219,8 @@ async function createRow(image) {
   $deleteBtn.className = 'button-sm bg-secondary-300 bg-hover-error'
   $deleteBtn.textContent = 'Eliminar'
   $deleteBtn.addEventListener('click', () => {
-    handleDelete(image.split('\\')[3].split('.')[0].split('-')[0])
+    console.log('CREATE ROW: ', image)
+    handleDelete(image.codigoArticulo, image.idImagen)
   })
   $delete.appendChild($deleteBtn)
   $row.appendChild($delete)
@@ -227,12 +229,18 @@ async function createRow(image) {
 }
 
 /**
- * @param {string} id
+ * @param {string} articleId
+ * @param {string} imageId
  * */
-async function handleDelete(id) {
-  await deleteImage(id)
-  showToast('Imagen eliminada exitosamente')
-  handleClick(id)
+async function handleDelete(articleId, imageId) {
+  try {
+    await deleteImage(articleId, imageId)
+    showToast('Imagen eliminada exitosamente')
+    handleClick(articleId)
+  } catch (e) {
+    console.error(e)
+    showToast('Hubo un error intentando eliminar la imagen')
+  }
 }
 
 /**

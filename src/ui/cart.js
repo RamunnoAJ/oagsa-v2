@@ -563,9 +563,10 @@ function createProductCard(item) {
   $card.classList.add('cart__card')
 
   const $image = document.createElement('img')
-  if (item.images[0]) {
-    if (item.images[0].includes('G:\\FerozoWebHosting')) {
-      const source = item.images[0]
+  const url = item.url ? item.url[0] : ''
+  if (url) {
+    if (url.includes('G:\\FerozoWebHosting')) {
+      const source = item.url[0]
         .split('\\')
         .slice(2)
         .filter(item => {
@@ -574,7 +575,7 @@ function createProductCard(item) {
         .join('\\')
       $image.src = `https://www.${source}`
     } else {
-      $image.src = `https://www.${item.images[0]}`
+      $image.src = `https://www.${url}`
     }
   } else {
     $image.src = defaultImage

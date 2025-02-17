@@ -7,10 +7,11 @@ import { BASE_URL, getDataFromDB } from '../utils/getDataFromDB.js'
  * */
 export async function getArticle(id) {
   const data = await getDataFromDB(
-    `articulo/articulo-codigo?pCodigoArticulo=${id}`
+    `articulo/articulo-codigo-new?pCodigoArticulo=${id}`
   )
   const articleApi = data.data
   const article = articlesMapper(articleApi)
+  console.log(article)
 
   return article
 }
@@ -39,11 +40,12 @@ export async function setImage(id, file) {
 }
 
 /**
- * @param {string} id
+ * @param {string} articleId
+ * @param {string} imageId
  * */
-export async function deleteImage(id) {
+export async function deleteImage(articleId, imageId) {
   const response = await fetch(
-    `${BASE_URL}articulo/imagen-baja?pCodigoArticulo=${id}`,
+    `${BASE_URL}articulo/imagen-baja-articulo?pCodigoArticulo=${articleId}&pIdImagen=${imageId}`,
     {
       method: 'DELETE',
       headers: {

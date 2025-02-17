@@ -5329,7 +5329,8 @@ header {
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
-    gap: 0.25rem; }
+    gap: 0.25rem;
+    width: 100%; }
     .images-container .images__select-container .images__select__title {
       font-size: var(--fs-400);
       font-weight: 500; }

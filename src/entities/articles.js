@@ -73,7 +73,8 @@ export class Article {
    * @param {number} isInWeb
    * @param {string} stockColor
    * @param {number} stock
-   * @param {string[]} images
+   * @param {string[]} url
+   * @param {object[]} images
    * */
   constructor(
     id,
@@ -88,6 +89,7 @@ export class Article {
     isInWeb,
     stockColor,
     stock,
+    url,
     images
   ) {
     this.id = id
@@ -102,6 +104,7 @@ export class Article {
     this.isInWeb = isInWeb
     this.stockColor = stockColor
     this.stock = stock
+    this.url = url
     this.images = images
   }
 }

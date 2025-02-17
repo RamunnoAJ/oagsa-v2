@@ -257,7 +257,7 @@ function renderProductCard(item, parentElement) {
 function createProductCard(item, user) {
   const $card = document.createElement('article')
   $card.classList = 'store__product__card'
-  const images = item.images.map(i =>
+  const images = item.url.map(i =>
     i ? 'oagsa' + i.split('oagsa')[1].replace('\\public_html', '') : null
   )
 
@@ -377,7 +377,7 @@ function createProductCard(item, user) {
       item.price * $quantityInput.value,
       0,
       false,
-      item.images,
+      item.url,
       item.stock
     )
     addToCart(newItem)

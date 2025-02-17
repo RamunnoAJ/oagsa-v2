@@ -23,6 +23,7 @@ export function articlesMapper(apiData) {
     stock,
     stockUnidades,
     url,
+    imagenes,
   } = apiData
 
   return new Article(
@@ -38,7 +39,8 @@ export function articlesMapper(apiData) {
     seMuestraEnWeb,
     stock,
     stockUnidades,
-    url
+    url,
+    imagenes
   )
 }
 

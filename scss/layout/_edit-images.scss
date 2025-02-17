@@ -8,6 +8,7 @@
   .images__select-container {
     @include flex(column, center, flex-start);
     gap: 0.25rem;
+    width: 100%;
 
     .images__select__title {
       font-size: var(--fs-400);
