@@ -11,7 +11,6 @@ export async function getArticle(id) {
   )
   const articleApi = data.data
   const article = articlesMapper(articleApi)
-  console.log(article)
 
   return article
 }

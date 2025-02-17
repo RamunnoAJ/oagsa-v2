@@ -57,7 +57,6 @@ export async function getBrands(url) {
  * @param {string} url
  * */
 export function downloadExcel(url, titulo) {
-  console.log(url)
   fetch(`${BASE_URL}${url}`)
     .then(res => res.blob())
     .then(data => {

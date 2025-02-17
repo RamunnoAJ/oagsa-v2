@@ -219,7 +219,6 @@ async function createRow(image) {
   $deleteBtn.className = 'button-sm bg-secondary-300 bg-hover-error'
   $deleteBtn.textContent = 'Eliminar'
   $deleteBtn.addEventListener('click', () => {
-    console.log('CREATE ROW: ', image)
     handleDelete(image.codigoArticulo, image.idImagen)
   })
   $delete.appendChild($deleteBtn)

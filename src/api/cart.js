@@ -22,7 +22,6 @@ export async function postBuyOrder(url, postBody) {
       throw new Error('Respuesta rechazada')
     }
   } catch (error) {
-    console.log(error)
     throw new Error(error)
   }
 }

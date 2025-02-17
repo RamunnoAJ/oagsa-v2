@@ -333,7 +333,7 @@ async function renderOptions(options, selectID) {
 function renderTableRows(item, parentElement) {
   const tableRow = document.createElement('tr')
   const image =
-    item.url[0]
+    item.images[0]
       ?.split('FerozoWebHosting\\')[1]
       .split('\\')
       .filter(e => e !== 'public_html')
