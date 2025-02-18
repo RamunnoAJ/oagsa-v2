@@ -45,15 +45,14 @@
         }
 
         .store__product__card__image {
-            width: 160px;
-            height: 160px;
+            width: auto;
+            height: auto;
             object-fit: contain;
         }
 
         .store__product__card__info {
             @include flex(column, center, center);
             gap: 0.25rem;
-            width: 100%;
             text-align: center;
 
             .button-sm {

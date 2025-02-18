@@ -4285,8 +4285,8 @@ body {
         .store__products .store__product__card .quantity .quantity__handler:hover {
           background-color: #faeed3; }
     .store__products .store__product__card .store__product__card__image {
-      width: 160px;
-      height: 160px;
+      width: auto;
+      height: auto;
       object-fit: contain; }
     .store__products .store__product__card .store__product__card__info {
       display: flex;
@@ -4294,7 +4294,6 @@ body {
       justify-content: center;
       align-items: center;
       gap: 0.25rem;
-      width: 100%;
       text-align: center; }
       .store__products .store__product__card .store__product__card__info .button-sm {
         padding: 0.5rem 1rem; }
