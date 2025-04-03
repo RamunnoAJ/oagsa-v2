@@ -26,6 +26,7 @@ if (window.location.href.includes('dashboard')) {
       'Historial de pedidos',
       'Precarga de clientes',
       'Catálogos',
+      'Cuentas de Oagsa',
     ]
 
     newItems.forEach(item => {
@@ -124,6 +125,13 @@ if (window.location.href.includes('dashboard')) {
           const user = JSON.parse(getUserFromStorage())
           $profileInfoContainer.innerHTML = `<a href="${user.powerBILink}" target="_blank">Link a Power BI</a>`
         }
+        break
+
+      case 'Cuentas de Oagsa':
+        const a = document.createElement('a')
+        a.href = '/assets/cuentas-oagsa.pdf'
+        a.download = `Cuentas de Oagsa.pdf`
+        a.click()
         break
 
       default:
