@@ -241,3 +241,13 @@ $colors: (
     @include flex(column, space-between, stretch);
   }
 }
+
+.text-sm {
+  font-size: var(--fs-200) !important;
+}
+
+.truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

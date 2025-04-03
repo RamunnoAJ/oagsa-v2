@@ -3747,6 +3747,14 @@ template {
     justify-content: space-between;
     align-items: stretch; } }
 
+.text-sm {
+  font-size: var(--fs-200) !important; }
+
+.truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap; }
+
 body {
   font-size: var(--fs-body);
   font-family: "Inter", sans-serif; }
