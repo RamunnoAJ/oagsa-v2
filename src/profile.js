@@ -15,7 +15,7 @@ import { renderDashboard, renderTitle } from './ui/profile.js'
 const $container = document.querySelector('.dashboard-container')
 
 if (window.location.href.includes('dashboard')) {
-  const list = ['Lista de precios', 'Cuentas de Oagsa']
+  const list = ['Lista de precios', 'Cuentas bancarias']
   const user = JSON.parse(getUserFromStorage())
 
   if (user.role === 1 || user.role === 2) {
@@ -126,10 +126,10 @@ if (window.location.href.includes('dashboard')) {
         }
         break
 
-      case 'Cuentas de Oagsa':
+      case 'Cuentas bancarias':
         const a = document.createElement('a')
         a.href = '/assets/cuentas-oagsa.pdf'
-        a.download = `Cuentas de Oagsa.pdf`
+        a.download = `Cuentas bancarias de Oagsa.pdf`
         a.click()
         break
 
