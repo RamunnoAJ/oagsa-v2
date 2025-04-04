@@ -15,7 +15,7 @@ import { renderDashboard, renderTitle } from './ui/profile.js'
 const $container = document.querySelector('.dashboard-container')
 
 if (window.location.href.includes('dashboard')) {
-  const list = ['Lista de precios']
+  const list = ['Lista de precios', 'Cuentas de Oagsa']
   const user = JSON.parse(getUserFromStorage())
 
   if (user.role === 1 || user.role === 2) {
@@ -26,7 +26,6 @@ if (window.location.href.includes('dashboard')) {
       'Historial de pedidos',
       'Precarga de clientes',
       'Catálogos',
-      'Cuentas de Oagsa',
     ]
 
     newItems.forEach(item => {
