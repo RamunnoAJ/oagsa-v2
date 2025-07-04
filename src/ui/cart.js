@@ -146,7 +146,7 @@ function createTableToDownload() {
 
 function createTableRowToDownload(item) {
   const $row = document.createElement('tr')
-  const totalPrice = item.totalDiscount || item.priceTotal
+  const totalPrice = item.priceTotal
 
   $row.innerHTML = `
     <td>${item.name}</td>
