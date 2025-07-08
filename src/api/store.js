@@ -34,3 +34,17 @@ export async function getProduct(id) {
 
   return finalProduct
 }
+
+/**
+ * @param {string} search
+ * @returns {import('../mappers/articles.js').Article[]}
+ */
+export async function searchProducts(search) {
+  const response = await getDataFromDB(
+    `articulo/articulo-buscar?pBuscar=${search}`
+  )
+  const data = await response.data
+  const products = data.map(articlesMapper)
+
+  return products
+}

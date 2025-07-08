@@ -1,5 +1,5 @@
 import { getCategories } from '../api/profilePricesList.js'
-import { getProduct, getProducts } from '../api/store.js'
+import { searchProducts, getProducts } from '../api/store.js'
 import { capitalizeFirstLetter } from '../utils/capitalizeFirstLetter.js'
 import * as storage from '../storage/store.js'
 import { addToCart } from '../cart.js'
@@ -93,8 +93,8 @@ async function handleSubmitSearch(e) {
   e.preventDefault()
 
   const value = document.querySelector('#searchByCode').value
-  const products = await getProduct(value)
-  renderProducts([products])
+  const products = await searchProducts(value)
+  renderProducts(products)
 }
 
 export async function renderClases() {
@@ -231,7 +231,7 @@ const renderProducts = async products => {
   const $storeProducts = document.querySelector('.store__products')
   $storeProducts.innerHTML = `<span class="loader"></span>`
 
-  if (products.length > 0) {
+  if (products?.length > 0) {
     $storeProducts.innerHTML = ''
     sortProducts(products)
 
